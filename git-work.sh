@@ -1,6 +1,7 @@
 #!/bin/sh
-cd C:\Users\Administrador\Desktop\api_management
-git pull origin master -f
+cd $1
+git pull origin master
 git add --all
-git commit -am "Auto-committed on %date%"
-git push  origin master -f
+NOW=$(date +"%m-%d-%Y %H-%M")
+git commit -am "Auto-committed on $NOW"
+git push  origin master
