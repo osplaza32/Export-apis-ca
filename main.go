@@ -5,9 +5,11 @@ import (
 	"crypto/tls"
 	"github.com/gorilla/mux"
 	"github.com/subosito/gotenv"
+	"log"
 	"os"
 	"os/exec"
 	"osplaza32/ExtractGolang/Entidades"
+	"regexp"
 	"runtime"
 
 	//"crypto/tls"
@@ -50,7 +52,8 @@ func recursivecall(url string,folder string){
 	var resp Entidades.TheContent
 	jsonresp := calls(url)
 	json.Unmarshal(jsonresp.Bytes(), &resp)
-	folder = folder +string(os.PathSeparator) +resp.Item.Resource.DependencyList.Reference.Name
+	carpeta :=cleanString(resp.Item.Resource.DependencyList.Reference.Name)
+	folder = folder +string(os.PathSeparator) +carpeta
 	for _, element := range resp.Item.Resource.DependencyList.Reference.Dependencies.Dependency {
 		if element.Type == "FOLDER"{
 			recursivecall(makeurl(element.Type,element.ID),folder)
@@ -75,12 +78,14 @@ func thecallandsave(url string,typee string,directory string) {
 	if typee == "SERVICE" {
 		var respuestainfoservice Entidades.Serviceinfo
 		json.Unmarshal(jsonrespinfo.Bytes(), &respuestainfoservice)
-		createFile(".\\api_management"+string(os.PathSeparator) +directory,string(os.PathSeparator) +"SERVICE-"+respuestainfoservice.Item.Name+".xml",respuestainfoservice.Item.Resource.Service.Resources.ResourceSet.Resource.Content)
+		archivo :=cleanString(respuestainfoservice.Item.Name)
+		createFile(os.Getenv("ENV_CLONE")+string(os.PathSeparator) +directory,string(os.PathSeparator) +"SERVICE-"+archivo+".xml",respuestainfoservice.Item.Resource.Service.Resources.ResourceSet.Resource.Content)
 		}
 	if typee == "POLICY"{
 		var respuestainfopolicy Entidades.Policyinfo
 		json.Unmarshal(jsonrespinfo.Bytes(), &respuestainfopolicy)
-		createFile(".\\api_management"+string(os.PathSeparator) +directory,string(os.PathSeparator) +"POLICY-"+respuestainfopolicy.Item.Name+".xml",respuestainfopolicy.Item.Resource.Policy.Resources.ResourceSet.Resource.Content)
+		archivo :=cleanString(respuestainfopolicy.Item.Name)
+		createFile(os.Getenv("ENV_CLONE")+string(os.PathSeparator) +directory,string(os.PathSeparator) +"POLICY-"+archivo+".xml",respuestainfopolicy.Item.Resource.Policy.Resources.ResourceSet.Resource.Content)
 		}
 	}
 func createFile(path string,name string,contenido string) {
@@ -96,13 +101,22 @@ func createFile(path string,name string,contenido string) {
 		f.Close()
 		return
 	}
-	fmt.Println(l, "bytes written successfully")
+	fmt.Println(l, "bytes escritos")
 	err = f.Close()
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 	}
+func cleanString(s string) string{
+	reg, err := regexp.Compile("[^a-zA-Z0-9]+")
+	if err != nil {
+		log.Fatal(err)
+	}
+	return reg.ReplaceAllString(s,"")
+
+
+}
 func makeurl(tipo string, id string) string {
 	var output string
 	switch tipo {
@@ -121,14 +135,14 @@ func basicAuth() string {
 }
 func GitWorld(){
 	if runtime.GOOS == "windows" {
-		value, err:= exec.Command("git-work.bat").Output()
+		value, err:= exec.Command("git-work.bat",os.Getenv("ENV_CLONE")).Output()
 		if err != nil{
 			fmt.Println("aun no")
 		}
 		println(string(value))
 	}
 	if runtime.GOOS == "linux" || runtime.GOOS == "darwin" {
-		value, err:= exec.Command("git-work.sh").Output()
+		value, err:= exec.Command("git-work.sh",os.Getenv("ENV_CLONE")).Output()
 		if err != nil{
 			fmt.Println("aun no")
 		}
