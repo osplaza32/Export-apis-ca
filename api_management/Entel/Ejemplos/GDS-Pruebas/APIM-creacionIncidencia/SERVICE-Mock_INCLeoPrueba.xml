@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:HardcodedResponse>
+            <L7p:Base64ResponseBody stringValue="PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHNvYXBlbnY6RW52ZWxvcGUgeG1sbnM6c29hcGVudj0iaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvc29hcC9lbnZlbG9wZS8iIHhtbG5zOnVybj0idXJuOkhQRF9DcmVhX0luY2lkZW5jaWEiPgogICA8c29hcGVudjpIZWFkZXIvPgogICA8c29hcGVudjpCb2R5PgogICAgICA8dXJuOkhlbHBEZXNrX1N1Ym1pdF9TZXJ2aWNlUmVzcG9uc2U+CiAgICAgICAgIDx1cm46SW5jaWRlbnRfTnVtYmVyPjk4OTg5PC91cm46SW5jaWRlbnRfTnVtYmVyPgogICAgICA8L3VybjpIZWxwRGVza19TdWJtaXRfU2VydmljZVJlc3BvbnNlPgogICA8L3NvYXBlbnY6Qm9keT4KPC9zb2FwZW52OkVudmVsb3BlPgo="/>
+        </L7p:HardcodedResponse>
+    </wsp:All>
+</wsp:Policy>

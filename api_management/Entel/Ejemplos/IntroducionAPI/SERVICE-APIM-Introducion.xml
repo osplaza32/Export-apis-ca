@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <wsp:OneOrMore L7p:Enabled="false" wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue="$.campo"/>
+                    <L7p:VariablePrefix stringValue="campo"/>
+                </L7p:EvaluateJsonPathExpression>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:CustomizeErrorResponse>
+                    <L7p:Content stringValue="{&quot;error&quot;:&quot;campo no informado&quot;}"/>
+                    <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                    <L7p:ExtraHeaders nameValuePairArray="included"/>
+                    <L7p:HttpStatus stringValue="400"/>
+                </L7p:CustomizeErrorResponse>
+                <L7p:RaiseError/>
+            </wsp:All>
+        </wsp:OneOrMore>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="T0s="/>
+            <L7p:Enabled booleanValue="false"/>
+            <L7p:VariableToSet stringValue="retorno"/>
+        </L7p:SetVariable>
+        <L7p:Include>
+            <L7p:PolicyGuid stringValue="812ed196-c315-4e92-b630-b5c64c5c043c"/>
+        </L7p:Include>
+        <L7p:ApiPortalIntegration>
+            <L7p:ApiGroup stringValue=""/>
+            <L7p:ApiId stringValue="94602ad6-4c29-48f6-bd07-787df57aa24b"/>
+            <L7p:PortalManagedApiFlag stringValue="L7p:ApiPortalManagedServiceAssertion"/>
+        </L7p:ApiPortalIntegration>
+        <L7p:Encapsulated>
+            <L7p:EncapsulatedAssertionConfigGuid stringValue="8a48ee76-a432-4013-85b6-428c65bd182d"/>
+            <L7p:EncapsulatedAssertionConfigName stringValue="API Portal Integration - OAuth 2.0"/>
+        </L7p:Encapsulated>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${request.http.method}"/>
+                    <L7p:Operator operatorNull="null"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item dataType="included">
+                            <L7p:Type variableDataType="string"/>
+                        </L7p:item>
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:RightValue stringValue="GET"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:HttpRoutingAssertion>
+                    <L7p:FailOnErrorStatus booleanValue="false"/>
+                    <L7p:HttpMethod httpMethod="DELETE"/>
+                    <L7p:ProtectedServiceUrl stringValue="https://localhost:8443/domain/subdomain/v1/response"/>
+                    <L7p:ProxyPassword stringValueNull="null"/>
+                    <L7p:ProxyUsername stringValueNull="null"/>
+                    <L7p:RequestHeaderRules httpPassthroughRuleSet="included">
+                        <L7p:ForwardAll booleanValue="true"/>
+                        <L7p:Rules httpPassthroughRules="included">
+                            <L7p:item httpPassthroughRule="included">
+                                <L7p:Name stringValue="Cookie"/>
+                            </L7p:item>
+                            <L7p:item httpPassthroughRule="included">
+                                <L7p:Name stringValue="SOAPAction"/>
+                            </L7p:item>
+                        </L7p:Rules>
+                    </L7p:RequestHeaderRules>
+                    <L7p:RequestParamRules httpPassthroughRuleSet="included">
+                        <L7p:ForwardAll booleanValue="true"/>
+                        <L7p:Rules httpPassthroughRules="included"/>
+                    </L7p:RequestParamRules>
+                    <L7p:ResponseHeaderRules httpPassthroughRuleSet="included">
+                        <L7p:ForwardAll booleanValue="true"/>
+                        <L7p:Rules httpPassthroughRules="included">
+                            <L7p:item httpPassthroughRule="included">
+                                <L7p:Name stringValue="Set-Cookie"/>
+                            </L7p:item>
+                        </L7p:Rules>
+                    </L7p:ResponseHeaderRules>
+                    <L7p:SamlAssertionVersion intValue="2"/>
+                </L7p:HttpRoutingAssertion>
+                <wsp:OneOrMore wsp:Usage="Required">
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                            <L7p:Expression2 stringValue="200"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:RightValue stringValue="200"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:HardcodedResponse>
+                            <L7p:Base64ResponseBody stringValue="JHtyZXNwb25zZS5tYWlucGFydH0="/>
+                            <L7p:ResponseContentType stringValue="application/json; charset=UTF-8"/>
+                        </L7p:HardcodedResponse>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="eyJyZXF1ZXN0SWQiOiIke3JlcXVlc3RJZH0iLCJyZXNwb25zZSI6JHtyZXNwb25zZS5tYWlucGFydH19"/>
+                            <L7p:ContentType stringValue="application/json; charset=utf-8"/>
+                            <L7p:DataType variableDataType="message"/>
+                            <L7p:VariableToSet stringValue="serviceResponse"/>
+                        </L7p:SetVariable>
+                        <L7p:HardcodedResponse>
+                            <L7p:Base64ResponseBody stringValue="JHtzZXJ2aWNlUmVzcG9uc2UubWFpbnBhcnR9"/>
+                            <L7p:ResponseContentType stringValue="application/json; charset=UTF-8"/>
+                            <L7p:ResponseStatus stringValue="422"/>
+                        </L7p:HardcodedResponse>
+                    </wsp:All>
+                </wsp:OneOrMore>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="GET"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${request.http.method}"/>
+                    <L7p:Operator operatorNull="null"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item dataType="included">
+                            <L7p:Type variableDataType="string"/>
+                        </L7p:item>
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:RightValue stringValue="POST"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:HttpRoutingAssertion>
+                    <L7p:FailOnErrorStatus booleanValue="false"/>
+                    <L7p:ProtectedServiceUrl stringValue="https://localhost:8443/domain/subdomain/v1/response"/>
+                    <L7p:ProxyPassword stringValueNull="null"/>
+                    <L7p:ProxyUsername stringValueNull="null"/>
+                    <L7p:RequestHeaderRules httpPassthroughRuleSet="included">
+                        <L7p:ForwardAll booleanValue="true"/>
+                        <L7p:Rules httpPassthroughRules="included">
+                            <L7p:item httpPassthroughRule="included">
+                                <L7p:Name stringValue="Cookie"/>
+                            </L7p:item>
+                            <L7p:item httpPassthroughRule="included">
+                                <L7p:Name stringValue="SOAPAction"/>
+                            </L7p:item>
+                        </L7p:Rules>
+                    </L7p:RequestHeaderRules>
+                    <L7p:RequestParamRules httpPassthroughRuleSet="included">
+                        <L7p:ForwardAll booleanValue="true"/>
+                        <L7p:Rules httpPassthroughRules="included"/>
+                    </L7p:RequestParamRules>
+                    <L7p:ResponseHeaderRules httpPassthroughRuleSet="included">
+                        <L7p:ForwardAll booleanValue="true"/>
+                        <L7p:Rules httpPassthroughRules="included">
+                            <L7p:item httpPassthroughRule="included">
+                                <L7p:Name stringValue="Set-Cookie"/>
+                            </L7p:item>
+                        </L7p:Rules>
+                    </L7p:ResponseHeaderRules>
+                    <L7p:SamlAssertionVersion intValue="2"/>
+                </L7p:HttpRoutingAssertion>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".messages.from.nickname"/>
+                    <L7p:Target target="RESPONSE"/>
+                    <L7p:VariablePrefix stringValue="nickname"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:HardcodedResponse>
+                    <L7p:Base64ResponseBody stringValue="JHtuaWNrbmFtZS5yZXN1bHRzWzJdfQ=="/>
+                    <L7p:ResponseContentType stringValue="application/json; charset=UTF-8"/>
+                </L7p:HardcodedResponse>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="POST"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${request.http.method}"/>
+                    <L7p:Operator operatorNull="null"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item dataType="included">
+                            <L7p:Type variableDataType="string"/>
+                        </L7p:item>
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:RightValue stringValue="PUT"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:HardcodedResponse>
+                    <L7p:Base64ResponseBody stringValue="UFVU"/>
+                </L7p:HardcodedResponse>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="PUT"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+            <wsp:All L7p:Enabled="false" wsp:Usage="Required">
+                <L7p:CustomizeErrorResponse>
+                    <L7p:Content stringValue="{&quot;error&quot;:&quot;campo no informado&quot;}"/>
+                    <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                    <L7p:ExtraHeaders nameValuePairArray="included"/>
+                    <L7p:HttpStatus stringValue="400"/>
+                </L7p:CustomizeErrorResponse>
+                <L7p:RaiseError/>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="Metodo no soportado"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="Method"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:OneOrMore>
+    </wsp:All>
+</wsp:Policy>

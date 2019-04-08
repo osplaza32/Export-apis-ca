@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:ApiPortalIntegration>
+            <L7p:ApiGroup stringValue=""/>
+            <L7p:ApiId stringValue="94c719a6-749a-4dc6-9249-68680722cedf"/>
+            <L7p:PortalManagedApiFlag stringValue="L7p:ApiPortalManagedServiceAssertion"/>
+        </L7p:ApiPortalIntegration>
+        <L7p:Encapsulated>
+            <L7p:EncapsulatedAssertionConfigGuid stringValue="8a48ee76-a432-4013-85b6-428c65bd182d"/>
+            <L7p:EncapsulatedAssertionConfigName stringValue="API Portal Integration - OAuth 2.0"/>
+        </L7p:Encapsulated>
+        <L7p:Include>
+            <L7p:PolicyGuid stringValue="812ed196-c315-4e92-b630-b5c64c5c043c"/>
+        </L7p:Include>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:Expression1 stringValue="${request.http.method}"/>
+                    <L7p:Expression2 stringValue="DELETE"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:RightValue stringValue="DELETE"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:HardcodedResponse>
+                    <L7p:Base64ResponseBody stringValue="ewoibWVzc2FnZSI6ImRlbGV0ZSBtZXRob2QiCn0="/>
+                    <L7p:ResponseContentType stringValue="application/json; charset=UTF-8"/>
+                </L7p:HardcodedResponse>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="DELETE"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:Expression1 stringValue="${request.http.method}"/>
+                    <L7p:Expression2 stringValue="PUT"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:RightValue stringValue="PUT"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:HardcodedResponse>
+                    <L7p:Base64ResponseBody stringValue="ewoibWVzc2FnZSI6InB1dCBtZXRob2QiCn0="/>
+                    <L7p:ResponseContentType stringValue="application/json; charset=UTF-8"/>
+                </L7p:HardcodedResponse>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="PUT"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:Expression1 stringValue="${request.http.method}"/>
+                    <L7p:Expression2 stringValue="POST"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:RightValue stringValue="POST"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:HardcodedResponse>
+                    <L7p:Base64ResponseBody stringValue="ewoibWVzc2FnZSI6InBvc3QgbWV0aG9kIgp9"/>
+                    <L7p:ResponseContentType stringValue="application/json; charset=UTF-8"/>
+                </L7p:HardcodedResponse>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="POST"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:Expression1 stringValue="${request.http.method}"/>
+                    <L7p:Expression2 stringValue="GET"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:RightValue stringValue="GET"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:HardcodedResponse>
+                    <L7p:Base64ResponseBody stringValue="ewoibWVzc2FnZSI6ImdldCBtZXRob2QiCn0="/>
+                    <L7p:ResponseContentType stringValue="application/json; charset=UTF-8"/>
+                </L7p:HardcodedResponse>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="GET"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+        </wsp:OneOrMore>
+    </wsp:All>
+</wsp:Policy>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                    <L7p:Expression2 stringValue="500"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:RightValue stringValue="500"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="RXJyb3IgaW50ZXJubyBkZWwgc2Vydmlkb3I="/>
+                    <L7p:VariableToSet stringValue="codeDescription"/>
+                </L7p:SetVariable>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                    <L7p:Expression2 stringValue="400"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:RightValue stringValue="400"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="UGV0aWNpw7NuIGluY29ycmVjdGE="/>
+                    <L7p:VariableToSet stringValue="codeDescription"/>
+                </L7p:SetVariable>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                    <L7p:Expression2 stringValue="422"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:RightValue stringValue="422"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="RW50aWRhZCBubyBwcm9jZXNhZGE="/>
+                    <L7p:VariableToSet stringValue="codeDescription"/>
+                </L7p:SetVariable>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                    <L7p:Expression2 stringValue="404"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:RightValue stringValue="404"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="UmVjdXJzbyBubyBlbmNvbnRyYWRv"/>
+                    <L7p:VariableToSet stringValue="codeDescription"/>
+                </L7p:SetVariable>
+            </wsp:All>
+            <wsp:All L7p:Enabled="false" wsp:Usage="Required">
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="RXJyb3IgaW50ZXJubyBkZWwgc2Vydmlkb3I="/>
+                    <L7p:VariableToSet stringValue="codeDescription"/>
+                </L7p:SetVariable>
+            </wsp:All>
+            <wsp:All L7p:Enabled="false" wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                    <L7p:Expression2 stringValue="500"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:RightValue stringValue="500"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="SW50ZXJuYWwgU2VydmVyIEVycm9y"/>
+                    <L7p:VariableToSet stringValue="codeDescription"/>
+                </L7p:SetVariable>
+            </wsp:All>
+        </wsp:OneOrMore>
+        <L7p:ExportVariables>
+            <L7p:ExportedVars stringArrayValue="included">
+                <L7p:item stringValue="codeDescription"/>
+            </L7p:ExportedVars>
+        </L7p:ExportVariables>
+    </wsp:All>
+</wsp:Policy>

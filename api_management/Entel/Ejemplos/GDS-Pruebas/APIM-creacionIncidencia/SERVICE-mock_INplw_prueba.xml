@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="bGEgc2FsaWRh"/>
+            <L7p:VariableToSet stringValue="salida"/>
+        </L7p:SetVariable>
+        <L7p:JdbcQuery>
+            <L7p:AssertionFailureEnabled booleanValue="false"/>
+            <L7p:ConnectionName stringValue="POS_BAC"/>
+            <L7p:ConvertVariablesToStrings booleanValue="false"/>
+            <L7p:NamingMap mapValue="included">
+                <L7p:entry>
+                    <L7p:key stringValue="aux"/>
+                    <L7p:value stringValue="aux"/>
+                </L7p:entry>
+            </L7p:NamingMap>
+            <L7p:QueryName stringValue="NombreQueryMia"/>
+            <L7p:SqlQuery stringValue="select API_PKG_PRUEBA.API_PRUEBA('1', '2') aux from dual"/>
+        </L7p:JdbcQuery>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtqZGJjUXVlcnkuYXV4WzJdLmdpcl9kZXNjcmlwY2lvbn0="/>
+            <L7p:VariableToSet stringValue="dato"/>
+        </L7p:SetVariable>
+        <L7p:HardcodedResponse>
+            <L7p:Base64ResponseBody stringValue="PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHNvYXBlbnY6RW52ZWxvcGUgeG1sbnM6c29hcGVudj0iaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvc29hcC9lbnZlbG9wZS8iIHhtbG5zOnhzZD0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiPgogICAgPHNvYXBlbnY6Qm9keT4KICAgICAgICA8bnMwOkhlbHBEZXNrX1N1Ym1pdF9TZXJ2aWNlUmVzcG9uc2UgeG1sbnM6bnMwPSJ1cm46SFBEX0NyZWFfSW5jaWRlbmNpYSIgeG1sbnM6eHNkPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYSIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSI+CiAgICAgICAgICAgIDxuczA6SW5jaWRlbnRfTnVtYmVyPjE4NjwvbnMwOkluY2lkZW50X051bWJlcj4KICAgICAgICA8L25zMDpIZWxwRGVza19TdWJtaXRfU2VydmljZVJlc3BvbnNlPgogICAgPC9zb2FwZW52OkJvZHk+Cjwvc29hcGVudjpFbnZlbG9wZT4KCg=="/>
+            <L7p:Enabled booleanValue="false"/>
+        </L7p:HardcodedResponse>
+    </wsp:All>
+</wsp:Policy>

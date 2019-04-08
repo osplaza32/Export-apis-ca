@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="Z3JhbnRfdHlwZT1jbGllbnRfY3JlZGVudGlhbHMmY2xpZW50X2lkPTI0NWE4N2Q0YjA2MTQ1MWZhNWVkMGFiZDM4NWIwYTU5JmNsaWVudF9zZWNyZXQ9YjNkZGRhOGM4MDIyNDFjYTg2ZDQ4ZTliZDcyMWM1OWImc2NvcGU9b29i"/>
+            <L7p:ContentType stringValue="application/x-www-form-urlencoded"/>
+            <L7p:DataType variableDataType="message"/>
+            <L7p:VariableToSet stringValue="varTokenIn"/>
+        </L7p:SetVariable>
+        <L7p:HttpRoutingAssertion>
+            <L7p:HttpMethod httpMethod="POST"/>
+            <L7p:ProtectedServiceUrl stringValue="https://cdv1utapiport01-ssg.entel.cl:9443/auth/oauth/v2/token"/>
+            <L7p:ProxyPassword stringValueNull="null"/>
+            <L7p:ProxyUsername stringValueNull="null"/>
+            <L7p:RequestHeaderRules httpPassthroughRuleSet="included">
+                <L7p:ForwardAll booleanValue="true"/>
+                <L7p:Rules httpPassthroughRules="included">
+                    <L7p:item httpPassthroughRule="included">
+                        <L7p:Name stringValue="Cookie"/>
+                    </L7p:item>
+                    <L7p:item httpPassthroughRule="included">
+                        <L7p:Name stringValue="SOAPAction"/>
+                    </L7p:item>
+                </L7p:Rules>
+            </L7p:RequestHeaderRules>
+            <L7p:RequestMsgSrc stringValue="varTokenIn"/>
+            <L7p:RequestParamRules httpPassthroughRuleSet="included">
+                <L7p:ForwardAll booleanValue="true"/>
+                <L7p:Rules httpPassthroughRules="included"/>
+            </L7p:RequestParamRules>
+            <L7p:ResponseHeaderRules httpPassthroughRuleSet="included">
+                <L7p:ForwardAll booleanValue="true"/>
+                <L7p:Rules httpPassthroughRules="included">
+                    <L7p:item httpPassthroughRule="included">
+                        <L7p:Name stringValue="Set-Cookie"/>
+                    </L7p:item>
+                </L7p:Rules>
+            </L7p:ResponseHeaderRules>
+            <L7p:ResponseMsgDest stringValue="varTokenOut"/>
+            <L7p:SamlAssertionVersion intValue="2"/>
+        </L7p:HttpRoutingAssertion>
+        <L7p:EvaluateJsonPathExpression>
+            <L7p:Expression stringValue="$.access_token"/>
+            <L7p:OtherTargetMessageVariable stringValue="varTokenOut"/>
+            <L7p:Target target="OTHER"/>
+            <L7p:VariablePrefix stringValue="varToken"/>
+        </L7p:EvaluateJsonPathExpression>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHt2YXJUb2tlbi5yZXN1bHR9"/>
+            <L7p:VariableToSet stringValue="token"/>
+        </L7p:SetVariable>
+        <L7p:AddHeader>
+            <L7p:HeaderName stringValue="Authorization"/>
+            <L7p:HeaderValue stringValue="Bearer ${token}"/>
+        </L7p:AddHeader>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtyZXF1ZXN0Lm1haW5wYXJ0LkFQSS5ub21icmV9"/>
+            <L7p:VariableToSet stringValue="varX"/>
+        </L7p:SetVariable>
+        <L7p:EvaluateJsonPathExpression>
+            <L7p:Expression stringValue=".API.nombre"/>
+            <L7p:VariablePrefix stringValue="varAPI"/>
+        </L7p:EvaluateJsonPathExpression>
+        <L7p:HttpRoutingAssertion>
+            <L7p:HttpMethod httpMethod="GET"/>
+            <L7p:ProtectedServiceUrl stringValue="https://cdv1utapiport01-ssg.entel.cl:9443/apiportaldevint/2.0/Apis"/>
+            <L7p:ProxyPassword stringValueNull="null"/>
+            <L7p:ProxyUsername stringValueNull="null"/>
+            <L7p:RequestHeaderRules httpPassthroughRuleSet="included">
+                <L7p:ForwardAll booleanValue="true"/>
+                <L7p:Rules httpPassthroughRules="included">
+                    <L7p:item httpPassthroughRule="included">
+                        <L7p:Name stringValue="Cookie"/>
+                    </L7p:item>
+                    <L7p:item httpPassthroughRule="included">
+                        <L7p:Name stringValue="SOAPAction"/>
+                    </L7p:item>
+                </L7p:Rules>
+            </L7p:RequestHeaderRules>
+            <L7p:RequestParamRules httpPassthroughRuleSet="included">
+                <L7p:ForwardAll booleanValue="true"/>
+                <L7p:Rules httpPassthroughRules="included"/>
+            </L7p:RequestParamRules>
+            <L7p:ResponseHeaderRules httpPassthroughRuleSet="included">
+                <L7p:ForwardAll booleanValue="true"/>
+                <L7p:Rules httpPassthroughRules="included">
+                    <L7p:item httpPassthroughRule="included">
+                        <L7p:Name stringValue="Set-Cookie"/>
+                    </L7p:item>
+                </L7p:Rules>
+            </L7p:ResponseHeaderRules>
+            <L7p:ResponseMsgDest stringValue="responseAPIs"/>
+            <L7p:SamlAssertionVersion intValue="2"/>
+        </L7p:HttpRoutingAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtyZXNwb25zZUFQSXMubWFpbnBhcnR9"/>
+            <L7p:ContentType stringValue="application/json; charset=utf-8"/>
+            <L7p:DataType variableDataType="message"/>
+            <L7p:VariableToSet stringValue="varResponseAPI"/>
+        </L7p:SetVariable>
+        <L7p:EvaluateJsonPathExpression>
+            <L7p:Enabled booleanValue="false"/>
+            <L7p:Expression stringValue="$[?(@.Name==APIM-consultarIDP)]"/>
+            <L7p:OtherTargetMessageVariable stringValue="varResponseAPI"/>
+            <L7p:Target target="OTHER"/>
+            <L7p:VariablePrefix stringValue="responseAPI"/>
+        </L7p:EvaluateJsonPathExpression>
+        <L7p:EvaluateJsonPathExpression>
+            <L7p:Expression stringValue="$[?(@.Name==${varAPI.result})]"/>
+            <L7p:OtherTargetMessageVariable stringValue="varResponseAPI"/>
+            <L7p:Target target="OTHER"/>
+            <L7p:VariablePrefix stringValue="responseAPI"/>
+        </L7p:EvaluateJsonPathExpression>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtyZXNwb25zZUFQSS5yZXN1bHR9"/>
+            <L7p:ContentType stringValue="application/json; charset=utf-8"/>
+            <L7p:DataType variableDataType="message"/>
+            <L7p:VariableToSet stringValue="responseAPI"/>
+        </L7p:SetVariable>
+        <L7p:EvaluateJsonPathExpression>
+            <L7p:Expression stringValue="$.Uuid"/>
+            <L7p:OtherTargetMessageVariable stringValue="responseAPI"/>
+            <L7p:Target target="OTHER"/>
+            <L7p:VariablePrefix stringValue="varUuid"/>
+        </L7p:EvaluateJsonPathExpression>
+        <L7p:HttpRoutingAssertion>
+            <L7p:HttpMethod httpMethod="GET"/>
+            <L7p:ProtectedServiceUrl stringValue="https://cdv1utapiport01-ssg.entel.cl:9443/apiportaldevint/2.0/Apis('${varUuid.result}')/SpecContent"/>
+            <L7p:ProxyPassword stringValueNull="null"/>
+            <L7p:ProxyUsername stringValueNull="null"/>
+            <L7p:RequestHeaderRules httpPassthroughRuleSet="included">
+                <L7p:ForwardAll booleanValue="true"/>
+                <L7p:Rules httpPassthroughRules="included">
+                    <L7p:item httpPassthroughRule="included">
+                        <L7p:Name stringValue="Cookie"/>
+                    </L7p:item>
+                    <L7p:item httpPassthroughRule="included">
+                        <L7p:Name stringValue="SOAPAction"/>
+                    </L7p:item>
+                </L7p:Rules>
+            </L7p:RequestHeaderRules>
+            <L7p:RequestParamRules httpPassthroughRuleSet="included">
+                <L7p:ForwardAll booleanValue="true"/>
+                <L7p:Rules httpPassthroughRules="included"/>
+            </L7p:RequestParamRules>
+            <L7p:ResponseHeaderRules httpPassthroughRuleSet="included">
+                <L7p:ForwardAll booleanValue="true"/>
+                <L7p:Rules httpPassthroughRules="included">
+                    <L7p:item httpPassthroughRule="included">
+                        <L7p:Name stringValue="Set-Cookie"/>
+                    </L7p:item>
+                </L7p:Rules>
+            </L7p:ResponseHeaderRules>
+            <L7p:ResponseMsgDest stringValue="responseSwagger"/>
+            <L7p:SamlAssertionVersion intValue="2"/>
+        </L7p:HttpRoutingAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtyZXNwb25zZVN3YWdnZXIubWFpbnBhcnR9"/>
+            <L7p:VariableToSet stringValue="varSwaggerIn"/>
+        </L7p:SetVariable>
+        <L7p:EncodeDecode>
+            <L7p:SourceVariableName stringValue="varSwaggerIn"/>
+            <L7p:TargetDataType variableDataType="string"/>
+            <L7p:TargetVariableName stringValue="varSwaggerOut"/>
+            <L7p:TransformType transformType="BASE64_ENCODE"/>
+        </L7p:EncodeDecode>
+        <L7p:EvaluateJsonPathExpression>
+            <L7p:Expression stringValue="$.Description"/>
+            <L7p:OtherTargetMessageVariable stringValue="responseAPI"/>
+            <L7p:Target target="OTHER"/>
+            <L7p:VariablePrefix stringValue="varDescription"/>
+        </L7p:EvaluateJsonPathExpression>
+        <L7p:EvaluateJsonPathExpression>
+            <L7p:Expression stringValue="$.PrivateDescription"/>
+            <L7p:OtherTargetMessageVariable stringValue="responseAPI"/>
+            <L7p:Target target="OTHER"/>
+            <L7p:VariablePrefix stringValue="varPrivateDescription"/>
+        </L7p:EvaluateJsonPathExpression>
+        <L7p:EvaluateJsonPathExpression>
+            <L7p:Expression stringValue="$.Name"/>
+            <L7p:OtherTargetMessageVariable stringValue="responseAPI"/>
+            <L7p:Target target="OTHER"/>
+            <L7p:VariablePrefix stringValue="varName"/>
+        </L7p:EvaluateJsonPathExpression>
+        <L7p:EvaluateJsonPathExpression>
+            <L7p:Expression stringValue="$.Version"/>
+            <L7p:OtherTargetMessageVariable stringValue="responseAPI"/>
+            <L7p:Target target="OTHER"/>
+            <L7p:VariablePrefix stringValue="varVersion"/>
+        </L7p:EvaluateJsonPathExpression>
+        <L7p:EvaluateJsonPathExpression>
+            <L7p:Expression stringValue="$.AuthenticationType"/>
+            <L7p:OtherTargetMessageVariable stringValue="responseAPI"/>
+            <L7p:Target target="OTHER"/>
+            <L7p:VariablePrefix stringValue="varAuthenticationType"/>
+        </L7p:EvaluateJsonPathExpression>
+        <L7p:EvaluateJsonPathExpression>
+            <L7p:Expression stringValue="$.ApiEulaUuid"/>
+            <L7p:OtherTargetMessageVariable stringValue="responseAPI"/>
+            <L7p:Target target="OTHER"/>
+            <L7p:VariablePrefix stringValue="varApiEulaUuid"/>
+        </L7p:EvaluateJsonPathExpression>
+        <L7p:EvaluateJsonPathExpression>
+            <L7p:Expression stringValue="$.SpecFilename"/>
+            <L7p:OtherTargetMessageVariable stringValue="responseAPI"/>
+            <L7p:Target target="OTHER"/>
+            <L7p:VariablePrefix stringValue="varSpecFilename"/>
+        </L7p:EvaluateJsonPathExpression>
+        <L7p:EvaluateJsonPathExpression>
+            <L7p:Expression stringValue="$.SsgUrl"/>
+            <L7p:OtherTargetMessageVariable stringValue="responseAPI"/>
+            <L7p:Target target="OTHER"/>
+            <L7p:VariablePrefix stringValue="varSsgUrl"/>
+        </L7p:EvaluateJsonPathExpression>
+        <L7p:EvaluateJsonPathExpression>
+            <L7p:Expression stringValue="$.AccessStatus"/>
+            <L7p:OtherTargetMessageVariable stringValue="responseAPI"/>
+            <L7p:Target target="OTHER"/>
+            <L7p:VariablePrefix stringValue="varAccessStatus"/>
+        </L7p:EvaluateJsonPathExpression>
+        <L7p:EvaluateJsonPathExpression>
+            <L7p:Expression stringValue="$.ApiLocationUrl"/>
+            <L7p:OtherTargetMessageVariable stringValue="responseAPI"/>
+            <L7p:Target target="OTHER"/>
+            <L7p:VariablePrefix stringValue="varApiLocationUrl"/>
+        </L7p:EvaluateJsonPathExpression>
+        <L7p:EvaluateJsonPathExpression>
+            <L7p:Expression stringValue="$.PublishedByPortal"/>
+            <L7p:OtherTargetMessageVariable stringValue="responseAPI"/>
+            <L7p:Target target="OTHER"/>
+            <L7p:VariablePrefix stringValue="varPublishedByPortal"/>
+        </L7p:EvaluateJsonPathExpression>
+        <L7p:EvaluateJsonPathExpression>
+            <L7p:Expression stringValue="$.PortalStatus"/>
+            <L7p:OtherTargetMessageVariable stringValue="responseAPI"/>
+            <L7p:Target target="OTHER"/>
+            <L7p:VariablePrefix stringValue="varPortalStatus"/>
+        </L7p:EvaluateJsonPathExpression>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue="$.OrgUuid"/>
+                    <L7p:OtherTargetMessageVariable stringValue="responseAPI"/>
+                    <L7p:Target target="OTHER"/>
+                    <L7p:VariablePrefix stringValue="varOrgUuid"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="IiR7dmFyT3JnVXVpZC5yZXN1bHR9Ig=="/>
+                    <L7p:VariableToSet stringValue="varOrgUuid"/>
+                </L7p:SetVariable>
+            </wsp:All>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="bnVsbA=="/>
+                <L7p:VariableToSet stringValue="varOrgUuid"/>
+            </L7p:SetVariable>
+        </wsp:OneOrMore>
+        <L7p:EvaluateJsonPathExpression>
+            <L7p:Expression stringValue="$.PolicyEntities"/>
+            <L7p:OtherTargetMessageVariable stringValue="responseAPI"/>
+            <L7p:Target target="OTHER"/>
+            <L7p:VariablePrefix stringValue="varPolicyEntities"/>
+        </L7p:EvaluateJsonPathExpression>
+        <L7p:EvaluateJsonPathExpression>
+            <L7p:Expression stringValue="$.CustomFieldValues"/>
+            <L7p:OtherTargetMessageVariable stringValue="responseAPI"/>
+            <L7p:Target target="OTHER"/>
+            <L7p:VariablePrefix stringValue="varCustomFieldValues"/>
+        </L7p:EvaluateJsonPathExpression>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="ew0KICAgICJBdXRoZW50aWNhdGlvblBhcmFtZXRlcnMiOiAie1wiR3JhbnRUeXBlXCI6XCJDTElFTlRfQ1JFREVOVElBTFNcIixcIlRva2VuRW5kcG9pbnRcIjpcImh0dHBzOi8vYXBpaW50ZXJuYWx1YXQuZW50ZWwuY2wvYXV0aC9vYXV0aC92Mi90b2tlblwifSIsDQogICAgIkRlc2NyaXB0aW9uIjogIiR7dmFyRGVzY3JpcHRpb24ucmVzdWx0fSIsDQogICAgIlByaXZhdGVEZXNjcmlwdGlvbiI6ICIke3ZhclByaXZhdGVEZXNjcmlwdGlvbi5yZXN1bHR9IiwNCiAgICAiTmFtZSI6ICIke3Zhck5hbWUucmVzdWx0fSIsDQogICAgIlZlcnNpb24iOiAiJHt2YXJWZXJzaW9uLnJlc3VsdH0iLA0KICAgICJBdXRoZW50aWNhdGlvblR5cGUiOiAiJHt2YXJBdXRoZW50aWNhdGlvblR5cGUucmVzdWx0fSIsDQogICAgIkFwaUV1bGFVdWlkIjogIiR7dmFyQXBpRXVsYVV1aWQucmVzdWx0fSIsDQogICAgIlNwZWNGaWxlbmFtZSI6ICAiJHt2YXJTcGVjRmlsZW5hbWUucmVzdWx0fSIsDQogICAgIlNwZWNDb250ZW50IjogImRhdGE6O2Jhc2U2NCwke3ZhclN3YWdnZXJPdXR9IiwNCiAgICAiU3NnVXJsIjogIiR7dmFyU3NnVXJsLnJlc3VsdH0iLA0KICAgICJBY2Nlc3NTdGF0dXMiOiAiJHt2YXJBY2Nlc3NTdGF0dXMucmVzdWx0fSIsDQogICAgIlV1aWQiOiAiJHt2YXJVdWlkLnJlc3VsdH0iLA0KICAgICJBcGlMb2NhdGlvblVybCI6ICIke3ZhckFwaUxvY2F0aW9uVXJsLnJlc3VsdH0iLA0KICAgICJPcmdVdWlkIjogJHt2YXJPcmdVdWlkfSwNCiAgICAiUG9ydGFsU3RhdHVzIjoiJHt2YXJQb3J0YWxTdGF0dXMucmVzdWx0fSIsDQogICAgIlB1Ymxpc2hlZEJ5UG9ydGFsIjoke3ZhclB1Ymxpc2hlZEJ5UG9ydGFsLnJlc3VsdH0sDQogICAgIlBvbGljeUVudGl0aWVzIjogJHt2YXJQb2xpY3lFbnRpdGllcy5yZXN1bHR9LA0KICAgICJDdXN0b21GaWVsZFZhbHVlcyI6ICR7dmFyQ3VzdG9tRmllbGRWYWx1ZXMucmVzdWx0fQ0KfQ=="/>
+            <L7p:ContentType stringValue="application/json; charset=utf-8"/>
+            <L7p:DataType variableDataType="message"/>
+            <L7p:VariableToSet stringValue="request"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="Z3JhbnRfdHlwZT1jbGllbnRfY3JlZGVudGlhbHMmY2xpZW50X2lkPTJkMDg3NGE1ZTJlMTQ0YjZhNDEwZjQ5ZTQwMjNlY2ZiJmNsaWVudF9zZWNyZXQ9OWIxZjUzNjc1YjFjNDBmNjljNjk2ZjE5ZDljYmI2Yjcmc2NvcGU9b29i"/>
+            <L7p:ContentType stringValue="application/x-www-form-urlencoded"/>
+            <L7p:DataType variableDataType="message"/>
+            <L7p:VariableToSet stringValue="varTokenIn"/>
+        </L7p:SetVariable>
+        <L7p:HttpRoutingAssertion>
+            <L7p:HttpMethod httpMethod="POST"/>
+            <L7p:ProtectedServiceUrl stringValue="https://cdv1utapiport01-ssg.entel.cl:9443/auth/oauth/v2/token"/>
+            <L7p:ProxyPassword stringValueNull="null"/>
+            <L7p:ProxyUsername stringValueNull="null"/>
+            <L7p:RequestHeaderRules httpPassthroughRuleSet="included">
+                <L7p:ForwardAll booleanValue="true"/>
+                <L7p:Rules httpPassthroughRules="included">
+                    <L7p:item httpPassthroughRule="included">
+                        <L7p:Name stringValue="Cookie"/>
+                    </L7p:item>
+                    <L7p:item httpPassthroughRule="included">
+                        <L7p:Name stringValue="SOAPAction"/>
+                    </L7p:item>
+                </L7p:Rules>
+            </L7p:RequestHeaderRules>
+            <L7p:RequestMsgSrc stringValue="varTokenIn"/>
+            <L7p:RequestParamRules httpPassthroughRuleSet="included">
+                <L7p:ForwardAll booleanValue="true"/>
+                <L7p:Rules httpPassthroughRules="included"/>
+            </L7p:RequestParamRules>
+            <L7p:ResponseHeaderRules httpPassthroughRuleSet="included">
+                <L7p:ForwardAll booleanValue="true"/>
+                <L7p:Rules httpPassthroughRules="included">
+                    <L7p:item httpPassthroughRule="included">
+                        <L7p:Name stringValue="Set-Cookie"/>
+                    </L7p:item>
+                </L7p:Rules>
+            </L7p:ResponseHeaderRules>
+            <L7p:ResponseMsgDest stringValue="varTokenOut"/>
+            <L7p:SamlAssertionVersion intValue="2"/>
+        </L7p:HttpRoutingAssertion>
+        <L7p:EvaluateJsonPathExpression>
+            <L7p:Expression stringValue="$.access_token"/>
+            <L7p:OtherTargetMessageVariable stringValue="varTokenOut"/>
+            <L7p:Target target="OTHER"/>
+            <L7p:VariablePrefix stringValue="varToken"/>
+        </L7p:EvaluateJsonPathExpression>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHt2YXJUb2tlbi5yZXN1bHR9"/>
+            <L7p:VariableToSet stringValue="token"/>
+        </L7p:SetVariable>
+        <L7p:AddHeader>
+            <L7p:HeaderName stringValue="Authorization"/>
+            <L7p:HeaderValue stringValue="Bearer ${token}"/>
+            <L7p:RemoveExisting booleanValue="true"/>
+        </L7p:AddHeader>
+        <wsp:OneOrMore L7p:Enabled="false" wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:HttpRoutingAssertion>
+                    <L7p:FailOnErrorStatus booleanValue="false"/>
+                    <L7p:HttpMethod httpMethod="GET"/>
+                    <L7p:ProtectedServiceUrl stringValue="https://cdv1utapiport01-ssg.entel.cl:9443/apiportaluatint/2.0/Apis('${varUuid.result}')"/>
+                    <L7p:ProxyPassword stringValueNull="null"/>
+                    <L7p:ProxyUsername stringValueNull="null"/>
+                    <L7p:RequestHeaderRules httpPassthroughRuleSet="included">
+                        <L7p:ForwardAll booleanValue="true"/>
+                        <L7p:Rules httpPassthroughRules="included">
+                            <L7p:item httpPassthroughRule="included">
+                                <L7p:Name stringValue="Cookie"/>
+                            </L7p:item>
+                            <L7p:item httpPassthroughRule="included">
+                                <L7p:Name stringValue="SOAPAction"/>
+                            </L7p:item>
+                        </L7p:Rules>
+                    </L7p:RequestHeaderRules>
+                    <L7p:RequestMsgSrc stringValue="request"/>
+                    <L7p:RequestParamRules httpPassthroughRuleSet="included">
+                        <L7p:ForwardAll booleanValue="true"/>
+                        <L7p:Rules httpPassthroughRules="included"/>
+                    </L7p:RequestParamRules>
+                    <L7p:ResponseHeaderRules httpPassthroughRuleSet="included">
+                        <L7p:ForwardAll booleanValue="true"/>
+                        <L7p:Rules httpPassthroughRules="included">
+                            <L7p:item httpPassthroughRule="included">
+                                <L7p:Name stringValue="Set-Cookie"/>
+                            </L7p:item>
+                        </L7p:Rules>
+                    </L7p:ResponseHeaderRules>
+                    <L7p:ResponseMsgDest stringValue="response"/>
+                    <L7p:SamlAssertionVersion intValue="2"/>
+                </L7p:HttpRoutingAssertion>
+                <L7p:HardcodedResponse>
+                    <L7p:Base64ResponseBody stringValue="JHtyZXF1ZXN0Lm1haW5wYXJ0fQ=="/>
+                    <L7p:ResponseContentType stringValue="application/json; charset=UTF-8"/>
+                </L7p:HardcodedResponse>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:CustomizeErrorResponse>
+                    <L7p:Content stringValue="${response.mainpart}"/>
+                    <L7p:ExtraHeaders nameValuePairArray="included"/>
+                </L7p:CustomizeErrorResponse>
+                <L7p:RaiseError/>
+            </wsp:All>
+        </wsp:OneOrMore>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:HttpRoutingAssertion>
+                    <L7p:FailOnErrorStatus booleanValue="false"/>
+                    <L7p:HttpMethod httpMethod="POST"/>
+                    <L7p:ProtectedServiceUrl stringValue="https://cdv1utapiport01-ssg.entel.cl:9443/apiportaluatint/2.0/Apis"/>
+                    <L7p:ProxyPassword stringValueNull="null"/>
+                    <L7p:ProxyUsername stringValueNull="null"/>
+                    <L7p:RequestHeaderRules httpPassthroughRuleSet="included">
+                        <L7p:ForwardAll booleanValue="true"/>
+                        <L7p:Rules httpPassthroughRules="included">
+                            <L7p:item httpPassthroughRule="included">
+                                <L7p:Name stringValue="Cookie"/>
+                            </L7p:item>
+                            <L7p:item httpPassthroughRule="included">
+                                <L7p:Name stringValue="SOAPAction"/>
+                            </L7p:item>
+                        </L7p:Rules>
+                    </L7p:RequestHeaderRules>
+                    <L7p:RequestMsgSrc stringValue="request"/>
+                    <L7p:RequestParamRules httpPassthroughRuleSet="included">
+                        <L7p:ForwardAll booleanValue="true"/>
+                        <L7p:Rules httpPassthroughRules="included"/>
+                    </L7p:RequestParamRules>
+                    <L7p:ResponseHeaderRules httpPassthroughRuleSet="included">
+                        <L7p:ForwardAll booleanValue="true"/>
+                        <L7p:Rules httpPassthroughRules="included">
+                            <L7p:item httpPassthroughRule="included">
+                                <L7p:Name stringValue="Set-Cookie"/>
+                            </L7p:item>
+                        </L7p:Rules>
+                    </L7p:ResponseHeaderRules>
+                    <L7p:ResponseMsgDest stringValue="response"/>
+                    <L7p:SamlAssertionVersion intValue="2"/>
+                </L7p:HttpRoutingAssertion>
+                <L7p:HardcodedResponse>
+                    <L7p:Base64ResponseBody stringValue="JHtyZXNwb25zZS5tYWlucGFydH0="/>
+                    <L7p:ResponseContentType stringValue="application/json; charset=UTF-8"/>
+                </L7p:HardcodedResponse>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:CustomizeErrorResponse>
+                    <L7p:Content stringValue="${response.mainpart}"/>
+                    <L7p:ExtraHeaders nameValuePairArray="included"/>
+                </L7p:CustomizeErrorResponse>
+                <L7p:RaiseError/>
+            </wsp:All>
+        </wsp:OneOrMore>
+    </wsp:All>
+</wsp:Policy>

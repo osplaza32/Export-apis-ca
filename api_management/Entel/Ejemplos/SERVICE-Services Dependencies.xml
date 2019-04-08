@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <wsp:All wsp:Usage="Required">
+            <L7p:SslAssertion>
+                <L7p:Enabled booleanValue="false"/>
+            </L7p:SslAssertion>
+            <L7p:HttpBasic>
+                <L7p:Enabled booleanValue="false"/>
+            </L7p:HttpBasic>
+            <L7p:Authentication>
+                <L7p:Enabled booleanValue="false"/>
+                <L7p:IdentityProviderOid goidValue="0000000000000000fffffffffffffffe"/>
+            </L7p:Authentication>
+        </wsp:All>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHtyZXF1ZXN0Lmh0dHAucGFyYW1ldGVyLnNlcnZpY2V9"/>
+                    <L7p:VariableToSet stringValue="service"/>
+                </L7p:SetVariable>
+                <L7p:ComparisonAssertion>
+                    <L7p:Expression1 stringValue="${service}"/>
+                    <L7p:Expression2 stringValue=""/>
+                    <L7p:Negate booleanValue="true"/>
+                    <L7p:Operator operator="EMPTY"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:Negated booleanValue="true"/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:RightValue stringValue=""/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JSR7c2VydmljZX0l"/>
+                    <L7p:VariableToSet stringValue="query"/>
+                </L7p:SetVariable>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHtyZXF1ZXN0Lmh0dHAucGFyYW1ldGVyLmd1aWR9"/>
+                    <L7p:VariableToSet stringValue="guid"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JXN0cmluZ1ZhbHVlPSIke2d1aWR9IiU="/>
+                    <L7p:VariableToSet stringValue="query"/>
+                </L7p:SetVariable>
+            </wsp:All>
+        </wsp:OneOrMore>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <L7p:JdbcQuery>
+                <L7p:ConnectionName stringValue="gateway"/>
+                <L7p:MaxRecords intValue="50"/>
+                <L7p:NamingMap mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="name"/>
+                        <L7p:value stringValue="name"/>
+                    </L7p:entry>
+                </L7p:NamingMap>
+                <L7p:SqlQuery stringValue="SELECT name FROM policy WHERE xml LIKE ${query};"/>
+            </L7p:JdbcQuery>
+            <L7p:JdbcQuery>
+                <L7p:ConnectionName stringValue="gateway"/>
+                <L7p:Enabled booleanValue="false"/>
+                <L7p:MaxRecords intValue="400"/>
+                <L7p:NamingMap mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="name"/>
+                        <L7p:value stringValue="name"/>
+                    </L7p:entry>
+                </L7p:NamingMap>
+                <L7p:SqlQuery stringValue="SELECT name FROM policy WHERE xml LIKE &quot;%ApiPortalIntegration%&quot;;"/>
+            </L7p:JdbcQuery>
+            <wsp:All wsp:Usage="Required">
+                <L7p:HardcodedResponse>
+                    <L7p:Base64ResponseBody stringValue="ewoicmVzdWx0Ijoibm8gZnVlIGVuY29udHJhZGEgbGEgcG9saWN5Igp9"/>
+                    <L7p:EarlyResponse booleanValue="true"/>
+                    <L7p:ResponseContentType stringValue="application/json; charset=UTF-8"/>
+                </L7p:HardcodedResponse>
+                <L7p:FalseAssertion/>
+            </wsp:All>
+        </wsp:OneOrMore>
+        <wsp:All L7p:Enabled="false" wsp:Usage="Required">
+            <L7p:ComparisonAssertion>
+                <L7p:Expression1 stringValue="${jdbcQuery.name}"/>
+                <L7p:Expression2 stringValue=""/>
+                <L7p:Negate booleanValue="true"/>
+                <L7p:Operator operator="EMPTY"/>
+                <L7p:Predicates predicates="included">
+                    <L7p:item binary="included">
+                        <L7p:Negated booleanValue="true"/>
+                        <L7p:Operator operator="EMPTY"/>
+                        <L7p:RightValue stringValue=""/>
+                    </L7p:item>
+                </L7p:Predicates>
+            </L7p:ComparisonAssertion>
+            <L7p:ForEachLoop L7p:Usage="Required"
+                loopVariable="jdbcQuery.name" variablePrefix="service">
+                <L7p:Regex>
+                    <L7p:AutoTarget booleanValue="false"/>
+                    <L7p:CaptureVar stringValue="id"/>
+                    <L7p:OtherTargetMessageVariable stringValue="service.current"/>
+                    <L7p:Regex stringValue="(?&lt;=\#)(.*?)(?=\,)"/>
+                    <L7p:Replacement stringValue=""/>
+                    <L7p:Target target="OTHER"/>
+                </L7p:Regex>
+                <L7p:Regex>
+                    <L7p:AutoTarget booleanValue="false"/>
+                    <L7p:CaptureVar stringValue="name"/>
+                    <L7p:OtherTargetMessageVariable stringValue="service.current"/>
+                    <L7p:Regex stringValue="\, (.*)"/>
+                    <L7p:Replacement stringValue=""/>
+                    <L7p:Target target="OTHER"/>
+                </L7p:Regex>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="ew0KImlkIjoiJHtpZFswXX0iLA0KIm5hbWUiOiIke25hbWVbMV19Ig0KfQ=="/>
+                    <L7p:VariableToSet stringValue="part"/>
+                </L7p:SetVariable>
+                <L7p:ManipulateMultiValuedVariable>
+                    <L7p:SourceVariableName stringValue="part"/>
+                    <L7p:TargetVariableName stringValue="result"/>
+                </L7p:ManipulateMultiValuedVariable>
+            </L7p:ForEachLoop>
+        </wsp:All>
+        <L7p:Join>
+            <L7p:InputVariable stringValue="jdbcQuery.name"/>
+            <L7p:OutputVariable stringValue="result"/>
+        </L7p:Join>
+        <L7p:HardcodedResponse>
+            <L7p:Base64ResponseBody stringValue="e2RhdGE6WyR7cmVzdWx0fV19"/>
+            <L7p:ResponseContentType stringValue="application/json; charset=UTF-8"/>
+        </L7p:HardcodedResponse>
+    </wsp:All>
+</wsp:Policy>

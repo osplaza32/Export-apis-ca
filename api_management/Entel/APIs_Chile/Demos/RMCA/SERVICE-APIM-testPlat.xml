@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="ew0KICAgICAgICAgICAgICAgICJhcHBsaWNhbnRzIiA6IHsNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAicHJpbWFyeUNvbnN1bWVyIiA6IHsNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgInBlcnNvbmFsSW5mb3JtYXRpb24iIDogew0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIm5hbWUiIDogW3sNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiaWRlbnRpZmllciIgOiAiY3VycmVudCINCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIH0NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIF0sDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY2hpbGVhblJ1dCIgOiAiMTU1MjU4NDQ2IiwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjaGlsZWFuU2VyaWFsTnVtYmVyIiA6ICJBMDAwMDAwMDAxIiwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJhZGRyZXNzZXMiIDogW3sNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiaWRlbnRpZmllciIgOiAiY3VycmVudCINCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIH0NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIF0sDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY3VzdG9tZXJSZWZlcmVuY2VJZGVudGlmaWVyIiA6ICJFTlRFTCINCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfQ0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIH0NCiAgICAgICAgICAgICAgICB9DQp9"/>
+            <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+            <L7p:DataType variableDataType="message"/>
+            <L7p:VariableToSet stringValue="json"/>
+        </L7p:SetVariable>
+        <L7p:AddHeader>
+            <L7p:HeaderName stringValue="Content-Type"/>
+            <L7p:HeaderValue stringValue="application/vnd.com.equifax.backbone.service.orchestration.rest.request.v1+json"/>
+            <L7p:OtherTargetMessageVariable stringValue="json"/>
+            <L7p:RemoveExisting booleanValue="true"/>
+            <L7p:Target target="OTHER"/>
+        </L7p:AddHeader>
+        <L7p:AddHeader>
+            <L7p:HeaderName stringValue="Authorization"/>
+            <L7p:HeaderValue stringValue="Basic ZW50ZWxwcm9kOiQwQzZhQSF5"/>
+            <L7p:OtherTargetMessageVariable stringValue="json"/>
+            <L7p:RemoveExisting booleanValue="true"/>
+            <L7p:Target target="OTHER"/>
+        </L7p:AddHeader>
+        <L7p:AddHeader>
+            <L7p:HeaderName stringValue="Accept-Encoding:"/>
+            <L7p:HeaderValue stringValue="gzip"/>
+            <L7p:OtherTargetMessageVariable stringValue="json"/>
+            <L7p:RemoveExisting booleanValue="true"/>
+            <L7p:Target target="OTHER"/>
+        </L7p:AddHeader>
+        <L7p:HttpRoutingAssertion>
+            <L7p:ConnectionTimeout stringValue="60000"/>
+            <L7p:FailOnErrorStatus booleanValue="false"/>
+            <L7p:OverrideContentType booleanValue="true"/>
+            <L7p:ProtectedServiceUrl stringValue="https://ws.equifax.cl/entel-client-orchestration/api/consumer"/>
+            <L7p:ProxyHost stringValue="10.49.10.9"/>
+            <L7p:ProxyPort stringValue="8080"/>
+            <L7p:RequestHeaderRules httpPassthroughRuleSet="included">
+                <L7p:ForwardAll booleanValue="true"/>
+                <L7p:Rules httpPassthroughRules="included"/>
+            </L7p:RequestHeaderRules>
+            <L7p:RequestMsgSrc stringValue="json"/>
+            <L7p:RequestParamRules httpPassthroughRuleSet="included">
+                <L7p:ForwardAll booleanValue="true"/>
+                <L7p:Rules httpPassthroughRules="included"/>
+            </L7p:RequestParamRules>
+            <L7p:ResponseHeaderRules httpPassthroughRuleSet="included">
+                <L7p:Rules httpPassthroughRules="included"/>
+            </L7p:ResponseHeaderRules>
+            <L7p:Timeout stringValue="60000"/>
+        </L7p:HttpRoutingAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtyZXNwb25zZS5tYWlucGFydH0="/>
+            <L7p:VariableToSet stringValue="jsonRsp"/>
+        </L7p:SetVariable>
+    </wsp:All>
+</wsp:Policy>

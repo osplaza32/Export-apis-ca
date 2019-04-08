@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:Include>
+            <L7p:PolicyGuid stringValue="812ed196-c315-4e92-b630-b5c64c5c043c"/>
+        </L7p:Include>
+        <L7p:ApiPortalIntegration>
+            <L7p:ApiGroup stringValue=""/>
+            <L7p:ApiId stringValue="3ef04f76-bec7-451b-a954-6eabf254e3a4"/>
+            <L7p:PortalManagedApiFlag stringValue="L7p:ApiPortalManagedServiceAssertion"/>
+        </L7p:ApiPortalIntegration>
+        <L7p:Encapsulated>
+            <L7p:EncapsulatedAssertionConfigGuid stringValue="8a48ee76-a432-4013-85b6-428c65bd182d"/>
+            <L7p:EncapsulatedAssertionConfigName stringValue="API Portal Integration - OAuth 2.0"/>
+        </L7p:Encapsulated>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtyZXF1ZXN0LnNoYXJlZC5wb3J0YWwuYW5hbHl0aWNzLmFwcGxpY2F0aW9uLm5hbWV9"/>
+            <L7p:VariableToSet stringValue="teste"/>
+        </L7p:SetVariable>
+        <L7p:HandleErrors L7p:Usage="Required"
+            includeIOException="false" variablePrefix="error">
+            <L7p:Include>
+                <L7p:PolicyGuid stringValue="c30fccdf-e5b2-4d1f-96da-424a5407efde"/>
+            </L7p:Include>
+            <wsp:OneOrMore wsp:Usage="Required">
+                <wsp:All wsp:Usage="Required">
+                    <L7p:ComparisonAssertion>
+                        <L7p:CaseSensitive booleanValue="false"/>
+                        <L7p:Expression1 stringValue="${request.http.uri}"/>
+                        <L7p:Operator operatorNull="null"/>
+                        <L7p:Predicates predicates="included">
+                            <L7p:item regex="included">
+                                <L7p:Pattern stringValue="^\/common\/location\/v2\/streets$"/>
+                            </L7p:item>
+                        </L7p:Predicates>
+                    </L7p:ComparisonAssertion>
+                    <wsp:OneOrMore wsp:Usage="Required">
+                        <wsp:All wsp:Usage="Required">
+                            <L7p:ComparisonAssertion>
+                                <L7p:CaseSensitive booleanValue="false"/>
+                                <L7p:Expression1 stringValue="${request.http.method}"/>
+                                <L7p:Expression2 stringValue="GET"/>
+                                <L7p:Predicates predicates="included">
+                                    <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="GET"/>
+                                    </L7p:item>
+                                </L7p:Predicates>
+                            </L7p:ComparisonAssertion>
+                            <L7p:Include>
+                                <L7p:PolicyGuid stringValue="ab102152-0a9f-448f-8cff-1f11a2b77123"/>
+                            </L7p:Include>
+                            <L7p:assertionComment>
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="GET"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:assertionComment>
+                        </wsp:All>
+                        <wsp:All wsp:Usage="Required">
+                            <L7p:ComparisonAssertion>
+                                <L7p:CaseSensitive booleanValue="false"/>
+                                <L7p:Expression1 stringValue="${request.http.method}"/>
+                                <L7p:Expression2 stringValue="OPTIONS"/>
+                                <L7p:Predicates predicates="included">
+                                    <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="OPTIONS"/>
+                                    </L7p:item>
+                                </L7p:Predicates>
+                            </L7p:ComparisonAssertion>
+                            <L7p:AddHeader>
+                                <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="Indicar metodos implementados"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                </L7p:AssertionComment>
+                                <L7p:HeaderName stringValue="Allow"/>
+                                <L7p:HeaderValue stringValue="GET, OPTIONS"/>
+                                <L7p:Target target="RESPONSE"/>
+                            </L7p:AddHeader>
+                            <L7p:HardcodedResponse>
+                                <L7p:ResponseContentType stringValue="application/json; charset=UTF-8"/>
+                            </L7p:HardcodedResponse>
+                            <L7p:assertionComment>
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="OPTIONS"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:assertionComment>
+                        </wsp:All>
+                        <wsp:All wsp:Usage="Required">
+                            <L7p:SetVariable>
+                                <L7p:Base64Expression stringValue="NDA1"/>
+                                <L7p:VariableToSet stringValue="code"/>
+                            </L7p:SetVariable>
+                            <L7p:SetVariable>
+                                <L7p:Base64Expression stringValue="TcOpdG9kbyBubyBwZXJtaXRpZG8="/>
+                                <L7p:VariableToSet stringValue="description"/>
+                            </L7p:SetVariable>
+                            <L7p:SetVariable>
+                                <L7p:Base64Expression stringValue="VW5hIHBldGljacOzbiBmdWUgaGVjaGEgYSB1bmEgVVJJIHV0aWxpemFuZG8gdW4gbcOpdG9kbyBkZSBzb2xpY2l0dWQgbm8gc29wb3J0YWRvLg=="/>
+                                <L7p:VariableToSet stringValue="descriptionDetail"/>
+                            </L7p:SetVariable>
+                            <L7p:SetVariable>
+                                <L7p:Base64Expression stringValue="JHtyZXF1ZXN0LnRpbWUubG9jYWwueXl5eS9NTS9kZCdUJ0hIOm1tOnNzLlNTU30="/>
+                                <L7p:VariableToSet stringValue="responseTimestamp"/>
+                            </L7p:SetVariable>
+                            <L7p:CustomizeErrorResponse>
+                                <L7p:Content stringValueReference="inline"><![CDATA[{
+"result":{
+	"transactionId":"${requestId}",
+	"code":"${code}",
+	"description":"${description}",
+	"descriptionDetail":"${descriptionDetail}",
+	"responseTimestamp":"${responseTimestamp}"
+	}
+}]]></L7p:Content>
+                                <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                                <L7p:ExtraHeaders nameValuePairArray="included">
+                                    <L7p:item nameValuePair="included">
+                                    <L7p:Key stringValue="Allow"/>
+                                    <L7p:Value stringValue="POST, OPTIONS"/>
+                                    </L7p:item>
+                                </L7p:ExtraHeaders>
+                                <L7p:HttpStatus stringValue="405"/>
+                            </L7p:CustomizeErrorResponse>
+                            <L7p:RaiseError/>
+                            <L7p:assertionComment>
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="No suportado"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:assertionComment>
+                        </wsp:All>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="HTTP Verbs"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:OneOrMore>
+                </wsp:All>
+                <wsp:All wsp:Usage="Required">
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue="NDA0"/>
+                        <L7p:VariableToSet stringValue="code"/>
+                    </L7p:SetVariable>
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue="UmVjdXJzbyBubyBlbmNvbnRyYWRv"/>
+                        <L7p:VariableToSet stringValue="description"/>
+                    </L7p:SetVariable>
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue="RWwgcmVjdXJzbyBubyBleGlzdGUgbyBlc3RhIGRlc2hhYmlsaXRhZG8="/>
+                        <L7p:VariableToSet stringValue="descriptionDetail"/>
+                    </L7p:SetVariable>
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue="JHtyZXF1ZXN0LnRpbWUubG9jYWwueXl5eS9NTS9kZCdUJ0hIOm1tOnNzLlNTU30="/>
+                        <L7p:VariableToSet stringValue="responseTimestamp"/>
+                    </L7p:SetVariable>
+                    <L7p:RaiseError/>
+                    <L7p:assertionComment>
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="RIGHT.COMMENT"/>
+                                <L7p:value stringValue="Camino no implementado"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:assertionComment>
+                </wsp:All>
+            </wsp:OneOrMore>
+        </L7p:HandleErrors>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${code}"/>
+                    <L7p:Operator operatorNull="null"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Negated booleanValue="true"/>
+                            <L7p:RightValue stringValue="200"/>
+                        </L7p:item>
+                        <L7p:item binary="included">
+                            <L7p:Negated booleanValue="true"/>
+                            <L7p:RightValue stringValue="201"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:HardcodedResponse>
+                    <L7p:Base64ResponseBody stringValue="ewoicmVzdWx0Ijp7CgkidHJhbnNhY3Rpb25JZCI6IiR7cmVxdWVzdElkfSIsCgkiY29kZSI6IiR7Y29kZX0iLAoJImRlc2NyaXB0aW9uIjoiJHtkZXNjcmlwdGlvbn0iLAoJImRlc2NyaXB0aW9uRGV0YWlsIjoiJHtkZXNjcmlwdGlvbkRldGFpbH0iLAoJInJlc3BvbnNlVGltZXN0YW1wIjoiJHtyZXNwb25zZVRpbWVzdGFtcH0iCgl9Cn0="/>
+                    <L7p:ResponseContentType stringValue="application/json; charset=UTF-8"/>
+                    <L7p:ResponseStatus stringValue="${httpCode}"/>
+                </L7p:HardcodedResponse>
+            </wsp:All>
+            <L7p:TrueAssertion/>
+        </wsp:OneOrMore>
+    </wsp:All>
+</wsp:Policy>

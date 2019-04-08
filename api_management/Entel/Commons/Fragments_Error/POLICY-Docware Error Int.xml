@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:AuditDetailAssertion>
+            <L7p:Detail stringValue="Policy Fragment: Docware Error"/>
+        </L7p:AuditDetailAssertion>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:AuditDetailAssertion>
+                    <L7p:Detail stringValue="CODIGO NUEVO: ${httpRouting.reasonCode}"/>
+                    <L7p:Level stringValue="WARNING"/>
+                </L7p:AuditDetailAssertion>
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                    <L7p:Operator operatorNull="null"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item dataType="included">
+                            <L7p:Type variableDataType="int"/>
+                        </L7p:item>
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:RightValue stringValue="500"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:AuditDetailAssertion>
+                    <L7p:CustomLoggerSuffix stringValue="entel.api"/>
+                    <L7p:Detail stringValue="REQUEST_ID: ${requestId} - ERROR DE BACKEND - CODIGO HTTP: ${httpRouting.reasonCode}"/>
+                    <L7p:LoggingOnly booleanValue="true"/>
+                </L7p:AuditDetailAssertion>
+                <L7p:CustomizeErrorResponse>
+                    <L7p:Content stringValueReference="inline"><![CDATA[{
+  "${nameResponse}": {
+    "${nameResult}": {
+      "Id": "${rspId.result}",
+      "Code": "${rspCode.result}",
+      "ExceptionMessage": "${rspExceptionMessage.result}"
+    }
+  }
+}]]></L7p:Content>
+                    <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                    <L7p:ExtraHeaders nameValuePairArray="included"/>
+                </L7p:CustomizeErrorResponse>
+                <L7p:RaiseError/>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:AuditDetailAssertion>
+                    <L7p:Detail stringValue="CODIGO ACTUAL: ${httpRouting.reasonCode}"/>
+                    <L7p:Level stringValue="WARNING"/>
+                </L7p:AuditDetailAssertion>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="IjUwMCI="/>
+                    <L7p:VariableToSet stringValue="code"/>
+                </L7p:SetVariable>
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                    <L7p:Operator operatorNull="null"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item dataType="included">
+                            <L7p:Type variableDataType="int"/>
+                        </L7p:item>
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:RightValue stringValue="-1"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="Ikhvc3Qgbm90IGZvdW5kIC0gRWwgc2Vydmlkb3IgYWwgcXVlIHNlIGhhY2UgcmVmZXJlbmNpYSBlbiBsYSBVUkwgbm8gcHVlZGUgc2VyIGFsY2FuemFkby4gKEhvc3Qgbm8gZXhpc3RlIG8gaW5hY3Rpdm8pLiI="/>
+                    <L7p:VariableToSet stringValue="description"/>
+                </L7p:SetVariable>
+                <L7p:AuditDetailAssertion>
+                    <L7p:CustomLoggerSuffix stringValue="entel.api"/>
+                    <L7p:Detail stringValue="REQUEST_ID: ${requestId} - ERROR: HOST NOT FOUND - CODIGO: ${httpRouting.reasonCode} - CODIGO HTTP: ${code}"/>
+                    <L7p:LoggingOnly booleanValue="true"/>
+                </L7p:AuditDetailAssertion>
+                <L7p:UUIDGenerator>
+                    <L7p:MaximumQuantity intValue="1"/>
+                    <L7p:TargetVariable stringValue="uuid"/>
+                </L7p:UUIDGenerator>
+                <L7p:CustomizeErrorResponse>
+                    <L7p:Content stringValueReference="inline"><![CDATA[{
+  "${nameResponse}": {
+    "${nameResult}": {
+      "Id": "${uuid}",
+      "Code":${httpRouting.reasonCode},
+      "ExceptionMessage": ${description}
+    }
+  }
+}]]></L7p:Content>
+                    <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                    <L7p:ExtraHeaders nameValuePairArray="included"/>
+                </L7p:CustomizeErrorResponse>
+                <L7p:RaiseError/>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                    <L7p:Operator operatorNull="null"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item dataType="included">
+                            <L7p:Type variableDataType="int"/>
+                        </L7p:item>
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:RightValue stringValue="-2"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="IkJhZCBVUkwgLSBMYSBVUkwgZXMgaW5jb3JyZWN0YS4i"/>
+                    <L7p:VariableToSet stringValue="description"/>
+                </L7p:SetVariable>
+                <L7p:AuditDetailAssertion>
+                    <L7p:CustomLoggerSuffix stringValue="entel.api"/>
+                    <L7p:Detail stringValue="REQUEST_ID: ${requestId} - ERROR: BAD URL - CODIGO: ${httpRouting.reasonCode} - CODIGO HTTP: ${code}"/>
+                    <L7p:LoggingOnly booleanValue="true"/>
+                </L7p:AuditDetailAssertion>
+                <L7p:UUIDGenerator>
+                    <L7p:MaximumQuantity intValue="1"/>
+                    <L7p:TargetVariable stringValue="uuid"/>
+                </L7p:UUIDGenerator>
+                <L7p:CustomizeErrorResponse>
+                    <L7p:Content stringValueReference="inline"><![CDATA[{
+  "${nameResponse}": {
+    "${nameResult}": {
+      "Id": "${uuid}",
+      "Code":${httpRouting.reasonCode},
+      "ExceptionMessage": ${description}
+    }
+  }
+}]]></L7p:Content>
+                    <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                    <L7p:ExtraHeaders nameValuePairArray="included"/>
+                </L7p:CustomizeErrorResponse>
+                <L7p:RaiseError/>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                    <L7p:Operator operatorNull="null"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item dataType="included">
+                            <L7p:Type variableDataType="int"/>
+                        </L7p:item>
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:RightValue stringValue="-3"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="IkNvbm5lY3Rpb24gdGltZW91dCAtIFNlIGVudsOtYSB1biBtZW5zYWplIGluaWNpYWwgYSBsYSBVUkwgcGVybyBubyBzZSByZWNpYmUgcmVzcHVlc3RhIGFudGVzIGRlbCB0aWVtcG8gZGUgZXhwaXJhY2nDs24uIg=="/>
+                    <L7p:VariableToSet stringValue="description"/>
+                </L7p:SetVariable>
+                <L7p:AuditDetailAssertion>
+                    <L7p:CustomLoggerSuffix stringValue="entel.api"/>
+                    <L7p:Detail stringValue="REQUEST_ID: ${requestId} - ERROR: CONNECTION TIMEOUT - CODIGO: ${httpRouting.reasonCode} - CODIGO HTTP: ${code}"/>
+                    <L7p:LoggingOnly booleanValue="true"/>
+                </L7p:AuditDetailAssertion>
+                <L7p:UUIDGenerator>
+                    <L7p:MaximumQuantity intValue="1"/>
+                    <L7p:TargetVariable stringValue="uuid"/>
+                </L7p:UUIDGenerator>
+                <L7p:CustomizeErrorResponse>
+                    <L7p:Content stringValueReference="inline"><![CDATA[{
+  "${nameResponse}": {
+    "${nameResult}": {
+      "Id": "${uuid}",
+      "Code":${httpRouting.reasonCode},
+      "ExceptionMessage": ${description}
+    }
+  }
+}]]></L7p:Content>
+                    <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                    <L7p:ExtraHeaders nameValuePairArray="included"/>
+                </L7p:CustomizeErrorResponse>
+                <L7p:RaiseError/>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                    <L7p:Operator operatorNull="null"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item dataType="included">
+                            <L7p:Type variableDataType="int"/>
+                        </L7p:item>
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:RightValue stringValue="-4"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="IlJlYWQgdGltZW91dCAtIFVubyBkZSBsb3MgcGFxdWV0ZXMgcmVjaWJpZG9zIHRhcmRvIG3DoXMgcXVlIGVsIHZhbG9yIGRlbCB0aWVtcG8gZGUgZXNwZXJhIGRlIGxlY3R1cmEuIg=="/>
+                    <L7p:VariableToSet stringValue="description"/>
+                </L7p:SetVariable>
+                <L7p:AuditDetailAssertion>
+                    <L7p:CustomLoggerSuffix stringValue="entel.api"/>
+                    <L7p:Detail stringValue="REQUEST_ID: ${requestId} - ERROR: READ TIMEOUT - CODIGO: ${httpRouting.reasonCode} -CODIGO HTTP: ${code}"/>
+                    <L7p:LoggingOnly booleanValue="true"/>
+                </L7p:AuditDetailAssertion>
+                <L7p:UUIDGenerator>
+                    <L7p:MaximumQuantity intValue="1"/>
+                    <L7p:TargetVariable stringValue="uuid"/>
+                </L7p:UUIDGenerator>
+                <L7p:CustomizeErrorResponse>
+                    <L7p:Content stringValueReference="inline"><![CDATA[{
+  "${nameResponse}": {
+    "${nameResult}": {
+      "Id": "${uuid}",
+      "Code":${httpRouting.reasonCode},
+      "ExceptionMessage": ${description}
+    }
+  }
+}]]></L7p:Content>
+                    <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                    <L7p:ExtraHeaders nameValuePairArray="included"/>
+                </L7p:CustomizeErrorResponse>
+                <L7p:RaiseError/>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                    <L7p:Operator operatorNull="null"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item dataType="included">
+                            <L7p:Type variableDataType="int"/>
+                        </L7p:item>
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Operator operator="GE"/>
+                            <L7p:RightValue stringValue="400"/>
+                        </L7p:item>
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Operator operator="LT"/>
+                            <L7p:RightValue stringValue="500"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHtodHRwUm91dGluZy5yZWFzb25Db2RlfQ=="/>
+                    <L7p:VariableToSet stringValue="code"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="IkV4aXN0ZSBjb25leGlvbiwgcGVybyBodWJvIHVuIHByb2JsZW1hIGFsIGRldm9sdmVyIGxhIHJlc3B1ZXN0YSI="/>
+                    <L7p:VariableToSet stringValue="description"/>
+                </L7p:SetVariable>
+                <L7p:AuditDetailAssertion>
+                    <L7p:CustomLoggerSuffix stringValue="entel.api"/>
+                    <L7p:Detail stringValue="REQUEST_ID: ${requestId} - ERROR: EXISTE CONEXION, PERO HUBO UN PROBLEMA AL DEVOLVER LA RESPUESTA - CODIGO HTTP: ${httpRouting.reasonCode}"/>
+                    <L7p:LoggingOnly booleanValue="true"/>
+                </L7p:AuditDetailAssertion>
+                <L7p:UUIDGenerator>
+                    <L7p:MaximumQuantity intValue="1"/>
+                    <L7p:TargetVariable stringValue="uuid"/>
+                </L7p:UUIDGenerator>
+                <L7p:CustomizeErrorResponse>
+                    <L7p:Content stringValueReference="inline"><![CDATA[{
+  "${nameResponse}": {
+    "${nameResult}": {
+      "Id": "${uuid}",
+      "Code":${httpRouting.reasonCode},
+      "ExceptionMessage": ${description}
+    }
+  }
+}]]></L7p:Content>
+                    <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                    <L7p:ExtraHeaders nameValuePairArray="included"/>
+                </L7p:CustomizeErrorResponse>
+                <L7p:RaiseError/>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                    <L7p:Operator operatorNull="null"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item dataType="included">
+                            <L7p:Type variableDataType="int"/>
+                        </L7p:item>
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Operator operator="GT"/>
+                            <L7p:RightValue stringValue="500"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHtodHRwUm91dGluZy5yZWFzb25Db2RlfQ=="/>
+                    <L7p:VariableToSet stringValue="code"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="IlByb2JsZW1hIGRlIGNvbXVuaWNhY2lvbiBjb24gZWwgc2VydmljaW8i"/>
+                    <L7p:VariableToSet stringValue="description"/>
+                </L7p:SetVariable>
+                <L7p:AuditDetailAssertion>
+                    <L7p:CustomLoggerSuffix stringValue="entel.api"/>
+                    <L7p:Detail stringValue="REQUEST_ID: ${requestId} - ERROR: PROBLEMA AL COMUNICARSE CON EL SERVICIO - CODIGO HTTP: ${httpRouting.reasonCode}"/>
+                    <L7p:LoggingOnly booleanValue="true"/>
+                </L7p:AuditDetailAssertion>
+                <L7p:UUIDGenerator>
+                    <L7p:MaximumQuantity intValue="1"/>
+                    <L7p:TargetVariable stringValue="uuid"/>
+                </L7p:UUIDGenerator>
+                <L7p:CustomizeErrorResponse>
+                    <L7p:Content stringValueReference="inline"><![CDATA[{
+  "${nameResponse}": {
+    "${nameResult}": {
+      "Id": "${uuid}",
+      "Code":${httpRouting.reasonCode},
+      "ExceptionMessage": ${description}
+    }
+  }
+}]]></L7p:Content>
+                    <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                    <L7p:ExtraHeaders nameValuePairArray="included"/>
+                </L7p:CustomizeErrorResponse>
+                <L7p:RaiseError/>
+            </wsp:All>
+        </wsp:OneOrMore>
+    </wsp:All>
+</wsp:Policy>

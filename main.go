@@ -36,13 +36,13 @@ func main() {
 }
 func GetUat(writer http.ResponseWriter, request *http.Request) {
 	gotenv.Load(".env.gatewayuat")
-	recursivecall(os.Getenv("ENV_URL")+"restman/1.0/folders/faa9255a5852a5f149b0039d964ef6cc/dependencies?level=1","")
+	recursivecall(os.Getenv("ENV_URL")+"restman/1.0/folders//0f43e5ff5547ea5444f6d5e0b087720f/dependencies?level=1","")
 	GitWorld()
 	json.NewEncoder(writer).Encode("Trabajo realizado")
 }
 func GetDev(writer http.ResponseWriter, request *http.Request) {
 	gotenv.Load(".env.gatewaydev")
-	recursivecall(os.Getenv("ENV_URL")+"restman/1.0/folders/faa9255a5852a5f149b0039d964ef6cc/dependencies?level=1","")
+	recursivecall(os.Getenv("ENV_URL")+"restman/1.0/folders//0f43e5ff5547ea5444f6d5e0b087720f/dependencies?level=1","")
 	GitWorld()
 	json.NewEncoder(writer).Encode("Trabajo realizado")
 }
@@ -75,12 +75,12 @@ func thecallandsave(url string,typee string,directory string) {
 	if typee == "SERVICE" {
 		var respuestainfoservice Entidades.Serviceinfo
 		json.Unmarshal(jsonrespinfo.Bytes(), &respuestainfoservice)
-		createFile("."+string(os.PathSeparator) +directory,string(os.PathSeparator) +"SERVICE-"+respuestainfoservice.Item.Name+".xml",respuestainfoservice.Item.Resource.Service.Resources.ResourceSet.Resource.Content)
+		createFile(".\\api_management"+string(os.PathSeparator) +directory,string(os.PathSeparator) +"SERVICE-"+respuestainfoservice.Item.Name+".xml",respuestainfoservice.Item.Resource.Service.Resources.ResourceSet.Resource.Content)
 		}
 	if typee == "POLICY"{
 		var respuestainfopolicy Entidades.Policyinfo
 		json.Unmarshal(jsonrespinfo.Bytes(), &respuestainfopolicy)
-		createFile("."+string(os.PathSeparator) +directory,string(os.PathSeparator) +"POLICY-"+respuestainfopolicy.Item.Name+".xml",respuestainfopolicy.Item.Resource.Policy.Resources.ResourceSet.Resource.Content)
+		createFile(".\\api_management"+string(os.PathSeparator) +directory,string(os.PathSeparator) +"POLICY-"+respuestainfopolicy.Item.Name+".xml",respuestainfopolicy.Item.Resource.Policy.Resources.ResourceSet.Resource.Content)
 		}
 	}
 func createFile(path string,name string,contenido string) {

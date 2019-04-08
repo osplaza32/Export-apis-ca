@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:Include>
+            <L7p:PolicyGuid stringValue="812ed196-c315-4e92-b630-b5c64c5c043c"/>
+        </L7p:Include>
+        <L7p:ApiPortalIntegration>
+            <L7p:ApiGroup stringValue=""/>
+            <L7p:ApiId stringValue="e87892d1-64d6-4a78-89f7-5df088dc0ec8"/>
+            <L7p:PortalManagedApiFlag stringValue="L7p:ApiPortalManagedServiceAssertion"/>
+        </L7p:ApiPortalIntegration>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <L7p:Encapsulated>
+                <L7p:EncapsulatedAssertionConfigGuid stringValue="8a48ee76-a432-4013-85b6-428c65bd182d"/>
+                <L7p:EncapsulatedAssertionConfigName stringValue="API Portal Integration - OAuth 2.0"/>
+            </L7p:Encapsulated>
+            <wsp:All wsp:Usage="Required">
+                <L7p:RemoteIpAddressRange>
+                    <L7p:StartIp stringValue="${gateway.internal.vip.ip}"/>
+                </L7p:RemoteIpAddressRange>
+                <L7p:Encapsulated>
+                    <L7p:EncapsulatedAssertionConfigGuid stringValue="d824174b-e956-4b40-8fea-5063acb20eee"/>
+                    <L7p:EncapsulatedAssertionConfigName stringValue="API Portal Integration - API Key"/>
+                </L7p:Encapsulated>
+            </wsp:All>
+        </wsp:OneOrMore>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${request.http.uri}"/>
+                    <L7p:Operator operatorNull="null"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item regex="included">
+                            <L7p:Pattern stringValue="^\/billing\/carrierBilling\/v2\/feasibility\/\d{11}$"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <wsp:OneOrMore wsp:Usage="Required">
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${request.http.method}"/>
+                            <L7p:Expression2 stringValue="GET"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="GET"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:Include>
+                            <L7p:PolicyGuid stringValue="c0ffaa4f-a945-4db8-b3f7-7d37126f5e7b"/>
+                        </L7p:Include>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="Validar Metodo 1"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="MDQwNQ=="/>
+                            <L7p:VariableToSet stringValue="codeRsp"/>
+                        </L7p:SetVariable>
+                        <L7p:CustomizeErrorResponse>
+                            <L7p:Content stringValueReference="inline"><![CDATA[{
+"code":"${codeRsp}",
+"description":"La peticion fue hecha utilizando un método de solicitud no soportado",
+"datetimeOperation":"${request.time.local.dd-MM-yyyy'T'HH:mm:ss.SSS}",
+"idOperation":"${requestId}"
+}]]></L7p:Content>
+                            <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                            <L7p:ExtraHeaders nameValuePairArray="included"/>
+                            <L7p:HttpStatus stringValue="404"/>
+                        </L7p:CustomizeErrorResponse>
+                        <L7p:RaiseError/>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="Método no permitido"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                </wsp:OneOrMore>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="MDQwNA=="/>
+                    <L7p:VariableToSet stringValue="codeRsp"/>
+                </L7p:SetVariable>
+                <L7p:CustomizeErrorResponse>
+                    <L7p:Content stringValueReference="inline"><![CDATA[{
+"code":"${codeRsp}",
+"description":"El recurso no existe o esta deshabilitado",
+"datetimeOperation":"${request.time.local.dd-MM-yyyy'T'HH:mm:ss.SSS}",
+"idOperation":"${requestId}"
+}]]></L7p:Content>
+                    <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                    <L7p:ExtraHeaders nameValuePairArray="included"/>
+                    <L7p:HttpStatus stringValue="404"/>
+                </L7p:CustomizeErrorResponse>
+                <L7p:RaiseError/>
+            </wsp:All>
+        </wsp:OneOrMore>
+    </wsp:All>
+</wsp:Policy>

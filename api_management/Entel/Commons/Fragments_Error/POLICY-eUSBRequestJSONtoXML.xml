@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:AuditDetailAssertion>
+            <L7p:Detail stringValue="Policy Fragment: Request JSON to XML (Active Comments)"/>
+        </L7p:AuditDetailAssertion>
+        <L7p:Regex>
+            <L7p:AutoTarget booleanValue="false"/>
+            <L7p:Regex stringValue="  +"/>
+            <L7p:Replace booleanValue="true"/>
+            <L7p:Replacement stringValue=""/>
+        </L7p:Regex>
+        <L7p:Regex>
+            <L7p:AutoTarget booleanValue="false"/>
+            <L7p:CaseInsensitive booleanValue="true"/>
+            <L7p:Regex stringValue="&quot;&quot;"/>
+            <L7p:Replace booleanValue="true"/>
+            <L7p:Replacement stringValue="&quot; &quot;"/>
+        </L7p:Regex>
+        <L7p:Regex>
+            <L7p:AutoTarget booleanValue="false"/>
+            <L7p:CaseInsensitive booleanValue="true"/>
+            <L7p:Regex stringValue=": "/>
+            <L7p:Replace booleanValue="true"/>
+            <L7p:Replacement stringValue=":"/>
+        </L7p:Regex>
+        <L7p:Regex>
+            <L7p:AutoTarget booleanValue="false"/>
+            <L7p:Regex stringValue=":null"/>
+            <L7p:Replace booleanValue="true"/>
+            <L7p:Replacement stringValue=":&quot;null&quot;"/>
+        </L7p:Regex>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:Split>
+                    <L7p:IgnoreEmptyValues booleanValue="true"/>
+                    <L7p:InputVariable stringValue="request.mainpart"/>
+                    <L7p:OutputVariable stringValue="jsonenter"/>
+                    <L7p:SplitPattern stringValue="\n|\r"/>
+                </L7p:Split>
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${jsonenter}"/>
+                    <L7p:Operator operatorNull="null"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item dataType="included">
+                            <L7p:Type variableDataType="string"/>
+                        </L7p:item>
+                        <L7p:item cardinality="included">
+                            <L7p:Max intValue="-1"/>
+                            <L7p:Min intValue="2"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:Regex>
+                    <L7p:AutoTarget booleanValue="false"/>
+                    <L7p:Regex stringValue="\n|\r|\t |\t"/>
+                    <L7p:Replace booleanValue="true"/>
+                    <L7p:Replacement stringValue=""/>
+                </L7p:Regex>
+                <L7p:Split>
+                    <L7p:IgnoreEmptyValues booleanValue="true"/>
+                    <L7p:InputVariable stringValue="request.mainpart"/>
+                    <L7p:OutputVariable stringValue="jsonvalues"/>
+                    <L7p:SplitPattern stringValue="},|&quot;.+?&quot;:&quot;|\{|}|&quot;}"/>
+                </L7p:Split>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="CUANDO EL REQUEST TENGA MAS DE UNA LINEA (HUMAN READABLE) / OUT: jsonvalues[]"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:Regex>
+                    <L7p:AutoTarget booleanValue="false"/>
+                    <L7p:Regex stringValue="\n"/>
+                    <L7p:Replace booleanValue="true"/>
+                    <L7p:Replacement stringValue=""/>
+                </L7p:Regex>
+                <L7p:Regex>
+                    <L7p:AutoTarget booleanValue="false"/>
+                    <L7p:Regex stringValue="\r"/>
+                    <L7p:Replace booleanValue="true"/>
+                    <L7p:Replacement stringValue=""/>
+                </L7p:Regex>
+                <L7p:Regex>
+                    <L7p:AutoTarget booleanValue="false"/>
+                    <L7p:Regex stringValue="\t"/>
+                    <L7p:Replace booleanValue="true"/>
+                    <L7p:Replacement stringValue=""/>
+                </L7p:Regex>
+                <L7p:Split>
+                    <L7p:IgnoreEmptyValues booleanValue="true"/>
+                    <L7p:InputVariable stringValue="request.mainpart"/>
+                    <L7p:OutputVariable stringValue="jsonvalues"/>
+                    <L7p:SplitPattern stringValue="},|&quot;.+?&quot;:&quot;|\{|}|&quot;}"/>
+                </L7p:Split>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="CUANDO EL REQUEST TENGA SOLO UNA LINEA (MACHINE READABLE) / OUT: jsonvalues[]"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+        </wsp:OneOrMore>
+    </wsp:All>
+</wsp:Policy>
