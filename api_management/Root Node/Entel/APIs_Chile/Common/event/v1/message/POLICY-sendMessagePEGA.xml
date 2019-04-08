@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:HandleErrors L7p:Usage="Required"
+            includeIOException="false" variablePrefix="error">
+            <wsp:OneOrMore wsp:Usage="Required">
+                <wsp:All L7p:Enabled="false" wsp:Usage="Required">
+                    <L7p:CacheLookup>
+                        <L7p:CacheEntryKey stringValue="${entryKey}"/>
+                        <L7p:CacheId stringValue="PEGA"/>
+                        <L7p:ContentTypeOverride stringValue=""/>
+                        <L7p:MaxEntryAgeSeconds stringValue="600"/>
+                        <L7p:OtherTargetMessageVariable stringValue="runningFlag"/>
+                        <L7p:Target target="OTHER"/>
+                    </L7p:CacheLookup>
+                    <L7p:EvaluateJsonPathExpression>
+                        <L7p:Expression stringValue=".flag"/>
+                        <L7p:OtherTargetMessageVariable stringValue="runningFlag"/>
+                        <L7p:Target target="OTHER"/>
+                        <L7p:VariablePrefix stringValue="flag"/>
+                    </L7p:EvaluateJsonPathExpression>
+                    <L7p:ComparisonAssertion>
+                        <L7p:Expression1 stringValue="${flag.result}"/>
+                        <L7p:Expression2 stringValue="true"/>
+                        <L7p:Predicates predicates="included">
+                            <L7p:item binary="included">
+                                <L7p:RightValue stringValue="true"/>
+                            </L7p:item>
+                        </L7p:Predicates>
+                    </L7p:ComparisonAssertion>
+                    <L7p:assertionComment>
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="LEFT.COMMENT"/>
+                                <L7p:value stringValue="lookup"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:assertionComment>
+                </wsp:All>
+                <wsp:All wsp:Usage="Required">
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue="eyJmbGFnIjoidHJ1ZSJ9"/>
+                        <L7p:ContentType stringValue="application/json; charset=utf-8"/>
+                        <L7p:DataType variableDataType="message"/>
+                        <L7p:VariableToSet stringValue="runningFlag"/>
+                    </L7p:SetVariable>
+                    <L7p:CacheStorage>
+                        <L7p:CacheEntryKey stringValue="${entryKey}"/>
+                        <L7p:CacheId stringValue="PEGA"/>
+                        <L7p:MaxEntries stringValue="3"/>
+                        <L7p:MaxEntryAgeSeconds stringValue="600"/>
+                        <L7p:OtherTargetMessageVariable stringValue="runningFlag"/>
+                        <L7p:Target target="OTHER"/>
+                    </L7p:CacheStorage>
+                    <wsp:OneOrMore wsp:Usage="Required">
+                        <wsp:All wsp:Usage="Required">
+                            <L7p:JdbcQuery>
+                                <L7p:AssertionFailureEnabled booleanValue="false"/>
+                                <L7p:ConnectionName stringValue="ODS_PEGA_SERVICES"/>
+                                <L7p:ConvertVariablesToStrings booleanValue="false"/>
+                                <L7p:GenerateXmlResult booleanValue="true"/>
+                                <L7p:NamingMap mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="DSC_SYSTEM"/>
+                                    <L7p:value stringValue="system"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="ID"/>
+                                    <L7p:value stringValue="id"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="MESSAGE"/>
+                                    <L7p:value stringValue="message"/>
+                                    </L7p:entry>
+                                </L7p:NamingMap>
+                                <L7p:QueryTimeout stringValue="10"/>
+                                <L7p:SqlQuery stringValueReference="inline"><![CDATA[select EVENT.ID_SERVICE ID, EVENT.MESSAGE MESSAGE
+from ODS_MOC.PEGA_GTW_EVENT EVENT, PEGA_GTW_STATUS STATUS, PEGA_GTW_TYPE TIPO
+WHERE
+EVENT.ID_TYPE = TIPO.ID_TYPE AND
+EVENT.ID_STATUS = STATUS.ID_STATUS AND
+STATUS.STATUS = 'NUEVO' AND 
+TIPO.ID_TYPE = ${tipo} AND
+ROWNUM <= ${maximo} 
+ORDER BY  EVENT.CREATED]]></L7p:SqlQuery>
+                            </L7p:JdbcQuery>
+                            <L7p:SetVariable>
+                                <L7p:Base64Expression stringValue="JHtqZGJjUXVlcnkueG1sUmVzdWx0fQ=="/>
+                                <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                                <L7p:DataType variableDataType="message"/>
+                                <L7p:VariableToSet stringValue="xmlQuery"/>
+                            </L7p:SetVariable>
+                            <L7p:XslTransformation>
+                                <L7p:Direction intValue="-1"/>
+                                <L7p:OtherTargetMessageVariable stringValue="xmlQuery"/>
+                                <L7p:ResourceInfo staticResourceInfo="included">
+                                    <L7p:Document stringValueReference="inline"><![CDATA[<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+    <xsl:output encoding="utf-8" indent="yes" method="xml" omit-xml-declaration="yes"/>
+
+    <!-- Stylesheet to remove all namespaces from a document -->
+    <!-- NOTE: this will lead to attribute name clash, if an element contains
+        two attributes with same local name but different namespace prefix -->
+    <!-- Nodes that cannot have a namespace are copied as such -->
+
+    <!-- template to copy elements -->
+    <xsl:template match="*">
+        <xsl:element name="{local-name()}">
+            <xsl:apply-templates select="@* | node()"/>
+        </xsl:element>
+    </xsl:template>
+
+    <!-- template to copy attributes -->
+    <xsl:template match="@*">
+        <xsl:attribute name="{local-name()}">
+            <xsl:value-of select="."/>
+        </xsl:attribute>
+    </xsl:template>
+
+    <!-- template to copy the rest of the nodes -->
+    <xsl:template match="comment() | text() | processing-instruction()">
+        <xsl:copy/>
+    </xsl:template>
+
+</xsl:stylesheet>]]></L7p:Document>
+                                </L7p:ResourceInfo>
+                                <L7p:Target target="OTHER"/>
+                                <L7p:TransformName stringValue=""/>
+                                <L7p:XsltVersion stringValue="1.0"/>
+                            </L7p:XslTransformation>
+                            <L7p:XslTransformation>
+                                <L7p:Direction intValue="-1"/>
+                                <L7p:OtherTargetMessageVariable stringValue="xmlQuery"/>
+                                <L7p:ResourceInfo staticResourceInfo="included">
+                                    <L7p:Document stringValueReference="inline"><![CDATA[<xsl:stylesheet version="666" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+<xsl:strip-space elements="*"/>
+  <xsl:template match="@*|node()">
+    <xsl:copy>
+      <xsl:apply-templates select="@*|node()"/>
+    </xsl:copy>
+  </xsl:template>
+  
+    <xsl:template match="col">
+     <xsl:element name="{@name}">
+      <xsl:apply-templates select="node()"/>
+     </xsl:element>
+    </xsl:template>
+    
+     <xsl:template match="jdbcQueryResult">
+      <messageRequest>
+        <xsl:apply-templates/>
+      </messageRequest>
+  </xsl:template>  
+  
+  <xsl:template match="row">
+      <messages>
+        <xsl:apply-templates/>
+      </messages>
+  </xsl:template>  
+
+</xsl:stylesheet>]]></L7p:Document>
+                                </L7p:ResourceInfo>
+                                <L7p:Target target="OTHER"/>
+                                <L7p:TransformName stringValue=""/>
+                                <L7p:XsltVersion stringValue="2.0"/>
+                            </L7p:XslTransformation>
+                            <L7p:ResponseXpathAssertion>
+                                <L7p:VariablePrefix stringValue="messageRequest"/>
+                                <L7p:XmlMsgSrc stringValue="xmlQuery"/>
+                                <L7p:XpathExpression xpathExpressionValue="included">
+                                    <L7p:Expression stringValue="/messageRequest"/>
+                                    <L7p:Namespaces mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="s"/>
+                                    <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                                    </L7p:entry>
+                                    </L7p:Namespaces>
+                                    <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                                </L7p:XpathExpression>
+                            </L7p:ResponseXpathAssertion>
+                            <L7p:SetVariable>
+                                <L7p:Base64Expression stringValue="PGV2ZW50PiR7ZXZlbnR9PC9ldmVudD4="/>
+                                <L7p:VariableToSet stringValue="variableType"/>
+                            </L7p:SetVariable>
+                            <L7p:RemoveElement>
+                                <L7p:ElementFromVariable stringValue="messageRequest.elements[0]"/>
+                                <L7p:ElementToInsertVariable stringValue="variableType"/>
+                                <L7p:InsertedElementLocation insertedElementLocation="FIRST_CHILD"/>
+                                <L7p:OtherTargetMessageVariable stringValue="xmlQuery"/>
+                                <L7p:Target target="OTHER"/>
+                            </L7p:RemoveElement>
+                            <L7p:JsonTransformation>
+                                <L7p:DestinationMessageTarget MessageTarget="included">
+                                    <L7p:OtherTargetMessageVariable stringValue="xmlQuery"/>
+                                    <L7p:Target target="OTHER"/>
+                                    <L7p:TargetModifiedByGateway booleanValue="true"/>
+                                </L7p:DestinationMessageTarget>
+                                <L7p:OtherTargetMessageVariable stringValue="xmlQuery"/>
+                                <L7p:RootTagString stringValue=""/>
+                                <L7p:Target target="OTHER"/>
+                            </L7p:JsonTransformation>
+                        </wsp:All>
+                        <wsp:All wsp:Usage="Required">
+                            <L7p:AuditDetailAssertion>
+                                <L7p:CustomLoggerSuffix stringValue="error"/>
+                                <L7p:Detail stringValueReference="inline"><![CDATA[REQUESTID: ${requestId} | APIM TASK-sendBulkMessage Finished with error| NODE: ${ssgnode.name} | TIMESTAMP: ${request.time.local.yyyy-MM-dd'T'HH:mm:ss.SSS}
+Error: Error al ejecutar la query de listar mensajes]]></L7p:Detail>
+                                <L7p:LoggingOnly booleanValue="true"/>
+                            </L7p:AuditDetailAssertion>
+                            <L7p:RaiseError/>
+                        </wsp:All>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="List Messages"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:OneOrMore>
+                    <wsp:OneOrMore wsp:Usage="Required">
+                        <wsp:All wsp:Usage="Required">
+                            <L7p:SetVariable>
+                                <L7p:Base64Expression stringValue="JHt4bWxRdWVyeX0="/>
+                                <L7p:ContentType stringValue="application/json; charset=utf-8"/>
+                                <L7p:DataType variableDataType="message"/>
+                                <L7p:VariableToSet stringValue="requestService"/>
+                            </L7p:SetVariable>
+                            <L7p:HttpRoutingAssertion>
+                                <L7p:ProtectedServiceUrl stringValue="${hostname}"/>
+                                <L7p:ProxyPassword stringValueNull="null"/>
+                                <L7p:ProxyUsername stringValueNull="null"/>
+                                <L7p:RequestHeaderRules httpPassthroughRuleSet="included">
+                                    <L7p:ForwardAll booleanValue="true"/>
+                                    <L7p:Rules httpPassthroughRules="included">
+                                    <L7p:item httpPassthroughRule="included">
+                                    <L7p:Name stringValue="Cookie"/>
+                                    </L7p:item>
+                                    <L7p:item httpPassthroughRule="included">
+                                    <L7p:Name stringValue="SOAPAction"/>
+                                    </L7p:item>
+                                    </L7p:Rules>
+                                </L7p:RequestHeaderRules>
+                                <L7p:RequestParamRules httpPassthroughRuleSet="included">
+                                    <L7p:ForwardAll booleanValue="true"/>
+                                    <L7p:Rules httpPassthroughRules="included"/>
+                                </L7p:RequestParamRules>
+                                <L7p:ResponseHeaderRules httpPassthroughRuleSet="included">
+                                    <L7p:ForwardAll booleanValue="true"/>
+                                    <L7p:Rules httpPassthroughRules="included">
+                                    <L7p:item httpPassthroughRule="included">
+                                    <L7p:Name stringValue="Set-Cookie"/>
+                                    </L7p:item>
+                                    </L7p:Rules>
+                                </L7p:ResponseHeaderRules>
+                                <L7p:SamlAssertionVersion intValue="2"/>
+                            </L7p:HttpRoutingAssertion>
+                            <wsp:OneOrMore wsp:Usage="Required">
+                                <wsp:All wsp:Usage="Required">
+                                    <L7p:ComparisonAssertion>
+                                    <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                                    <L7p:Expression2 stringValue="200"/>
+                                    <L7p:Predicates predicates="included">
+                                    <L7p:item binary="included">
+                                    <L7p:RightValue stringValue="200"/>
+                                    </L7p:item>
+                                    </L7p:Predicates>
+                                    </L7p:ComparisonAssertion>
+                                    <L7p:Join>
+                                    <L7p:InputVariable stringValue="jdbcQuery.id"/>
+                                    <L7p:JoinSubstring stringValue="','"/>
+                                    <L7p:OutputVariable stringValue="ids"/>
+                                    </L7p:Join>
+                                    <wsp:OneOrMore wsp:Usage="Required">
+                                    <wsp:All wsp:Usage="Required">
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JyR7aWRzfSc="/>
+                                    <L7p:VariableToSet stringValue="sql"/>
+                                    </L7p:SetVariable>
+                                    <L7p:JdbcQuery>
+
+                                    <L7p:AssertionFailureEnabled booleanValue="false"/>
+                                    <L7p:ConnectionName stringValue="ODS_PEGA_SERVICES"/>
+
+                                    <L7p:ConvertVariablesToStrings booleanValue="false"/>
+                                    <L7p:Enabled booleanValue="false"/>
+                                    <L7p:MaxRecords intValue="200"/>
+                                    <L7p:QueryTimeout stringValue="10"/>
+
+                                    <L7p:SaveResultsAsContextVariables booleanValue="false"/>
+                                    <L7p:SqlQuery stringValueReference="inline"><![CDATA[UPDATE ODS_MOC.PEGA_GTW_EVENT SET ID_STATUS = 1 WHERE ID_SERVICE IN (select EVENT.ID_SERVICE ID 
+from ODS_MOC.PEGA_GTW_EVENT EVENT, PEGA_GTW_STATUS STATUS, PEGA_GTW_TYPE TIPO 
+WHERE 
+EVENT.ID_TYPE = TIPO.ID_TYPE AND 
+EVENT.ID_STATUS = STATUS.ID_STATUS AND 
+STATUS.STATUS = 'NUEVO' AND  
+TIPO.ID_TYPE = ${tipo} AND 
+ROWNUM <= ${maximo} 
+ORDER BY  EVENT.CREATED)]]></L7p:SqlQuery>
+                                    <L7p:VariablePrefix stringValue="queryUpdate"/>
+                                    </L7p:JdbcQuery>
+                                    <L7p:JdbcQuery>
+
+                                    <L7p:AssertionFailureEnabled booleanValue="false"/>
+                                    <L7p:ConnectionName stringValue="ODS_PEGA_SERVICES"/>
+
+                                    <L7p:ConvertVariablesToStrings booleanValue="false"/>
+                                    <L7p:MaxRecords intValue="200"/>
+                                    <L7p:QueryTimeout stringValue="10"/>
+
+                                    <L7p:SaveResultsAsContextVariables booleanValue="false"/>
+                                    <L7p:SqlQuery stringValueReference="inline"><![CDATA[UPDATE
+  ODS_MOC.PEGA_GTW_EVENT
+SET
+  ID_STATUS = 1
+WHERE
+  ID_SERVICE = 101]]></L7p:SqlQuery>
+                                    <L7p:VariablePrefix stringValue="queryUpdate"/>
+                                    </L7p:JdbcQuery>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="eyJmbGFnIjoiZmFsc2UifQ=="/>
+                                    <L7p:ContentType stringValue="application/json; charset=utf-8"/>
+                                    <L7p:DataType variableDataType="message"/>
+                                    <L7p:VariableToSet stringValue="runningFlag"/>
+                                    </L7p:SetVariable>
+                                    <L7p:CacheStorage>
+                                    <L7p:CacheEntryKey stringValue="${entryKey}"/>
+                                    <L7p:CacheId stringValue="PEGA"/>
+                                    <L7p:MaxEntries stringValue="3"/>
+                                    <L7p:MaxEntryAgeSeconds stringValue="600"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="runningFlag"/>
+                                    <L7p:Target target="OTHER"/>
+                                    </L7p:CacheStorage>
+                                    </wsp:All>
+                                    <wsp:All wsp:Usage="Required">
+                                    <L7p:AuditDetailAssertion>
+                                    <L7p:CustomLoggerSuffix stringValue="error"/>
+                                    <L7p:Detail stringValueReference="inline"><![CDATA[REQUESTID: ${requestId} | APIM TASK-sendBulkMessage Finished with error| NODE: ${ssgnode.name} | TIMESTAMP: ${request.time.local.yyyy-MM-dd'T'HH:mm:ss.SSS}
+Error: Error al ejecutar la query de update mesajes]]></L7p:Detail>
+                                    <L7p:LoggingOnly booleanValue="true"/>
+                                    </L7p:AuditDetailAssertion>
+                                    <L7p:RaiseError/>
+                                    </wsp:All>
+                                    <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="Update Table"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:assertionComment>
+                                    </wsp:OneOrMore>
+                                </wsp:All>
+                                <wsp:All wsp:Usage="Required">
+                                    <L7p:ComparisonAssertion>
+                                    <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                                    <L7p:Expression2 stringValue="400"/>
+                                    <L7p:Predicates predicates="included">
+                                    <L7p:item binary="included">
+                                    <L7p:RightValue stringValue="400"/>
+                                    </L7p:item>
+                                    </L7p:Predicates>
+                                    </L7p:ComparisonAssertion>
+                                    <wsp:OneOrMore wsp:Usage="Required">
+                                    <wsp:All wsp:Usage="Required">
+                                    <L7p:JdbcQuery>
+
+                                    <L7p:AssertionFailureEnabled booleanValue="false"/>
+                                    <L7p:ConnectionName stringValue="ODS_PEGA_SERVICES"/>
+
+                                    <L7p:ConvertVariablesToStrings booleanValue="false"/>
+                                    <L7p:MaxRecords intValue="200"/>
+                                    <L7p:QueryTimeout stringValue="10"/>
+
+                                    <L7p:SaveResultsAsContextVariables booleanValue="false"/>
+                                    <L7p:SqlQuery stringValueReference="inline"><![CDATA[update ODS_MOC.ODS_PEGA_SERVICES 
+SET DSC_STATUS = 'SENT'
+WHERE DSC_ID IN ()]]></L7p:SqlQuery>
+                                    </L7p:JdbcQuery>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="eyJmbGFnIjoiZmFsc2UifQ=="/>
+                                    <L7p:ContentType stringValue="application/json; charset=utf-8"/>
+                                    <L7p:DataType variableDataType="message"/>
+                                    <L7p:VariableToSet stringValue="runningFlag"/>
+                                    </L7p:SetVariable>
+                                    <L7p:CacheStorage>
+                                    <L7p:CacheEntryKey stringValue="${entryKey}"/>
+                                    <L7p:CacheId stringValue="PEGA"/>
+                                    <L7p:MaxEntries stringValue="3"/>
+                                    <L7p:MaxEntryAgeSeconds stringValue="600"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="runningFlag"/>
+                                    <L7p:Target target="OTHER"/>
+                                    </L7p:CacheStorage>
+                                    </wsp:All>
+                                    <wsp:All wsp:Usage="Required">
+                                    <L7p:AuditDetailAssertion>
+                                    <L7p:CustomLoggerSuffix stringValue="error"/>
+                                    <L7p:Detail stringValueReference="inline"><![CDATA[REQUESTID: ${requestId} | APIM TASK-sendBulkMessage Finished with error| NODE: ${ssgnode.name} | TIMESTAMP: ${request.time.local.yyyy-MM-dd'T'HH:mm:ss.SSS}
+Error: Error al ejecutar la query de update mesajes]]></L7p:Detail>
+                                    <L7p:LoggingOnly booleanValue="true"/>
+                                    </L7p:AuditDetailAssertion>
+                                    <L7p:RaiseError/>
+                                    </wsp:All>
+                                    <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="Update Table"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:assertionComment>
+                                    </wsp:OneOrMore>
+                                </wsp:All>
+                                <wsp:All wsp:Usage="Required">
+                                    <L7p:AuditDetailAssertion>
+                                    <L7p:CustomLoggerSuffix stringValue="error"/>
+                                    <L7p:Detail stringValueReference="inline"><![CDATA[REQUESTID: ${requestId} | APIM TASK-sendBulkMessage Finished with error| NODE: ${ssgnode.name} | TIMESTAMP: ${request.time.local.yyyy-MM-dd'T'HH:mm:ss.SSS}
+Error: Error al ejecutar el servicio en PEGA]]></L7p:Detail>
+                                    <L7p:LoggingOnly booleanValue="true"/>
+                                    </L7p:AuditDetailAssertion>
+                                    <L7p:RaiseError/>
+                                </wsp:All>
+                            </wsp:OneOrMore>
+                        </wsp:All>
+                        <wsp:All wsp:Usage="Required">
+                            <L7p:AuditDetailAssertion>
+                                <L7p:CustomLoggerSuffix stringValue="error"/>
+                                <L7p:Detail stringValueReference="inline"><![CDATA[REQUESTID: ${requestId} | APIM TASK-sendBulkMessage Finished with error| NODE: ${ssgnode.name} | TIMESTAMP: ${request.time.local.yyyy-MM-dd'T'HH:mm:ss.SSS}
+Error: Error al ejecutar el servicio en PEGA]]></L7p:Detail>
+                                <L7p:LoggingOnly booleanValue="true"/>
+                            </L7p:AuditDetailAssertion>
+                            <L7p:RaiseError/>
+                        </wsp:All>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="Service"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:OneOrMore>
+                    <L7p:assertionComment>
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="LEFT.COMMENT"/>
+                                <L7p:value stringValue="store"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:assertionComment>
+                </wsp:All>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="Cache"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:OneOrMore>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="Try"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </L7p:HandleErrors>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${error.message}"/>
+                    <L7p:Expression2 stringValue=""/>
+                    <L7p:Negate booleanValue="true"/>
+                    <L7p:Operator operator="EMPTY"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Negated booleanValue="true"/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:RightValue stringValue=""/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="ew0KImNoYW5uZWwiOiItMTAwMTIwMzE2NDcxMyIsDQoibWVzc2FnZSI6IiR7ZXJyb3IubWVzc2FnZX0iDQp9"/>
+                    <L7p:ContentType stringValue="application/json; charset=utf-8"/>
+                    <L7p:DataType variableDataType="message"/>
+                    <L7p:VariableToSet stringValue="runscopeRequest"/>
+                </L7p:SetVariable>
+                <L7p:HttpRoutingAssertion>
+                    <L7p:Enabled booleanValue="false"/>
+                    <L7p:ProtectedServiceUrl stringValue="http://10.51.4.126/bpta_telegram/message"/>
+                    <L7p:RequestHeaderRules httpPassthroughRuleSet="included">
+                        <L7p:ForwardAll booleanValue="true"/>
+                        <L7p:Rules httpPassthroughRules="included">
+                            <L7p:item httpPassthroughRule="included">
+                                <L7p:Name stringValue="Cookie"/>
+                            </L7p:item>
+                            <L7p:item httpPassthroughRule="included">
+                                <L7p:Name stringValue="SOAPAction"/>
+                            </L7p:item>
+                        </L7p:Rules>
+                    </L7p:RequestHeaderRules>
+                    <L7p:RequestParamRules httpPassthroughRuleSet="included">
+                        <L7p:ForwardAll booleanValue="true"/>
+                        <L7p:Rules httpPassthroughRules="included"/>
+                    </L7p:RequestParamRules>
+                    <L7p:ResponseHeaderRules httpPassthroughRuleSet="included">
+                        <L7p:ForwardAll booleanValue="true"/>
+                        <L7p:Rules httpPassthroughRules="included">
+                            <L7p:item httpPassthroughRule="included">
+                                <L7p:Name stringValue="Set-Cookie"/>
+                            </L7p:item>
+                        </L7p:Rules>
+                    </L7p:ResponseHeaderRules>
+                    <L7p:SamlAssertionVersion intValue="2"/>
+                </L7p:HttpRoutingAssertion>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="Catch"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+            <L7p:AuditDetailAssertion>
+                <L7p:CustomLoggerSuffix stringValue="trafficlog"/>
+                <L7p:Detail stringValue="REQUESTID: ${requestId} | APIM TASK-sendBulkMessage Finished | NODE: ${ssgnode.name} | TIMESTAMP: ${request.time.local.yyyy-MM-dd'T'HH:mm:ss.SSS}"/>
+                <L7p:LoggingOnly booleanValue="true"/>
+            </L7p:AuditDetailAssertion>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="Catch"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:OneOrMore>
+    </wsp:All>
+</wsp:Policy>

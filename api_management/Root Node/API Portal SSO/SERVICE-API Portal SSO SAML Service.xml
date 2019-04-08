@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="************************************************************************************"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="* Policy for executing SAML SSO against a configured IDP"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="*"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="************************************************************************************"/>
+        </L7p:CommentAssertion>
+        <L7p:Include>
+            <L7p:PolicyGuid stringValue="e0b2b540-b211-468a-87ca-76f2679216f3"/>
+        </L7p:Include>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <L7p:Include>
+                <L7p:PolicyGuid stringValue="5f789110-42f9-4c28-9dd5-949845d2cd4b"/>
+            </L7p:Include>
+            <L7p:Include>
+                <L7p:PolicyGuid stringValue="eec5c295-fbe9-40b9-a6d4-a261edbdd180"/>
+            </L7p:Include>
+        </wsp:OneOrMore>
+    </wsp:All>
+</wsp:Policy>

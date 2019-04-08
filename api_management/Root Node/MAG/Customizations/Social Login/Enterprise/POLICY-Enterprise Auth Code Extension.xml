@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="Target Policy: &quot;enterprise oauth 2.0 client&quot;"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="This policy overrides the call to retrieve the OAuth 2.0 Auth Code"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="To activate, set the Context Variable &quot;override_auth_request&quot; in &quot;#enterprise oauth 2.0 client&quot; to true"/>
+        </L7p:CommentAssertion>
+        <L7p:RetrieveOAuth2Token>
+            <L7p:AuthEndpoint stringValue="${authorization_endpoint}"/>
+            <L7p:ClientId stringValue="${client_id}"/>
+            <L7p:ClientSecretPlainText stringValue="${client_secret}"/>
+            <L7p:InputParams inputParams="included">
+                <L7p:item oauthParam="included">
+                    <L7p:Name stringValue="redirect_uri"/>
+                    <L7p:Value stringValue="${registered_redirect_uri}"/>
+                </L7p:item>
+                <L7p:item oauthParam="included">
+                    <L7p:IncludeType includeType="AUTHORIZATION_REQUEST"/>
+                    <L7p:Name stringValue="state"/>
+                    <L7p:Value stringValue="${sessionID}"/>
+                </L7p:item>
+                <L7p:item oauthParam="included">
+                    <L7p:IncludeType includeType="AUTHORIZATION_REQUEST"/>
+                    <L7p:Name stringValue="scope"/>
+                    <L7p:Value stringValue="${scope}"/>
+                </L7p:item>
+            </L7p:InputParams>
+            <L7p:IsClientAuthHttpBasic booleanValue="false"/>
+            <L7p:TokenEndpoint stringValue="${token_endpoint}"/>
+            <L7p:UserPasswordPlainText stringValue=""/>
+            <L7p:Username stringValue=""/>
+        </L7p:RetrieveOAuth2Token>
+    </wsp:All>
+</wsp:Policy>

@@ -1,0 +1,986 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === ***  THIS POLICY IS READ ONLY ***"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === If you have the need to customize this policy"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === please contact CA APIM Support so we can improve customization capability"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="This policy can be found and should be used as 'Encapsulated Assertion'!"/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxMN2o6Y2Fzc2FuZHJhUXVlcnlSZXN1bHQgeG1sbnM6TDdqPSJodHRwOi8vbnMubDd0ZWNoLmNvbS8yMDEyLzA4L2Nhc3NhbmRyYS1xdWVyeS1yZXN1bHQiLz4="/>
+            <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+            <L7p:DataType variableDataType="message"/>
+            <L7p:VariableToSet stringValue="resp"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue=""/>
+            <L7p:VariableToSet stringValue="content-type"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue=""/>
+            <L7p:VariableToSet stringValue="error.code"/>
+        </L7p:SetVariable>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <L7p:ComparisonAssertion>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="Empty"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:CaseSensitive booleanValue="false"/>
+                <L7p:Expression1 stringValue="${username}"/>
+                <L7p:Expression2 stringValue=""/>
+                <L7p:Operator operator="EMPTY"/>
+                <L7p:Predicates predicates="included">
+                    <L7p:item binary="included">
+                        <L7p:CaseSensitive booleanValue="false"/>
+                        <L7p:Operator operator="EMPTY"/>
+                        <L7p:RightValue stringValue=""/>
+                    </L7p:item>
+                </L7p:Predicates>
+            </L7p:ComparisonAssertion>
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${username}"/>
+                    <L7p:Expression2 stringValue="*"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:RightValue stringValue="*"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:CassandraQuery>
+                    <L7p:AssertionComment assertionComment="included">
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="LEFT.COMMENT"/>
+                                <L7p:value stringValue="Devices"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="RIGHT.COMMENT"/>
+                                <L7p:value stringValue="Get list of devices of the user"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:AssertionComment>
+                    <L7p:ConnectionName stringValue="MAG_OAuth_Cassandra"/>
+                    <L7p:FetchSize intValue="5000"/>
+                    <L7p:GenerateXmlResult booleanValue="true"/>
+                    <L7p:MaxRecords intValue="100"/>
+                    <L7p:NamingMap mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="magidentifier"/>
+                            <L7p:value stringValue="magidentifier"/>
+                        </L7p:entry>
+                    </L7p:NamingMap>
+                    <L7p:Prefix stringValue="queryIdentifier"/>
+                    <L7p:QueryDocument stringValueReference="inline"><![CDATA[SELECT magidentifier
+                FROM mag_msso_device_user]]></L7p:QueryDocument>
+                    <L7p:QueryTimeout stringValueNull="null"/>
+                </L7p:CassandraQuery>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHtxdWVyeUlkZW50aWZpZXIubWFnaWRlbnRpZmllcn0="/>
+                    <L7p:VariableToSet stringValue="magidentifier"/>
+                </L7p:SetVariable>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="Any user"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:CommentAssertion>
+                    <L7p:Comment stringValue="=== Not supported with Cassandra"/>
+                </L7p:CommentAssertion>
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${username}"/>
+                    <L7p:Operator operatorNull="null"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item regex="included">
+                            <L7p:Pattern stringValue=".{1,32}[%]$"/>
+                        </L7p:item>
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Negated booleanValue="true"/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:RightValue stringValue=""/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:CassandraQuery>
+                    <L7p:ConnectionName stringValue="MAG_OAuth_Cassandra"/>
+                    <L7p:Enabled booleanValue="false"/>
+                    <L7p:FetchSize intValue="5000"/>
+                    <L7p:GenerateXmlResult booleanValue="true"/>
+                    <L7p:MaxRecords intValue="1000"/>
+                    <L7p:QueryDocument stringValueReference="inline"><![CDATA[SELECT
+                magidentifier AS MAG_IDENTIFIER,
+                devicename AS DEVICE_NAME,
+                devicestatus AS DEVICE_STATUS,
+                username AS DEVICE_USER,
+                certdn AS DEVICE_DN,
+                created AS DEVICE_CREATED,
+                updated AS DEVICE_UPDATED,
+                multiuser AS MULTIUSER,
+                access_token AS ACCESS_TOKEN
+                FROM mag_msso_device_username_view
+                WHERE username=${username}]]></L7p:QueryDocument>
+                    <L7p:QueryTimeout stringValueNull="null"/>
+                </L7p:CassandraQuery>
+                <L7p:AuditDetailAssertion>
+                    <L7p:Detail stringValue="'Like' is not supported in cassandra. Given username: '${username}'"/>
+                </L7p:AuditDetailAssertion>
+                <L7p:TrueAssertion/>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="Like"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${username}"/>
+                    <L7p:Expression2 stringValue=""/>
+                    <L7p:Negate booleanValue="true"/>
+                    <L7p:Operator operator="EMPTY"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Negated booleanValue="true"/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:RightValue stringValue=""/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:CassandraQuery>
+                    <L7p:AssertionComment assertionComment="included">
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="LEFT.COMMENT"/>
+                                <L7p:value stringValue="Devices"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="RIGHT.COMMENT"/>
+                                <L7p:value stringValue="Get list of devices of the user"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:AssertionComment>
+                    <L7p:ConnectionName stringValue="MAG_OAuth_Cassandra"/>
+                    <L7p:FetchSize intValue="5000"/>
+                    <L7p:MaxRecords intValue="100"/>
+                    <L7p:NamingMap mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="magidentifier"/>
+                            <L7p:value stringValue="magidentifier"/>
+                        </L7p:entry>
+                    </L7p:NamingMap>
+                    <L7p:Prefix stringValue="queryIdentifier"/>
+                    <L7p:QueryDocument stringValueReference="inline"><![CDATA[SELECT magidentifier
+                FROM mag_msso_device_user
+                WHERE username=${username}]]></L7p:QueryDocument>
+                    <L7p:QueryTimeout stringValueNull="null"/>
+                </L7p:CassandraQuery>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHtxdWVyeUlkZW50aWZpZXIubWFnaWRlbnRpZmllcn0="/>
+                    <L7p:VariableToSet stringValue="magidentifier"/>
+                </L7p:SetVariable>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="Single user"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue=""/>
+                    <L7p:VariableToSet stringValue="magidentifier"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="MDAw"/>
+                    <L7p:VariableToSet stringValue="error.code"/>
+                </L7p:SetVariable>
+                <L7p:AuditDetailAssertion>
+                    <L7p:Detail stringValue="No query could be executed successfully. username='username'"/>
+                </L7p:AuditDetailAssertion>
+                <L7p:FalseAssertion/>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="error"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="Queries"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="Execute the appropriate query"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:OneOrMore>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <L7p:ComparisonAssertion>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="Empty"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:CaseSensitive booleanValue="false"/>
+                <L7p:Expression1 stringValue="${username}"/>
+                <L7p:Expression2 stringValue=""/>
+                <L7p:Operator operator="EMPTY"/>
+                <L7p:Predicates predicates="included">
+                    <L7p:item binary="included">
+                        <L7p:CaseSensitive booleanValue="false"/>
+                        <L7p:Operator operator="EMPTY"/>
+                        <L7p:RightValue stringValue=""/>
+                    </L7p:item>
+                </L7p:Predicates>
+            </L7p:ComparisonAssertion>
+            <wsp:All wsp:Usage="Required">
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHtxdWVyeUlkZW50aWZpZXIubWFnaWRlbnRpZmllcn0="/>
+                    <L7p:VariableToSet stringValue="magidentifier"/>
+                </L7p:SetVariable>
+                <L7p:Split>
+                    <L7p:IgnoreEmptyValues booleanValue="true"/>
+                    <L7p:InputVariable stringValue="magidentifier"/>
+                    <L7p:OutputVariable stringValue="magidentifier"/>
+                    <L7p:SplitPattern stringValue=",[ ]?"/>
+                </L7p:Split>
+                <L7p:SetVariable>
+                    <L7p:AssertionComment assertionComment="included">
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="LEFT.COMMENT"/>
+                                <L7p:value stringValue="empty"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="RIGHT.COMMENT"/>
+                                <L7p:value stringValue="For the case that there are no devices"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:AssertionComment>
+                    <L7p:Base64Expression stringValue=""/>
+                    <L7p:VariableToSet stringValue="resulting.rows"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:AssertionComment assertionComment="included">
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="LEFT.COMMENT"/>
+                                <L7p:value stringValue="empty"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="RIGHT.COMMENT"/>
+                                <L7p:value stringValue="access_token did not exist, this is a template used further down"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:AssertionComment>
+                    <L7p:Base64Expression stringValue="PEw3ajpjb2wgIG5hbWU9ImNsaWVudF9uYW1lIiB0eXBlPSJqYXZhLmxhbmcuU3RyaW5nIj5OVUxMPC9MN2o6Y29sPg0KPEw3ajpjb2wgIG5hbWU9ImNsaWVudF9zY29wZSIgdHlwZT0iamF2YS5sYW5nLlN0cmluZyI+TlVMTDwvTDdqOmNvbD4NCjxMN2o6Y29sICBuYW1lPSJjbGllbnRfc3RhdHVzIiB0eXBlPSJqYXZhLmxhbmcuU3RyaW5nIj5OVUxMPC9MN2o6Y29sPg=="/>
+                    <L7p:VariableToSet stringValue="no_client_info"/>
+                </L7p:SetVariable>
+                <L7p:ForEachLoop L7p:Usage="Required"
+                    iterationLimit="1000" loopVariable="magidentifier" variablePrefix="identifier">
+                    <L7p:CassandraQuery>
+                        <L7p:AssertionComment assertionComment="included">
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="Associated access tokens"/>
+                                </L7p:entry>
+                                <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="Get details of each device of the user"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:AssertionComment>
+                        <L7p:ConnectionName stringValue="MAG_OAuth_Cassandra"/>
+                        <L7p:FetchSize intValue="5000"/>
+                        <L7p:MaxRecords intValue="1000"/>
+                        <L7p:NamingMap mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="access_token"/>
+                                <L7p:value stringValue="access_token"/>
+                            </L7p:entry>
+                        </L7p:NamingMap>
+                        <L7p:Prefix stringValue="queryDetails"/>
+                        <L7p:QueryDocument stringValue="SELECT magidentifier, access_token FROM mag_msso_device_overview WHERE magidentifier=${identifier.current}"/>
+                        <L7p:QueryTimeout stringValueNull="null"/>
+                    </L7p:CassandraQuery>
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue="JHtxdWVyeURldGFpbHMuYWNjZXNzX3Rva2VufQ=="/>
+                        <L7p:VariableToSet stringValue="access_tokens"/>
+                    </L7p:SetVariable>
+                    <L7p:Split>
+                        <L7p:IgnoreEmptyValues booleanValue="true"/>
+                        <L7p:InputVariable stringValue="access_tokens"/>
+                        <L7p:OutputVariable stringValue="access_token"/>
+                        <L7p:SplitPattern stringValue=",[ ]?"/>
+                    </L7p:Split>
+                    <wsp:OneOrMore wsp:Usage="Required">
+                        <wsp:All wsp:Usage="Required">
+                            <L7p:ComparisonAssertion>
+                                <L7p:Expression1 stringValue="${access_token}"/>
+                                <L7p:Expression2 stringValue=""/>
+                                <L7p:Negate booleanValue="true"/>
+                                <L7p:Operator operator="EMPTY"/>
+                                <L7p:Predicates predicates="included">
+                                    <L7p:item binary="included">
+                                    <L7p:Negated booleanValue="true"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue=""/>
+                                    </L7p:item>
+                                </L7p:Predicates>
+                            </L7p:ComparisonAssertion>
+                            <L7p:ForEachLoop L7p:Usage="Required"
+                                loopVariable="access_token" variablePrefix="token">
+                                <wsp:OneOrMore wsp:Usage="Required">
+                                    <wsp:All wsp:Usage="Required">
+                                    <L7p:CommentAssertion>
+                                    <L7p:Comment stringValue="We only want entries with a client_key and access_token not NULL/Empty"/>
+                                    </L7p:CommentAssertion>
+                                    <L7p:CassandraQuery>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="Get associated client key"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:ConnectionName stringValue="MAG_OAuth_Cassandra"/>
+                                    <L7p:FetchSize intValue="5000"/>
+                                    <L7p:MaxRecords intValue="1"/>
+                                    <L7p:NamingMap mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="client_key"/>
+                                    <L7p:value stringValue="client_key"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="magidentifier"/>
+                                    <L7p:value stringValue="magidentifier"/>
+                                    </L7p:entry>
+                                    </L7p:NamingMap>
+                                    <L7p:Prefix stringValue="queryOverviewToken"/>
+                                    <L7p:QueryDocument stringValueReference="inline"><![CDATA[SELECT
+                magidentifier, client_key
+                FROM mag_msso_device_overview_token
+                WHERE access_token=${token.current}]]></L7p:QueryDocument>
+                                    <L7p:QueryTimeout stringValueNull="null"/>
+                                    </L7p:CassandraQuery>
+                                    <L7p:CassandraQuery>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="Get device overview info"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="using magidentifier and client_key"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:ConnectionName stringValue="MAG_OAuth_Cassandra"/>
+                                    <L7p:FetchSize intValue="5000"/>
+                                    <L7p:GenerateXmlResult booleanValue="true"/>
+                                    <L7p:MaxRecords intValue="1"/>
+                                    <L7p:Prefix stringValue="queryDetails"/>
+                                    <L7p:QueryDocument stringValueReference="inline"><![CDATA[SELECT     magidentifier AS MAG_IDENTIFIER,
+                devicename AS DEVICE_NAME,
+                devicestatus AS DEVICE_STATUS,
+                username AS DEVICE_USER,
+                certdn AS DEVICE_DN,
+                created AS DEVICE_CREATED,
+                updated AS DEVICE_UPDATED,
+                multiuser AS MULTIUSER,
+                access_token AS ACCESS_TOKEN,
+                csr_base64 AS CSR_BASE64,
+                signed_cert_base64 AS SIGNED_CERT_BASE64,
+                grace_expiration AS GRACE_EXPIRATION
+                FROM mag_msso_device_overview
+                WHERE magidentifier=${queryOverviewToken.magidentifier} AND client_key=${queryOverviewToken.client_key}]]></L7p:QueryDocument>
+                                    <L7p:QueryTimeout stringValueNull="null"/>
+                                    </L7p:CassandraQuery>
+                                    <L7p:ComparisonAssertion>
+                                    <L7p:Expression1 stringValue="${queryDetails.queryresult.count}"/>
+                                    <L7p:Expression2 stringValue="0"/>
+                                    <L7p:Operator operator="GT"/>
+                                    <L7p:Predicates predicates="included">
+                                    <L7p:item binary="included">
+                                    <L7p:Operator operator="GT"/>
+                                    <L7p:RightValue stringValue="0"/>
+                                    </L7p:item>
+                                    </L7p:Predicates>
+                                    </L7p:ComparisonAssertion>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHtxdWVyeURldGFpbHMueG1sUmVzdWx0fQ=="/>
+                                    <L7p:VariableToSet stringValue="current.xml"/>
+                                    </L7p:SetVariable>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="PEw3ajpjb2wgIG5hbWU9ImFjY2Vzc190b2tlbiIgdHlwZT0iamF2YS5sYW5nLlN0cmluZyI+JHt0b2tlbi5jdXJyZW50fTwvTDdqOmNvbD4="/>
+                                    <L7p:VariableToSet stringValue="pattern"/>
+                                    </L7p:SetVariable>
+                                    <L7p:Encapsulated>
+
+                                    <L7p:EncapsulatedAssertionConfigGuid stringValue="19902efe-b202-49da-a5d9-619c57ee842a"/>
+
+                                    <L7p:EncapsulatedAssertionConfigName stringValue="OTK Token Get (token)"/>
+                                    <L7p:Parameters mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="client_key"/>
+                                    <L7p:value stringValue=""/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="queryOffset"/>
+                                    <L7p:value stringValue=""/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="resource_owner"/>
+                                    <L7p:value stringValue=""/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="return_json"/>
+                                    <L7p:value stringValue="false"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="rtoken"/>
+                                    <L7p:value stringValue=""/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="token"/>
+                                    <L7p:value stringValue="${token.current}"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="token_status"/>
+                                    <L7p:value stringValue=""/>
+                                    </L7p:entry>
+                                    </L7p:Parameters>
+                                    </L7p:Encapsulated>
+                                    <wsp:OneOrMore wsp:Usage="Required">
+                                    <wsp:All wsp:Usage="Required">
+                                    <L7p:ResponseXpathAssertion>
+                                    <L7p:VariablePrefix stringValue="client_name"/>
+                                    <L7p:XmlMsgSrc stringValue="resp"/>
+                                    <L7p:XpathExpression xpathExpressionValue="included">
+                                    <L7p:Expression stringValue="/ns:values/ns:value/ns:client_name"/>
+                                    <L7p:Namespaces mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="ns"/>
+
+                                    <L7p:value stringValue="http://ns.l7tech.com/2012/11/otk-tokenstore"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="s"/>
+
+                                    <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                                    </L7p:entry>
+                                    </L7p:Namespaces>
+
+                                    <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                                    </L7p:XpathExpression>
+                                    </L7p:ResponseXpathAssertion>
+                                    <L7p:ResponseXpathAssertion>
+                                    <L7p:VariablePrefix stringValue="client_status"/>
+                                    <L7p:XmlMsgSrc stringValue="resp"/>
+                                    <L7p:XpathExpression xpathExpressionValue="included">
+                                    <L7p:Expression stringValue="/ns:values/ns:value/ns:status"/>
+                                    <L7p:Namespaces mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="ns"/>
+
+                                    <L7p:value stringValue="http://ns.l7tech.com/2012/11/otk-tokenstore"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="s"/>
+
+                                    <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                                    </L7p:entry>
+                                    </L7p:Namespaces>
+
+                                    <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                                    </L7p:XpathExpression>
+                                    </L7p:ResponseXpathAssertion>
+                                    <L7p:ResponseXpathAssertion>
+                                    <L7p:VariablePrefix stringValue="client_scope"/>
+                                    <L7p:XmlMsgSrc stringValue="resp"/>
+                                    <L7p:XpathExpression xpathExpressionValue="included">
+                                    <L7p:Expression stringValue="/ns:values/ns:value/ns:scope"/>
+                                    <L7p:Namespaces mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="ns"/>
+
+                                    <L7p:value stringValue="http://ns.l7tech.com/2012/11/otk-tokenstore"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="s"/>
+
+                                    <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                                    </L7p:entry>
+                                    </L7p:Namespaces>
+
+                                    <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                                    </L7p:XpathExpression>
+                                    </L7p:ResponseXpathAssertion>
+                                    <L7p:ComparisonAssertion>
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Expression1 stringValue="${client_name.result}"/>
+                                    <L7p:Expression2 stringValue="value index="/>
+                                    <L7p:Negate booleanValue="true"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:Predicates predicates="included">
+                                    <L7p:item binary="included">
+
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Negated booleanValue="true"/>
+
+                                    <L7p:Operator operator="EMPTY"/>
+
+                                    <L7p:RightValue stringValue="value index="/>
+                                    </L7p:item>
+                                    </L7p:Predicates>
+                                    </L7p:ComparisonAssertion>
+                                    <L7p:SetVariable>
+
+                                    <L7p:Base64Expression stringValue="JHtwYXR0ZXJufQ0KPEw3ajpjb2wgIG5hbWU9ImNsaWVudF9uYW1lIiB0eXBlPSJqYXZhLmxhbmcuU3RyaW5nIj4ke2NsaWVudF9uYW1lLnJlc3VsdH08L0w3ajpjb2w+DQo8TDdqOmNvbCAgbmFtZT0iY2xpZW50X3Njb3BlIiB0eXBlPSJqYXZhLmxhbmcuU3RyaW5nIj4ke2NsaWVudF9zY29wZS5yZXN1bHR9PC9MN2o6Y29sPg0KPEw3ajpjb2wgIG5hbWU9ImNsaWVudF9zdGF0dXMiIHR5cGU9ImphdmEubGFuZy5TdHJpbmciPiR7Y2xpZW50X3N0YXR1cy5yZXN1bHR9PC9MN2o6Y29sPg=="/>
+                                    <L7p:VariableToSet stringValue="access_token_replacement"/>
+                                    </L7p:SetVariable>
+                                    <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="Results"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:assertionComment>
+                                    </wsp:All>
+                                    <wsp:All wsp:Usage="Required">
+                                    <L7p:CommentAssertion>
+                                    <L7p:Comment stringValue="Add NULL values for client_name, client_scope, client_status "/>
+                                    </L7p:CommentAssertion>
+                                    <L7p:SetVariable>
+
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+
+                                    <L7p:value stringValue="none"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+
+                                    <L7p:value stringValue="access_token did not exist"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+
+                                    <L7p:Base64Expression stringValue="JHtwYXR0ZXJufQ0KJHtub19jbGllbnRfaW5mb30="/>
+                                    <L7p:VariableToSet stringValue="access_token_replacement"/>
+                                    </L7p:SetVariable>
+                                    <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="No Results"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:assertionComment>
+                                    </wsp:All>
+                                    <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="Check results"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:assertionComment>
+                                    </wsp:OneOrMore>
+                                    <L7p:Regex>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="client info"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="add client info to response"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:AutoTarget booleanValue="false"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="current.xml"/>
+
+                                    <L7p:PatternContainsVariables booleanValue="true"/>
+                                    <L7p:Regex stringValue="${pattern}"/>
+                                    <L7p:Replace booleanValue="true"/>
+                                    <L7p:Replacement stringValue="${access_token_replacement}"/>
+                                    <L7p:Target target="OTHER"/>
+                                    </L7p:Regex>
+                                    <L7p:Regex>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="device"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="get all the rows that include details per device"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:AutoTarget booleanValue="false"/>
+                                    <L7p:CaptureVar stringValue="current.xml"/>
+                                    <L7p:FindAll booleanValue="true"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="current.xml"/>
+                                    <L7p:Regex stringValue="(&lt;L7j:row[>].*[&lt;]/L7j:row[>])"/>
+                                    <L7p:Replacement stringValue=""/>
+                                    <L7p:Target target="OTHER"/>
+                                    </L7p:Regex>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHtyZXN1bHRpbmcucm93c30NCiR7Y3VycmVudC54bWxbMV19"/>
+                                    <L7p:VariableToSet stringValue="resulting.rows"/>
+                                    </L7p:SetVariable>
+                                    <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="Get device overview"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:assertionComment>
+                                    </wsp:All>
+                                    <L7p:TrueAssertion>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="No rows to add"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    </L7p:TrueAssertion>
+                                    <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="Prepare results"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:assertionComment>
+                                </wsp:OneOrMore>
+                            </L7p:ForEachLoop>
+                            <L7p:assertionComment>
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="Tokens Associated"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:assertionComment>
+                        </wsp:All>
+                        <wsp:All wsp:Usage="Required">
+                            <L7p:CommentAssertion>
+                                <L7p:Comment stringValue="No tokens associated, so we want to return 1 overview entry where access_token is NULL"/>
+                            </L7p:CommentAssertion>
+                            <L7p:CassandraQuery>
+                                <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="Get device overview info"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                </L7p:AssertionComment>
+                                <L7p:ConnectionName stringValue="MAG_OAuth_Cassandra"/>
+                                <L7p:FetchSize intValue="5000"/>
+                                <L7p:GenerateXmlResult booleanValue="true"/>
+                                <L7p:MaxRecords intValue="1000"/>
+                                <L7p:NamingMap mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="access_token"/>
+                                    <L7p:value stringValue="access_token"/>
+                                    </L7p:entry>
+                                </L7p:NamingMap>
+                                <L7p:Prefix stringValue="queryDetails"/>
+                                <L7p:QueryDocument stringValueReference="inline"><![CDATA[SELECT
+                magidentifier AS MAG_IDENTIFIER,
+                devicename AS DEVICE_NAME,
+                devicestatus AS DEVICE_STATUS,
+                username AS DEVICE_USER,
+                certdn AS DEVICE_DN,
+                created AS DEVICE_CREATED,
+                updated AS DEVICE_UPDATED,
+                multiuser AS MULTIUSER,
+                access_token AS ACCESS_TOKEN,
+                csr_base64 AS CSR_BASE64,
+                signed_cert_base64 AS SIGNED_CERT_BASE64,
+                grace_expiration AS GRACE_EXPIRATION
+                FROM mag_msso_device_overview
+                WHERE magidentifier=${identifier.current}]]></L7p:QueryDocument>
+                                <L7p:QueryTimeout stringValueNull="null"/>
+                            </L7p:CassandraQuery>
+                            <L7p:SetVariable>
+                                <L7p:Base64Expression stringValue="JHtxdWVyeURldGFpbHMueG1sUmVzdWx0fQ=="/>
+                                <L7p:VariableToSet stringValue="current.xml"/>
+                            </L7p:SetVariable>
+                            <L7p:CommentAssertion>
+                                <L7p:Comment stringValue="Update client_name, client_status, client_scope fields to NULL"/>
+                            </L7p:CommentAssertion>
+                            <wsp:OneOrMore wsp:Usage="Required">
+                                <wsp:All wsp:Usage="Required">
+                                    <L7p:ComparisonAssertion>
+                                    <L7p:Expression1 stringValue="${queryDetails.queryresult.count}"/>
+                                    <L7p:Expression2 stringValue="0"/>
+                                    <L7p:Operator operator="GT"/>
+                                    <L7p:Predicates predicates="included">
+                                    <L7p:item binary="included">
+                                    <L7p:Operator operator="GT"/>
+                                    <L7p:RightValue stringValue="0"/>
+                                    </L7p:item>
+                                    </L7p:Predicates>
+                                    </L7p:ComparisonAssertion>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="PEw3ajpjb2wgIG5hbWU9ImFjY2Vzc190b2tlbiIgPjwhW0NEQVRBW05VTExdXT48L0w3ajpjb2w+"/>
+                                    <L7p:VariableToSet stringValue="pattern"/>
+                                    </L7p:SetVariable>
+                                    <L7p:SetVariable>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="none"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="access_token did not exist"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:Base64Expression stringValue="JHtwYXR0ZXJufQ0KJHtub19jbGllbnRfaW5mb30="/>
+                                    <L7p:VariableToSet stringValue="access_token_replacement"/>
+                                    </L7p:SetVariable>
+                                    <L7p:Regex>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="client info"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="add client info to response"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:AutoTarget booleanValue="false"/>
+                                    <L7p:OtherTargetMessageVariable stringValue="current.xml"/>
+                                    <L7p:PatternContainsVariables booleanValue="true"/>
+                                    <L7p:Regex stringValue="${pattern}"/>
+                                    <L7p:Replace booleanValue="true"/>
+                                    <L7p:Replacement stringValue="${access_token_replacement}"/>
+                                    <L7p:Target target="OTHER"/>
+                                    </L7p:Regex>
+                                    <L7p:Regex>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="device"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="get all the rows that include details per device"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:AutoTarget booleanValue="false"/>
+                                    <L7p:CaptureVar stringValue="current.xml"/>
+                                    <L7p:FindAll booleanValue="true"/>
+                                    <L7p:OtherTargetMessageVariable stringValue="current.xml"/>
+                                    <L7p:Regex stringValue="(&lt;L7j:row[>].*[&lt;]/L7j:row[>])"/>
+                                    <L7p:Replacement stringValue=""/>
+                                    <L7p:Target target="OTHER"/>
+                                    </L7p:Regex>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHtyZXN1bHRpbmcucm93c30NCiR7Y3VycmVudC54bWxbMV19"/>
+                                    <L7p:VariableToSet stringValue="resulting.rows"/>
+                                    </L7p:SetVariable>
+                                    <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="Results found"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:assertionComment>
+                                </wsp:All>
+                                <L7p:TrueAssertion>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="No rows to add"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                </L7p:TrueAssertion>
+                                <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="Prepare results"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                </L7p:assertionComment>
+                            </wsp:OneOrMore>
+                            <L7p:assertionComment>
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="No Tokens Associated"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:assertionComment>
+                        </wsp:All>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="Add Token Info"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:OneOrMore>
+                </L7p:ForEachLoop>
+                <L7p:SetVariable>
+                    <L7p:AssertionComment assertionComment="included">
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="LEFT.COMMENT"/>
+                                <L7p:value stringValue="resp"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="RIGHT.COMMENT"/>
+                                <L7p:value stringValue="set the content for the response"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:AssertionComment>
+                    <L7p:Base64Expression stringValue="PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxMN2o6Y2Fzc2FuZHJhUXVlcnlSZXN1bHQgeG1sbnM6TDdqPSJodHRwOi8vbnMubDd0ZWNoLmNvbS8yMDEyLzA4L2Nhc3NhbmRyYS1xdWVyeS1yZXN1bHQiPg0KJHtyZXN1bHRpbmcucm93c30NCjwvTDdqOmNhc3NhbmRyYVF1ZXJ5UmVzdWx0Pg=="/>
+                    <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                    <L7p:DataType variableDataType="message"/>
+                    <L7p:VariableToSet stringValue="resp"/>
+                </L7p:SetVariable>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="Overview"/>
+                        </L7p:entry>
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="Create the overview reponse"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:AuditDetailAssertion>
+                    <L7p:Detail stringValue="No query could be executed successfully. username='${username}'"/>
+                </L7p:AuditDetailAssertion>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue=""/>
+                    <L7p:VariableToSet stringValue="magidentifier"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="MDAw"/>
+                    <L7p:VariableToSet stringValue="error.code"/>
+                </L7p:SetVariable>
+                <L7p:FalseAssertion/>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="error"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+        </wsp:OneOrMore>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="dGV4dC94bWw7Y2hhcnNldD1VVEYtOA=="/>
+            <L7p:VariableToSet stringValue="content-type"/>
+        </L7p:SetVariable>
+        <L7p:XslTransformation>
+            <L7p:Direction intValue="-1"/>
+            <L7p:OtherTargetMessageVariable stringValue="resp"/>
+            <L7p:ResourceInfo staticResourceInfo="included">
+                <L7p:Document stringValueReference="inline"><![CDATA[<xsl:stylesheet version="1.0" xmlns:L7j-cassandra="http://ns.l7tech.com/2012/08/cassandra-query-result" xmlns:ns="http://ns.l7tech.com/2012/11/otk-tokenstore" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+                <xsl:output cdata-section-elements="ns:access_token ns:device_created ns:device_dn ns:mag_identifier ns:device_name ns:device_status ns:device_updated ns:device_user ns:multiuser ns:client_name ns:client_status ns:client_scope ns:csr_base64 ns:signed_cert_base64 ns:grace_expiration" encoding="UTF-8" indent="yes" method="xml" omit-xml-declaration="no"/>
+                <xsl:template match="L7j-cassandra:cassandraQueryResult">
+                <xsl:element name="ns:values">
+                <xsl:for-each select="L7j-cassandra:row">
+                <xsl:element name="ns:value">
+                <xsl:attribute name="index">
+                <xsl:value-of select="position()"/>
+                </xsl:attribute>
+                <xsl:for-each select="L7j-cassandra:col">
+                <xsl:element name="ns:{@name}">
+                <xsl:value-of select="text()"/>
+                </xsl:element>
+                </xsl:for-each>
+                </xsl:element>
+                </xsl:for-each>
+                </xsl:element>
+                </xsl:template>
+                </xsl:stylesheet>]]></L7p:Document>
+            </L7p:ResourceInfo>
+            <L7p:Target target="OTHER"/>
+            <L7p:TransformName stringValue=""/>
+            <L7p:XsltVersion stringValue="1.0"/>
+        </L7p:XslTransformation>
+    </wsp:All>
+</wsp:Policy>

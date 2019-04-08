@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="This is a SAML token server used by SAML grant type test client"/>
+        </L7p:CommentAssertion>
+        <L7p:SslAssertion/>
+        <L7p:HttpBasic/>
+        <L7p:Authentication>
+            <L7p:IdentityProviderOid goidValue="0000000000000000fffffffffffffffe"/>
+        </L7p:Authentication>
+        <L7p:SetVariable>
+            <L7p:AssertionComment assertionComment="included">
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue=" Audience restriction must be created in advance as multiple variables are used"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:AssertionComment>
+            <L7p:Base64Expression stringValue="JHtyZXF1ZXN0Lmh0dHAucGFyYW1ldGVyLmF1ZGllbmNlX3JlY2lwaWVudF9yZXN0cmljdGlvbn0="/>
+            <L7p:VariableToSet stringValue="audience_recipient_restriction"/>
+        </L7p:SetVariable>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <L7p:ComparisonAssertion>
+                <L7p:CaseSensitive booleanValue="false"/>
+                <L7p:Expression1 stringValue="${audience_recipient_restriction}"/>
+                <L7p:Operator operatorNull="null"/>
+                <L7p:Predicates predicates="included">
+                    <L7p:item dataType="included">
+                        <L7p:Type variableDataType="string"/>
+                    </L7p:item>
+                    <L7p:item binary="included">
+                        <L7p:Negated booleanValue="true"/>
+                        <L7p:Operator operator="EMPTY"/>
+                        <L7p:RightValue stringValue=""/>
+                    </L7p:item>
+                </L7p:Predicates>
+            </L7p:ComparisonAssertion>
+            <L7p:SetVariable>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue=" Audience restriction must be created in advance as multiple variables are used"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:Base64Expression stringValue="JHtyZXF1ZXN0LnVybC5wcm90b2NvbH06Ly8ke3JlcXVlc3QudXJsLmhvc3R9"/>
+                <L7p:VariableToSet stringValue="audience_recipient_restriction"/>
+            </L7p:SetVariable>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="==DEFAULT"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="// if audience_recipient_restriction is empty, set it to ${request.url.protocol}://${request.url.host}"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:OneOrMore>
+        <L7p:SamlIssuer>
+            <L7p:AssertionComment assertionComment="included">
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue=" Variable for audience and recipient restriction must be created in advance if more than one variable is referenced"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:AssertionComment>
+            <L7p:AudienceRestriction stringValue="${audience_recipient_restriction}"/>
+            <L7p:AuthenticationStatement samlAuthenticationInfo="included">
+                <L7p:AuthenticationMethods stringArrayValue="included"/>
+                <L7p:IncludeAuthenticationContextDeclaration booleanValue="false"/>
+            </L7p:AuthenticationStatement>
+            <L7p:NameQualifier stringValue=""/>
+            <L7p:SubjectConfirmationDataRecipient stringValue="${audience_recipient_restriction}"/>
+            <L7p:SubjectConfirmationMethodUri stringValue="urn:oasis:names:tc:SAML:1.0:cm:bearer"/>
+            <L7p:Version boxedIntegerValue="2"/>
+        </L7p:SamlIssuer>
+        <L7p:EncodeDecode>
+            <L7p:SourceVariableName stringValue="issuedSamlAssertion"/>
+            <L7p:TargetDataType variableDataType="string"/>
+            <L7p:TargetVariableName stringValue="samlBase64"/>
+            <L7p:TransformType transformType="BASE64_ENCODE"/>
+        </L7p:EncodeDecode>
+        <L7p:HardcodedResponse>
+            <L7p:AssertionComment assertionComment="included">
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="200"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="SAML token response"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:AssertionComment>
+            <L7p:Base64ResponseBody stringValue="PGh0bWw+CjxIRUFEPjxNRVRBIEhUVFAtRVFVSVY9J1BSQUdNQScgQ09OVEVOVD0nTk8tQ0FDSEUnPjxNRVRBIEhUVFAtRVFVSVY9J0NBQ0hFLUNPTlRST0wnIENPTlRFTlQ9J05PLUNBQ0hFJz48VElUTEU+U0FNTCAyLjAgQXV0by1QT1NUIGZvcm08L1RJVExFPjwvSEVBRD4KICAgPGJvZHkgb25Mb2FkPSJkb2N1bWVudC5mb3Jtc1swXS5zdWJtaXQoKSI+CjxOT1NDUklQVD5Zb3VyIGJyb3dzZXIgZG9lcyBub3Qgc3VwcG9ydCBKYXZhU2NyaXB0LiAgUGxlYXNlIGNsaWNrIHRoZSAnQ29udGludWUnIGJ1dHRvbiBiZWxvdyB0byBwcm9jZWVkLiA8YnI+PGJyPjwvTk9TQ1JJUFQ+CiAgICAgIDxmb3JtIGFjdGlvbj0iJHtyZXF1ZXN0Lmh0dHAucGFyYW1ldGVyLnJlZGlyZWN0X3VyaX0iIG1ldGhvZD0iUE9TVCI+CjxpbnB1dCB0eXBlPSJoaWRkZW4iIG5hbWU9IlNBTUxSZXNwb25zZSIgdmFsdWU9IiR7c2FtbEJhc2U2NH0iPgo8Tk9TQ1JJUFQ+PElOUFVUIFRZUEU9IlNVQk1JVCIgVkFMVUU9IkNvbnRpbnVlIj48L05PU0NSSVBUPgogICAgICA8L2Zvcm0+CiAgIDwvYm9keT4KPC9odG1sPg=="/>
+            <L7p:ResponseContentType stringValue="text/html; charset=UTF-8"/>
+        </L7p:HardcodedResponse>
+    </wsp:All>
+</wsp:Policy>

@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:AuditDetailAssertion>
+            <L7p:Detail stringValue="Policy Fragment: Rate Limit"/>
+            <L7p:Enabled booleanValue="false"/>
+        </L7p:AuditDetailAssertion>
+        <L7p:ApiPortalEncassIntegration/>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="Note workaround to select &quot;Spread limit over&quot; checkbox based on &quot;hardLimit&quot; argument into encapsulated assertion."/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtwb3J0YWwubWFuYWdlZC5zZXJ2aWNlLmFwaUlkfQ=="/>
+            <L7p:VariableToSet stringValue="counterName"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtyZXF1ZXN0LnRpbWUubG9jYWwueXl5eS1NTS1kZCdUJ0hIOm1tOnNzLlNTU30="/>
+            <L7p:VariableToSet stringValue="responseTimestamp"/>
+        </L7p:SetVariable>
+        <L7p:ExportVariables>
+            <L7p:ExportedVars stringArrayValue="included"/>
+        </L7p:ExportVariables>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <L7p:ComparisonAssertion>
+                <L7p:CaseSensitive booleanValue="false"/>
+                <L7p:Expression1 stringValue="${hardLimit}"/>
+                <L7p:Operator operatorNull="null"/>
+                <L7p:Predicates predicates="included">
+                    <L7p:item dataType="included">
+                        <L7p:Type variableDataType="boolean"/>
+                    </L7p:item>
+                    <L7p:item binary="included">
+                        <L7p:CaseSensitive booleanValue="false"/>
+                        <L7p:RightValue stringValue="true"/>
+                    </L7p:item>
+                </L7p:Predicates>
+            </L7p:ComparisonAssertion>
+            <L7p:ComparisonAssertion>
+                <L7p:CaseSensitive booleanValue="false"/>
+                <L7p:Expression1 stringValue="${hardLimit}"/>
+                <L7p:Operator operatorNull="null"/>
+                <L7p:Predicates predicates="included">
+                    <L7p:item dataType="included">
+                        <L7p:Type variableDataType="boolean"/>
+                    </L7p:item>
+                    <L7p:item binary="included">
+                        <L7p:CaseSensitive booleanValue="false"/>
+                        <L7p:RightValue stringValue="false"/>
+                    </L7p:item>
+                </L7p:Predicates>
+            </L7p:ComparisonAssertion>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="ZmFsc2U="/>
+                <L7p:VariableToSet stringValue="hardLimit"/>
+            </L7p:SetVariable>
+        </wsp:OneOrMore>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <L7p:ComparisonAssertion>
+                <L7p:CaseSensitive booleanValue="false"/>
+                <L7p:Expression1 stringValue="${counterName}"/>
+                <L7p:Operator operatorNull="null"/>
+                <L7p:Predicates predicates="included">
+                    <L7p:item dataType="included">
+                        <L7p:Type variableDataType="string"/>
+                    </L7p:item>
+                    <L7p:item binary="included">
+                        <L7p:CaseSensitive booleanValue="false"/>
+                        <L7p:Negated booleanValue="true"/>
+                        <L7p:Operator operator="EMPTY"/>
+                        <L7p:RightValue stringValue=""/>
+                    </L7p:item>
+                </L7p:Predicates>
+            </L7p:ComparisonAssertion>
+            <wsp:All wsp:Usage="Required">
+                <L7p:CustomizeErrorResponse>
+                    <L7p:Content stringValueReference="inline"><![CDATA[{
+  "counterName" : "${counterName}",
+  "error.message" : "counterName should be a non-empty string"
+}]]></L7p:Content>
+                    <L7p:ContentType stringValue="application/json"/>
+                    <L7p:ExtraHeaders nameValuePairArray="included"/>
+                </L7p:CustomizeErrorResponse>
+                <L7p:RaiseError/>
+            </wsp:All>
+        </wsp:OneOrMore>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <L7p:ComparisonAssertion>
+                <L7p:CaseSensitive booleanValue="false"/>
+                <L7p:Expression1 stringValue="${maxRequestsPerSecond}"/>
+                <L7p:Operator operatorNull="null"/>
+                <L7p:Predicates predicates="included">
+                    <L7p:item dataType="included">
+                        <L7p:Type variableDataType="int"/>
+                    </L7p:item>
+                    <L7p:item binary="included">
+                        <L7p:CaseSensitive booleanValue="false"/>
+                        <L7p:Operator operator="GT"/>
+                        <L7p:RightValue stringValue="0"/>
+                    </L7p:item>
+                </L7p:Predicates>
+            </L7p:ComparisonAssertion>
+            <wsp:All wsp:Usage="Required">
+                <L7p:ExportVariables>
+                    <L7p:ExportedVars stringArrayValue="included">
+                        <L7p:item stringValue="responseTimestamp"/>
+                    </L7p:ExportedVars>
+                </L7p:ExportVariables>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHtyZXF1ZXN0LnRpbWUubG9jYWwueXl5eS1NTS1kZCdUJ0hIOm1tOnNzLlNTU30="/>
+                    <L7p:VariableToSet stringValue="responseTimestamp"/>
+                </L7p:SetVariable>
+                <L7p:CustomizeErrorResponse>
+                    <L7p:Content stringValueReference="inline"><![CDATA[{
+"result":{
+	"transactionId":"${requestId}",
+	"code":"400",
+	"description":"Bad Request",
+	"descriptionDetail":"El parámetro maxRequestsPerSecond en Portal debe ser un entrero mayor que 0",
+	"responseTimestamp":"${responseTimestamp}"
+	}
+}]]></L7p:Content>
+                    <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                    <L7p:ExtraHeaders nameValuePairArray="included"/>
+                </L7p:CustomizeErrorResponse>
+                <L7p:RaiseError/>
+            </wsp:All>
+        </wsp:OneOrMore>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${hardLimit}"/>
+                    <L7p:Operator operatorNull="null"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item dataType="included">
+                            <L7p:Type variableDataType="boolean"/>
+                        </L7p:item>
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:RightValue stringValue="true"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <wsp:OneOrMore wsp:Usage="Required">
+                    <L7p:RateLimit>
+                        <L7p:CounterName stringValue="${counterName}"/>
+                        <L7p:HardLimit booleanValue="true"/>
+                        <L7p:MaxRequestsPerSecond stringValue="${maxRequestsPerSecond}"/>
+                    </L7p:RateLimit>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="JHtyZXF1ZXN0LnRpbWUubG9jYWwueXl5eS1NTS1kZCdUJ0hIOm1tOnNzLlNTU30="/>
+                            <L7p:VariableToSet stringValue="responseTimestamp"/>
+                        </L7p:SetVariable>
+                        <L7p:ExportVariables>
+                            <L7p:ExportedVars stringArrayValue="included">
+                                <L7p:item stringValue="responseTimestamp"/>
+                            </L7p:ExportedVars>
+                        </L7p:ExportVariables>
+                        <L7p:CustomizeErrorResponse>
+                            <L7p:Content stringValueReference="inline"><![CDATA[{
+"result":{
+	"transactionId":"${requestId}",
+	"code":"429",
+	"description":"Too Many Requests",
+	"descriptionDetail":"Límite de transacciones excedido",
+	"responseTimestamp":"${responseTimestamp}"
+	}
+}]]></L7p:Content>
+                            <L7p:ContentType stringValue="application/json"/>
+                            <L7p:ExtraHeaders nameValuePairArray="included"/>
+                            <L7p:HttpStatus stringValue="429"/>
+                        </L7p:CustomizeErrorResponse>
+                        <L7p:RaiseError/>
+                    </wsp:All>
+                </wsp:OneOrMore>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${hardLimit}"/>
+                    <L7p:Operator operatorNull="null"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item dataType="included">
+                            <L7p:Type variableDataType="boolean"/>
+                        </L7p:item>
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:RightValue stringValue="false"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <wsp:OneOrMore wsp:Usage="Required">
+                    <L7p:RateLimit>
+                        <L7p:CounterName stringValue="${counterName}"/>
+                        <L7p:MaxRequestsPerSecond stringValue="${maxRequestsPerSecond}"/>
+                    </L7p:RateLimit>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ExportVariables>
+                            <L7p:ExportedVars stringArrayValue="included">
+                                <L7p:item stringValue="responseTimestamp"/>
+                            </L7p:ExportedVars>
+                        </L7p:ExportVariables>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="JHtyZXF1ZXN0LnRpbWUubG9jYWwueXl5eS1NTS1kZCdUJ0hIOm1tOnNzLlNTU30="/>
+                            <L7p:VariableToSet stringValue="responseTimestamp"/>
+                        </L7p:SetVariable>
+                        <L7p:CustomizeErrorResponse>
+                            <L7p:Content stringValueReference="inline"><![CDATA[{
+"result":{
+	"transactionId":"${requestId}",
+	"code":"429",
+	"description":"Too Many Requests",
+	"descriptionDetail":"Límite de transacciones excedido",
+	"responseTimestamp":"${responseTimestamp}"
+	}
+}]]></L7p:Content>
+                            <L7p:ContentType stringValue="application/json"/>
+                            <L7p:ExtraHeaders nameValuePairArray="included"/>
+                            <L7p:HttpStatus stringValue="429"/>
+                        </L7p:CustomizeErrorResponse>
+                        <L7p:RaiseError/>
+                    </wsp:All>
+                </wsp:OneOrMore>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:CustomizeErrorResponse>
+                    <L7p:Content stringValueReference="inline"><![CDATA[{
+  "hardLimit" : "${hardLimit}",
+  "error.message" : "hardLimit must be a boolean with a value of true or false"
+}]]></L7p:Content>
+                    <L7p:ContentType stringValue="application/json"/>
+                    <L7p:ExtraHeaders nameValuePairArray="included"/>
+                </L7p:CustomizeErrorResponse>
+                <L7p:RaiseError/>
+            </wsp:All>
+        </wsp:OneOrMore>
+        <L7p:ExportVariables>
+            <L7p:ExportedVars stringArrayValue="included"/>
+        </L7p:ExportVariables>
+    </wsp:All>
+</wsp:Policy>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="Target Configuration Policy: &quot;mag manager endpoint configuration&quot;"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="=== Set custom values for Context Variables below ==="/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="aHR0cHM6Ly8ke2dhdGV3YXkuZXh0ZXJuYWwuY2x1c3Rlci5ob3N0bmFtZX06ODQ0My9hdXRoL29hdXRoL3YyL2F1dGhvcml6ZQ=="/>
+            <L7p:VariableToSet stringValue="authorization_endpoint"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="aHR0cHM6Ly8ke2dhdGV3YXkuZXh0ZXJuYWwuY2x1c3Rlci5ob3N0bmFtZX06ODQ0My9hdXRoL29hdXRoL3YyL3Rva2Vu"/>
+            <L7p:VariableToSet stringValue="token_endpoint"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="aHR0cHM6Ly8ke2dhdGV3YXkuZXh0ZXJuYWwuY2x1c3Rlci5ob3N0bmFtZX06ODQ0My9vcGVuaWQvY29ubmVjdC92MS91c2VyaW5mbw=="/>
+            <L7p:VariableToSet stringValue="resource_endpoint"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="aHR0cHM6Ly8ke2dhdGV3YXkuZXh0ZXJuYWwuY2x1c3Rlci5ob3N0bmFtZX06ODQ0My9hdXRoL29hdXRoL3YyL3Rva2VuL3Jldm9rZQ=="/>
+            <L7p:VariableToSet stringValue="revoke_token_endpoint"/>
+        </L7p:SetVariable>
+    </wsp:All>
+</wsp:Policy>

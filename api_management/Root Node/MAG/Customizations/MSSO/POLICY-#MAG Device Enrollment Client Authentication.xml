@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="This policy is used at '/connect/device/enrollment'"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="Modify this policy to change the way a client authenticates in order to access that API"/>
+        </L7p:CommentAssertion>
+        <L7p:Encapsulated>
+            <L7p:EncapsulatedAssertionConfigGuid stringValue="47f768f4-b478-472b-a1ee-10f4b6e76f99"/>
+            <L7p:EncapsulatedAssertionConfigName stringValue="OTK Require SSL (with Client Certificate)"/>
+            <L7p:Parameters mapValue="included">
+                <L7p:entry>
+                    <L7p:key stringValue="apiPrefix"/>
+                    <L7p:value stringValue=""/>
+                </L7p:entry>
+                <L7p:entry>
+                    <L7p:key stringValue="requireClientCert"/>
+                    <L7p:value stringValue="false"/>
+                </L7p:entry>
+            </L7p:Parameters>
+        </L7p:Encapsulated>
+    </wsp:All>
+</wsp:Policy>

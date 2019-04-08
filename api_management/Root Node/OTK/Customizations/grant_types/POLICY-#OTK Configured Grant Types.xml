@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="Target Configuration Policy: &quot;OTK Configured Grant Types&quot;"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="=== Set custom values for Context Variables below ==="/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="=== To add new custom grant types, set the variable &quot;grant_type_custom&quot; to a ==="/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="=== space separated list (for multiple grant types) ==="/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="== Enable the two lines below to enable custom grant types"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="== Implement custom grant type in OTK grant_type=CUSTOM"/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="Z3JhbnRUeXBlQ3VzdG9tMSBncmFudFR5cGVDdXN0b20y"/>
+            <L7p:Enabled booleanValue="false"/>
+            <L7p:VariableToSet stringValue="grant_type_custom"/>
+        </L7p:SetVariable>
+        <L7p:ExportVariables>
+            <L7p:Enabled booleanValue="false"/>
+            <L7p:ExportedVars stringArrayValue="included">
+                <L7p:item stringValue="grant_type_custom"/>
+            </L7p:ExportedVars>
+        </L7p:ExportVariables>
+    </wsp:All>
+</wsp:Policy>

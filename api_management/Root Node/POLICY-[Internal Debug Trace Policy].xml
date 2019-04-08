@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="A simple debug trace policy."/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="This policy will be invoked after every assertion for any service with debug tracing enabled."/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="For example, we can trigger auditing of trace information about the assertion that just finished."/>
+        </L7p:CommentAssertion>
+        <L7p:AuditAssertion>
+            <L7p:SaveRequest booleanValue="true"/>
+            <L7p:SaveResponse booleanValue="true"/>
+        </L7p:AuditAssertion>
+        <L7p:AuditDetailAssertion>
+            <L7p:Detail stringValue="TRACE: service.name=${trace.service.name} policy.name=${trace.policy.name} policy.guid=${trace.policy.guid} assertion.number=${trace.assertion.numberstr} assertion.shortname=${trace.assertion.shortname} assertion.start=${trace.assertion.start.ms} assertion.latency=${trace.assertion.latency.ms} status=${trace.status}"/>
+        </L7p:AuditDetailAssertion>
+    </wsp:All>
+</wsp:Policy>

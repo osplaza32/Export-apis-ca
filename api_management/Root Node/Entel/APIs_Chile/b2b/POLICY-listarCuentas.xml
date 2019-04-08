@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:HtmlFormDataAssertion>
+                    <L7p:AllowGet booleanValue="true"/>
+                    <L7p:DisallowOtherFields booleanValue="true"/>
+                    <L7p:FieldSpecs htmlFormFieldSpecArray="included">
+                        <L7p:item htmlFormFieldSpec="included">
+                            <L7p:AllowEmpty boxedBooleanValue="false"/>
+                            <L7p:AllowedLocation fieldLocation="requestUrl"/>
+                            <L7p:DataType fieldDataType="string"/>
+                            <L7p:MaxOccurs intValue="1"/>
+                            <L7p:MinOccurs intValue="1"/>
+                            <L7p:Name stringValue="rutEmpresa"/>
+                        </L7p:item>
+                        <L7p:item htmlFormFieldSpec="included">
+                            <L7p:AllowEmpty boxedBooleanValue="true"/>
+                            <L7p:AllowedLocation fieldLocation="requestUrl"/>
+                            <L7p:DataType fieldDataType="string"/>
+                            <L7p:MaxOccurs intValue="1"/>
+                            <L7p:Name stringValue="rutAdmin"/>
+                        </L7p:item>
+                    </L7p:FieldSpecs>
+                </L7p:HtmlFormDataAssertion>
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${request.http.parameter.rutEmpresa}"/>
+                    <L7p:Operator operatorNull="null"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item regex="included">
+                            <L7p:Pattern stringValue="^\d{9}"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="NDAw"/>
+                    <L7p:VariableToSet stringValue="code"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="U29saWNpdHVkIGluY29ycmVjdGE="/>
+                    <L7p:VariableToSet stringValue="description"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="TGEgc29saWNpdHVkIGNvbnRpZW5lIHNpbnRheGlzIGVycsOzbmVhIHkgbm8gZGViZXLDrWEgcmVwZXRpcnNlLiBQYXLDoW1ldHJvIHJ1dEVtcHJlc2EgZGViZSBzZXIgbnVtw6lyaWNvIHkgb2JsaWdhdG9yaW8="/>
+                    <L7p:VariableToSet stringValue="descriptionDetail"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHtyZXF1ZXN0LnRpbWUubG9jYWwueXl5eS9NTS9kZCdUJ0hIOm1tOnNzLlNTU30="/>
+                    <L7p:VariableToSet stringValue="responseTimestamp"/>
+                </L7p:SetVariable>
+                <L7p:CustomizeErrorResponse>
+                    <L7p:Content stringValueReference="inline"><![CDATA[{
+"result":{
+	"transactionId":"${requestId}",
+	"code":"${code}",
+	"description":"${description}",
+	"descriptionDetail":"${descriptionDetail}",
+	"responseTimestamp":"${responseTimestamp}"
+	}
+}]]></L7p:Content>
+                    <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                    <L7p:ExtraHeaders nameValuePairArray="included"/>
+                    <L7p:HttpStatus stringValue="400"/>
+                </L7p:CustomizeErrorResponse>
+                <L7p:RaiseError/>
+            </wsp:All>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="validar parametros query"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:OneOrMore>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:JdbcQuery>
+                    <L7p:AssertionFailureEnabled booleanValue="false"/>
+                    <L7p:ConnectionName stringValue="POS_BAC"/>
+                    <L7p:ConvertVariablesToStrings booleanValue="false"/>
+                    <L7p:MaxRecords intValue="10000"/>
+                    <L7p:SqlQuery stringValueReference="inline"><![CDATA[SELECT CUSTCODE CUENTA_CLIE
+FROM  CUSTOMER_ALL CUA
+  , PEMP_CUENTASATIENDE CCTE
+WHERE CUA.CUSTCODE = CCTE.CUENNRO
+  AND CUA.CSTYPE = 'a'
+  AND CUA.CSSOCIALSECNO = UPPER(LPAD(${request.http.parameter.rutEmpresa}, 9, 0))
+GROUP BY CUSTCODE]]></L7p:SqlQuery>
+                </L7p:JdbcQuery>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHtqZGJjUXVlcnkucXVlcnlyZXN1bHQuY291bnR9"/>
+                    <L7p:DataType variableDataType="int"/>
+                    <L7p:VariableToSet stringValue="countResultQuery"/>
+                </L7p:SetVariable>
+                <wsp:OneOrMore wsp:Usage="Required">
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${countResultQuery}"/>
+                            <L7p:Operator operatorNull="null"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="int"/>
+                                </L7p:item>
+                                <L7p:item binary="included">
+                                    <L7p:Operator operator="GE"/>
+                                    <L7p:RightValue stringValue="1"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:Join>
+                            <L7p:InputVariable stringValue="jdbcQuery.cuenta_clie"/>
+                            <L7p:JoinSubstring stringValue="&quot;,&quot;"/>
+                            <L7p:OutputVariable stringValue="cuentas"/>
+                        </L7p:Join>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="WyIke2N1ZW50YXN9Il0="/>
+                            <L7p:VariableToSet stringValue="cuentas"/>
+                        </L7p:SetVariable>
+                        <wsp:OneOrMore wsp:Usage="Required">
+                            <wsp:All wsp:Usage="Required">
+                                <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHtyZXF1ZXN0LnVybC5xdWVyeX0="/>
+                                    <L7p:VariableToSet stringValue="uri1"/>
+                                </L7p:SetVariable>
+                                <L7p:ComparisonAssertion>
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Expression1 stringValue="${request.url.queryi}"/>
+                                    <L7p:Expression2 stringValue="rutAdmin"/>
+                                    <L7p:Negate booleanValue="true"/>
+                                    <L7p:Operator operator="CONTAINS"/>
+                                    <L7p:Predicates predicates="included">
+                                    <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Negated booleanValue="true"/>
+                                    <L7p:Operator operator="CONTAINS"/>
+                                    <L7p:RightValue stringValue="rutAdmin"/>
+                                    </L7p:item>
+                                    </L7p:Predicates>
+                                </L7p:ComparisonAssertion>
+                                <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHtyZXF1ZXN0LnRpbWUubG9jYWwuZGQvTU0veXl5eSdUJ0hIOm1tOnNzLlNTU30="/>
+                                    <L7p:VariableToSet stringValue="responseTimestamp"/>
+                                </L7p:SetVariable>
+                                <L7p:HardcodedResponse>
+                                    <L7p:Base64ResponseBody stringValue="ewogICAgInJlc3VsdCI6IHsKICAgICAgICAidHJhbnNhY3Rpb25JZCI6ICIke3JlcXVlc3RJZH0iLAogICAgICAgICJjb2RlIjogIjIwMCIsCiAgICAgICAgImRlc2NyaXB0aW9uIjogIk9LIiwKICAgICAgICAiZGVzY3JpcHRpb25EZXRhaWwiOiAiT3BlcmFjacOzbiByZWFsaXphZGEgZXhpdG9zYW1lbnRlIiwKICAgICAgICAicmVzcG9uc2VUaW1lc3RhbXAiOiAiJHtyZXF1ZXN0LnRpbWUubG9jYWwuZGQvTU0veXl5eSdUJ0hIOm1tOnNzLlNTU30iCiAgICB9LAogICAgImN1ZW50YXNFbXByZXNhIjogJHtjdWVudGFzfQp9"/>
+                                    <L7p:ResponseContentType stringValue="application/json; charset=UTF-8"/>
+                                </L7p:HardcodedResponse>
+                            </wsp:All>
+                            <wsp:OneOrMore wsp:Usage="Required">
+                                <wsp:All wsp:Usage="Required">
+                                    <L7p:JdbcQuery>
+                                    <L7p:AssertionFailureEnabled booleanValue="false"/>
+                                    <L7p:ConnectionName stringValue="POS_BAC"/>
+                                    <L7p:ConvertVariablesToStrings booleanValue="false"/>
+                                    <L7p:MaxRecords intValue="10000"/>
+                                    <L7p:SqlQuery stringValueReference="inline"><![CDATA[SELECT CUSTCODE CUENTA_CLIE, '1' CTA_EMPRESA,  COUNT(*) NUM
+FROM  CUSTOMER_ALL CUA
+  , PEMP_CUENTASATIENDE CCTE
+WHERE CUA.CUSTCODE = CCTE.CUENNRO
+  AND CUA.CSTYPE = 'a'
+  AND CUA.CSSOCIALSECNO = UPPER(LPAD(${request.http.parameter.rutEmpresa}, 9, 0))
+  AND CCTE.RUTUSUARIO = UPPER(${request.http.parameter.rutAdmin})
+GROUP BY CUSTCODE
+HAVING COUNT(*) = 1
+ORDER BY CUENTA_CLIE]]></L7p:SqlQuery>
+                                    <L7p:VariablePrefix stringValue="jdbcQuery2"/>
+                                    </L7p:JdbcQuery>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHtqZGJjUXVlcnkyLnF1ZXJ5cmVzdWx0LmNvdW50fQ=="/>
+                                    <L7p:DataType variableDataType="int"/>
+                                    <L7p:VariableToSet stringValue="countResultQuery"/>
+                                    </L7p:SetVariable>
+                                    <wsp:OneOrMore wsp:Usage="Required">
+                                    <wsp:All wsp:Usage="Required">
+                                    <L7p:ComparisonAssertion>
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Expression1 stringValue="${countResultQuery}"/>
+                                    <L7p:Operator operatorNull="null"/>
+                                    <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="int"/>
+                                    </L7p:item>
+                                    <L7p:item binary="included">
+                                    <L7p:Operator operator="GE"/>
+                                    <L7p:RightValue stringValue="1"/>
+                                    </L7p:item>
+                                    </L7p:Predicates>
+                                    </L7p:ComparisonAssertion>
+                                    <L7p:Join>
+                                    <L7p:InputVariable stringValue="jdbcQuery2.cuenta_clie"/>
+                                    <L7p:JoinSubstring stringValue="&quot;,&quot;"/>
+                                    <L7p:OutputVariable stringValue="cuentasAdmin"/>
+                                    </L7p:Join>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="WyIke2N1ZW50YXNBZG1pbn0iXQ=="/>
+                                    <L7p:VariableToSet stringValue="cuentasAdmin"/>
+                                    </L7p:SetVariable>
+                                    <L7p:HardcodedResponse>
+                                    <L7p:Base64ResponseBody stringValue="ewogICAgInJlc3VsdCI6IHsKICAgICAgICAidHJhbnNhY3Rpb25JZCI6ICIke3JlcXVlc3RJZH0iLAogICAgICAgICJjb2RlIjogIjIwMCIsCiAgICAgICAgImRlc2NyaXB0aW9uIjogIk9LIiwKICAgICAgICAiZGVzY3JpcHRpb25EZXRhaWwiOiAiT3BlcmFjacOzbiByZWFsaXphZGEgZXhpdG9zYW1lbnRlIiwKICAgICAgICAicmVzcG9uc2VUaW1lc3RhbXAiOiAiJHtyZXF1ZXN0LnRpbWUubG9jYWwuZGQvTU0veXl5eSdUJ0hIOm1tOnNzLlNTU30iCiAgICB9LAogICAgImN1ZW50YXNFbXByZXNhIjogJHtjdWVudGFzfSwKICAgICJjdWVudGFzQWRtaW4iOiAke2N1ZW50YXNBZG1pbn0KfQ=="/>
+                                    <L7p:ResponseContentType stringValue="application/json; charset=UTF-8"/>
+                                    </L7p:HardcodedResponse>
+                                    <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="count result query = 1"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:assertionComment>
+                                    </wsp:All>
+                                    <wsp:All wsp:Usage="Required">
+                                    <L7p:HardcodedResponse>
+                                    <L7p:Base64ResponseBody stringValue="ewogICAgInJlc3VsdCI6IHsKICAgICAgICAidHJhbnNhY3Rpb25JZCI6ICIke3JlcXVlc3RJZH0iLAogICAgICAgICJjb2RlIjogIjIwMCIsCiAgICAgICAgImRlc2NyaXB0aW9uIjogIk9LIiwKICAgICAgICAiZGVzY3JpcHRpb25EZXRhaWwiOiAiT3BlcmFjacOzbiByZWFsaXphZGEgZXhpdG9zYW1lbnRlIiwKICAgICAgICAicmVzcG9uc2VUaW1lc3RhbXAiOiAiJHtyZXF1ZXN0LnRpbWUubG9jYWwuZGQvTU0veXl5eSdUJ0hIOm1tOnNzLlNTU30iCiAgICB9LAogICAgImN1ZW50YXNFbXByZXNhIjogJHtjdWVudGFzfSwKImN1ZW50YXNBZG1pbiI6IG51bGwKfQ=="/>
+                                    <L7p:ResponseContentType stringValue="application/json; charset=UTF-8"/>
+                                    </L7p:HardcodedResponse>
+                                    </wsp:All>
+                                    </wsp:OneOrMore>
+                                </wsp:All>
+                            </wsp:OneOrMore>
+                        </wsp:OneOrMore>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="count result query = 1"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="NDIy"/>
+                            <L7p:VariableToSet stringValue="codeMigration"/>
+                        </L7p:SetVariable>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="RW50aWRhZCBubyBwcm9jZXNhZGE="/>
+                            <L7p:VariableToSet stringValue="description"/>
+                        </L7p:SetVariable>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="Tm8gZXhpc3RlbiBjdWVudGFzIGFzb2NpYWRhcyBhbCBydXQgZGUgbGEgZW1wcmVzYQ=="/>
+                            <L7p:VariableToSet stringValue="descriptionDetail"/>
+                        </L7p:SetVariable>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="JHtyZXF1ZXN0LnRpbWUubG9jYWwuZGQvTU0veXl5eSdUJ0hIOm1tOnNzLlNTU30="/>
+                            <L7p:VariableToSet stringValue="responseTimestamp"/>
+                        </L7p:SetVariable>
+                        <L7p:CustomizeErrorResponse>
+                            <L7p:Content stringValueReference="inline"><![CDATA[{
+    "result": {
+        "transactionId": "${requestId}",
+        "code": "${codeMigration}",
+        "description": "Error interno en el servidor",
+        "descriptionDetail": "${descriptionDetail}",
+        "responseTimestamp": "${responseTimestamp}"
+    }
+}]]></L7p:Content>
+                            <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                            <L7p:ExtraHeaders nameValuePairArray="included"/>
+                            <L7p:HttpStatus stringValue="422"/>
+                        </L7p:CustomizeErrorResponse>
+                        <L7p:RaiseError/>
+                    </wsp:All>
+                </wsp:OneOrMore>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="NTAw"/>
+                    <L7p:VariableToSet stringValue="codeMigration"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="RXJyb3IgaW50ZXJubyBlbiBlbCBzZXJ2aWRvcg=="/>
+                    <L7p:VariableToSet stringValue="description"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="RXJyb3IgaW50ZW50YW5kbyBjb25lY3RhciBhIGJhc2UgZGUgZGF0b3M="/>
+                    <L7p:VariableToSet stringValue="descriptionDetail"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHtyZXF1ZXN0LnRpbWUubG9jYWwuZGQvTU0veXl5eSdUJ0hIOm1tOnNzLlNTU30="/>
+                    <L7p:VariableToSet stringValue="responseTimestamp"/>
+                </L7p:SetVariable>
+                <L7p:AuditDetailAssertion>
+                    <L7p:CustomLoggerSuffix stringValue="entel.api.syslog.error"/>
+                    <L7p:Detail stringValueReference="inline"><![CDATA[REQUESTID: ${requestId} | EVENTID: ${request.http.header.eventId} | APIM ${service.name} Database Failed | IS STATUS: 500 | IS URI: N/A | IS REQUEST: SELECT CUSTCODE CUENTA_CLIE
+FROM  CUSTOMER_ALL CUA
+  , PEMP_CUENTASATIENDE CCTE
+WHERE CUA.CUSTCODE = CCTE.CUENNRO
+  AND CUA.CSTYPE = 'a'
+  AND CUA.CSSOCIALSECNO = UPPER(LPAD('${request.http.parameter.rutEmpresa}', 9, 0))
+GROUP BY CUSTCODE | IS RESPONSE: Database error | TIMESTAMP: ${request.time.local.yyyy-MM-dd'T'HH:mm:ss.SSS}]]></L7p:Detail>
+                    <L7p:Level stringValue="WARNING"/>
+                    <L7p:LoggingOnly booleanValue="true"/>
+                </L7p:AuditDetailAssertion>
+                <L7p:CustomizeErrorResponse>
+                    <L7p:Content stringValueReference="inline"><![CDATA[{
+    "result": {
+        "transactionId": "${requestId}",
+        "code": "${codeMigration}",
+        "description": "Error interno en el servidor",
+        "descriptionDetail": "${descriptionDetail}",
+        "responseTimestamp": "${responseTimestamp}"
+    }
+}]]></L7p:Content>
+                    <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                    <L7p:ExtraHeaders nameValuePairArray="included"/>
+                </L7p:CustomizeErrorResponse>
+                <L7p:RaiseError/>
+            </wsp:All>
+        </wsp:OneOrMore>
+    </wsp:All>
+</wsp:Policy>

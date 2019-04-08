@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:HttpRoutingAssertion>
+            <L7p:CustomIpAddresses stringArrayValue="included">
+                <L7p:item stringValue="129.152.171.133"/>
+            </L7p:CustomIpAddresses>
+            <L7p:FollowRedirects booleanValue="true"/>
+            <L7p:ForceIncludeRequestBody booleanValue="true"/>
+            <L7p:Login stringValue="Integracion@entel1.test"/>
+            <L7p:Password stringValue="3nt3l123"/>
+            <L7p:ProtectedServiceUrl stringValue="https://api.etadirect.com/rest/ofscCore/v1/activities"/>
+            <L7p:ProxyHost stringValue="10.49.10.9"/>
+            <L7p:ProxyPort stringValue="8080"/>
+            <L7p:RequestHeaderRules httpPassthroughRuleSet="included">
+                <L7p:ForwardAll booleanValue="true"/>
+                <L7p:Rules httpPassthroughRules="included">
+                    <L7p:item httpPassthroughRule="included">
+                        <L7p:Name stringValue="Cookie"/>
+                    </L7p:item>
+                    <L7p:item httpPassthroughRule="included">
+                        <L7p:Name stringValue="SOAPAction"/>
+                    </L7p:item>
+                </L7p:Rules>
+            </L7p:RequestHeaderRules>
+            <L7p:RequestParamRules httpPassthroughRuleSet="included">
+                <L7p:ForwardAll booleanValue="true"/>
+                <L7p:Rules httpPassthroughRules="included"/>
+            </L7p:RequestParamRules>
+            <L7p:ResponseHeaderRules httpPassthroughRuleSet="included">
+                <L7p:ForwardAll booleanValue="true"/>
+                <L7p:Rules httpPassthroughRules="included">
+                    <L7p:item httpPassthroughRule="included">
+                        <L7p:Name stringValue="Set-Cookie"/>
+                    </L7p:item>
+                </L7p:Rules>
+            </L7p:ResponseHeaderRules>
+            <L7p:TlsTrustedCertGoids goidArrayValue="included">
+                <L7p:item goidValue="74fdc8cae5418cdf3f8d63ef9f47f58b"/>
+            </L7p:TlsTrustedCertGoids>
+            <L7p:TlsTrustedCertNames stringArrayValue="included">
+                <L7p:item stringValue="*.etadirect.com"/>
+            </L7p:TlsTrustedCertNames>
+        </L7p:HttpRoutingAssertion>
+    </wsp:All>
+</wsp:Policy>

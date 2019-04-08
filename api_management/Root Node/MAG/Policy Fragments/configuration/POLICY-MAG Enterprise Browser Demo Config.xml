@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === ***  THIS POLICY IS READ ONLY ***"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === If you have the need to customize this policy"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === please contact CA APIM Support so we can improve customization capability"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="=== This is a demo policy to configure several values to be used with the Enterprise Browser demo"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="=== By default there is no need to modify this policy."/>
+        </L7p:CommentAssertion>
+        <wsp:All wsp:Usage="Required">
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="=== Hosts"/>
+            </L7p:CommentAssertion>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="aHR0cDovLyR7cmVxdWVzdC51cmwuaG9zdH06ODA4MA=="/>
+                <L7p:VariableToSet stringValue="host_enterprise_browser_icon_server"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="JHtyZXF1ZXN0LnVybC5wcm90b2NvbH06Ly8ke3JlcXVlc3QudXJsLmhvc3R9OiR7cmVxdWVzdC51cmwucG9ydH0="/>
+                <L7p:VariableToSet stringValue="host_enterprise_browser_demo_app"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="JHtyZXF1ZXN0LnVybC5wcm90b2NvbH06Ly8ke3JlcXVlc3QudXJsLmhvc3R9OiR7cmVxdWVzdC51cmwucG9ydH0="/>
+                <L7p:VariableToSet stringValue="host_saml_recipient_server"/>
+            </L7p:SetVariable>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="=== Paths"/>
+            </L7p:CommentAssertion>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="L2Nvbm5lY3QvZW50ZXJwcmlzZS9icm93c2VyL2ljb24vYXBwYQ=="/>
+                <L7p:VariableToSet stringValue="path_enterprise_browser_icon_appa"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="L2Nvbm5lY3QvZW50ZXJwcmlzZS9icm93c2VyL2ljb24vYXBwYg=="/>
+                <L7p:VariableToSet stringValue="path_enterprise_browser_icon_appb"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="L2Nvbm5lY3QvZW50ZXJwcmlzZS9icm93c2VyL2ljb24vYXBwYw=="/>
+                <L7p:VariableToSet stringValue="path_enterprise_browser_icon_appc"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="L2Nvbm5lY3QvZW50ZXJwcmlzZS9icm93c2VyL2hlbHBlcg=="/>
+                <L7p:VariableToSet stringValue="path_enterprise_browser_helper"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="L2Nvbm5lY3QvZW50ZXJwcmlzZS9icm93c2VyL3dlYnNzby90aW1lc2VydmljZQ=="/>
+                <L7p:VariableToSet stringValue="path_enterprise_browser_demo_app"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="L2Nvbm5lY3QvZW50ZXJwcmlzZS9icm93c2VyL3dlYnNzby9sb2dpbg=="/>
+                <L7p:VariableToSet stringValue="path_saml_recipient_server"/>
+            </L7p:SetVariable>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="=== Locations, combination of host and path"/>
+            </L7p:CommentAssertion>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="JHtob3N0X2VudGVycHJpc2VfYnJvd3Nlcl9pY29uX3NlcnZlcn0ke3BhdGhfZW50ZXJwcmlzZV9icm93c2VyX2ljb25fYXBwYX0="/>
+                <L7p:VariableToSet stringValue="location_enterprise_icon_appa"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="JHtob3N0X2VudGVycHJpc2VfYnJvd3Nlcl9pY29uX3NlcnZlcn0ke3BhdGhfZW50ZXJwcmlzZV9icm93c2VyX2ljb25fYXBwYn0="/>
+                <L7p:VariableToSet stringValue="location_enterprise_icon_appb"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="JHtob3N0X2VudGVycHJpc2VfYnJvd3Nlcl9pY29uX3NlcnZlcn0ke3BhdGhfZW50ZXJwcmlzZV9icm93c2VyX2ljb25fYXBwY30="/>
+                <L7p:VariableToSet stringValue="location_enterprise_icon_appc"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="L2Nvbm5lY3QvZW50ZXJwcmlzZS9icm93c2VyL3dlYnNzby9hdXRob3JpemUvYXBwYw=="/>
+                <L7p:VariableToSet stringValue="path_enterprise_browser_authorize_appc"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="JHtob3N0X2VudGVycHJpc2VfYnJvd3Nlcl9pY29uX3NlcnZlcn0ke3BhdGhfZW50ZXJwcmlzZV9icm93c2VyX2hlbHBlcn0="/>
+                <L7p:VariableToSet stringValue="location_enterprise_browser_helper"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="JHtob3N0X2VudGVycHJpc2VfYnJvd3Nlcl9kZW1vX2FwcH0ke3BhdGhfZW50ZXJwcmlzZV9icm93c2VyX2F1dGhvcml6ZV9hcHBjfQ=="/>
+                <L7p:VariableToSet stringValue="location_enterprise_web_authorize_appc"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="JHtob3N0X2VudGVycHJpc2VfYnJvd3Nlcl9kZW1vX2FwcH0ke3BhdGhfZW50ZXJwcmlzZV9icm93c2VyX2RlbW9fYXBwfQ=="/>
+                <L7p:VariableToSet stringValue="location_enterprise_browser_demo_app"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="JHtob3N0X3NhbWxfcmVjaXBpZW50X3NlcnZlcn0ke3BhdGhfc2FtbF9yZWNpcGllbnRfc2VydmVyfQ=="/>
+                <L7p:VariableToSet stringValue="location_saml_server_login"/>
+            </L7p:SetVariable>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="Variables"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:All>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${icon}"/>
+                    <L7p:Expression2 stringValue="appa"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:RightValue stringValue="appa"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="aVZCT1J3MEtHZ29BQUFBTlNVaEVVZ0FBQUhJQUFBQnlDQUlBQUFBQXZ4SXFBQUFHYmtsRVFWUjRuTzJjWDB3VVJ4akFaeGNQdUJNUA0KOVFxWGVJQlhrRk1FaEFab1VmUVUwQlJUYmJYV1dyVkJhU1JGaGRpa1RmdlcxNzQyYVZLaXFWV2pqWXF0Yldvd3RyUWwvQlZCYWJVVw0Ka0g5RkN1SlpCQUVCUFk2N1BoQUp6YzBjeDk1OU14dnovWjQyTTdPN1gzNjN6TXgrTTR0RTN2cUNJUDVHRmgzQTh3bHFCUUcxZ29CYQ0KUVVDdElLQldFRkFyQ0tnVkJOUUtBbW9GQWJXQ2dGcEJRSzBnb0ZZUVVDc0lxQlVFMUFvQ2FnVUJ0WUtBV2tGQXJTQ2dWaEJRS3dpbw0KRlFUVUNnSnFCUUcxZ29CYVFVQ3RJS0JXRUZBckNLZ1ZCTlFLd2p6UkFUQkpNSVV1Q05aNGFORDhZT1RSeUZOdThjd0p0V3FWcGF1Zg0KN1FyUkJucG9VbHphZU9oa0xiZUk1b1JLTzRGc1M3aG5wNFNRek1TbGZJSlJnRXExYms2ZVhkbUtLRU9DS1pSRE1BcFFxZFl0TDhkNA0KMCt6QStqam9TSlNoUnEycDVzWExJdzNldE55eDFrSWtDVG9lQmFoUmEzN21TaTliUm9UcHR5UXVBUTFHR2VyVEtrdmJNeXplTjgveg0KK2pmZ2llcTA3azB6aDRYcTNNdWJ1L3NkazA3MzhweTA2R0NkcCttdEVGU25OVGVUUGdxZEtXK3FhKzUxTDljRmFZcXN5NEdEbWpQcQ0KMGhvV3FzMU1OcnVYTzUydTQ5VnRwUTJkMUxQMmJsQmRQNkF1clljelYyZ0NLQ0ZkYTdsbmV6Uis2bXFIMCtseXIwMktDVTgxTDRhUA0KYmc2b1MrdHV4anowdTlwV1FramY0RmhkQzZVZklJUVVaTWNEaGpWM1ZLVFZHaHR1aWFBOGRIYUg4MmgxMjlSeFNmVWQ2cm5iMWxoSQ0KZ0lvbXNDclNtcDlON3lLcmJuVS9IclZQSFJkWHQ0L2JIZTV0REhwdFhycFhMMlo4VUkxV2pmejY2bGhxVFVsTjYvU3hmWHppMThZdQ0KYWpQV0ZFSUlhdEZhc0dhWlhoZmtYajc2eEg2c3JtTm15VGVWemRRcnJFdU1qSHhoUGtod2MwY3RXdDlsdkN5Vk5YWVIrK1RNa25NMw0KdWg4T2o3bTNESkRsd2l5MVBMQ3EwQnBqWExBNnprU3RPbGZsTmtZNVhaZnEycW1OMzdhaTFoa2N5b3FUWmNvNC9uQjQvSHhqdDN2NQ0KeVFyNmZNQnNESDB0a2Y3emNFWUZXaVZwNTlvVjFKckw5UjJFTnYrdmFMVjE5ZzFTVDNrdlN4VnZYT0sxYmswMFJZYnJxVlZuM0h1QQ0KWjF5c2JhV1c1NlJGQjJyRloxN0VhODFqakRNOS9jTS9OL1d4empwVzN1S2lQTWRFRjZRNXNsNTg1a1d3MW1DZEppZU5QbzMva1RFdQ0KVGRGbUc3blJScGV1aHN5TFlLMUYxdVhhUVBxaU9tdGNtcWFFMFVVa3hZU25MQldjZVJHc2RjOEdlZy9RMmpQUTBQWFE4N25GVmEzMg0KaVVscWxmRE1pMGl0TDBVdFNvNHhVcXUrWjR4SU0zazhhaSsvZVpkYXRUMGpWbXptUmFUVzl4bTVGWmVMSEsrY3BRZVk0aXlqSHpEbw0KZGZ2VG81Vkg1alBpdE1yU214bjBJZnYzOXZ0dHRoRnZybkdxdm5Ob2xMNE5hNS9RcFVOaFdsbExnZVJaMHRvckhLN1NldnFFWVYxaQ0KWklSQldPWkYyTmEyZmV6WG9kR25FM3RlTVh0NW5mdURvOVR5QUZrdXlvNzdwT1M2Z3RoOFJ4THliM0hEUXJXOVIvT295MVorcE1zMg0KOUdMaGFkQmJzQkRUQ1JSbTBaY0MvWXZBeklzWXJlL3cycEltS3ZNaVFPdDZpOUZpNHZRV0pDcnpJa0FyYXlrUUFsR1pGKzVhTmZMVw0KZFBwU0lCQ3M5Mk5RZUdzOW1MRk1yNXRsOTdwL1NZNHg4cys4OEo2M2VzamFIYjl5OCtPU0JzVlgvdmJJcHN3ayt0YjRndXo0L0srcg0KRkY5WkFWeTFlbGdLSklRVS8vTFh3TWdUeFJjL1hkN00wcm85SXpiL1ZEV1pwT1c5WWVEYUNSek9Xa2xkQ2lTRTNPNTZjT1B1Z0M4WA0KUDNHTm1SL2duM25ocUZXU2RxNWpEc29YcXIzT0E3QndPRm41QVVKSUx0L01Deit0YjZ3eVJZVFJsd0lkazg0dnkxdDh2OFhKY3ZxRw0KRjBLSWxXL21oWi9XL2V3WG5zby8vK2tmVnQ2clRsUFdmTC9MTmtTdDRyem5oWk5XZlVoUVRpcXpkenRiNFlkSGRZcUxOY3o4OSs0Tg0KSzdsOWJjUko2MGViNG9NWlM0SERZL2F2L3I5NXpSZE9zSmNWb3NMMTI1SWkvSFVqejNEUktrbjdOaWF3S2kvWHR4TUg1Uk1XWmR6dQ0KSGVxNFI5L3dRZ2c1c0pIVDBpRVByYnRTb3FJWSsxWUlJZWRyMnZ4N3U1OGEvMlpWYlVxSk5pN1UrdmQyVkhob1BiaDVGYXRxZU96cA0KRDdkNi9IdTdTOWVaV2dQbnlSKyt5dnk3OFNQZ1d0UE1CaXY3Qy9XR2xqN3E1alZmdUhMSFptZjNLcm5aQ1dRZStNQUZydlhUSFdrZQ0KaHQ5NnhvWWZuM0E0bSs3K3k2bzBMcHIvQWZ4MmVOaWNnSEdoZG9raDVJOE9HNnZCYjdmcEh3VDV5S1ZybnFZVzFualQ1MlZORVBlZA0KUnN3UzRYT1ArSTJZenlXb0ZRVFVDZ0pxQlFHMWdvQmFRVUN0SUtCV0VGQXJDS2dWQk5RS0Ftb0ZBYldDZ0ZwQlFLMGdvRllRVUNzSQ0KcUJVRTFBb0NhZ1VCdFlLQVdrRkFyU0NnVmhCUUt3aW9GUVRVQ3NKL2hOZUlLNVlvVVlZQUFBQUFTVVZPUks1Q1lJST0="/>
+                    <L7p:VariableToSet stringValue="src"/>
+                </L7p:SetVariable>
+                <L7p:EncodeDecode>
+                    <L7p:CharacterEncoding stringValueNull="null"/>
+                    <L7p:SourceVariableName stringValue="src"/>
+                    <L7p:TargetContentType stringValue="image/png"/>
+                    <L7p:TargetDataType variableDataType="message"/>
+                    <L7p:TargetVariableName stringValue="target"/>
+                    <L7p:TransformType transformType="BASE64_DECODE"/>
+                </L7p:EncodeDecode>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="Icon AppA"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${icon}"/>
+                    <L7p:Expression2 stringValue="appb"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:RightValue stringValue="appb"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="aVZCT1J3MEtHZ29BQUFBTlNVaEVVZ0FBQUhJQUFBQnlDQUlBQUFBQXZ4SXFBQUFGNVVsRVFWUjRuTzJjYlV4VFZ4aUFUMXRhb0VETA0KUjZWOFZFUUVGSXdpNHBnZ0pyb3dwbTZPYkZrRzZ2ejZzVC9PdWUzUE5QTWpMbGxtekZ5bXllSmNsaEhDRHcxc1kwN0RRbUM2b1RDWg0KVHFQT0R6WUVnc2lxVWhCS1MxdmFlKzkra0d4RTdpMkYzZmZjY3ZJKzRWZmZrL08rZVhJNE9WK3RpaHg5aFNCeW8xYTZBRFpCclNDZw0KVmhCUUt3aW9GUVRVQ2dKcUJRRzFnb0JhUVVDdElLQldFRkFyQ0tnVkJOUUtBbW9GQWJXQ2dGcEJRSzBnb0ZZUVVDc0lxQlVFMUFvQw0KYWdVQnRZS0FXa0ZBclNDZ1ZoQlFLd2lvRlFUVUNnSnFCUUcxZ29CYVFRaFJKR3RTbEhsNWJJckQ2M2J6UGkvUGNRSXZDRlB1aENmQw0Ka05kOXorTWdIaWNSZkFCbFRoOWx0RDV2bmwvNTRyc3lkampvZHR6cHUzL2pjZWZGdisrZTZycWl1R1dWSXQ4ZFdKMllmZjcxajRBNg0KN3greDEvN1o4c0hWMHpabkgxQ0tTVkZtYm0xM0RNQjFIcWMzdkptN3RtdkwwVDJMMXhPaWdrdmtCMlcwUG5EMlE2ZUkxSVVmV3IyOQ0KYnQxdVFqVFF1U2FpMEVxQTkzSThUeUhQdW96ODAydmVvejltRlZ0Z2VUZ3ZuVVNsOHd0M0xTeWhrK3RmRk5RNktoVVNpQkRJWCtDNQ0KRGhSdUlOb0lPYW9PRkdVV1dJUVFqMDk4dEZiZC9HbnJ6OGNENmNHb2p5dUlzU3lNU1Y1aHlTN05YSzVXU1E2Uk9MMWhkOVp6aDIrZQ0KbldhdFUyY0c3N0tHUnZycmUyOThldXZIVit1UDVKL2MzZEp6MjAvanRXbDUxQW9qTTFycmVLN2FPb3BxOXpmZnZ5WFZvTUNTUlZUMA0KL2pVWjBUckd0bk5mU2szWk9vM1dwSStoVmdsVFdqdnN2ZGVzSFZMUmpBalVPbDN1RGZSS2hhSzFlbXBsc0thMWZkQXFGWHJrdGxNcg0KZ3pXdFpuMjBWT2d2MXlDMU1salRtbTFLRWYxOHdEWHNHSGxDclF5MnRLcENGczZhSXhwcDZibE5wckl4KzU4d3BmVll3YWI0Q1BGSg0KNElkN2wybFd3bzdXNHFSRmIrV3RGdzIxMmU1LzNkNUVzeGpGemdUa0pOUllVVkMrZVZHeFJpMHlTbmlCZi85Q0ZjMFpnQVNoMWhSRA0KL0piMGxaTTJVeEZWb3Q2WUhwT1VGcDJ3TkRIREdDcTVKdDNYVkhXMjU1cXNOVTVPMEdsZGxicDRWZXBpV2JyeThkekh2MVlmdW5GRw0KbHQ2bVJOQnBsWXNIZHR2VyttUG5yZjZPdGVCZ1RTdkg4NjI5ZDAvZWJUcmUxa1FFU2hjUUUyRm5KVEFHVHdTOU5qUXIxdktzS1ZYQg0KTWxnYnJWcTFKamNoUFRjaGZlZXlsNjgvN05qYzhQbXRKOTMweTJCdHRJNW5TY0s4M3pjZC9qRHZOZm8zcjBFM1d2dGRkdXR3UUk4eg0KOU5wUWk4R2swMmo5dEFuVjZBNFViVXlKTW0zLzVZUk1CUVpFMEdtdGE3OGM0QlVoSVlRUWxTWEt2RFE2ZWMyY25PMDVKV0VoT3RGRw0KMjNKS3V1MTlCNjk5SjFlUmt6TFRKd0hod2ZERE16MVhkelJYeks1OHUrWk9FeStJdityWXU2SThLMXI4Y0F1Q21hNzFQMnpPdnJMRw0KWTU5YytsWTBHcUxXZkZiMEJyVmkyTkU2eHA0cjM5eDgxQ2thZW1IZXNreWpoVTRackdrbGhOdmZja29xVnA2V1Q2Y0k5clNTUmx1WA0KVktnNE5ZZE9EUXhxZGJrRzdKNFIwZERjNkVRNk5UQ29sUkJpbFhpV0hCTWVTYWNBTnJVbVI4V0pmaDZoRFNOcThiV3R2RENvTlNuSw0KSEtrTEZ3MXhQRTk0R3NkYURHb3RNczJWQ2cyNkhYUnVYeGpVK2s3dVMxSWhtNHZTd3hiV3RPNWRVbG80TzFzcStzZGp5YldYdkRDbA0KZFdOYTRiNFZHL3cwcU91a2RGY1lkQ2RZMDJPbGVjR1JsVnZ5a3hmNGFlUGhSaXU3cjlDcFJ6R3RVay85RjhXbkhucW1MSkFld2tKMA0KS1liNFZLTTV4VGpMcERkTzJyN2llZ1B4aW04VFpFZEJyZUluOW1OWEpyS242M2ZaZC94V0xYdTNVaWcydDJyOW51ckxpNC9uZGpTZQ0KSUY0bnRZeUthUTNYMHRqdEVFSjRnZC9aOEVWTlZ5dWRkR01vTkFtRWhPblVORkkvZGc3dU92ZFZkZGNsQ3JuR280eldIQVA0U1pLWA0KNTc1dmF5NjdVRUU4dzlDNUpxS00xa3hEUEZEUEFoRTZuMWhyN2x3OGVMdGgxRVh2K2ZWVEtLTTFPVEoyeU9OMGVUMXVuOWZEZVgwYw0KeHdtY1FBUkJJRlA2TWlzdkNJNVJsOTB6TXVRWnNUb0dXaCsxMXo1c1UyUjRQb1V5djM3QlBFeHRYb01IMUFvQ2FnVUJ0WUtBV2tGQQ0KclNDZ1ZoQlFLd2lvRlFUVUNnSnFCUUcxZ29CYVFVQ3RJS0JXRUZBckNLZ1ZCTlFLQW1vRkFiV0NnRnBCUUswZ29GWVFVQ3NJcUJVRQ0KMUFvQ2FnWGhIeXZydEIzNUpjajJBQUFBQUVsRlRrU3VRbUND"/>
+                    <L7p:VariableToSet stringValue="src"/>
+                </L7p:SetVariable>
+                <L7p:EncodeDecode>
+                    <L7p:CharacterEncoding stringValueNull="null"/>
+                    <L7p:SourceVariableName stringValue="src"/>
+                    <L7p:TargetContentType stringValue="image/png"/>
+                    <L7p:TargetDataType variableDataType="message"/>
+                    <L7p:TargetVariableName stringValue="target"/>
+                    <L7p:TransformType transformType="BASE64_DECODE"/>
+                </L7p:EncodeDecode>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="Icon AppB"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${icon}"/>
+                    <L7p:Expression2 stringValue="appc"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:RightValue stringValue="appc"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="aVZCT1J3MEtHZ29BQUFBTlNVaEVVZ0FBQUhJQUFBQnlDQVlBQUFDUDNZVjlBQUFBQVhOU1IwSUFyczRjNlFBQUFBUm5RVTFCQUFDeA0Kand2OFlRVUFBQUFKY0VoWmN3QUFEc1FBQUE3RUFaVXJEaHNBQUFPclNVUkJWSGhlN2R5eFN4dGhHTWZ4cHlZR0s5SkM1enBFcXpoSQ0KL29XQ2xYWVFCQjJ5QzRWTVRnNHVqaTRPdHF1QlF2Y09GZ3BTc0Zib3Z4QWNKS0Z4Y0s1Z0NTTFh4RFp2OGlodHFyMUx6TlgzK2Qzdg0KQTZYdks1S2gzOTU3bCtUZXUvZnQ4Wk9mUXVZTjZOOWtIRU9DWUVnUURBbUNJVUV3SkFpR0JNR1FJQmdTQkVPQ1lFZ1FEQW1DSVVFdw0KSkFpR0JNR1FJQmdTQkVPQ1lFZ1FEQW1DSVVFd0pBaUdCTUdRSUJnU0JFT0NZRWdRREFtQ0lVRXdKQWlHQk1HUUlCZ1NCRU9DWUVnUQ0KbU04UXlCZmwwZWFNVHE0WHJFeEk3WjFPQU1DRVRLL3R5b05DVm1mZFFZaHFQdVJ0QXY1cFgycWpCUWwwWm8zaGMrU2lqQnhYK2hUUg0KbVdtOTNraGVwOGJZREpsYmxZZkhHNUxSYVQ5bE5vdXh2RzdjN0lWMEVYZGVTa3FuL1plVmRFNkhoaGdMMlZ4T1k0M29aR1ZnU29lRw0KR0FvNUxjTmZ1bHRPRzhVRk9SbWR1T2JQZ3B4WDlaZEEyQW1aWDVhaE1SMkh1QXg0dW42Z1ArbDBJR2RQMjFGcmUvb2o0NHlFYkM2cA0KSVcvdzI0N2tmTzVmQWY4V0xEV0R6cjJSaHM3ZGExd2M2dEFRR3lIekx5SXRxY0hLY3prcjZhUWJwUTA1dlZwdWo2VGV5MnZjTVFNZg0KQ0xoejQvdndaWFZ2VlU2V3RuV1NQUDRma2JrNUdRdzlOemFYMU5mSmplaDRIekk5L3l6ODdjYmVWbTlMS2hEdlF3Nk1oMzhFRjN4TQ0KOXRIb2VCNXlVVEt6T3J6UnZnUkFYMGYxeXUrUXVZbndaYlZhbFFzZEpwbi9GenRocWhXcDZ6REovQTQ1TlJaNlJEYStsbldVYlBhUA0KU0dyeE9tUjZNdnlLdFZHTy9uRWNNaDZSSU15SFRFMU82eWpaZUVTQzhEcGt2WHlrbzV1bHhpZDFsR3c4SWtINEhmS3crdHNYdmplWQ0KamZaZEpUcS9RNVlxNFNHTjN2WFdiNTR2cldXNUNMMUpLaXVEODd4eTlUemtnUVNmSWx6d0ZKWVR2N3g2ZjdGVC8vQTV3dkk2SS9mWA0Ka24xVWVoOVNTanZ5SThJOXFLbkNLeGxPOExuUy81QVJsMWQzcmh6YXVjMitEWGVUVjBVZUhlK2EvQTloSUdSemVWM2ZpcmpkcmJjZA0KVlptM0x1RGxuWHJjTWhDamJhbXQ3T3M0WEdiVGhRa0oydHJScGIvWGNUdUp4Yzl2VFcxMGRVZE81ejk2SE55V2cyN3VWdmVCa1NPeQ0KTFZoYU5idWpPRzZtUXJhVzJOSDRZMXI4c3RwWVNNZkZqSE5iSERmeC9FZnRiWEhmaTFIZWxuU241NDFBZHd6aThTeTNmN0tIMjQ1bg0KTStBbG1PZnNYSW42akFHdzNWdDRJUlBLNkRtU09qRWtDSVlFd1pBZ0dCSUVRNEpnU0JBTUNZSWhRVEFrQ0lZRXdaQWdHQklFUTRKZw0KU0JBTUNZSWhRVEFrQ0lZRXdaQWdHQklFUTRKZ1NCQU1DWUloUVRBa0NJWUV3WkFnR0JJRVE0SmdTQkFNQ1lJaFFUQWtDSWFFSVBJTA0KcFg3ZEcyQTF5dHNBQUFBQVNVVk9SSzVDWUlJPQ=="/>
+                    <L7p:VariableToSet stringValue="src"/>
+                </L7p:SetVariable>
+                <L7p:EncodeDecode>
+                    <L7p:CharacterEncoding stringValueNull="null"/>
+                    <L7p:SourceVariableName stringValue="src"/>
+                    <L7p:TargetContentType stringValue="image/png"/>
+                    <L7p:TargetDataType variableDataType="message"/>
+                    <L7p:TargetVariableName stringValue="target"/>
+                    <L7p:TransformType transformType="BASE64_DECODE"/>
+                </L7p:EncodeDecode>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="Icon AppC"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="aVZCT1J3MEtHZ29BQUFBTlNVaEVVZ0FBQUhJQUFBQnlDQVlBQUFDUDNZVjlBQUFBQVhOU1IwSUFyczRjNlFBQUFBUm5RVTFCQUFDeA0Kand2OFlRVUFBQUFKY0VoWmN3QUFEc1FBQUE3RUFaVXJEaHNBQUFId1NVUkJWSGhlN2QydlRrSlJITUR4bnlhVGYrWUdUUXNtUjNSeg0KWmg1QWs2L2dBOURNTm9MUmlrOUEwa0l5R0RRYUpkbGtZMU1TVGUrOVhBYk9GK0I4ei9lejNkM0xnZmJkYnp1SEFCdHhlL0VUU3Q1bQ0KZlZmaURBbGhTQWhEUWhnU3dwQVFob1F3SklRaElRd0pZVWdJUTBJWUVzS1FFSWFFTUNTRUlTRU1DV0ZJQ0VOQ0dCTENrQkNHaERBaw0KaENFaERBbGhTQWhEUWhnU3dwQVFob1F3SklRaElRd0pZVWdJUTBJWUVzS1FFSWFFTUNTRUlTRU1DV0ZJQ0VOQ0dCTENrQkNHaERBaw0KeEpyKzhPNHNidTdmNDJvY01UeHZ4MldyWGk2TlBtSXkrSzVmL1BYdnN4bHhJaUhTQzlrNmlQMXVlK1U2akdIMXhrNDhaRHFOcGVRbg0KOHVUbE16cmx3L0Z1OUt1VlBDVWVjaHJkcDFseDM0cTcwKzM1VXFhU0RybWN4bVpjNzFWTDJVbzQ1R0lhaTkzcVVkN1RXRW8zNU9ocg0KUG8yTlp2UXkzdVFzckgzSXp1QXRKcjM2ZXB6V3E4VTU4M2wrbGh5ZU5lSzFlc3BibWhNNUdsZGZGdVIrNUZqbFh5cEJKTDFyMVpJaA0KSVF3SllVZ0lRMElZRXNLUUVJYUVNQ1NFSVNFTUNXRklDRU5DR0JMQ2tCQ0doREFraENFaERBbGhTQWhEUWhnU3dwQVFob1F3SklRaA0KSVF3SllVZ0lRMElZRXNLUUVJYUVNQ1NFSVNFTUNXRklDRU5DR0JMQ2tCQ0doREFraENFaERBbGhTQWhEUWhnU3dwQVFob1F3SklRaA0KSVF3SllVZ0lRMElZRWlIaUYzUHVPakIvNFAyc0FBQUFBRWxGVGtTdVFtQ0M="/>
+                    <L7p:VariableToSet stringValue="src"/>
+                </L7p:SetVariable>
+                <L7p:EncodeDecode>
+                    <L7p:CharacterEncoding stringValueNull="null"/>
+                    <L7p:SourceVariableName stringValue="src"/>
+                    <L7p:TargetContentType stringValue="image/png"/>
+                    <L7p:TargetDataType variableDataType="message"/>
+                    <L7p:TargetVariableName stringValue="target"/>
+                    <L7p:TransformType transformType="BASE64_DECODE"/>
+                </L7p:EncodeDecode>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="Icon default"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="Icons"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:OneOrMore>
+    </wsp:All>
+</wsp:Policy>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:AuditDetailAssertion>
+            <L7p:Detail stringValue="Policy Fragment: portal-message-received"/>
+            <L7p:Enabled booleanValue="false"/>
+        </L7p:AuditDetailAssertion>
+        <wsp:All wsp:Usage="Required">
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="dHJ1ZQ=="/>
+                <L7p:VariableToSet stringValue="otkRequest"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="JHtyZXF1ZXN0Lmh0dHAuaGVhZGVyLm9yaWdpbn0="/>
+                <L7p:VariableToSet stringValue="origin-header"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="JHtyZXF1ZXN0LnVybC5wcm90b2NvbH06Ly8ke3JlcXVlc3QudXJsLmhvc3R9OiR7cmVxdWVzdC51cmwucG9ydH0="/>
+                <L7p:VariableToSet stringValue="origin-req"/>
+            </L7p:SetVariable>
+            <wsp:OneOrMore wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:Expression1 stringValue="/enroll/apiportaldevint"/>
+                    <L7p:Expression2 stringValue="/auth/oauth/v2/authorize"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:RightValue stringValue="/auth/oauth/v2/authorize"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:ComparisonAssertion>
+                    <L7p:Expression1 stringValue="/enroll/apiportaldevint"/>
+                    <L7p:Expression2 stringValue="/auth/oauth/v2/token"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:RightValue stringValue="/auth/oauth/v2/token"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="ZmFsc2U="/>
+                    <L7p:VariableToSet stringValue="otkRequest"/>
+                </L7p:SetVariable>
+            </wsp:OneOrMore>
+            <wsp:OneOrMore wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:Expression1 stringValue=""/>
+                    <L7p:Expression2 stringValue="false"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:RightValue stringValue="false"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:ComparisonAssertion>
+                    <L7p:AssertionComment assertionComment="included">
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="RIGHT.COMMENT"/>
+                                <L7p:value stringValue="// skip CORS for same-origin requests"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:AssertionComment>
+                    <L7p:Expression1 stringValue=""/>
+                    <L7p:Expression2 stringValue=""/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:RightValue stringValue=""/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <wsp:All wsp:Usage="Required">
+                    <L7p:AuditDetailAssertion>
+                        <L7p:Detail stringValue="Enabling CORS support for OTK"/>
+                        <L7p:Level stringValue="FINE"/>
+                    </L7p:AuditDetailAssertion>
+                    <L7p:CORS>
+                        <L7p:AcceptedMethods stringListValue="included">
+                            <L7p:item stringValue="GET"/>
+                            <L7p:item stringValue="PUT"/>
+                            <L7p:item stringValue="POST"/>
+                            <L7p:item stringValue="HEAD"/>
+                            <L7p:item stringValue="DELETE"/>
+                            <L7p:item stringValue="PATCH"/>
+                            <L7p:item stringValue="OPTIONS"/>
+                        </L7p:AcceptedMethods>
+                        <L7p:AcceptedOrigins stringListValue="included">
+                            <L7p:item stringValue="http://apim.dev.ca.com"/>
+                            <L7p:item stringValue="https://apim.dev.ca.com"/>
+                        </L7p:AcceptedOrigins>
+                        <L7p:AllowNonStandardMethods booleanValue="true"/>
+                        <L7p:RequireCors booleanValue="false"/>
+                    </L7p:CORS>
+                    <wsp:OneOrMore wsp:Usage="Required">
+                        <wsp:OneOrMore wsp:Usage="Required">
+                            <L7p:ComparisonAssertion>
+                                <L7p:CaseSensitive booleanValue="false"/>
+                                <L7p:Expression1 stringValue=""/>
+                                <L7p:Operator operatorNull="null"/>
+                                <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="boolean"/>
+                                    </L7p:item>
+                                    <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="false"/>
+                                    </L7p:item>
+                                </L7p:Predicates>
+                            </L7p:ComparisonAssertion>
+                            <L7p:ComparisonAssertion>
+                                <L7p:CaseSensitive booleanValue="false"/>
+                                <L7p:Expression1 stringValue=""/>
+                                <L7p:Operator operatorNull="null"/>
+                                <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="boolean"/>
+                                    </L7p:item>
+                                    <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="false"/>
+                                    </L7p:item>
+                                </L7p:Predicates>
+                            </L7p:ComparisonAssertion>
+                        </wsp:OneOrMore>
+                        <wsp:All wsp:Usage="Required">
+                            <L7p:CustomizeErrorResponse>
+                                <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="// return immediately with a 200 response"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                </L7p:AssertionComment>
+                                <L7p:Content stringValue=""/>
+                                <L7p:ExtraHeaders nameValuePairArray="included"/>
+                                <L7p:HttpStatus stringValue="200"/>
+                            </L7p:CustomizeErrorResponse>
+                            <L7p:FalseAssertion/>
+                            <L7p:assertionComment>
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="// is cors preflight request"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:assertionComment>
+                        </wsp:All>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="//process cors result if any"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:OneOrMore>
+                </wsp:All>
+            </wsp:OneOrMore>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="// enable CORS for OTK"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:All>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtnYXRld2F5LnRpbWUubWlsbGlzfQ=="/>
+            <L7p:VariableToSet stringValue="portal.startService"/>
+        </L7p:SetVariable>
+        <L7p:ExportVariables>
+            <L7p:ExportedVars stringArrayValue="included">
+                <L7p:item stringValue="portal.startService"/>
+            </L7p:ExportedVars>
+        </L7p:ExportVariables>
+    </wsp:All>
+</wsp:Policy>

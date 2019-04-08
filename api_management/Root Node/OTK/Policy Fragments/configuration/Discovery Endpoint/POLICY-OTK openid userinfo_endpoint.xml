@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtob3N0X29hdXRoMl9hdXRoX3NlcnZlcn0ke3VzZXJpbmZvX3BhdGh9"/>
+            <L7p:VariableToSet stringValue="userinfo_endpoint"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:AssertionComment assertionComment="included">
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="// OPTIONAL"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:AssertionComment>
+            <L7p:Base64Expression stringValue="dHJ1ZQ=="/>
+            <L7p:VariableToSet stringValue="discovery.endpoint.enabled"/>
+        </L7p:SetVariable>
+        <L7p:Include>
+            <L7p:PolicyGuid stringValue="3b33149f-a598-44a9-a9ee-82976b2aa78a"/>
+        </L7p:Include>
+        <L7p:ComparisonAssertion>
+            <L7p:CaseSensitive booleanValue="false"/>
+            <L7p:Expression1 stringValue="${userinfo_endpoint}"/>
+            <L7p:Expression2 stringValue=""/>
+            <L7p:Negate booleanValue="true"/>
+            <L7p:Operator operator="EMPTY"/>
+            <L7p:Predicates predicates="included">
+                <L7p:item binary="included">
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Negated booleanValue="true"/>
+                    <L7p:Operator operator="EMPTY"/>
+                    <L7p:RightValue stringValue=""/>
+                </L7p:item>
+            </L7p:Predicates>
+        </L7p:ComparisonAssertion>
+        <L7p:ExportVariables>
+            <L7p:ExportedVars stringArrayValue="included">
+                <L7p:item stringValue="discovery.endpoint.enabled"/>
+                <L7p:item stringValue="userinfo_endpoint"/>
+            </L7p:ExportedVars>
+        </L7p:ExportVariables>
+    </wsp:All>
+</wsp:Policy>

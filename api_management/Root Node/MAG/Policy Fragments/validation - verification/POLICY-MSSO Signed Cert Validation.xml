@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === ***  THIS POLICY IS READ ONLY ***"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === Required changes can be implemented in policies in the 'Customizations' folder "/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === The policies within that folder will have the same name as this policy but "/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === either prefixed with '#' or suffixed with 'Extensions'"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === Prefixed policies can be used to overwrite variables of this policy"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === Suffixed policies can be used to extend functionality"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === If you find you cannot add your customizations using the policies in the 'Customizations' folder"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === please contact CA APIM Support so we can improve customization capability"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="This policy can be found and should be used as 'Encapsulated Assertion'!"/>
+        </L7p:CommentAssertion>
+        <L7p:ComparisonAssertion>
+            <L7p:CaseSensitive booleanValue="false"/>
+            <L7p:Expression1 stringValue="${certificate.subject.dn.cn}"/>
+            <L7p:Expression2 stringValue="${session.subscriber_id}"/>
+            <L7p:ExpressionIsVariable booleanValue="false"/>
+            <L7p:Negate booleanValue="true"/>
+            <L7p:Operator operator="EMPTY"/>
+            <L7p:Predicates predicates="included">
+                <L7p:item binary="included">
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Negated booleanValue="true"/>
+                    <L7p:Operator operator="EMPTY"/>
+                    <L7p:RightValue stringValue="${session.subscriber_id}"/>
+                </L7p:item>
+            </L7p:Predicates>
+        </L7p:ComparisonAssertion>
+        <L7p:ComparisonAssertion>
+            <L7p:CaseSensitive booleanValue="false"/>
+            <L7p:Expression1 stringValue="${certificate.subject.dn.ou}"/>
+            <L7p:Expression2 stringValue=""/>
+            <L7p:ExpressionIsVariable booleanValue="false"/>
+            <L7p:Negate booleanValue="true"/>
+            <L7p:Operator operator="EMPTY"/>
+            <L7p:Predicates predicates="included">
+                <L7p:item binary="included">
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Negated booleanValue="true"/>
+                    <L7p:Operator operator="EMPTY"/>
+                    <L7p:RightValue stringValue=""/>
+                </L7p:item>
+            </L7p:Predicates>
+        </L7p:ComparisonAssertion>
+        <L7p:ComparisonAssertion>
+            <L7p:CaseSensitive booleanValue="false"/>
+            <L7p:Expression1 stringValue="${certificate.subject.dn.dc}"/>
+            <L7p:Expression2 stringValue=""/>
+            <L7p:ExpressionIsVariable booleanValue="false"/>
+            <L7p:Negate booleanValue="true"/>
+            <L7p:Operator operator="EMPTY"/>
+            <L7p:Predicates predicates="included">
+                <L7p:item binary="included">
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Negated booleanValue="true"/>
+                    <L7p:Operator operator="EMPTY"/>
+                    <L7p:RightValue stringValue=""/>
+                </L7p:item>
+            </L7p:Predicates>
+        </L7p:ComparisonAssertion>
+        <L7p:ComparisonAssertion>
+            <L7p:CaseSensitive booleanValue="false"/>
+            <L7p:Expression1 stringValue="${certificate.subject.dn.o}"/>
+            <L7p:Expression2 stringValue=""/>
+            <L7p:ExpressionIsVariable booleanValue="false"/>
+            <L7p:Negate booleanValue="true"/>
+            <L7p:Operator operator="EMPTY"/>
+            <L7p:Predicates predicates="included">
+                <L7p:item binary="included">
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Negated booleanValue="true"/>
+                    <L7p:Operator operator="EMPTY"/>
+                    <L7p:RightValue stringValue=""/>
+                </L7p:item>
+            </L7p:Predicates>
+        </L7p:ComparisonAssertion>
+        <L7p:Include>
+            <L7p:PolicyGuid stringValue="c89754e0-14e9-4487-8ced-896f717eb9a2"/>
+        </L7p:Include>
+    </wsp:All>
+</wsp:Policy>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="METHOD+PATH+BODY"/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtyZXF1ZXN0Lmh0dHAubWV0aG9kfSR7cmVxdWVzdC5odHRwLnBhdGh9JHtyZXF1ZXN0Lm1haW5wYXJ0fQ=="/>
+            <L7p:VariableToSet stringValue="NormalString"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="QlVTQ0FSIExBIFNIQVJFRCBLRVkgREUgUE9SVEFM"/>
+            <L7p:VariableToSet stringValue="sharedSecret"/>
+        </L7p:SetVariable>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="Nombre de la variable quedara como Entel-Auth en la cabecera"/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtyZXF1ZXN0Lmh0dHAuaGVhZGVyLkVudGVsLUF1dGh9"/>
+            <L7p:VariableToSet stringValue="hash"/>
+        </L7p:SetVariable>
+        <L7p:GenerateSecurityHash>
+            <L7p:Algorithm stringValue="HMAC-SHA256"/>
+            <L7p:Base64Data stringValue="JHtOb3JtYWxTdHJpbmd9"/>
+            <L7p:KeyText stringValue="${sharedSecret}"/>
+            <L7p:LineBreak lineBreak="CR-LF"/>
+            <L7p:TargetOutputVariable stringValue="EncodeString"/>
+        </L7p:GenerateSecurityHash>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:Expression1 stringValue="${hash}"/>
+                    <L7p:Expression2 stringValue="${EncodeString}"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:RightValue stringValue="${EncodeString}"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:CommentAssertion>
+                    <L7p:Comment stringValue="SUCESO"/>
+                </L7p:CommentAssertion>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:CommentAssertion>
+                    <L7p:Comment stringValue="ERROR UNAUTHORIZED"/>
+                </L7p:CommentAssertion>
+            </wsp:All>
+        </wsp:OneOrMore>
+    </wsp:All>
+</wsp:Policy>

@@ -1,0 +1,2133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:UUIDGenerator>
+            <L7p:Enabled booleanValue="false"/>
+            <L7p:TargetVariable stringValue="idTransaction"/>
+        </L7p:UUIDGenerator>
+        <L7p:EvaluateJsonPathExpression>
+            <L7p:Expression stringValue=".header.transactionId"/>
+            <L7p:VariablePrefix stringValue="idTransaction"/>
+        </L7p:EvaluateJsonPathExpression>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:RateLimit>
+                    <L7p:CounterName stringValue="PRESET(30359c245daaa824)${request.clientid}"/>
+                    <L7p:MaxRequestsPerSecond stringValue="3"/>
+                </L7p:RateLimit>
+                <L7p:TrueAssertion/>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="MTAw"/>
+                    <L7p:VariableToSet stringValue="codeReturn"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="U29sbyBzZSBwdWVkZW4gZW52aWFyIGNvbW8gbWF4aW1vIDMgVFBTLg=="/>
+                    <L7p:VariableToSet stringValue="description"/>
+                </L7p:SetVariable>
+                <L7p:AuditDetailAssertion>
+                    <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                    <L7p:Detail stringValue="idOperation: ${idTransaction.result} ResourceId:  Message: Undefined ReasonCode: -5 Service: migration"/>
+                    <L7p:LoggingOnly booleanValue="true"/>
+                </L7p:AuditDetailAssertion>
+                <L7p:CustomizeErrorResponse>
+                    <L7p:Content stringValueReference="inline"><![CDATA[{
+"code":"${codeReturn}",
+"description":"${description}",
+"datetimeOperation":"${datetimeOperation}",
+"idOperation":"${idTransaction.result}"
+}]]></L7p:Content>
+                    <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                    <L7p:ExtraHeaders nameValuePairArray="included"/>
+                    <L7p:HttpStatus stringValue="400"/>
+                </L7p:CustomizeErrorResponse>
+                <L7p:RaiseError/>
+            </wsp:All>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="VALIDAR JSON"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:OneOrMore>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${idTransaction.result}"/>
+                    <L7p:Operator operatorNull="null"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item dataType="included">
+                            <L7p:Type variableDataType="string"/>
+                        </L7p:item>
+                        <L7p:item binary="included">
+                            <L7p:Negated booleanValue="true"/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:RightValue stringValue=""/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:TrueAssertion/>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHtyZXF1ZXN0SWR9"/>
+                    <L7p:VariableToSet stringValue="idTransaction.result"/>
+                </L7p:SetVariable>
+                <L7p:TrueAssertion/>
+            </wsp:All>
+        </wsp:OneOrMore>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtyZXF1ZXN0LnRpbWUubG9jYWwuZGQvTU0veXl5eSdUJ0hIOm1tOnNzLlNTU30="/>
+            <L7p:VariableToSet stringValue="datetimeOperation"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="QVBJTS1lbnZpYXJDb250cmF0b0VudGVsUmV0YWls"/>
+            <L7p:VariableToSet stringValue="serviceName"/>
+        </L7p:SetVariable>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:JSONSchema>
+                    <L7p:ResourceInfo staticResourceInfo="included">
+                        <L7p:Document stringValueReference="inline"><![CDATA[{
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "header": {
+      "$id": "/properties/header",
+      "type": "object",
+      "properties": {
+        "consumerId": {
+          "$id": "/properties/header/properties/consumerId",
+          "type": "string",
+          "title": "The Consumerid Schema ",
+          "default": "",
+          "examples": [
+            ""
+          ]
+        },
+        "transactionId": {
+          "$id": "/properties/header/properties/transactionId",
+          "type": "string",
+          "title": "The Transactionid Schema ",
+          "default": "",
+          "examples": [
+            ""
+          ]
+        },
+        "applicationCode": {
+          "$id": "/properties/header/properties/applicationCode",
+          "type": "string",
+          "title": "The Applicationcode Schema ",
+          "default": "",
+          "examples": [
+            ""
+          ]
+        },
+        "countryCode": {
+          "$id": "/properties/header/properties/countryCode",
+          "type": "string",
+          "title": "The Countrycode Schema ",
+          "default": "",
+          "examples": [
+            ""
+          ]
+        },
+        "requestTimestamp": {
+          "$id": "/properties/header/properties/requestTimestamp",
+          "type": "string",
+          "title": "The Requesttimestamp Schema ",
+          "default": "",
+          "examples": [
+            ""
+          ]
+        }
+      }
+    },
+    "contratoClienteReq": {
+      "$id": "/properties/contratoClienteReq",
+      "type": "array",
+      "items": {
+        "$id": "/properties/contratoClienteReq/items",
+        "type": "object",
+        "properties": {
+          "reqContratoCliente": {
+            "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente",
+            "type": "array",
+            "items": {
+              "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items",
+              "type": "object",
+              "properties": {
+                "timestamp": {
+                  "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/timestamp",
+                  "type": "string",
+                  "title": "The Timestamp Schema ",
+                  "default": "",
+                  "examples": [
+                    ""
+                  ]
+                },
+                "storeId": {
+                  "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/storeId",
+                  "type": "string",
+                  "title": "The Storeid Schema ",
+                  "default": "",
+                  "examples": [
+                    ""
+                  ]
+                },
+                "terminalId": {
+                  "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/terminalId",
+                  "type": "string",
+                  "title": "The Terminalid Schema ",
+                  "default": "",
+                  "examples": [
+                    ""
+                  ]
+                },
+                "retailId": {
+                  "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/retailId",
+                  "type": "string",
+                  "title": "The Retailid Schema ",
+                  "default": "",
+                  "examples": [
+                    ""
+                  ]
+                },
+                "tipoHabilitacion": {
+                  "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/tipoHabilitacion",
+                  "type": "string",
+                  "title": "The Tipohabilitacion Schema ",
+                  "default": "",
+                  "examples": [
+                    ""
+                  ]
+                },
+                "descStore": {
+                  "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/descStore",
+                  "type": "string",
+                  "title": "The Descstore Schema ",
+                  "default": "",
+                  "examples": [
+                    ""
+                  ]
+                },
+                "datosCliente": {
+                  "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosCliente",
+                  "type": "array",
+                  "items": {
+                    "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosCliente/items",
+                    "type": "object",
+                    "properties": {
+                      "idTipoDocumento": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosCliente/items/properties/idTipoDocumento",
+                        "type": "string",
+                        "title": "The Idtipodocumento Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "rut": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosCliente/items/properties/rut",
+                        "type": "string",
+                        "title": "The Rut Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "dv": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosCliente/items/properties/dv",
+                        "type": "string",
+                        "title": "The Dv Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "serie": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosCliente/items/properties/serie",
+                        "type": "string",
+                        "title": "The Serie Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "titulo": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosCliente/items/properties/titulo",
+                        "type": "string",
+                        "title": "The Titulo Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "genero": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosCliente/items/properties/genero",
+                        "type": "string",
+                        "title": "The Genero Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "estadoCivil": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosCliente/items/properties/estadoCivil",
+                        "type": "string",
+                        "title": "The Estadocivil Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "tipoCliente": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosCliente/items/properties/tipoCliente",
+                        "type": "string",
+                        "title": "The Tipocliente Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "nombre": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosCliente/items/properties/nombre",
+                        "type": "string",
+                        "title": "The Nombre Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "apellidoP": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosCliente/items/properties/apellidoP",
+                        "type": "string",
+                        "title": "The Apellidop Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "apellidoM": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosCliente/items/properties/apellidoM",
+                        "type": "string",
+                        "title": "The Apellidom Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "direccion": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosCliente/items/properties/direccion",
+                        "type": "string",
+                        "title": "The Direccion Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "tipoCalle": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosCliente/items/properties/tipoCalle",
+                        "type": "string",
+                        "title": "The Tipocalle Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "nombreCalle": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosCliente/items/properties/nombreCalle",
+                        "type": "string",
+                        "title": "The Nombrecalle Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "nroCasa": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosCliente/items/properties/nroCasa",
+                        "type": "string",
+                        "title": "The Nrocasa Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "nroDepto": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosCliente/items/properties/nroDepto",
+                        "type": "string",
+                        "title": "The Nrodepto Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "codigoPostal": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosCliente/items/properties/codigoPostal",
+                        "type": "string",
+                        "title": "The Codigopostal Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "obs1": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosCliente/items/properties/obs1",
+                        "type": "string",
+                        "title": "The Obs1 Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "nroTelMovil": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosCliente/items/properties/nroTelMovil",
+                        "type": "string",
+                        "title": "The Nrotelmovil Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "nroTelFijo": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosCliente/items/properties/nroTelFijo",
+                        "type": "string",
+                        "title": "The Nrotelfijo Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "ciudad": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosCliente/items/properties/ciudad",
+                        "type": "string",
+                        "title": "The Ciudad Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "comuna": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosCliente/items/properties/comuna",
+                        "type": "string",
+                        "title": "The Comuna Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "state": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosCliente/items/properties/state",
+                        "type": "string",
+                        "title": "The State Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "pais": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosCliente/items/properties/pais",
+                        "type": "string",
+                        "title": "The Pais Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "email": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosCliente/items/properties/email",
+                        "type": "string",
+                        "title": "The Email Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      }
+                    }
+                  }
+                },
+                "datosEvaluacion": {
+                  "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion",
+                  "type": "array",
+                  "items": {
+                    "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items",
+                    "type": "object",
+                    "properties": {
+                      "idTipoAcreditacion": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/idTipoAcreditacion",
+                        "type": "string",
+                        "title": "The Idtipoacreditacion Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "nroTipoAcreditacion": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/nroTipoAcreditacion",
+                        "type": "string",
+                        "title": "The Nrotipoacreditacion Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "idNombreEntidad": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/idNombreEntidad",
+                        "type": "string",
+                        "title": "The Idnombreentidad Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "montoDisponible": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/montoDisponible",
+                        "type": "string",
+                        "title": "The Montodisponible Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "idTipoPago": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/idTipoPago",
+                        "type": "string",
+                        "title": "The Idtipopago Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "mesVencimiento": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/mesVencimiento",
+                        "type": "string",
+                        "title": "The Mesvencimiento Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "anioVencimiento": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/anioVencimiento",
+                        "type": "string",
+                        "title": "The Aniovencimiento Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "obs1": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/obs1",
+                        "type": "string",
+                        "title": "The Obs1 Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "obs2": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/obs2",
+                        "type": "string",
+                        "title": "The Obs2 Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "obs3": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/obs3",
+                        "type": "string",
+                        "title": "The Obs3 Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "obs4": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/obs4",
+                        "type": "string",
+                        "title": "The Obs4 Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "resultadoEvaluacion": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/resultadoEvaluacion",
+                        "type": "array",
+                        "items": {
+                          "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/resultadoEvaluacion/items",
+                          "type": "object",
+                          "properties": {
+                            "clasificacionCliente": {
+                              "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/resultadoEvaluacion/items/properties/clasificacionCliente",
+                              "type": "string",
+                              "title": "The Clasificacioncliente Schema ",
+                              "default": "",
+                              "examples": [
+                                ""
+                              ]
+                            },
+                            "descripcionCliente": {
+                              "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/resultadoEvaluacion/items/properties/descripcionCliente",
+                              "type": "string",
+                              "title": "The Descripcioncliente Schema ",
+                              "default": "",
+                              "examples": [
+                                ""
+                              ]
+                            },
+                            "numeroLineas": {
+                              "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/resultadoEvaluacion/items/properties/numeroLineas",
+                              "type": "string",
+                              "title": "The Numerolineas Schema ",
+                              "default": "",
+                              "examples": [
+                                ""
+                              ]
+                            },
+                            "idEnganche": {
+                              "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/resultadoEvaluacion/items/properties/idEnganche",
+                              "type": "string",
+                              "title": "The Idenganche Schema ",
+                              "default": "",
+                              "examples": [
+                                ""
+                              ]
+                            },
+                            "descripcionMontoCredito": {
+                              "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/resultadoEvaluacion/items/properties/descripcionMontoCredito",
+                              "type": "array",
+                              "items": {
+                                "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/resultadoEvaluacion/items/properties/descripcionMontoCredito/items",
+                                "type": "object",
+                                "properties": {
+                                  "descMontoCreditoElem": {
+                                    "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/resultadoEvaluacion/items/properties/descripcionMontoCredito/items/properties/descMontoCreditoElem",
+                                    "type": "array",
+                                    "items": {
+                                      "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/resultadoEvaluacion/items/properties/descripcionMontoCredito/items/properties/descMontoCreditoElem/items",
+                                      "type": "object",
+                                      "properties": {
+                                        "idTipoEquipo": {
+                                          "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/resultadoEvaluacion/items/properties/descripcionMontoCredito/items/properties/descMontoCreditoElem/items/properties/idTipoEquipo",
+                                          "type": "string",
+                                          "title": "The Idtipoequipo Schema ",
+                                          "default": "",
+                                          "examples": [
+                                            ""
+                                          ]
+                                        },
+                                        "tipoPlan": {
+                                          "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/resultadoEvaluacion/items/properties/descripcionMontoCredito/items/properties/descMontoCreditoElem/items/properties/tipoPlan",
+                                          "type": "string",
+                                          "title": "The Tipoplan Schema ",
+                                          "default": "",
+                                          "examples": [
+                                            ""
+                                          ]
+                                        },
+                                        "montoCreditoPlan": {
+                                          "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/resultadoEvaluacion/items/properties/descripcionMontoCredito/items/properties/descMontoCreditoElem/items/properties/montoCreditoPlan",
+                                          "type": "string",
+                                          "title": "The Montocreditoplan Schema ",
+                                          "default": "",
+                                          "examples": [
+                                            ""
+                                          ]
+                                        },
+                                        "obs1": {
+                                          "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/resultadoEvaluacion/items/properties/descripcionMontoCredito/items/properties/descMontoCreditoElem/items/properties/obs1",
+                                          "type": "string",
+                                          "title": "The Obs1 Schema ",
+                                          "default": "",
+                                          "examples": [
+                                            ""
+                                          ]
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "ventaConPat": {
+                              "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/resultadoEvaluacion/items/properties/ventaConPat",
+                              "type": "string",
+                              "title": "The Ventaconpat Schema ",
+                              "default": "",
+                              "examples": [
+                                ""
+                              ]
+                            },
+                            "tipoTarifa": {
+                              "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/resultadoEvaluacion/items/properties/tipoTarifa",
+                              "type": "string",
+                              "title": "The Tipotarifa Schema ",
+                              "default": "",
+                              "examples": [
+                                ""
+                              ]
+                            },
+                            "documentosAcreditacion": {
+                              "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/resultadoEvaluacion/items/properties/documentosAcreditacion",
+                              "type": "array",
+                              "items": {
+                                "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/resultadoEvaluacion/items/properties/documentosAcreditacion/items",
+                                "type": "object",
+                                "properties": {
+                                  "dctoAcredElem": {
+                                    "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/resultadoEvaluacion/items/properties/documentosAcreditacion/items/properties/dctoAcredElem",
+                                    "type": "array",
+                                    "items": {
+                                      "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/resultadoEvaluacion/items/properties/documentosAcreditacion/items/properties/dctoAcredElem/items",
+                                      "type": "object",
+                                      "properties": {
+                                        "docAcreditacion": {
+                                          "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosEvaluacion/items/properties/resultadoEvaluacion/items/properties/documentosAcreditacion/items/properties/dctoAcredElem/items/properties/docAcreditacion",
+                                          "type": "string",
+                                          "title": "The Docacreditacion Schema ",
+                                          "default": "",
+                                          "examples": [
+                                            ""
+                                          ]
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "datosPlan": {
+                  "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPlan",
+                  "type": "array",
+                  "items": {
+                    "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPlan/items",
+                    "type": "object",
+                    "properties": {
+                      "cantidadLineas": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPlan/items/properties/cantidadLineas",
+                        "type": "string",
+                        "title": "The Cantidadlineas Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "listaDatosPlanes": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPlan/items/properties/listaDatosPlanes",
+                        "type": "array",
+                        "items": {
+                          "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPlan/items/properties/listaDatosPlanes/items",
+                          "type": "object",
+                          "properties": {
+                            "datosPlanElem": {
+                              "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPlan/items/properties/listaDatosPlanes/items/properties/datosPlanElem",
+                              "type": "array",
+                              "items": {
+                                "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPlan/items/properties/listaDatosPlanes/items/properties/datosPlanElem/items",
+                                "type": "object",
+                                "properties": {
+                                  "codPlan": {
+                                    "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPlan/items/properties/listaDatosPlanes/items/properties/datosPlanElem/items/properties/codPlan",
+                                    "type": "string",
+                                    "title": "The Codplan Schema ",
+                                    "default": "",
+                                    "examples": [
+                                      ""
+                                    ]
+                                  },
+                                  "nombrePlan": {
+                                    "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPlan/items/properties/listaDatosPlanes/items/properties/datosPlanElem/items/properties/nombrePlan",
+                                    "type": "string",
+                                    "title": "The Nombreplan Schema ",
+                                    "default": "",
+                                    "examples": [
+                                      ""
+                                    ]
+                                  },
+                                  "numeroCel1": {
+                                    "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPlan/items/properties/listaDatosPlanes/items/properties/datosPlanElem/items/properties/numeroCel1",
+                                    "type": "string",
+                                    "title": "The Numerocel1 Schema ",
+                                    "default": "",
+                                    "examples": [
+                                      ""
+                                    ]
+                                  },
+                                  "numeroCel2": {
+                                    "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPlan/items/properties/listaDatosPlanes/items/properties/datosPlanElem/items/properties/numeroCel2",
+                                    "type": "string",
+                                    "title": "The Numerocel2 Schema ",
+                                    "default": "",
+                                    "examples": [
+                                      ""
+                                    ]
+                                  },
+                                  "serie": {
+                                    "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPlan/items/properties/listaDatosPlanes/items/properties/datosPlanElem/items/properties/serie",
+                                    "type": "string",
+                                    "title": "The Serie Schema ",
+                                    "default": "",
+                                    "examples": [
+                                      ""
+                                    ]
+                                  },
+                                  "tipoSim": {
+                                    "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPlan/items/properties/listaDatosPlanes/items/properties/datosPlanElem/items/properties/tipoSim",
+                                    "type": "string",
+                                    "title": "The Tiposim Schema ",
+                                    "default": "",
+                                    "examples": [
+                                      ""
+                                    ]
+                                  },
+                                  "patente": {
+                                    "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPlan/items/properties/listaDatosPlanes/items/properties/datosPlanElem/items/properties/patente",
+                                    "type": "string",
+                                    "title": "The Patente Schema ",
+                                    "default": "",
+                                    "examples": [
+                                      ""
+                                    ]
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "datosTelefono": {
+                  "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosTelefono",
+                  "type": "array",
+                  "items": {
+                    "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosTelefono/items",
+                    "type": "object",
+                    "properties": {
+                      "datosTelefonoElem": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosTelefono/items/properties/datosTelefonoElem",
+                        "type": "array",
+                        "items": {
+                          "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosTelefono/items/properties/datosTelefonoElem/items",
+                          "type": "object",
+                          "properties": {
+                            "descripcionCelular": {
+                              "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosTelefono/items/properties/datosTelefonoElem/items/properties/descripcionCelular",
+                              "type": "string",
+                              "title": "The Descripcioncelular Schema ",
+                              "default": "",
+                              "examples": [
+                                ""
+                              ]
+                            },
+                            "imei": {
+                              "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosTelefono/items/properties/datosTelefonoElem/items/properties/imei",
+                              "type": "string",
+                              "title": "The Imei Schema ",
+                              "default": "",
+                              "examples": [
+                                ""
+                              ]
+                            },
+                            "idInternoCel": {
+                              "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosTelefono/items/properties/datosTelefonoElem/items/properties/idInternoCel",
+                              "type": "string",
+                              "title": "The Idinternocel Schema ",
+                              "default": "",
+                              "examples": [
+                                ""
+                              ]
+                            },
+                            "tipoCel": {
+                              "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosTelefono/items/properties/datosTelefonoElem/items/properties/tipoCel",
+                              "type": "string",
+                              "title": "The Tipocel Schema ",
+                              "default": "",
+                              "examples": [
+                                ""
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "datosPago": {
+                  "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPago",
+                  "type": "array",
+                  "items": {
+                    "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPago/items",
+                    "type": "object",
+                    "properties": {
+                      "nroBoleta": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPago/items/properties/nroBoleta",
+                        "type": "string",
+                        "title": "The Nroboleta Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "montoCancelado": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPago/items/properties/montoCancelado",
+                        "type": "string",
+                        "title": "The Montocancelado Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "local": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPago/items/properties/local",
+                        "type": "string",
+                        "title": "The Local Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "terminal": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPago/items/properties/terminal",
+                        "type": "string",
+                        "title": "The Terminal Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "idVendedor": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPago/items/properties/idVendedor",
+                        "type": "string",
+                        "title": "The Idvendedor Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "numeroTelefonicoTienda": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPago/items/properties/numeroTelefonicoTienda",
+                        "type": "string",
+                        "title": "The Numerotelefonicotienda Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "cicloFacturacion": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPago/items/properties/cicloFacturacion",
+                        "type": "string",
+                        "title": "The Ciclofacturacion Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "vencimiento": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPago/items/properties/vencimiento",
+                        "type": "string",
+                        "title": "The Vencimiento Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      }
+                    }
+                  }
+                },
+                "datosPortabilidad": {
+                  "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPortabilidad",
+                  "type": "array",
+                  "items": {
+                    "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPortabilidad/items",
+                    "type": "object",
+                    "properties": {
+                      "cap": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPortabilidad/items/properties/cap",
+                        "type": "string",
+                        "title": "The Cap Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "nroConsultaOAP": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPortabilidad/items/properties/nroConsultaOAP",
+                        "type": "string",
+                        "title": "The Nroconsultaoap Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "nroPortabilidadInt": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPortabilidad/items/properties/nroPortabilidadInt",
+                        "type": "string",
+                        "title": "The Nroportabilidadint Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "nroSolicitudOAP": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPortabilidad/items/properties/nroSolicitudOAP",
+                        "type": "string",
+                        "title": "The Nrosolicitudoap Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "modalidadServActual": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPortabilidad/items/properties/modalidadServActual",
+                        "type": "string",
+                        "title": "The Modalidadservactual Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "tipoEquipo": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPortabilidad/items/properties/tipoEquipo",
+                        "type": "string",
+                        "title": "The Tipoequipo Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "tipoServicio": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPortabilidad/items/properties/tipoServicio",
+                        "type": "string",
+                        "title": "The Tiposervicio Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "tipoSubscriptor": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPortabilidad/items/properties/tipoSubscriptor",
+                        "type": "string",
+                        "title": "The Tiposubscriptor Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "idOperadorDonante": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPortabilidad/items/properties/idOperadorDonante",
+                        "type": "string",
+                        "title": "The Idoperadordonante Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "documentosPortabilidad": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPortabilidad/items/properties/documentosPortabilidad",
+                        "type": "array",
+                        "items": {
+                          "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPortabilidad/items/properties/documentosPortabilidad/items",
+                          "type": "object",
+                          "properties": {
+                            "dctosPortabilidadElem": {
+                              "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPortabilidad/items/properties/documentosPortabilidad/items/properties/dctosPortabilidadElem",
+                              "type": "array",
+                              "items": {
+                                "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPortabilidad/items/properties/documentosPortabilidad/items/properties/dctosPortabilidadElem/items",
+                                "type": "object",
+                                "properties": {
+                                  "nombre": {
+                                    "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPortabilidad/items/properties/documentosPortabilidad/items/properties/dctosPortabilidadElem/items/properties/nombre",
+                                    "type": "string",
+                                    "title": "The Nombre Schema ",
+                                    "default": "",
+                                    "examples": [
+                                      ""
+                                    ]
+                                  },
+                                  "mimeType": {
+                                    "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPortabilidad/items/properties/documentosPortabilidad/items/properties/dctosPortabilidadElem/items/properties/mimeType",
+                                    "type": "string",
+                                    "title": "The Mimetype Schema ",
+                                    "default": "",
+                                    "examples": [
+                                      ""
+                                    ]
+                                  },
+                                  "peso": {
+                                    "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPortabilidad/items/properties/documentosPortabilidad/items/properties/dctosPortabilidadElem/items/properties/peso",
+                                    "type": "string",
+                                    "title": "The Peso Schema ",
+                                    "default": "",
+                                    "examples": [
+                                      ""
+                                    ]
+                                  },
+                                  "docCodificado": {
+                                    "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/datosPortabilidad/items/properties/documentosPortabilidad/items/properties/dctosPortabilidadElem/items/properties/docCodificado",
+                                    "type": "string",
+                                    "title": "The Doccodificado Schema ",
+                                    "default": "",
+                                    "examples": [
+                                      ""
+                                    ]
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "documentoContrato": {
+                  "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/documentoContrato",
+                  "type": "array",
+                  "items": {
+                    "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/documentoContrato/items",
+                    "type": "object",
+                    "properties": {
+                      "numeroFolio": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/documentoContrato/items/properties/numeroFolio",
+                        "type": "string",
+                        "title": "The Numerofolio Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "tipoVenta": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/documentoContrato/items/properties/tipoVenta",
+                        "type": "string",
+                        "title": "The Tipoventa Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "idVentaTelco": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/documentoContrato/items/properties/idVentaTelco",
+                        "type": "string",
+                        "title": "The Idventatelco Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "nombre": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/documentoContrato/items/properties/nombre",
+                        "type": "string",
+                        "title": "The Nombre Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "mimeType": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/documentoContrato/items/properties/mimeType",
+                        "type": "string",
+                        "title": "The Mimetype Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "peso": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/documentoContrato/items/properties/peso",
+                        "type": "string",
+                        "title": "The Peso Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "docCodificado": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/documentoContrato/items/properties/docCodificado",
+                        "type": "string",
+                        "title": "The Doccodificado Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "obs1": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/documentoContrato/items/properties/obs1",
+                        "type": "string",
+                        "title": "The Obs1 Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "obs2": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/documentoContrato/items/properties/obs2",
+                        "type": "string",
+                        "title": "The Obs2 Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "obs3": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/documentoContrato/items/properties/obs3",
+                        "type": "string",
+                        "title": "The Obs3 Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "obs4": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/documentoContrato/items/properties/obs4",
+                        "type": "string",
+                        "title": "The Obs4 Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "obs5": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/documentoContrato/items/properties/obs5",
+                        "type": "string",
+                        "title": "The Obs5 Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "obs6": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/documentoContrato/items/properties/obs6",
+                        "type": "string",
+                        "title": "The Obs6 Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "obs7": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/documentoContrato/items/properties/obs7",
+                        "type": "string",
+                        "title": "The Obs7 Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "obs8": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/documentoContrato/items/properties/obs8",
+                        "type": "string",
+                        "title": "The Obs8 Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "obs9": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/documentoContrato/items/properties/obs9",
+                        "type": "string",
+                        "title": "The Obs9 Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      },
+                      "obs10": {
+                        "$id": "/properties/contratoClienteReq/items/properties/reqContratoCliente/items/properties/documentoContrato/items/properties/obs10",
+                        "type": "string",
+                        "title": "The Obs10 Schema ",
+                        "default": "",
+                        "examples": [
+                          ""
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}]]></L7p:Document>
+                    </L7p:ResourceInfo>
+                </L7p:JSONSchema>
+                <L7p:TrueAssertion/>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="NDAw"/>
+                    <L7p:VariableToSet stringValue="codeReturn"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="RXJyb3IgZW4gZXN0cnVjdHVyYSBKU09O"/>
+                    <L7p:VariableToSet stringValue="description"/>
+                </L7p:SetVariable>
+                <L7p:AuditDetailAssertion>
+                    <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                    <L7p:Detail stringValue="idOperation: ${idTransaction.result} ResourceId:  Message: Undefined ReasonCode: -5 Service: migration"/>
+                    <L7p:LoggingOnly booleanValue="true"/>
+                </L7p:AuditDetailAssertion>
+                <L7p:CustomizeErrorResponse>
+                    <L7p:Content stringValueReference="inline"><![CDATA[{
+"code":"${codeReturn}",
+"description":"${description}",
+"datetimeOperation":"${datetimeOperation}",
+"idOperation":"${idTransaction.result}"
+}]]></L7p:Content>
+                    <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                    <L7p:ExtraHeaders nameValuePairArray="included"/>
+                    <L7p:HttpStatus stringValue="400"/>
+                </L7p:CustomizeErrorResponse>
+                <L7p:RaiseError/>
+            </wsp:All>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="VALIDAR JSON"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:OneOrMore>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".timestamp"/>
+                    <L7p:VariablePrefix stringValue="timestamp"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".storeId"/>
+                    <L7p:VariablePrefix stringValue="storeId"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".terminalId"/>
+                    <L7p:VariablePrefix stringValue="terminalId"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".retailId"/>
+                    <L7p:VariablePrefix stringValue="retailId"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".tipoHabilitacion"/>
+                    <L7p:VariablePrefix stringValue="tipoHabilitacion"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".descStore"/>
+                    <L7p:VariablePrefix stringValue="descStore"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosCliente.idTipoDocumento"/>
+                    <L7p:VariablePrefix stringValue="idTipoDocumento"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosCliente.rut"/>
+                    <L7p:VariablePrefix stringValue="rut"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosCliente.dv"/>
+                    <L7p:VariablePrefix stringValue="dv"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosCliente.serie"/>
+                    <L7p:VariablePrefix stringValue="serie"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosCliente.titulo"/>
+                    <L7p:VariablePrefix stringValue="titulo"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosCliente.genero"/>
+                    <L7p:VariablePrefix stringValue="genero"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosCliente.estadoCivil"/>
+                    <L7p:VariablePrefix stringValue="estadoCivil"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosCliente.tipoCliente"/>
+                    <L7p:VariablePrefix stringValue="tipoCliente"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosCliente.nombre"/>
+                    <L7p:VariablePrefix stringValue="nombre"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosCliente.apellidoP"/>
+                    <L7p:VariablePrefix stringValue="apellidoP"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosCliente.apellidoM"/>
+                    <L7p:VariablePrefix stringValue="apellidoM"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosCliente.direccion"/>
+                    <L7p:VariablePrefix stringValue="direccion"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosCliente.tipoCalle"/>
+                    <L7p:VariablePrefix stringValue="tipoCalle"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosCliente.nombreCalle"/>
+                    <L7p:VariablePrefix stringValue="nombreCalle"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosCliente.nroCasa"/>
+                    <L7p:VariablePrefix stringValue="nroCasa"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosCliente.nroDepto"/>
+                    <L7p:VariablePrefix stringValue="nroDepto"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosCliente.codigoPostal"/>
+                    <L7p:VariablePrefix stringValue="codigoPostal"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosCliente.obs1"/>
+                    <L7p:VariablePrefix stringValue="datosCliente.obs1"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosCliente.nroTelMovil"/>
+                    <L7p:VariablePrefix stringValue="nroTelMovil"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosCliente.nroTelFijo"/>
+                    <L7p:VariablePrefix stringValue="nroTelFijo"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosCliente.ciudad"/>
+                    <L7p:VariablePrefix stringValue="ciudad"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosCliente.comuna"/>
+                    <L7p:VariablePrefix stringValue="comuna"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosCliente.state"/>
+                    <L7p:VariablePrefix stringValue="state"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosCliente.pais"/>
+                    <L7p:VariablePrefix stringValue="pais"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosCliente.email"/>
+                    <L7p:VariablePrefix stringValue="email"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosEvaluacion.idTipoAcreditacion"/>
+                    <L7p:VariablePrefix stringValue="idTipoAcreditacion"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosEvaluacion.nroTipoAcreditacion"/>
+                    <L7p:VariablePrefix stringValue="nroTipoAcreditacion"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosEvaluacion.idNombreEntidad"/>
+                    <L7p:VariablePrefix stringValue="idNombreEntidad"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosEvaluacion.montoDisponible"/>
+                    <L7p:VariablePrefix stringValue="montoDisponible"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosEvaluacion.idTipoPago"/>
+                    <L7p:VariablePrefix stringValue="idTipoPago"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosEvaluacion.mesVencimiento"/>
+                    <L7p:VariablePrefix stringValue="mesVencimiento"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosEvaluacion.anioVencimiento"/>
+                    <L7p:VariablePrefix stringValue="anioVencimiento"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosEvaluacion.obs1"/>
+                    <L7p:VariablePrefix stringValue="datosEvaluacion.obs1"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosEvaluacion.obs2"/>
+                    <L7p:VariablePrefix stringValue="datosEvaluacion.obs2"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosEvaluacion.obs3"/>
+                    <L7p:VariablePrefix stringValue="datosEvaluacion.obs3"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosEvaluacion.obs4"/>
+                    <L7p:VariablePrefix stringValue="datosEvaluacion.obs4"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosEvaluacion.resultadoEvaluacion.clasificacionCliente"/>
+                    <L7p:VariablePrefix stringValue="clasificacionCliente"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosEvaluacion.resultadoEvaluacion.descripcionCliente"/>
+                    <L7p:VariablePrefix stringValue="descripcionCliente"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosEvaluacion.resultadoEvaluacion.numeroLineas"/>
+                    <L7p:VariablePrefix stringValue="numeroLineas"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosEvaluacion.resultadoEvaluacion.idEnganche"/>
+                    <L7p:VariablePrefix stringValue="idEnganche"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosEvaluacion.resultadoEvaluacion.descripcionMontoCredito.descMontoCreditoElem.idTipoEquipo"/>
+                    <L7p:VariablePrefix stringValue="idTipoEquipo"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosEvaluacion.resultadoEvaluacion.descripcionMontoCredito.descMontoCreditoElem.tipoPlan"/>
+                    <L7p:VariablePrefix stringValue="tipoPlan"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosEvaluacion.resultadoEvaluacion.descripcionMontoCredito.descMontoCreditoElem.montoCreditoPlan"/>
+                    <L7p:VariablePrefix stringValue="montoCreditoPlan"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosEvaluacion.resultadoEvaluacion.descripcionMontoCredito.descMontoCreditoElem.obs1"/>
+                    <L7p:VariablePrefix stringValue="descMontoCreditoElem.obs1"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosEvaluacion.resultadoEvaluacion.ventaConPat"/>
+                    <L7p:VariablePrefix stringValue="ventaConPat"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosEvaluacion.resultadoEvaluacion.tipoTarifa"/>
+                    <L7p:VariablePrefix stringValue="tipoTarifa"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosEvaluacion.resultadoEvaluacion.documentosAcreditacion.dctoAcredElem.docAcreditacion"/>
+                    <L7p:VariablePrefix stringValue="docAcreditacion"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosPlan.cantidadLineas"/>
+                    <L7p:VariablePrefix stringValue="cantidadLineas"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosPlan.listaDatosPlanes.datosPlanElem.codPlan"/>
+                    <L7p:VariablePrefix stringValue="codPlan"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosPlan.listaDatosPlanes.datosPlanElem.nombrePlan"/>
+                    <L7p:VariablePrefix stringValue="nombrePlan"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosPlan.listaDatosPlanes.datosPlanElem.numeroCel1"/>
+                    <L7p:VariablePrefix stringValue="numeroCel1"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosPlan.listaDatosPlanes.datosPlanElem.numeroCel2"/>
+                    <L7p:VariablePrefix stringValue="numeroCel2"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosPlan.listaDatosPlanes.datosPlanElem.serie"/>
+                    <L7p:VariablePrefix stringValue="serie"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosPlan.listaDatosPlanes.datosPlanElem.tipoSim"/>
+                    <L7p:VariablePrefix stringValue="tipoSim"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosPlan.listaDatosPlanes.datosPlanElem.patente"/>
+                    <L7p:VariablePrefix stringValue="patente"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosTelefono.datosTelefonoElem.descripcionCelular"/>
+                    <L7p:VariablePrefix stringValue="descripcionCelular"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosTelefono.datosTelefonoElem.imei"/>
+                    <L7p:VariablePrefix stringValue="imei"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosTelefono.datosTelefonoElem.idInternoCel"/>
+                    <L7p:VariablePrefix stringValue="idInternoCel"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosTelefono.datosTelefonoElem.tipoCel"/>
+                    <L7p:VariablePrefix stringValue="tipoCel"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosPago.nroBoleta"/>
+                    <L7p:VariablePrefix stringValue="nroBoleta"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosPago.montoCancelado"/>
+                    <L7p:VariablePrefix stringValue="montoCancelado"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosPago.local"/>
+                    <L7p:VariablePrefix stringValue="local"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosPago.terminal"/>
+                    <L7p:VariablePrefix stringValue="terminal"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosPago.idVendedor"/>
+                    <L7p:VariablePrefix stringValue="idVendedor"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosPago.numeroTelefonicoTienda"/>
+                    <L7p:VariablePrefix stringValue="numeroTelefonicoTienda"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosPago.cicloFacturacion"/>
+                    <L7p:VariablePrefix stringValue="cicloFacturacion"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosPago.vencimiento"/>
+                    <L7p:VariablePrefix stringValue="vencimiento"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosPortabilidad.cap"/>
+                    <L7p:VariablePrefix stringValue="cap"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosPortabilidad.nroConsultaOAP"/>
+                    <L7p:VariablePrefix stringValue="nroConsultaOAP"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosPortabilidad.nroPortabilidadInt"/>
+                    <L7p:VariablePrefix stringValue="nroPortabilidadInt"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosPortabilidad.nroSolicitudOAP"/>
+                    <L7p:VariablePrefix stringValue="nroSolicitudOAP"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosPortabilidad.modalidadServActual"/>
+                    <L7p:VariablePrefix stringValue="modalidadServActual"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosPortabilidad.tipoEquipo"/>
+                    <L7p:VariablePrefix stringValue="tipoEquipo"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosPortabilidad.tipoServicio"/>
+                    <L7p:VariablePrefix stringValue="tipoServicio"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosPortabilidad.tipoSubscriptor"/>
+                    <L7p:VariablePrefix stringValue="tipoSubscriptor"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosPortabilidad.capidOperadorDonante"/>
+                    <L7p:VariablePrefix stringValue="idOperadorDonante"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosPortabilidad.documentosPortabilidad.dctosPortabilidadElem.nombre"/>
+                    <L7p:VariablePrefix stringValue="dctosPortabilidadElem.nombre"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosPortabilidad.documentosPortabilidad.dctosPortabilidadElem.mimeType"/>
+                    <L7p:VariablePrefix stringValue="dctosPortabilidadElem.mimeType"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosPortabilidad.documentosPortabilidad.dctosPortabilidadElem.peso"/>
+                    <L7p:VariablePrefix stringValue="dctosPortabilidadElem.peso"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".datosPortabilidad.documentosPortabilidad.dctosPortabilidadElem.docCodificado"/>
+                    <L7p:VariablePrefix stringValue="dctosPortabilidadElem.docCodificado"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".documentoContrato.numeroFolio"/>
+                    <L7p:VariablePrefix stringValue="numeroFolio"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".documentoContrato.tipoVenta"/>
+                    <L7p:VariablePrefix stringValue="tipoVenta"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".documentoContrato.idVentaTelco"/>
+                    <L7p:VariablePrefix stringValue="idVentaTelco"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".documentoContrato.nombre"/>
+                    <L7p:VariablePrefix stringValue="documentoContrato.nombre"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".documentoContrato.mimeType"/>
+                    <L7p:VariablePrefix stringValue="documentoContrato.mimeType"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".documentoContrato.peso"/>
+                    <L7p:VariablePrefix stringValue="documentoContrato.peso"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".documentoContrato.docCodificado"/>
+                    <L7p:VariablePrefix stringValue="documentoContrato.docCodificado"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".documentoContrato.obs1"/>
+                    <L7p:VariablePrefix stringValue="documentoContrato.obs1"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".documentoContrato.obs2"/>
+                    <L7p:VariablePrefix stringValue="documentoContrato.obs2"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".documentoContrato.obs3"/>
+                    <L7p:VariablePrefix stringValue="documentoContrato.obs3"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".documentoContrato.obs4"/>
+                    <L7p:VariablePrefix stringValue="documentoContrato.obs4"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".documentoContrato.obs5"/>
+                    <L7p:VariablePrefix stringValue="documentoContrato.obs5"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".documentoContrato.obs6"/>
+                    <L7p:VariablePrefix stringValue="documentoContrato.obs6"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".documentoContrato.obs7"/>
+                    <L7p:VariablePrefix stringValue="documentoContrato.obs7"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".documentoContrato.obs8"/>
+                    <L7p:VariablePrefix stringValue="documentoContrato.obs8"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".documentoContrato.obs9"/>
+                    <L7p:VariablePrefix stringValue="documentoContrato.obs9"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".documentoContrato.obs10"/>
+                    <L7p:VariablePrefix stringValue="documentoContrato.obs10"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="PHNvYXBlbnY6RW52ZWxvcGUgeG1sbnM6c29hcGVudj0iaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvc29hcC9lbnZlbG9wZS8iIHhtbG5zOmVudj0iaHR0cDovL3d3dy5lc2EuY29tL01hcmtldFNhbGVzL1NhbGVzQ2hhbm5lbE1WTy9UL2VudmlhckNvbnRyYXRvRmFiQ29ubldTLyIgeG1sbnM6cmVxPSJodHRwOi8vd3d3LmVzYS5jb20vTWFya2V0U2FsZXMvU2FsZXNDaGFubmVsTVZPL1QvZW52aWFyQ29udHJhdG9GYWJDb25uV1MvcmVxdWVzdCI+DQogICA8c29hcGVudjpIZWFkZXIvPg0KICAgPHNvYXBlbnY6Qm9keT4NCiAgICAgIDxlbnY6Y29udHJhdG9DbGllbnRlUmVxPg0KICAgICAgICAgPGVudjpyZXFDb250cmF0b0NsaWVudGU+DQogICAgICAgICAgICA8cmVxOnRpbWVzdGFtcD4ke3RpbWVzdGFtcC5yZXN1bHR9PC9yZXE6dGltZXN0YW1wPg0KICAgICAgICAgICAgPHJlcTpzdG9yZUlkPiR7c3RvcmVJZC5yZXN1bHR9PC9yZXE6c3RvcmVJZD4NCiAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgIDxyZXE6dGVybWluYWxJZD4ke3Rlcm1pbmFsSWQucmVzdWx0fTwvcmVxOnRlcm1pbmFsSWQ+DQoJCQk8cmVxOnJldGFpbElkPiR7cmV0YWlsSWQucmVzdWx0fTwvcmVxOnJldGFpbElkPg0KICAgICAgICAgICAgPHJlcTp0aXBvSGFiaWxpdGFjaW9uPiR7dGlwb0hhYmlsaXRhY2lvbi5yZXN1bHR9PC9yZXE6dGlwb0hhYmlsaXRhY2lvbj4NCiAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgIDxyZXE6ZGVzY1N0b3JlPiR7ZGVzY1N0b3JlLnJlc3VsdH08L3JlcTpkZXNjU3RvcmU+DQogICAgICAgICAgICA8cmVxOmRhdG9zQ2xpZW50ZT4NCiAgICAgICAgICAgICAgIDxyZXE6aWRUaXBvRG9jdW1lbnRvPiR7aWRUaXBvRG9jdW1lbnRvLnJlc3VsdH08L3JlcTppZFRpcG9Eb2N1bWVudG8+DQogICAgICAgICAgICAgICA8cmVxOnJ1dD4ke3J1dC5yZXN1bHR9PC9yZXE6cnV0Pg0KICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgPHJlcTpkdj4ke2R2LnJlc3VsdH08L3JlcTpkdj4NCiAgICAgICAgICAgICAgIDxyZXE6c2VyaWU+JHtzZXJpZS5yZXN1bHR9PC9yZXE6c2VyaWU+DQogICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICA8cmVxOnRpdHVsbz4ke3RpdHVsby5yZXN1bHR9PC9yZXE6dGl0dWxvPg0KICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgPHJlcTpnZW5lcm8+JHtnZW5lcm8ucmVzdWx0fTwvcmVxOmdlbmVybz4NCiAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgIDxyZXE6ZXN0YWRvQ2l2aWw+JHtlc3RhZG9DaXZpbC5yZXN1bHR9PC9yZXE6ZXN0YWRvQ2l2aWw+DQogICAgICAgICAgICAgICA8cmVxOnRpcG9DbGllbnRlPiR7dGlwb0NsaWVudGUucmVzdWx0fTwvcmVxOnRpcG9DbGllbnRlPg0KICAgICAgICAgICAgICAgPHJlcTpub21icmU+JHtub21icmUucmVzdWx0fTwvcmVxOm5vbWJyZT4NCiAgICAgICAgICAgICAgIDxyZXE6YXBlbGxpZG9QPiR7YXBlbGxpZG9QLnJlc3VsdH08L3JlcTphcGVsbGlkb1A+DQogICAgICAgICAgICAgICA8cmVxOmFwZWxsaWRvTT4ke2FwZWxsaWRvTS5yZXN1bHR9PC9yZXE6YXBlbGxpZG9NPg0KICAgICAgICAgICAgICAgPHJlcTpkaXJlY2Npb24+JHtkaXJlY2Npb24ucmVzdWx0fTwvcmVxOmRpcmVjY2lvbj4NCiAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgIDxyZXE6dGlwb0NhbGxlPiR7dGlwb0NhbGxlLnJlc3VsdH08L3JlcTp0aXBvQ2FsbGU+DQogICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICA8cmVxOm5vbWJyZUNhbGxlPiR7bm9tYnJlQ2FsbGUucmVzdWx0fTwvcmVxOm5vbWJyZUNhbGxlPg0KICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgPHJlcTpucm9DYXNhPiR7bnJvQ2FzYS5yZXN1bHR9PC9yZXE6bnJvQ2FzYT4NCiAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgIDxyZXE6bnJvRGVwdG8+JHtucm9EZXB0by5yZXN1bHR9PC9yZXE6bnJvRGVwdG8+DQogICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICA8cmVxOmNvZGlnb1Bvc3RhbD4ke2NvZGlnb1Bvc3RhbC5yZXN1bHR9PC9yZXE6Y29kaWdvUG9zdGFsPg0KICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgPHJlcTpvYnMxPiR7ZGF0b3NDbGllbnRlLm9iczEucmVzdWx0fTwvcmVxOm9iczE+DQogICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICA8cmVxOm5yb1RlbE1vdmlsPiR7bnJvVGVsTW92aWwucmVzdWx0fTwvcmVxOm5yb1RlbE1vdmlsPg0KICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgPHJlcTpucm9UZWxGaWpvPiR7bnJvVGVsRmlqby5yZXN1bHR9PC9yZXE6bnJvVGVsRmlqbz4NCiAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgIDxyZXE6Y2l1ZGFkPiR7Y2l1ZGFkLnJlc3VsdH08L3JlcTpjaXVkYWQ+DQogICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICA8cmVxOmNvbXVuYT4ke2NvbXVuYS5yZXN1bHR9PC9yZXE6Y29tdW5hPg0KICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgPHJlcTpzdGF0ZT4ke3N0YXRlLnJlc3VsdH08L3JlcTpzdGF0ZT4NCiAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgIDxyZXE6cGFpcz4ke3BhaXMucmVzdWx0fTwvcmVxOnBhaXM+DQogICAgICAgICAgICAgICA8cmVxOmVtYWlsPiR7ZW1haWwucmVzdWx0fTwvcmVxOmVtYWlsPg0KICAgICAgICAgICAgPC9yZXE6ZGF0b3NDbGllbnRlPg0KICAgICAgICAgICAgPHJlcTpkYXRvc0V2YWx1YWNpb24+DQogICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICA8cmVxOmlkVGlwb0FjcmVkaXRhY2lvbj4ke2lkVGlwb0FjcmVkaXRhY2lvbi5yZXN1bHR9PC9yZXE6aWRUaXBvQWNyZWRpdGFjaW9uPg0KICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgPHJlcTpucm9UaXBvQWNyZWRpdGFjaW9uPiR7bnJvVGlwb0FjcmVkaXRhY2lvbi5yZXN1bHR9PC9yZXE6bnJvVGlwb0FjcmVkaXRhY2lvbj4NCiAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgIDxyZXE6aWROb21icmVFbnRpZGFkPiR7aWROb21icmVFbnRpZGFkLnJlc3VsdH08L3JlcTppZE5vbWJyZUVudGlkYWQ+DQogICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICA8cmVxOm1vbnRvRGlzcG9uaWJsZT4ke21vbnRvRGlzcG9uaWJsZS5yZXN1bHR9PC9yZXE6bW9udG9EaXNwb25pYmxlPg0KICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgPHJlcTppZFRpcG9QYWdvPiR7aWRUaXBvUGFnby5yZXN1bHR9PC9yZXE6aWRUaXBvUGFnbz4NCiAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgIDxyZXE6bWVzVmVuY2ltaWVudG8+JHttZXNWZW5jaW1pZW50by5yZXN1bHR9PC9yZXE6bWVzVmVuY2ltaWVudG8+DQogICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICA8cmVxOmFuaW9WZW5jaW1pZW50bz4ke2FuaW9WZW5jaW1pZW50by5yZXN1bHR9PC9yZXE6YW5pb1ZlbmNpbWllbnRvPg0KICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgPHJlcTpvYnMxPiR7ZGF0b3NFdmFsdWFjaW9uLm9iczEucmVzdWx0fTwvcmVxOm9iczE+DQogICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICA8cmVxOm9iczI+JHtkYXRvc0V2YWx1YWNpb24ub2JzMi5yZXN1bHR9PC9yZXE6b2JzMj4NCiAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgIDxyZXE6b2JzMz4ke2RhdG9zRXZhbHVhY2lvbi5vYnMzLnJlc3VsdH08L3JlcTpvYnMzPg0KICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgPHJlcTpvYnM0PiR7ZGF0b3NFdmFsdWFjaW9uLm9iczQucmVzdWx0fTwvcmVxOm9iczQ+DQogICAgICAgICAgICAgICA8cmVxOnJlc3VsdGFkb0V2YWx1YWNpb24+DQogICAgICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICAgICA8cmVxOmNsYXNpZmljYWNpb25DbGllbnRlPiR7Y2xhc2lmaWNhY2lvbkNsaWVudGUucmVzdWx0fTwvcmVxOmNsYXNpZmljYWNpb25DbGllbnRlPg0KICAgICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgICAgPHJlcTpkZXNjcmlwY2lvbkNsaWVudGU+JHtkZXNjcmlwY2lvbkNsaWVudGUucmVzdWx0fTwvcmVxOmRlc2NyaXBjaW9uQ2xpZW50ZT4NCiAgICAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgICAgIDxyZXE6bnVtZXJvTGluZWFzPiR7bnVtZXJvTGluZWFzLnJlc3VsdH08L3JlcTpudW1lcm9MaW5lYXM+DQogICAgICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICAgICA8cmVxOmlkRW5nYW5jaGU+JHtpZEVuZ2FuY2hlLnJlc3VsdH08L3JlcTppZEVuZ2FuY2hlPg0KICAgICAgICAgICAgICAgICAgPHJlcTpkZXNjcmlwY2lvbk1vbnRvQ3JlZGl0bz4NCiAgICAgICAgICAgICAgICAgICAgIDwhLS0xIG9yIG1vcmUgcmVwZXRpdGlvbnM6LS0+DQogICAgICAgICAgICAgICAgICAgICA8cmVxOmRlc2NNb250b0NyZWRpdG9FbGVtPg0KICAgICAgICAgICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgICAgICAgICAgPHJlcTppZFRpcG9FcXVpcG8+JHtpZFRpcG9FcXVpcG8ucmVzdWx0fTwvcmVxOmlkVGlwb0VxdWlwbz4NCiAgICAgICAgICAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgICAgICAgICAgIDxyZXE6dGlwb1BsYW4+JHt0aXBvUGxhbi5yZXN1bHR9PC9yZXE6dGlwb1BsYW4+DQogICAgICAgICAgICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICAgICAgICAgICA8cmVxOm1vbnRvQ3JlZGl0b1BsYW4+JHttb250b0NyZWRpdG9QbGFuLnJlc3VsdH08L3JlcTptb250b0NyZWRpdG9QbGFuPg0KICAgICAgICAgICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgICAgICAgICAgPHJlcTpvYnMxPiR7ZGVzY01vbnRvQ3JlZGl0b0VsZW0ub2JzMS5yZXN1bHR9PC9yZXE6b2JzMT4NCiAgICAgICAgICAgICAgICAgICAgIDwvcmVxOmRlc2NNb250b0NyZWRpdG9FbGVtPg0KICAgICAgICAgICAgICAgICAgPC9yZXE6ZGVzY3JpcGNpb25Nb250b0NyZWRpdG8+DQogICAgICAgICAgICAgICAgICA8cmVxOnZlbnRhQ29uUGF0PiR7dmVudGFDb25QYXQucmVzdWx0fTwvcmVxOnZlbnRhQ29uUGF0Pg0KICAgICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgICAgPHJlcTp0aXBvVGFyaWZhPiR7dGlwb1RhcmlmYS5yZXN1bHR9PC9yZXE6dGlwb1RhcmlmYT4NCiAgICAgICAgICAgICAgICAgIDxyZXE6ZG9jdW1lbnRvc0FjcmVkaXRhY2lvbj4NCiAgICAgICAgICAgICAgICAgICAgIDwhLS0xIG9yIG1vcmUgcmVwZXRpdGlvbnM6LS0+DQogICAgICAgICAgICAgICAgICAgICA8cmVxOmRjdG9BY3JlZEVsZW0+DQogICAgICAgICAgICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICAgICAgICAgICA8cmVxOmRvY0FjcmVkaXRhY2lvbj4ke2RvY0FjcmVkaXRhY2lvbi5yZXN1bHR9PC9yZXE6ZG9jQWNyZWRpdGFjaW9uPg0KICAgICAgICAgICAgICAgICAgICAgPC9yZXE6ZGN0b0FjcmVkRWxlbT4NCiAgICAgICAgICAgICAgICAgIDwvcmVxOmRvY3VtZW50b3NBY3JlZGl0YWNpb24+DQogICAgICAgICAgICAgICA8L3JlcTpyZXN1bHRhZG9FdmFsdWFjaW9uPg0KICAgICAgICAgICAgPC9yZXE6ZGF0b3NFdmFsdWFjaW9uPg0KICAgICAgICAgICAgPHJlcTpkYXRvc1BsYW4+DQogICAgICAgICAgICAgICA8cmVxOmNhbnRpZGFkTGluZWFzPiR7Y2FudGlkYWRMaW5lYXMucmVzdWx0fTwvcmVxOmNhbnRpZGFkTGluZWFzPg0KICAgICAgICAgICAgICAgPHJlcTpsaXN0YURhdG9zUGxhbmVzPg0KICAgICAgICAgICAgICAgICAgPCEtLTEgb3IgbW9yZSByZXBldGl0aW9uczotLT4NCiAgICAgICAgICAgICAgICAgIDxyZXE6ZGF0b3NQbGFuRWxlbT4NCiAgICAgICAgICAgICAgICAgICAgIDxyZXE6Y29kUGxhbj4ke2NvZFBsYW4ucmVzdWx0fTwvcmVxOmNvZFBsYW4+DQogICAgICAgICAgICAgICAgICAgICA8cmVxOm5vbWJyZVBsYW4+JHtub21icmVQbGFuLnJlc3VsdH08L3JlcTpub21icmVQbGFuPg0KICAgICAgICAgICAgICAgICAgICAgPHJlcTpudW1lcm9DZWwxPiR7bnVtZXJvQ2VsMS5yZXN1bHR9PC9yZXE6bnVtZXJvQ2VsMT4NCiAgICAgICAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgICAgICAgIDxyZXE6bnVtZXJvQ2VsMj4ke251bWVyb0NlbDIucmVzdWx0fTwvcmVxOm51bWVyb0NlbDI+DQogICAgICAgICAgICAgICAgICAgICA8cmVxOnNlcmllPiR7c2VyaWUucmVzdWx0fTwvcmVxOnNlcmllPg0KICAgICAgICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgICAgICAgPHJlcTp0aXBvU2ltPiR7dGlwb1NpbS5yZXN1bHR9PC9yZXE6dGlwb1NpbT4NCiAgICAgICAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgICAgICAgIDxyZXE6cGF0ZW50ZT4ke3BhdGVudGUucmVzdWx0fTwvcmVxOnBhdGVudGU+DQogICAgICAgICAgICAgICAgICA8L3JlcTpkYXRvc1BsYW5FbGVtPg0KICAgICAgICAgICAgICAgPC9yZXE6bGlzdGFEYXRvc1BsYW5lcz4NCiAgICAgICAgICAgIDwvcmVxOmRhdG9zUGxhbj4NCiAgICAgICAgICAgIDxyZXE6ZGF0b3NUZWxlZm9ubz4NCiAgICAgICAgICAgICAgIDxyZXE6ZGF0b3NUZWxlZm9ubz4NCiAgICAgICAgICAgICAgICAgIDwhLS0xIG9yIG1vcmUgcmVwZXRpdGlvbnM6LS0+DQogICAgICAgICAgICAgICAgICA8cmVxOmRhdG9zVGVsZWZvbm9FbGVtPg0KICAgICAgICAgICAgICAgICAgICAgPHJlcTpkZXNjcmlwY2lvbkNlbHVsYXI+JHtkZXNjcmlwY2lvbkNlbHVsYXIucmVzdWx0fTwvcmVxOmRlc2NyaXBjaW9uQ2VsdWxhcj4NCiAgICAgICAgICAgICAgICAgICAgIDxyZXE6aW1laT4ke2ltZWkucmVzdWx0fTwvcmVxOmltZWk+DQogICAgICAgICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICAgICAgICA8cmVxOmlkSW50ZXJub0NlbD4ke2lkSW50ZXJub0NlbC5yZXN1bHR9PC9yZXE6aWRJbnRlcm5vQ2VsPg0KICAgICAgICAgICAgICAgICAgICAgPHJlcTp0aXBvQ2VsPiR7dGlwb0NlbC5yZXN1bHR9PC9yZXE6dGlwb0NlbD4NCiAgICAgICAgICAgICAgICAgIDwvcmVxOmRhdG9zVGVsZWZvbm9FbGVtPg0KICAgICAgICAgICAgICAgPC9yZXE6ZGF0b3NUZWxlZm9ubz4NCiAgICAgICAgICAgIDwvcmVxOmRhdG9zVGVsZWZvbm8+DQogICAgICAgICAgICA8cmVxOmRhdG9zUGFnbz4NCiAgICAgICAgICAgICAgIDxyZXE6bnJvQm9sZXRhPiR7bnJvQm9sZXRhLnJlc3VsdH08L3JlcTpucm9Cb2xldGE+DQogICAgICAgICAgICAgICA8cmVxOm1vbnRvQ2FuY2VsYWRvPiR7bW9udG9DYW5jZWxhZG8ucmVzdWx0fTwvcmVxOm1vbnRvQ2FuY2VsYWRvPg0KICAgICAgICAgICAgICAgPHJlcTpsb2NhbD4ke2xvY2FsLnJlc3VsdH08L3JlcTpsb2NhbD4NCiAgICAgICAgICAgICAgIDxyZXE6dGVybWluYWw+JHt0ZXJtaW5hbC5yZXN1bHR9PC9yZXE6dGVybWluYWw+DQogICAgICAgICAgICAgICA8cmVxOmlkVmVuZGVkb3I+JHtpZFZlbmRlZG9yLnJlc3VsdH08L3JlcTppZFZlbmRlZG9yPg0KICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgPHJlcTpudW1lcm9UZWxlZm9uaWNvVGllbmRhPiR7bnVtZXJvVGVsZWZvbmljb1RpZW5kYS5yZXN1bHR9PC9yZXE6bnVtZXJvVGVsZWZvbmljb1RpZW5kYT4NCiAgICAgICAgICAgICAgIDxyZXE6Y2ljbG9GYWN0dXJhY2lvbj4ke2NpY2xvRmFjdHVyYWNpb24ucmVzdWx0fTwvcmVxOmNpY2xvRmFjdHVyYWNpb24+DQogICAgICAgICAgICAgICA8cmVxOnZlbmNpbWllbnRvPiR7dmVuY2ltaWVudG8ucmVzdWx0fTwvcmVxOnZlbmNpbWllbnRvPg0KICAgICAgICAgICAgPC9yZXE6ZGF0b3NQYWdvPg0KICAgICAgICAgICAgPHJlcTpkYXRvc1BvcnRhYmlsaWRhZD4NCiAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgIDxyZXE6Y2FwPiR7Y2FwLnJlc3VsdH08L3JlcTpjYXA+DQogICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICA8cmVxOm5yb1NvbGljaXR1ZE9BUD4ke25yb1NvbGljaXR1ZE9BUC5yZXN1bHR9PC9yZXE6bnJvU29saWNpdHVkT0FQPg0KICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgPHJlcTpucm9Db25zdWx0YU9BUD4ke25yb0NvbnN1bHRhT0FQLnJlc3VsdH08L3JlcTpucm9Db25zdWx0YU9BUD4NCiAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgIDxyZXE6bnJvUG9ydGFiaWxpZGFkSW50PiR7bnJvUG9ydGFiaWxpZGFkSW50LnJlc3VsdH08L3JlcTpucm9Qb3J0YWJpbGlkYWRJbnQ+DQogICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICA8cmVxOm1vZGFsaWRhZFNlcnZBY3R1YWw+JHttb2RhbGlkYWRTZXJ2QWN0dWFsLnJlc3VsdH08L3JlcTptb2RhbGlkYWRTZXJ2QWN0dWFsPg0KICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgPHJlcTp0aXBvRXF1aXBvPiR7dGlwb0VxdWlwby5yZXN1bHR9PC9yZXE6dGlwb0VxdWlwbz4NCiAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgIDxyZXE6dGlwb1NlcnZpY2lvPiR7dGlwb1NlcnZpY2lvLnJlc3VsdH08L3JlcTp0aXBvU2VydmljaW8+DQogICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICA8cmVxOnRpcG9TdWJzY3JpcHRvcj4ke3RpcG9TdWJzY3JpcHRvci5yZXN1bHR9PC9yZXE6dGlwb1N1YnNjcmlwdG9yPg0KICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgPHJlcTppZE9wZXJhZG9yRG9uYW50ZT4ke2lkT3BlcmFkb3JEb25hbnRlLnJlc3VsdH08L3JlcTppZE9wZXJhZG9yRG9uYW50ZT4NCiAgICAgICAgICAgICAgIDxyZXE6ZG9jdW1lbnRvc1BvcnRhYmlsaWRhZD4NCiAgICAgICAgICAgICAgICAgIDwhLS0xIG9yIG1vcmUgcmVwZXRpdGlvbnM6LS0+DQogICAgICAgICAgICAgICAgICA8cmVxOmRjdG9zUG9ydGFiaWxpZGFkRWxlbT4NCiAgICAgICAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgICAgICAgIDxyZXE6bm9tYnJlPiR7ZGN0b3NQb3J0YWJpbGlkYWRFbGVtLm5vbWJyZS5yZXN1bHR9PC9yZXE6bm9tYnJlPg0KICAgICAgICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgICAgICAgPHJlcTptaW1lVHlwZT4ke2RjdG9zUG9ydGFiaWxpZGFkRWxlbS5taW1lVHlwZS5yZXN1bHR9PC9yZXE6bWltZVR5cGU+DQogICAgICAgICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICAgICAgICA8cmVxOnBlc28+JHtkY3Rvc1BvcnRhYmlsaWRhZEVsZW0ucGVzby5yZXN1bHR9PC9yZXE6cGVzbz4NCiAgICAgICAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgICAgICAgIDxyZXE6ZG9jQ29kaWZpY2Fkbz4ke2RjdG9zUG9ydGFiaWxpZGFkRWxlbS5kb2NDb2RpZmljYWRvLnJlc3VsdH08L3JlcTpkb2NDb2RpZmljYWRvPg0KICAgICAgICAgICAgICAgICAgPC9yZXE6ZGN0b3NQb3J0YWJpbGlkYWRFbGVtPg0KICAgICAgICAgICAgICAgPC9yZXE6ZG9jdW1lbnRvc1BvcnRhYmlsaWRhZD4NCiAgICAgICAgICAgIDwvcmVxOmRhdG9zUG9ydGFiaWxpZGFkPg0KICAgICAgICAgICAgPHJlcTpkb2N1bWVudG9Db250cmF0bz4NCiAgICAgICAgICAgICAgIDxyZXE6bnVtZXJvRm9saW8+JHtudW1lcm9Gb2xpby5yZXN1bHR9PC9yZXE6bnVtZXJvRm9saW8+DQogICAgICAgICAgICAgICA8cmVxOnRpcG9WZW50YT4ke3RpcG9WZW50YS5yZXN1bHR9PC9yZXE6dGlwb1ZlbnRhPg0KICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgPHJlcTppZFZlbnRhVGVsY28+JHtpZFZlbnRhVGVsY28ucmVzdWx0fTwvcmVxOmlkVmVudGFUZWxjbz4NCiAgICAgICAgICAgICAgIDxyZXE6bm9tYnJlPiR7ZG9jdW1lbnRvQ29udHJhdG8ubm9tYnJlLnJlc3VsdH08L3JlcTpub21icmU+DQogICAgICAgICAgICAgICA8cmVxOm1pbWVUeXBlPiR7ZG9jdW1lbnRvQ29udHJhdG8ubWltZVR5cGUucmVzdWx0fTwvcmVxOm1pbWVUeXBlPg0KICAgICAgICAgICAgICAgPHJlcTpwZXNvPiR7ZG9jdW1lbnRvQ29udHJhdG8ucGVzby5yZXN1bHR9PC9yZXE6cGVzbz4NCiAgICAgICAgICAgICAgIDxyZXE6ZG9jQ29kaWZpY2Fkbz5jaWQ6MTI3ODY5NTA5ODE1OTwvcmVxOmRvY0NvZGlmaWNhZG8+DQogICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICA8cmVxOm9iczE+JHtkb2N1bWVudG9Db250cmF0by5vYnMxLnJlc3VsdH08L3JlcTpvYnMxPg0KICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgPHJlcTpvYnMyPiR7ZG9jdW1lbnRvQ29udHJhdG8ub2JzMi5yZXN1bHR9PC9yZXE6b2JzMj4NCiAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgIDxyZXE6b2JzMz4ke2RvY3VtZW50b0NvbnRyYXRvLm9iczMucmVzdWx0fTwvcmVxOm9iczM+DQogICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICA8cmVxOm9iczQ+JHtkb2N1bWVudG9Db250cmF0by5vYnM0LnJlc3VsdH08L3JlcTpvYnM0Pg0KICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgPHJlcTpvYnM1PiR7ZG9jdW1lbnRvQ29udHJhdG8ub2JzNS5yZXN1bHR9PC9yZXE6b2JzNT4NCiAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgIDxyZXE6b2JzNj4ke2RvY3VtZW50b0NvbnRyYXRvLm9iczYucmVzdWx0fTwvcmVxOm9iczY+DQogICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICA8cmVxOm9iczc+JHtkb2N1bWVudG9Db250cmF0by5vYnM3LnJlc3VsdH08L3JlcTpvYnM3Pg0KICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgPHJlcTpvYnM4PiR7ZG9jdW1lbnRvQ29udHJhdG8ub2JzOC5yZXN1bHR9PC9yZXE6b2JzOD4NCiAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgIDxyZXE6b2JzOT4ke2RvY3VtZW50b0NvbnRyYXRvLm9iczkucmVzdWx0fTwvcmVxOm9iczk+DQogICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICA8cmVxOm9iczEwPiR7ZG9jdW1lbnRvQ29udHJhdG8ub2JzMTAucmVzdWx0fTwvcmVxOm9iczEwPg0KICAgICAgICAgICAgPC9yZXE6ZG9jdW1lbnRvQ29udHJhdG8+DQogICAgICAgICA8L2VudjpyZXFDb250cmF0b0NsaWVudGU+DQogICAgICA8L2Vudjpjb250cmF0b0NsaWVudGVSZXE+DQogICA8L3NvYXBlbnY6Qm9keT4NCjwvc29hcGVudjpFbnZlbG9wZT4="/>
+                    <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                    <L7p:DataType variableDataType="message"/>
+                    <L7p:VariableToSet stringValue="xmlMessage"/>
+                </L7p:SetVariable>
+                <L7p:AuditDetailAssertion>
+                    <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                    <L7p:Detail stringValue="IDTRANSACTION: ${idTransaction.result}  REQUEST: ${xmlMessage.mainpart}"/>
+                    <L7p:LoggingOnly booleanValue="true"/>
+                </L7p:AuditDetailAssertion>
+                <L7p:HttpRoutingAssertion>
+                    <L7p:ConnectionTimeout stringValue="5000"/>
+                    <L7p:HttpMethod httpMethod="POST"/>
+                    <L7p:Login stringValue="envioContratoFabConn"/>
+                    <L7p:Password stringValue="@T26PF18P3"/>
+                    <L7p:ProtectedServiceUrl stringValue="http://${gateway.legado.hostname}/MarketSales/SalesChannelMVO/T/enviarContratoFabConnService/ContratoClienteService"/>
+                    <L7p:ProxyPassword stringValueNull="null"/>
+                    <L7p:ProxyUsername stringValueNull="null"/>
+                    <L7p:RequestHeaderRules httpPassthroughRuleSet="included">
+                        <L7p:ForwardAll booleanValue="true"/>
+                        <L7p:Rules httpPassthroughRules="included">
+                            <L7p:item httpPassthroughRule="included">
+                                <L7p:Name stringValue="Cookie"/>
+                            </L7p:item>
+                            <L7p:item httpPassthroughRule="included">
+                                <L7p:Name stringValue="SOAPAction"/>
+                            </L7p:item>
+                        </L7p:Rules>
+                    </L7p:RequestHeaderRules>
+                    <L7p:RequestMsgSrc stringValue="xmlMessage"/>
+                    <L7p:RequestParamRules httpPassthroughRuleSet="included">
+                        <L7p:ForwardAll booleanValue="true"/>
+                        <L7p:Rules httpPassthroughRules="included"/>
+                    </L7p:RequestParamRules>
+                    <L7p:ResponseHeaderRules httpPassthroughRuleSet="included">
+                        <L7p:ForwardAll booleanValue="true"/>
+                        <L7p:Rules httpPassthroughRules="included">
+                            <L7p:item httpPassthroughRule="included">
+                                <L7p:Name stringValue="Set-Cookie"/>
+                            </L7p:item>
+                        </L7p:Rules>
+                    </L7p:ResponseHeaderRules>
+                    <L7p:ResponseMsgDest stringValue="serviceResponse"/>
+                    <L7p:Timeout stringValue="5000"/>
+                </L7p:HttpRoutingAssertion>
+                <L7p:AuditDetailAssertion>
+                    <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                    <L7p:Detail stringValue="IDTRANSACTION: ${idTransaction.result}     SERVICIO: ${httpRouting.url}     REASONCODE: ${httpRouting.reasonCode}     RESPONSE: ${serviceResponse.mainpart}"/>
+                    <L7p:LoggingOnly booleanValue="true"/>
+                </L7p:AuditDetailAssertion>
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                    <L7p:Operator operatorNull="null"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item dataType="included">
+                            <L7p:Type variableDataType="int"/>
+                        </L7p:item>
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:RightValue stringValue="200"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:Include>
+                    <L7p:PolicyGuid stringValue="6ca99a73-dddf-4d5c-b579-1b8ff18635d6"/>
+                </L7p:Include>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHtzZXJ2aWNlUmVzcG9uc2UubWFpbnBhcnR9"/>
+                    <L7p:ContentType stringValue="application/json; charset=utf-8"/>
+                    <L7p:DataType variableDataType="message"/>
+                    <L7p:VariableToSet stringValue="responseJson"/>
+                </L7p:SetVariable>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue="$.Envelope.Body"/>
+                    <L7p:OtherTargetMessageVariable stringValue="responseJson"/>
+                    <L7p:Target target="OTHER"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="MjAw"/>
+                    <L7p:VariableToSet stringValue="code"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="MA=="/>
+                    <L7p:VariableToSet stringValue="codeReturn"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="T3BlcmFjacOzbiBleGl0b3Nh"/>
+                    <L7p:VariableToSet stringValue="description"/>
+                </L7p:SetVariable>
+                <L7p:AuditDetailAssertion>
+                    <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                    <L7p:Detail stringValue="OPERATIONID: ${idTransaction.result} SERVICE: ${serviceName} MESSAGE: ${description} RESPONSE: ${jsonPath.result}"/>
+                    <L7p:LoggingOnly booleanValue="true"/>
+                </L7p:AuditDetailAssertion>
+                <L7p:Regex>
+                    <L7p:AutoTarget booleanValue="false"/>
+                    <L7p:OtherTargetMessageVariable stringValue="jsonPath.result"/>
+                    <L7p:Regex stringValue="^(.)|}$"/>
+                    <L7p:Replace booleanValue="true"/>
+                    <L7p:Replacement stringValue=""/>
+                    <L7p:Target target="OTHER"/>
+                </L7p:Regex>
+                <L7p:HardcodedResponse>
+                    <L7p:Base64ResponseBody stringValue="ewoicmVzdWx0Ijp7CgkidHJhbnNhY3Rpb25JZCI6IiR7aWRUcmFuc2FjdGlvbi5yZXN1bHR9IiwKCSJjb2RlIjoiJHtjb2RlUmV0dXJufSIsCgkiZGVzY3JpcHRpb24iOiIke2Rlc2NyaXB0aW9ufSIsCgkicmVzcG9uc2VUaW1lc3RhbXAiOiIke2RhdGV0aW1lT3BlcmF0aW9ufSIKCX0sCiR7anNvblBhdGgucmVzdWx0fQp9"/>
+                    <L7p:ResponseContentType stringValue="application/json; charset=utf-8"/>
+                </L7p:HardcodedResponse>
+                <L7p:HardcodedResponse>
+                    <L7p:Base64ResponseBody stringValue="ewogICAgImNvbnRyYXRvQ2xpZW50ZVJlc3AiIDogW3sKICAgICAgInJlc3BDb250cmF0b0NsaWVudGUiIDogW3sKICAgICAgICAidGltZXN0YW1wIiA6ICIyMDE4LTAzLTEzVDEyOjE5OjE4Ljc1Mi0wMzowMCIsCiAgICAgICAgIm9wZXJhZG9yIiA6IFt7CiAgICAgICAgICAiaWRPcGVyYWRvciIgOiAiMyIsCiAgICAgICAgICAiZXJyb3IiIDogIjAiLAogICAgICAgICAgIm1lc3NhZ2UiIDogIiIsCiAgICAgICAgICAiaWRDbGllbnRlIiA6ICIiLAogICAgICAgICAgIm9iczEiIDogIiIsCiAgICAgICAgICAib2JzMiIgOiAiIiwKICAgICAgICAgICJvYnMzIiA6ICIiCiAgICAgICAgfV0KICAgICAgfV0KICAgIH1dCn0="/>
+                    <L7p:Enabled booleanValue="false"/>
+                    <L7p:ResponseContentType stringValue="application/json; charset=utf-8"/>
+                </L7p:HardcodedResponse>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <wsp:OneOrMore wsp:Usage="Required">
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                            <L7p:Operator operatorNull="null"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="int"/>
+                                </L7p:item>
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="500"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="NTAw"/>
+                            <L7p:VariableToSet stringValue="code"/>
+                        </L7p:SetVariable>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="RXJyb3IgZW4gbGEgZWplY3VjacOzbiBkZSBzZXJ2aWNpbyBleHRlcm5v"/>
+                            <L7p:VariableToSet stringValue="description"/>
+                        </L7p:SetVariable>
+                        <L7p:AuditDetailAssertion>
+                            <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                            <L7p:Detail stringValue="OPERATIONID: ${idTransaction.result} SERVICE: ${serviceName} MESSAGE: ${description} ERRORCODE: ${httpRouting.reasonCode}"/>
+                            <L7p:LoggingOnly booleanValue="true"/>
+                        </L7p:AuditDetailAssertion>
+                        <L7p:CustomizeErrorResponse>
+                            <L7p:Content stringValueReference="inline"><![CDATA[{
+"code":"${codeReturn}",
+"description":"${description}",
+"datetimeOperation":"${datetimeOperation}",
+"idOperation":"${idTransaction}"
+}]]></L7p:Content>
+                            <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                            <L7p:ExtraHeaders nameValuePairArray="included"/>
+                        </L7p:CustomizeErrorResponse>
+                        <L7p:RaiseError/>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="httpReason = 500"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                            <L7p:Operator operatorNull="null"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="int"/>
+                                </L7p:item>
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="-1"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="NTAw"/>
+                            <L7p:VariableToSet stringValue="code"/>
+                        </L7p:SetVariable>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="SG9zdCBubyBlbmNvbnRyYWRv"/>
+                            <L7p:VariableToSet stringValue="description"/>
+                        </L7p:SetVariable>
+                        <L7p:AuditDetailAssertion>
+                            <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                            <L7p:Detail stringValue="OPERATIONID: ${idTransaction.result} SERVICE: ${serviceName} MESSAGE: ${description} ERRORCODE: ${httpRouting.reasonCode}"/>
+                            <L7p:LoggingOnly booleanValue="true"/>
+                        </L7p:AuditDetailAssertion>
+                        <L7p:CustomizeErrorResponse>
+                            <L7p:Content stringValueReference="inline"><![CDATA[{
+"code":"${codeReturn}",
+"description":"${description}",
+"datetimeOperation":"${datetimeOperation}",
+"idOperation":"${idTransaction}"
+}]]></L7p:Content>
+                            <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                            <L7p:ExtraHeaders nameValuePairArray="included"/>
+                        </L7p:CustomizeErrorResponse>
+                        <L7p:RaiseError/>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="httpReason = -1"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                            <L7p:Operator operatorNull="null"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="int"/>
+                                </L7p:item>
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="-2"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="NTAw"/>
+                            <L7p:VariableToSet stringValue="code"/>
+                        </L7p:SetVariable>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="QmFkIFVSTA=="/>
+                            <L7p:VariableToSet stringValue="description"/>
+                        </L7p:SetVariable>
+                        <L7p:AuditDetailAssertion>
+                            <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                            <L7p:Detail stringValue="OPERATIONID: ${idTransaction.result} SERVICE: ${serviceName} MESSAGE: ${description} ERRORCODE: ${httpRouting.reasonCode}"/>
+                            <L7p:LoggingOnly booleanValue="true"/>
+                        </L7p:AuditDetailAssertion>
+                        <L7p:CustomizeErrorResponse>
+                            <L7p:Content stringValueReference="inline"><![CDATA[{
+"code":"${codeReturn}",
+"description":"${description}",
+"datetimeOperation":"${datetimeOperation}",
+"idOperation":"${idTransaction}"
+}]]></L7p:Content>
+                            <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                            <L7p:ExtraHeaders nameValuePairArray="included"/>
+                        </L7p:CustomizeErrorResponse>
+                        <L7p:RaiseError/>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="httpReason = -2"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                            <L7p:Operator operatorNull="null"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="int"/>
+                                </L7p:item>
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="-3"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="NTAw"/>
+                            <L7p:VariableToSet stringValue="code"/>
+                        </L7p:SetVariable>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="Q29uZXhpw7NuIHRpbWVvdXQ="/>
+                            <L7p:VariableToSet stringValue="description"/>
+                        </L7p:SetVariable>
+                        <L7p:AuditDetailAssertion>
+                            <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                            <L7p:Detail stringValue="OPERATIONID: ${idTransaction.result} SERVICE: ${serviceName} MESSAGE: ${description} ERRORCODE: ${httpRouting.reasonCode}"/>
+                            <L7p:LoggingOnly booleanValue="true"/>
+                        </L7p:AuditDetailAssertion>
+                        <L7p:CustomizeErrorResponse>
+                            <L7p:Content stringValueReference="inline"><![CDATA[{
+"code":"${codeReturn}",
+"description":"${description}",
+"datetimeOperation":"${datetimeOperation}",
+"idOperation":"${idTransaction}"
+}]]></L7p:Content>
+                            <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                            <L7p:ExtraHeaders nameValuePairArray="included"/>
+                        </L7p:CustomizeErrorResponse>
+                        <L7p:RaiseError/>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="httpReason = -3"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                            <L7p:Operator operatorNull="null"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="int"/>
+                                </L7p:item>
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="-4"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="NTAw"/>
+                            <L7p:VariableToSet stringValue="code"/>
+                        </L7p:SetVariable>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="UmVhZCB0aW1lb3V0"/>
+                            <L7p:VariableToSet stringValue="description"/>
+                        </L7p:SetVariable>
+                        <L7p:AuditDetailAssertion>
+                            <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                            <L7p:Detail stringValue="OPERATIONID: ${idTransaction.result} SERVICE: ${serviceName} MESSAGE: ${description} ERRORCODE: ${httpRouting.reasonCode}"/>
+                            <L7p:LoggingOnly booleanValue="true"/>
+                        </L7p:AuditDetailAssertion>
+                        <L7p:CustomizeErrorResponse>
+                            <L7p:Content stringValueReference="inline"><![CDATA[{
+"code":"${codeReturn}",
+"description":"${description}",
+"datetimeOperation":"${datetimeOperation}",
+"idOperation":"${idTransaction}"
+}]]></L7p:Content>
+                            <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                            <L7p:ExtraHeaders nameValuePairArray="included"/>
+                        </L7p:CustomizeErrorResponse>
+                        <L7p:RaiseError/>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="httpReason = -4"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                            <L7p:Operator operatorNull="null"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="int"/>
+                                </L7p:item>
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="-5"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="NTAw"/>
+                            <L7p:VariableToSet stringValue="code"/>
+                        </L7p:SetVariable>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="RXJyb3IgaW5kZWZpbmlkbw=="/>
+                            <L7p:VariableToSet stringValue="description"/>
+                        </L7p:SetVariable>
+                        <L7p:AuditDetailAssertion>
+                            <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                            <L7p:Detail stringValue="OPERATIONID: ${idTransaction.result} SERVICE: ${serviceName} MESSAGE: ${description} ERRORCODE: ${httpRouting.reasonCode}"/>
+                            <L7p:LoggingOnly booleanValue="true"/>
+                        </L7p:AuditDetailAssertion>
+                        <L7p:CustomizeErrorResponse>
+                            <L7p:Content stringValueReference="inline"><![CDATA[{
+"code":"${codeReturn}",
+"description":"${description}",
+"datetimeOperation":"${datetimeOperation}",
+"idOperation":"${idTransaction}"
+}]]></L7p:Content>
+                            <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                            <L7p:ExtraHeaders nameValuePairArray="included"/>
+                        </L7p:CustomizeErrorResponse>
+                        <L7p:RaiseError/>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="httpReason = -5"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                </wsp:OneOrMore>
+            </wsp:All>
+        </wsp:OneOrMore>
+    </wsp:All>
+</wsp:Policy>

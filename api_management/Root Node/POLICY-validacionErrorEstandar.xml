@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${code}"/>
+                    <L7p:Operator operatorNull="null"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Negated booleanValue="true"/>
+                            <L7p:RightValue stringValue="200"/>
+                        </L7p:item>
+                        <L7p:item binary="included">
+                            <L7p:Negated booleanValue="true"/>
+                            <L7p:RightValue stringValue="201"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHtyZXF1ZXN0LnRpbWUubG9jYWwueXl5eS1NTS1kZCdUJ0hIOm1tOnNzLlNTU30="/>
+                    <L7p:VariableToSet stringValue="responseTimestamp"/>
+                </L7p:SetVariable>
+                <L7p:HardcodedResponse>
+                    <L7p:Base64ResponseBody stringValue="ewoicmVzdWx0Ijp7CgkidHJhbnNhY3Rpb25JZCI6IiR7cmVxdWVzdElkfSIsCgkiY29kZSI6IiR7Y29kZX0iLAoJImRlc2NyaXB0aW9uIjoiJHtkZXNjcmlwdGlvbn0iLAoJImRlc2NyaXB0aW9uRGV0YWlsIjoiJHtkZXNjcmlwdGlvbkRldGFpbH0iLAoJInJlc3BvbnNlVGltZXN0YW1wIjoiJHtyZXNwb25zZVRpbWVzdGFtcH0iCgl9Cn0="/>
+                    <L7p:ResponseContentType stringValue="application/json; charset=UTF-8"/>
+                    <L7p:ResponseStatus stringValue="${httpCode}"/>
+                </L7p:HardcodedResponse>
+            </wsp:All>
+            <L7p:TrueAssertion/>
+        </wsp:OneOrMore>
+    </wsp:All>
+</wsp:Policy>

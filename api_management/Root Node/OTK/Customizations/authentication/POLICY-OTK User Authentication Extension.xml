@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="== Target Policy:  &quot;OTK User Authentication&quot;"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="== Change the assertions below to select a different Identity Provider, if needed"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="== Output:  ${current.username}, ${salt}, ${third_party_sso_token} and ${third_party_sso_token_type}"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="=="/>
+        </L7p:CommentAssertion>
+        <L7p:ComparisonAssertion>
+            <L7p:AssertionComment assertionComment="included">
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="// modify this check if this policy branch should also be used for other validations than just by username"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:AssertionComment>
+            <L7p:CaseSensitive booleanValue="false"/>
+            <L7p:Expression1 stringValue="${username}"/>
+            <L7p:Expression2 stringValue=""/>
+            <L7p:Negate booleanValue="true"/>
+            <L7p:Operator operator="EMPTY"/>
+            <L7p:Predicates predicates="included">
+                <L7p:item binary="included">
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Negated booleanValue="true"/>
+                    <L7p:Operator operator="EMPTY"/>
+                    <L7p:RightValue stringValue=""/>
+                </L7p:item>
+            </L7p:Predicates>
+        </L7p:ComparisonAssertion>
+        <L7p:XpathCredentialSource>
+            <L7p:AssertionComment assertionComment="included">
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="// creating an authorization context"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:AssertionComment>
+            <L7p:PasswordExpression xpathExpressionValue="included">
+                <L7p:Expression stringValue="$password"/>
+                <L7p:Namespaces mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="s"/>
+                        <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                    </L7p:entry>
+                </L7p:Namespaces>
+            </L7p:PasswordExpression>
+            <L7p:XpathExpression xpathExpressionValue="included">
+                <L7p:Expression stringValue="$username"/>
+                <L7p:Namespaces mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="s"/>
+                        <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                    </L7p:entry>
+                </L7p:Namespaces>
+            </L7p:XpathExpression>
+        </L7p:XpathCredentialSource>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="Implement a RateLimit assertion here if rate limiting is required for authentication"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="Enable/ Disable whatever branch is required"/>
+        </L7p:CommentAssertion>
+        <wsp:All wsp:Usage="Required">
+            <L7p:Authentication>
+                <L7p:IdentityProviderOid goidValue="0000000000000000fffffffffffffffe"/>
+            </L7p:Authentication>
+            <L7p:SetVariable>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="// default: use the given username"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:Base64Expression stringValue="JHt1c2VybmFtZX0="/>
+                <L7p:VariableToSet stringValue="current.username"/>
+            </L7p:SetVariable>
+            <L7p:IdentityAttributes>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="id"/>
+                        </L7p:entry>
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="// Lookup the internal ID for creating 'salt'"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:IdentityProviderOid goidValue="0000000000000000fffffffffffffffe"/>
+                <L7p:LookupAttributes identityMappingArray="included">
+                    <L7p:item internalAttributeMapping="included">
+                        <L7p:AttributeConfig attributeConfig="included">
+                            <L7p:Header header="included">
+                                <L7p:Name stringValue="Unique ID"/>
+                                <L7p:Type variableDataType="string"/>
+                                <L7p:UsersOrGroups usersOrGroups="BOTH"/>
+                                <L7p:VariableName stringValue="id"/>
+                            </L7p:Header>
+                            <L7p:VariableName stringValue="id"/>
+                        </L7p:AttributeConfig>
+                        <L7p:ProviderOid goidValue="0000000000000000fffffffffffffffe"/>
+                    </L7p:item>
+                </L7p:LookupAttributes>
+                <L7p:VariablePrefix stringValue="given_username"/>
+            </L7p:IdentityAttributes>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="JHtnaXZlbl91c2VybmFtZS5pZH0="/>
+                <L7p:VariableToSet stringValue="salt"/>
+            </L7p:SetVariable>
+            <L7p:Encapsulated>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="// get the user id to be used for 'salt' which is used for 'sub' when generating an id_token"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:EncapsulatedAssertionConfigGuid stringValue="fb3a7c6b-6fc1-47b3-a823-2eecdfa173fe"/>
+                <L7p:EncapsulatedAssertionConfigName stringValue="OTK User Attribute Look Up"/>
+                <L7p:Parameters mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="custom"/>
+                        <L7p:value stringValue="${provider}"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="given_username"/>
+                        <L7p:value stringValue="${current.username}"/>
+                    </L7p:entry>
+                </L7p:Parameters>
+            </L7p:Encapsulated>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="IDP"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="// Configure your IDP"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:All>
+        <wsp:All L7p:Enabled="false" wsp:Usage="Required">
+            <L7p:Include>
+                <L7p:PolicyGuid stringValue="721e7ae9-e7d9-42f2-8965-f22a79b7de4e"/>
+            </L7p:Include>
+            <L7p:SiteMinderAuthenticate>
+                <L7p:CookieSourceVar stringValue=""/>
+                <L7p:NamedUser stringValue="${creds}"/>
+                <L7p:Prefix stringValue="siteminder"/>
+            </L7p:SiteMinderAuthenticate>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="JHtzaXRlbWluZGVyLnNtY29udGV4dC5hdHRyaWJ1dGVzLkFUVFJfVVNFUk5BTUV9"/>
+                <L7p:VariableToSet stringValue="current.username"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="JHtzaXRlbWluZGVyLnNtY29udGV4dC5hdHRyaWJ1dGVzLkFUVFJfVVNFUlVOSVZFUlNBTElEfQ=="/>
+                <L7p:VariableToSet stringValue="salt"/>
+            </L7p:SetVariable>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="=== Other available attributes:"/>
+            </L7p:CommentAssertion>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="ATTR_USERDN, ATTR_USERUNIVERSALID, ATTR_AUTH_DIR_OID, ATTR_AUTH_DIR_NAME, ATTR_AUTH_DIR_SERVER, ATTR_AUTH_DIR_NAMESPACE, ATTR_USERNAME"/>
+            </L7p:CommentAssertion>
+            <L7p:Encapsulated>
+                <L7p:EncapsulatedAssertionConfigGuid stringValue="09be8009-c273-4608-8f4d-5ac4f31eb7eb"/>
+                <L7p:EncapsulatedAssertionConfigName stringValue="MAG Configure Context Variables For Third Party SSO"/>
+                <L7p:NoOpIfConfigMissing booleanValue="true"/>
+            </L7p:Encapsulated>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="SiteMinder"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="// pre-configured for use with SiteMinder"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:All>
+        <L7p:ExportVariables>
+            <L7p:AssertionComment assertionComment="included">
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="// Update the exports if adding outputs"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:AssertionComment>
+            <L7p:ExportedVars stringArrayValue="included">
+                <L7p:item stringValue="current.user.attributes"/>
+                <L7p:item stringValue="current.username"/>
+                <L7p:item stringValue="salt"/>
+                <L7p:item stringValue="third_party_sso_token"/>
+                <L7p:item stringValue="third_party_sso_token_type"/>
+            </L7p:ExportedVars>
+        </L7p:ExportVariables>
+    </wsp:All>
+</wsp:Policy>

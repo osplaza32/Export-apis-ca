@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === ***  THIS POLICY IS READ ONLY ***"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === If you have the need to customize this policy"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === please contact CA APIM Support so we can improve customization capability"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="=== This fragment has to be preceeded by this encapsulated assertion:"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="=== OTK OVP Configuration"/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="MS4wIChSRkMgNTg0OSk="/>
+            <L7p:VariableToSet stringValue="oauth1_version"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="aHR0cHM6Ly9sb2NhbGhvc3Q6ODQ0Mw=="/>
+            <L7p:VariableToSet stringValue="host_oauth_v1_server_website_baseuri"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtob3N0X29hdXRoX3YxX3NlcnZlcl93ZWJzaXRlX2Jhc2V1cml9L2F1dGgvb2F1dGgvdjEvYXV0aG9yaXplL3dlYnNpdGU="/>
+            <L7p:VariableToSet stringValue="oauth_v1_website_path"/>
+        </L7p:SetVariable>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="=== 'host_oauth_ovp_server' gets set by OTK OVP Configuration"/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtob3N0X29hdXRoX292cF9zZXJ2ZXJ9L29hdXRoL3ZhbGlkYXRpb24vdjEvYXV0aG9yaXpl"/>
+            <L7p:VariableToSet stringValue="oauth1_validation_authorize_endpoint"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtob3N0X29hdXRoX292cF9zZXJ2ZXJ9L29hdXRoL3ZhbGlkYXRpb24vdmFsaWRhdGUvdjEvc2lnbmF0dXJl"/>
+            <L7p:VariableToSet stringValue="oauth1_validation_signature_endpoint"/>
+        </L7p:SetVariable>
+        <L7p:ExportVariables>
+            <L7p:ExportedVars stringArrayValue="included">
+                <L7p:item stringValue="host_oauth_v1_server_website_baseuri"/>
+                <L7p:item stringValue="oauth_v1_website_path"/>
+                <L7p:item stringValue="oauth1_version"/>
+                <L7p:item stringValue="oauth1_validation_signature_endpoint"/>
+                <L7p:item stringValue="oauth1_validation_authorize_endpoint"/>
+            </L7p:ExportedVars>
+        </L7p:ExportVariables>
+    </wsp:All>
+</wsp:Policy>

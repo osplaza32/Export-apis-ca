@@ -1,0 +1,676 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:AuditDetailAssertion>
+                    <L7p:Detail stringValue="Policy Fragment: postReserveGA"/>
+                </L7p:AuditDetailAssertion>
+                <wsp:OneOrMore wsp:Usage="Required">
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:JSONSchema>
+                            <L7p:ResourceInfo staticResourceInfo="included">
+                                <L7p:Document stringValueReference="inline"><![CDATA[{
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "properties": {
+    "movil": {
+      "$id": "/properties/movil",
+      "type": "string",
+      "title": "The Movil Schema",
+      "default": "",
+      "examples": [
+        "56982904416"
+      ],
+      "minLength": 1,
+      "pattern": "^(569){1}\\d{8}"
+    },
+    "transactionId": {
+      "$id": "/properties/transactionId",
+      "type": "string",
+      "title": "The Transactionid Schema",
+      "default": "",
+      "examples": [
+        "D"
+      ],
+      "minLength": 1
+    },
+    "aplicacion": {
+      "$id": "/properties/aplicacion",
+      "type": "string",
+      "title": "The aplicacion Schema",
+      "default": "",
+      "examples": [
+        "D"
+      ],
+      "minLength": 1
+    },
+    "tipoContenido": {
+      "$id": "/properties/tipoContenido",
+      "type": "string",
+      "title": "The tipoContenido Schema",
+      "default": "",
+      "examples": [
+        "D"
+      ],
+      "minLength": 1
+    },
+    "valor": {
+      "$id": "/properties/valor",
+      "type": "string",
+      "title": "The Valor Schema",
+      "default": "",
+      "examples": [
+        "1000"
+      ],
+      "minLength": 1,
+      "pattern": "\\d+"
+    },
+    "producto": {
+      "$id": "/properties/producto",
+      "type": "string",
+      "title": "The Producto Schema",
+      "default": "",
+      "examples": [
+        "D"
+      ],
+      "minLength": 1
+    }
+  },
+  "required": [
+    "movil",
+    "transactionId",
+    "aplicacion",
+    "tipoContenido",
+    "valor",
+    "producto"
+  ]
+}]]></L7p:Document>
+                            </L7p:ResourceInfo>
+                        </L7p:JSONSchema>
+                        <L7p:EvaluateJsonPathExpression>
+                            <L7p:Expression stringValue=".movil"/>
+                            <L7p:VariablePrefix stringValue="msisdn"/>
+                        </L7p:EvaluateJsonPathExpression>
+                        <L7p:EvaluateJsonPathExpression>
+                            <L7p:Expression stringValue=".transactionId"/>
+                            <L7p:VariablePrefix stringValue="transactionId"/>
+                        </L7p:EvaluateJsonPathExpression>
+                        <L7p:EvaluateJsonPathExpression>
+                            <L7p:Expression stringValue=".aplicacion"/>
+                            <L7p:VariablePrefix stringValue="aplicacion"/>
+                        </L7p:EvaluateJsonPathExpression>
+                        <L7p:EvaluateJsonPathExpression>
+                            <L7p:Expression stringValue=".tipoContenido"/>
+                            <L7p:VariablePrefix stringValue="tipoContenido"/>
+                        </L7p:EvaluateJsonPathExpression>
+                        <L7p:EvaluateJsonPathExpression>
+                            <L7p:Expression stringValue=".valor"/>
+                            <L7p:VariablePrefix stringValue="valor"/>
+                        </L7p:EvaluateJsonPathExpression>
+                        <L7p:EvaluateJsonPathExpression>
+                            <L7p:Expression stringValue=".producto"/>
+                            <L7p:VariablePrefix stringValue="producto"/>
+                        </L7p:EvaluateJsonPathExpression>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="PHNvYXBlbnY6RW52ZWxvcGUgeG1sbnM6c29hcGVudj0iaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvc29hcC9lbnZlbG9wZS8iIHhtbG5zOnJlcT0iaHR0cDovL3d3dy5lc2EuY29tL0JpbGxpbmcvQWNjb3VudFJlY2VpdmFibGVzL04vcmVzZXJ2YXJDb2Jyb1N0b3JlV1MvcmVxdWVzdCI+DQogICA8c29hcGVudjpIZWFkZXIvPg0KICAgPHNvYXBlbnY6Qm9keT4NCiAgICAgIDxyZXE6cmVzZXJ2YXJSZXF1ZXN0RG9jdW1lbnQ+DQogICAgICAgICA8cmVxOnJlcXVlc3Q+DQogICAgICAgICAgICA8cmVxOmhlYWRlckluPg0KICAgICAgICAgICAgICAgPHJlcTphcHBOYW1lPj88L3JlcTphcHBOYW1lPg0KICAgICAgICAgICAgICAgPHJlcTp1c2VyTmFtZT4/PC9yZXE6dXNlck5hbWU+DQogICAgICAgICAgICA8L3JlcTpoZWFkZXJJbj4NCiAgICAgICAgICAgIDxyZXE6bW92aWw+JHttc2lzZG4ucmVzdWx0fTwvcmVxOm1vdmlsPg0KICAgICAgICAgICAgPHJlcTp0cmFuc2FjdGlvbklkPiR7dHJhbnNhY3Rpb25JZC5yZXN1bHR9PC9yZXE6dHJhbnNhY3Rpb25JZD4NCiAgICAgICAgICAgIDxyZXE6YXBsaWNhY2lvbj4ke2FwbGljYWNpb24ucmVzdWx0fTwvcmVxOmFwbGljYWNpb24+DQogICAgICAgICAgICA8cmVxOnRpcG9Db250ZW5pZG8+JHt0aXBvQ29udGVuaWRvLnJlc3VsdH08L3JlcTp0aXBvQ29udGVuaWRvPg0KICAgICAgICAgICAgPHJlcTp2YWxvcj4ke3ZhbG9yLnJlc3VsdH08L3JlcTp2YWxvcj4NCiAgICAgICAgICAgIDxyZXE6cHJvZHVjdG8+JHtwcm9kdWN0by5yZXN1bHR9PC9yZXE6cHJvZHVjdG8+DQogICAgICAgICA8L3JlcTpyZXF1ZXN0Pg0KICAgICAgPC9yZXE6cmVzZXJ2YXJSZXF1ZXN0RG9jdW1lbnQ+DQogICA8L3NvYXBlbnY6Qm9keT4NCjwvc29hcGVudjpFbnZlbG9wZT4NCg=="/>
+                            <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                            <L7p:DataType variableDataType="message"/>
+                            <L7p:VariableToSet stringValue="XmlMessage"/>
+                        </L7p:SetVariable>
+                        <L7p:AuditDetailAssertion>
+                            <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                            <L7p:Detail stringValue="IDTRANSACTION: ${idTransaction} SERVICE: http://${gateway.legado.hostname}/Billing/AccountReceivables/N/reservarCobroStoreService/reservarCobroStore REQUEST: ${XmlMessage.mainpart}"/>
+                            <L7p:LoggingOnly booleanValue="true"/>
+                        </L7p:AuditDetailAssertion>
+                        <L7p:HttpRoutingAssertion>
+                            <L7p:ConnectionTimeout stringValue="5000"/>
+                            <L7p:FailOnErrorStatus booleanValue="false"/>
+                            <L7p:HttpMethod httpMethod="POST"/>
+                            <L7p:ProtectedServiceUrl stringValue="http://${gateway.legado.hostname}/Billing/AccountReceivables/N/reservarCobroStoreService/reservarCobroStore"/>
+                            <L7p:ProxyPassword stringValueNull="null"/>
+                            <L7p:ProxyUsername stringValueNull="null"/>
+                            <L7p:RequestHeaderRules httpPassthroughRuleSet="included">
+                                <L7p:ForwardAll booleanValue="true"/>
+                                <L7p:Rules httpPassthroughRules="included">
+                                    <L7p:item httpPassthroughRule="included">
+                                    <L7p:Name stringValue="Cookie"/>
+                                    </L7p:item>
+                                    <L7p:item httpPassthroughRule="included">
+                                    <L7p:Name stringValue="SOAPAction"/>
+                                    </L7p:item>
+                                </L7p:Rules>
+                            </L7p:RequestHeaderRules>
+                            <L7p:RequestMsgSrc stringValue="XmlMessage"/>
+                            <L7p:RequestParamRules httpPassthroughRuleSet="included">
+                                <L7p:ForwardAll booleanValue="true"/>
+                                <L7p:Rules httpPassthroughRules="included"/>
+                            </L7p:RequestParamRules>
+                            <L7p:ResponseHeaderRules httpPassthroughRuleSet="included">
+                                <L7p:ForwardAll booleanValue="true"/>
+                                <L7p:Rules httpPassthroughRules="included">
+                                    <L7p:item httpPassthroughRule="included">
+                                    <L7p:Name stringValue="Set-Cookie"/>
+                                    </L7p:item>
+                                </L7p:Rules>
+                            </L7p:ResponseHeaderRules>
+                            <L7p:ResponseMsgDest stringValue="serviceResponse"/>
+                            <L7p:Timeout stringValue="6900"/>
+                        </L7p:HttpRoutingAssertion>
+                        <L7p:AuditDetailAssertion>
+                            <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                            <L7p:Detail stringValue="IDTRANSACTION: ${idTransaction} BACKEND: ${httpRouting.url} LATENCY: ${httpRouting.latency} ms REASONCODE: ${httpRouting.reasonCode} RESPONSEBACKEND: ${serviceResponse.mainpart} "/>
+                            <L7p:LoggingOnly booleanValue="true"/>
+                        </L7p:AuditDetailAssertion>
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                            <L7p:Operator operatorNull="null"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="int"/>
+                                </L7p:item>
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="200"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:Include>
+                            <L7p:PolicyGuid stringValue="6ca99a73-dddf-4d5c-b579-1b8ff18635d6"/>
+                        </L7p:Include>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="JHtzZXJ2aWNlUmVzcG9uc2UubWFpbnBhcnR9"/>
+                            <L7p:ContentType stringValue="application/json; charset=utf-8"/>
+                            <L7p:DataType variableDataType="message"/>
+                            <L7p:VariableToSet stringValue="jsonResultLegado"/>
+                        </L7p:SetVariable>
+                        <L7p:EvaluateJsonPathExpression>
+                            <L7p:Expression stringValue=".Envelope.Body.reservarResponseDocument.response.headerOut.codigo"/>
+                            <L7p:OtherTargetMessageVariable stringValue="jsonResultLegado"/>
+                            <L7p:Target target="OTHER"/>
+                            <L7p:VariablePrefix stringValue="codeResultLegado"/>
+                        </L7p:EvaluateJsonPathExpression>
+                        <L7p:EvaluateJsonPathExpression>
+                            <L7p:Expression stringValue=".Envelope.Body.reservarResponseDocument.response.headerOut.descripcion"/>
+                            <L7p:OtherTargetMessageVariable stringValue="jsonResultLegado"/>
+                            <L7p:Target target="OTHER"/>
+                            <L7p:VariablePrefix stringValue="descriptionResultLegado"/>
+                        </L7p:EvaluateJsonPathExpression>
+                        <L7p:EvaluateJsonPathExpression>
+                            <L7p:Expression stringValue=".Envelope.Body.reservarResponseDocument.response.headerOut.idOperacion"/>
+                            <L7p:OtherTargetMessageVariable stringValue="jsonResultLegado"/>
+                            <L7p:Target target="OTHER"/>
+                            <L7p:VariablePrefix stringValue="idOperationResultLegado"/>
+                        </L7p:EvaluateJsonPathExpression>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="JHtjb2RlUmVzdWx0TGVnYWRvLnJlc3VsdH0="/>
+                            <L7p:VariableToSet stringValue="codeReturn"/>
+                        </L7p:SetVariable>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="JHtkZXNjcmlwdGlvblJlc3VsdExlZ2Fkby5yZXN1bHR9"/>
+                            <L7p:VariableToSet stringValue="description"/>
+                        </L7p:SetVariable>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="JHtpZE9wZXJhdGlvblJlc3VsdExlZ2Fkby5yZXN1bHR9"/>
+                            <L7p:VariableToSet stringValue="idTransaction"/>
+                        </L7p:SetVariable>
+                        <L7p:AuditDetailAssertion>
+                            <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                            <L7p:Detail stringValueReference="inline"><![CDATA[IDTRANSACTION: ${idTransaction} SERVICE: ${request.url} RESPONSE:
+{
+"code":"${codeReturn}",
+"description":"${description}",
+"datetimeOperation":"${datetimeOperation}",
+"idOperation":"${idTransaction}"
+}]]></L7p:Detail>
+                            <L7p:LoggingOnly booleanValue="true"/>
+                        </L7p:AuditDetailAssertion>
+                        <L7p:HardcodedResponse>
+                            <L7p:Base64ResponseBody stringValue="ewogICJyZXN1bHQiOiB7CiAgICAidHJhbnNhY3Rpb25JZCI6ICIke3JlcXVlc3RJZH0iLAogICAgImNvZGUiOiAiJHtodHRwUm91dGluZy5yZWFzb25Db2RlfSIsCiAgICAiZGVzY3JpcHRpb24iOiAiT0siLAogICAgImRlc2NyaXB0aW9uRGV0YWlsIjogIk9wZXJhY2lvbiBjb25jbHVpZGEgZXhpdG9zYW1lbnRlIiwKICAgICJyZXNwb25zZVRpbWVzdGFtcCI6ICIke2RhdGV0aW1lT3BlcmF0aW9ufSIKICB9LAogICJjb2RpZ28iOiAiJHtjb2RlUmV0dXJufSIsCiAgImRlc2NyaXBjaW9uIjogIiR7ZGVzY3JpcHRpb259IiwKICAiZmVjaGFPcGVyYWNpb24iOiAiJHtkYXRldGltZU9wZXJhdGlvbn0iLAogICJpZE9wZXJhY2lvbiI6ICIke2lkVHJhbnNhY3Rpb259Igp9"/>
+                            <L7p:EarlyResponse booleanValue="true"/>
+                            <L7p:ResponseContentType stringValue="application/json; charset=UTF-8"/>
+                        </L7p:HardcodedResponse>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="OK"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <wsp:All wsp:Usage="Required">
+                            <L7p:ComparisonAssertion>
+                                <L7p:CaseSensitive booleanValue="false"/>
+                                <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                                <L7p:Operator operatorNull="null"/>
+                                <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="int"/>
+                                    </L7p:item>
+                                    <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="404"/>
+                                    </L7p:item>
+                                </L7p:Predicates>
+                            </L7p:ComparisonAssertion>
+                            <L7p:SetVariable>
+                                <L7p:Base64Expression stringValue="MDIwMQ=="/>
+                                <L7p:VariableToSet stringValue="codeReturn"/>
+                            </L7p:SetVariable>
+                            <L7p:SetVariable>
+                                <L7p:Base64Expression stringValue="RXJyb3IgZW4gbGEgZWplY3VjacOzbiBkZWwgV1M="/>
+                                <L7p:VariableToSet stringValue="description"/>
+                            </L7p:SetVariable>
+                            <L7p:AuditDetailAssertion>
+                                <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                                <L7p:Detail stringValueReference="inline"><![CDATA[IDTRANSACTION: ${idTransaction} RESOURCEID: ${msisdn.result} MESSAGE: El servicio migration no se encuentra habilitado HTTPCODE: 404 RESPONSE:
+{
+"code":"${codeReturn}",
+"description":"${description}",
+"datetimeOperation":"${datetimeOperation}",
+"idOperation":"${idTransaction}"
+}]]></L7p:Detail>
+                                <L7p:LoggingOnly booleanValue="true"/>
+                            </L7p:AuditDetailAssertion>
+                            <L7p:CustomizeErrorResponse>
+                                <L7p:Content stringValueReference="inline"><![CDATA[{
+"code":"${codeReturn}",
+"description":"${description}",
+"datetimeOperation":"${datetimeOperation}",
+"idOperation":"${idTransaction}"
+}]]></L7p:Content>
+                                <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                                <L7p:ExtraHeaders nameValuePairArray="included"/>
+                            </L7p:CustomizeErrorResponse>
+                            <L7p:RaiseError/>
+                            <L7p:assertionComment>
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="httpReason = 404 - Service Not Found"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:assertionComment>
+                        </wsp:All>
+                        <wsp:All wsp:Usage="Required">
+                            <L7p:ComparisonAssertion>
+                                <L7p:CaseSensitive booleanValue="false"/>
+                                <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                                <L7p:Operator operatorNull="null"/>
+                                <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="int"/>
+                                    </L7p:item>
+                                    <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="500"/>
+                                    </L7p:item>
+                                </L7p:Predicates>
+                            </L7p:ComparisonAssertion>
+                            <wsp:OneOrMore wsp:Usage="Required">
+                                <wsp:All wsp:Usage="Required">
+                                    <L7p:ComparisonAssertion>
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Expression1 stringValue="${request.http.header.content-type}"/>
+                                    <L7p:Expression2 stringValue="application/json"/>
+                                    <L7p:Predicates predicates="included">
+                                    <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="application/json"/>
+                                    </L7p:item>
+                                    </L7p:Predicates>
+                                    </L7p:ComparisonAssertion>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="MDIwMw=="/>
+                                    <L7p:VariableToSet stringValue="codeReturn"/>
+                                    </L7p:SetVariable>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="RXJyb3IgZW4gY29uZXhpw7NuIGEgYmFzZSBkZSBkYXRvcw=="/>
+                                    <L7p:VariableToSet stringValue="description"/>
+                                    </L7p:SetVariable>
+                                    <L7p:AuditDetailAssertion>
+                                    <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                                    <L7p:Detail stringValueReference="inline"><![CDATA[IDTRANSACTION: ${idTransaction} RESOURCEID: ${msisdn.result} MESSAGE: Se ha producido un error en la base de datos del servicio migration (https://${gateway.internal.vip.hostname}/customer/v1/migration/${msisdn.result}) HTTPCODE: 500 RESPONSE:
+{
+"code":"${codeReturn}",
+"description":"${description}",
+"datetimeOperation":"${datetimeOperation}",
+"idOperation":"${idTransaction}"
+}]]></L7p:Detail>
+                                    <L7p:LoggingOnly booleanValue="true"/>
+                                    </L7p:AuditDetailAssertion>
+                                </wsp:All>
+                                <wsp:All wsp:Usage="Required">
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="MDIwMQ=="/>
+                                    <L7p:VariableToSet stringValue="codeReturn"/>
+                                    </L7p:SetVariable>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="RXJyb3IgZW4gbGEgZWplY3VjacOzbiBkZWwgV1M="/>
+                                    <L7p:VariableToSet stringValue="description"/>
+                                    </L7p:SetVariable>
+                                    <L7p:AuditDetailAssertion>
+                                    <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                                    <L7p:Detail stringValueReference="inline"><![CDATA[IDTRANSACTION: ${idTransaction} RESOURCEID: ${msisdn.result} MESSAGE: El servicio migration (https://${gateway.internal.vip.hostname}/customer/v1/migration/${msisdn.result}) no se encuentra disponible HTTPCODE: 500 RESPONSE:
+{
+"code":"${codeReturn}",
+"description":"${description}",
+"datetimeOperation":"${datetimeOperation}",
+"idOperation":"${idTransaction}"
+}]]></L7p:Detail>
+                                    <L7p:LoggingOnly booleanValue="true"/>
+                                    </L7p:AuditDetailAssertion>
+                                </wsp:All>
+                            </wsp:OneOrMore>
+                            <L7p:CustomizeErrorResponse>
+                                <L7p:Content stringValueReference="inline"><![CDATA[{
+"code":"${codeReturn}",
+"description":"${description}",
+"datetimeOperation":"${datetimeOperation}",
+"idOperation":"${idTransaction}"
+}]]></L7p:Content>
+                                <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                                <L7p:ExtraHeaders nameValuePairArray="included"/>
+                            </L7p:CustomizeErrorResponse>
+                            <L7p:RaiseError/>
+                            <L7p:assertionComment>
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="httpReason = 500 - DB not connected"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:assertionComment>
+                        </wsp:All>
+                        <wsp:All wsp:Usage="Required">
+                            <L7p:ComparisonAssertion>
+                                <L7p:CaseSensitive booleanValue="false"/>
+                                <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                                <L7p:Operator operatorNull="null"/>
+                                <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="int"/>
+                                    </L7p:item>
+                                    <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="-1"/>
+                                    </L7p:item>
+                                </L7p:Predicates>
+                            </L7p:ComparisonAssertion>
+                            <L7p:SetVariable>
+                                <L7p:Base64Expression stringValue="MDIwMQ=="/>
+                                <L7p:VariableToSet stringValue="code"/>
+                            </L7p:SetVariable>
+                            <L7p:SetVariable>
+                                <L7p:Base64Expression stringValue="RXJyb3IgZW4gbGEgZWplY3VjacOzbiBkZWwgV1M="/>
+                                <L7p:VariableToSet stringValue="description"/>
+                            </L7p:SetVariable>
+                            <L7p:AuditDetailAssertion>
+                                <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                                <L7p:Detail stringValueReference="inline"><![CDATA[IDTRANSACTION: ${idTransaction} RESOURCEID: ${msisdn.result} MESSAGE: Host Not Found REASONCODE: -1 SERVICE: migration RESPONSE:
+{
+"code":"${codeReturn}",
+"description":"${description}",
+"datetimeOperation":"${datetimeOperation}",
+"idOperation":"${idTransaction}"
+}]]></L7p:Detail>
+                                <L7p:LoggingOnly booleanValue="true"/>
+                            </L7p:AuditDetailAssertion>
+                            <L7p:CustomizeErrorResponse>
+                                <L7p:Content stringValueReference="inline"><![CDATA[{
+"code":"${codeReturn}",
+"description":"${description}",
+"datetimeOperation":"${datetimeOperation}",
+"idOperation":"${idTransaction}"
+}]]></L7p:Content>
+                                <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                                <L7p:ExtraHeaders nameValuePairArray="included"/>
+                            </L7p:CustomizeErrorResponse>
+                            <L7p:RaiseError/>
+                            <L7p:assertionComment>
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="httpReason = -1"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:assertionComment>
+                        </wsp:All>
+                        <wsp:All wsp:Usage="Required">
+                            <L7p:ComparisonAssertion>
+                                <L7p:CaseSensitive booleanValue="false"/>
+                                <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                                <L7p:Operator operatorNull="null"/>
+                                <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="int"/>
+                                    </L7p:item>
+                                    <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="-2"/>
+                                    </L7p:item>
+                                </L7p:Predicates>
+                            </L7p:ComparisonAssertion>
+                            <L7p:SetVariable>
+                                <L7p:Base64Expression stringValue="MDIwMQ=="/>
+                                <L7p:VariableToSet stringValue="codeReturn"/>
+                            </L7p:SetVariable>
+                            <L7p:SetVariable>
+                                <L7p:Base64Expression stringValue="RXJyb3IgZW4gbGEgZWplY3VjacOzbiBkZWwgV1M="/>
+                                <L7p:VariableToSet stringValue="description"/>
+                            </L7p:SetVariable>
+                            <L7p:AuditDetailAssertion>
+                                <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                                <L7p:Detail stringValueReference="inline"><![CDATA[IDTRANSACTION: ${idTransaction} RESOURCEID: ${msisdn.result} MESSAGE: Bad URL REASONCODE: -2 SERVICE: migration RESPONSE:
+{
+"code":"${codeReturn}",
+"description":"${description}",
+"datetimeOperation":"${datetimeOperation}",
+"idOperation":"${idTransaction}"
+}]]></L7p:Detail>
+                                <L7p:LoggingOnly booleanValue="true"/>
+                            </L7p:AuditDetailAssertion>
+                            <L7p:CustomizeErrorResponse>
+                                <L7p:Content stringValueReference="inline"><![CDATA[{
+"code":"${codeReturn}",
+"description":"${description}",
+"datetimeOperation":"${datetimeOperation}",
+"idOperation":"${idTransaction}"
+}]]></L7p:Content>
+                                <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                                <L7p:ExtraHeaders nameValuePairArray="included"/>
+                            </L7p:CustomizeErrorResponse>
+                            <L7p:RaiseError/>
+                            <L7p:assertionComment>
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="httpReason = -2"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:assertionComment>
+                        </wsp:All>
+                        <wsp:All wsp:Usage="Required">
+                            <L7p:ComparisonAssertion>
+                                <L7p:CaseSensitive booleanValue="false"/>
+                                <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                                <L7p:Operator operatorNull="null"/>
+                                <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="int"/>
+                                    </L7p:item>
+                                    <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="-3"/>
+                                    </L7p:item>
+                                </L7p:Predicates>
+                            </L7p:ComparisonAssertion>
+                            <L7p:SetVariable>
+                                <L7p:Base64Expression stringValue="MDIwMQ=="/>
+                                <L7p:VariableToSet stringValue="codeReturn"/>
+                            </L7p:SetVariable>
+                            <L7p:SetVariable>
+                                <L7p:Base64Expression stringValue="RXJyb3IgZW4gbGEgZWplY3VjacOzbiBkZWwgV1M="/>
+                                <L7p:VariableToSet stringValue="description"/>
+                            </L7p:SetVariable>
+                            <L7p:AuditDetailAssertion>
+                                <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                                <L7p:Detail stringValueReference="inline"><![CDATA[IDTRANSACTION: ${idTransaction} RESOURCEID: ${msisdn.result} MESSAGE: Connection Timeout REASONCODE: -3 SERVICE: migration RESPONSE:
+{
+"code":"${codeReturn}",
+"description":"${description}",
+"datetimeOperation":"${datetimeOperation}",
+"idOperation":"${idTransaction}"
+}]]></L7p:Detail>
+                                <L7p:LoggingOnly booleanValue="true"/>
+                            </L7p:AuditDetailAssertion>
+                            <L7p:CustomizeErrorResponse>
+                                <L7p:Content stringValueReference="inline"><![CDATA[{
+"code":"${codeReturn}",
+"description":"${description}",
+"datetimeOperation":"${datetimeOperation}",
+"idOperation":"${idTransaction}"
+}]]></L7p:Content>
+                                <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                                <L7p:ExtraHeaders nameValuePairArray="included"/>
+                            </L7p:CustomizeErrorResponse>
+                            <L7p:RaiseError/>
+                            <L7p:assertionComment>
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="httpReason = -3"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:assertionComment>
+                        </wsp:All>
+                        <wsp:All wsp:Usage="Required">
+                            <L7p:ComparisonAssertion>
+                                <L7p:CaseSensitive booleanValue="false"/>
+                                <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                                <L7p:Operator operatorNull="null"/>
+                                <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="int"/>
+                                    </L7p:item>
+                                    <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="-4"/>
+                                    </L7p:item>
+                                </L7p:Predicates>
+                            </L7p:ComparisonAssertion>
+                            <L7p:SetVariable>
+                                <L7p:Base64Expression stringValue="MDIwMQ=="/>
+                                <L7p:VariableToSet stringValue="codeReturn"/>
+                            </L7p:SetVariable>
+                            <L7p:SetVariable>
+                                <L7p:Base64Expression stringValue="RXJyb3IgZW4gbGEgZWplY3VjacOzbiBkZWwgV1M="/>
+                                <L7p:VariableToSet stringValue="description"/>
+                            </L7p:SetVariable>
+                            <L7p:AuditDetailAssertion>
+                                <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                                <L7p:Detail stringValueReference="inline"><![CDATA[IDTRANSACTION: ${idTransaction} RESOURCE: ${msisdn.result} MESSAGE: Read timeout REASONCODE: -4 SERVICE: migration RESPONSE:
+{
+"code":"${codeReturn}",
+"description":"${description}",
+"datetimeOperation":"${datetimeOperation}",
+"idOperation":"${idTransaction}"
+}]]></L7p:Detail>
+                                <L7p:LoggingOnly booleanValue="true"/>
+                            </L7p:AuditDetailAssertion>
+                            <L7p:CustomizeErrorResponse>
+                                <L7p:Content stringValueReference="inline"><![CDATA[{
+"code":"${codeReturn}",
+"description":"${description}",
+"datetimeOperation":"${datetimeOperation}",
+"idOperation":"${idTransaction}"
+}]]></L7p:Content>
+                                <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                                <L7p:ExtraHeaders nameValuePairArray="included"/>
+                            </L7p:CustomizeErrorResponse>
+                            <L7p:RaiseError/>
+                            <L7p:assertionComment>
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="httpReason = -4"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:assertionComment>
+                        </wsp:All>
+                        <wsp:All wsp:Usage="Required">
+                            <L7p:ComparisonAssertion>
+                                <L7p:CaseSensitive booleanValue="false"/>
+                                <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                                <L7p:Operator operatorNull="null"/>
+                                <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="int"/>
+                                    </L7p:item>
+                                    <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="-5"/>
+                                    </L7p:item>
+                                </L7p:Predicates>
+                            </L7p:ComparisonAssertion>
+                            <L7p:SetVariable>
+                                <L7p:Base64Expression stringValue="MDIwMQ=="/>
+                                <L7p:VariableToSet stringValue="codeReturn"/>
+                            </L7p:SetVariable>
+                            <L7p:SetVariable>
+                                <L7p:Base64Expression stringValue="RXJyb3IgZW4gbGEgZWplY3VjacOzbiBkZWwgV1M="/>
+                                <L7p:VariableToSet stringValue="description"/>
+                            </L7p:SetVariable>
+                            <L7p:AuditDetailAssertion>
+                                <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                                <L7p:Detail stringValueReference="inline"><![CDATA[IDTRANSACTION: ${idTransaction} RESOURCEID: ${msisdn.result} MESSAGE: Undefined REASONCODE: -5 SERVICE: migration RESPONSE:
+{
+"code":"${codeReturn}",
+"description":"${description}",
+"datetimeOperation":"${datetimeOperation}",
+"idOperation":"${idTransaction}"
+}]]></L7p:Detail>
+                                <L7p:LoggingOnly booleanValue="true"/>
+                            </L7p:AuditDetailAssertion>
+                            <L7p:CustomizeErrorResponse>
+                                <L7p:Content stringValueReference="inline"><![CDATA[{
+"code":"${codeReturn}",
+"description":"${description}",
+"datetimeOperation":"${datetimeOperation}",
+"idOperation":"${idTransaction}"
+}]]></L7p:Content>
+                                <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                                <L7p:ExtraHeaders nameValuePairArray="included"/>
+                            </L7p:CustomizeErrorResponse>
+                            <L7p:RaiseError/>
+                            <L7p:assertionComment>
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="httpReason = -5"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:assertionComment>
+                        </wsp:All>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="NOK"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                </wsp:OneOrMore>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:Include>
+                    <L7p:PolicyGuid stringValue="1b3f18a3-5e88-4cae-9fae-44b459727ac1"/>
+                </L7p:Include>
+            </wsp:All>
+        </wsp:OneOrMore>
+    </wsp:All>
+</wsp:Policy>

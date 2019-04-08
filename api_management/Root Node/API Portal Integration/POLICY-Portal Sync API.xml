@@ -1,0 +1,2690 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="************************************************************************************"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="* Policy for Syncing Portal APIs onto the tenant gateway"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="*"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="* Services will be created in the Portal Apis folder"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="* Services tagged with the service property &quot;portalID&quot;  will get updated/deleted by this policy"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="************************************************************************************"/>
+        </L7p:CommentAssertion>
+        <L7p:Encapsulated>
+            <L7p:EncapsulatedAssertionConfigGuid stringValue="ed1e3112-5df8-4769-8436-09ddb1362f88"/>
+            <L7p:EncapsulatedAssertionConfigName stringValue="portalosencass"/>
+            <L7p:Parameters mapValue="included">
+                <L7p:entry>
+                    <L7p:key stringValue="defaultHost"/>
+                    <L7p:value stringValue="${gateway.portal.config.pssg.host}"/>
+                </L7p:entry>
+                <L7p:entry>
+                    <L7p:key stringValue="defaultPort"/>
+                    <L7p:value stringValue="9447"/>
+                </L7p:entry>
+                <L7p:entry>
+                    <L7p:key stringValue="hostName"/>
+                    <L7p:value stringValue="${gateway.portal.config.pssg.sync.host}"/>
+                </L7p:entry>
+                <L7p:entry>
+                    <L7p:key stringValue="port"/>
+                    <L7p:value stringValue="${gateway.portal.config.pssg.sync.port}"/>
+                </L7p:entry>
+            </L7p:Parameters>
+        </L7p:Encapsulated>
+        <L7p:HttpRoutingAssertion>
+            <L7p:AssertionComment assertionComment="included">
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="get from portal"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:AssertionComment>
+            <L7p:HttpMethod httpMethod="GET"/>
+            <L7p:KeyAlias stringValue="portalman"/>
+            <L7p:NonDefaultKeystoreId goidValue="00000000000000000000000000000002"/>
+            <L7p:ProtectedServiceUrl stringValue="https://${outputHost}:${outputPort}/sync/2.0/apis?identifier=${gateway.portal.config.identifier}&amp;nodeId=${gateway.portal.config.node.id}"/>
+            <L7p:ProxyPassword stringValueNull="null"/>
+            <L7p:ProxyUsername stringValueNull="null"/>
+            <L7p:RequestHeaderRules httpPassthroughRuleSet="included">
+                <L7p:ForwardAll booleanValue="true"/>
+                <L7p:Rules httpPassthroughRules="included">
+                    <L7p:item httpPassthroughRule="included">
+                        <L7p:Name stringValue="Cookie"/>
+                    </L7p:item>
+                    <L7p:item httpPassthroughRule="included">
+                        <L7p:Name stringValue="SOAPAction"/>
+                    </L7p:item>
+                </L7p:Rules>
+            </L7p:RequestHeaderRules>
+            <L7p:RequestParamRules httpPassthroughRuleSet="included">
+                <L7p:ForwardAll booleanValue="true"/>
+                <L7p:Rules httpPassthroughRules="included"/>
+            </L7p:RequestParamRules>
+            <L7p:ResponseHeaderRules httpPassthroughRuleSet="included">
+                <L7p:ForwardAll booleanValue="true"/>
+                <L7p:Rules httpPassthroughRules="included">
+                    <L7p:item httpPassthroughRule="included">
+                        <L7p:Name stringValue="Set-Cookie"/>
+                    </L7p:item>
+                </L7p:Rules>
+            </L7p:ResponseHeaderRules>
+            <L7p:ResponseMsgDest stringValue="httpResponse1"/>
+            <L7p:SamlAssertionVersion intValue="2"/>
+            <L7p:UsesDefaultKeyStore booleanValue="false"/>
+        </L7p:HttpRoutingAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="YXBp"/>
+            <L7p:VariableToSet stringValue="cacheKey"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtnYXRld2F5LnBvcnRhbC5zeW5jLmFwaS5jYWNoZS5hZ2V9"/>
+            <L7p:VariableToSet stringValue="cacheAge"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue=""/>
+            <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+            <L7p:DataType variableDataType="message"/>
+            <L7p:VariableToSet stringValue="empty.message"/>
+        </L7p:SetVariable>
+        <L7p:GenerateSecurityHash>
+            <L7p:Algorithm stringValue="MD5"/>
+            <L7p:Base64Data stringValue="JHtodHRwUmVzcG9uc2UxLm1haW5wYXJ0fQ=="/>
+            <L7p:LineBreak lineBreak="CR-LF"/>
+            <L7p:TargetOutputVariable stringValue="encodedApis"/>
+        </L7p:GenerateSecurityHash>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <L7p:CacheLookup>
+                <L7p:CacheEntryKey stringValue="${cacheKey}"/>
+                <L7p:CacheId stringValue="portal"/>
+                <L7p:ContentTypeOverride stringValue=""/>
+                <L7p:MaxEntryAgeSeconds stringValue="${cacheAge}"/>
+                <L7p:OtherTargetMessageVariable stringValue="prevApi"/>
+                <L7p:Target target="OTHER"/>
+            </L7p:CacheLookup>
+            <L7p:TrueAssertion/>
+        </wsp:OneOrMore>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <L7p:ComparisonAssertion>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="do nothing if no change from portal"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:CaseSensitive booleanValue="false"/>
+                <L7p:Expression1 stringValue="${encodedApis}"/>
+                <L7p:Operator operatorNull="null"/>
+                <L7p:Predicates predicates="included">
+                    <L7p:item dataType="included">
+                        <L7p:Type variableDataType="string"/>
+                    </L7p:item>
+                    <L7p:item binary="included">
+                        <L7p:RightValue stringValue="${prevApi.mainpart}"/>
+                    </L7p:item>
+                </L7p:Predicates>
+            </L7p:ComparisonAssertion>
+            <wsp:All wsp:Usage="Required">
+                <wsp:OneOrMore wsp:Usage="Required">
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:JSONSchema>
+                            <L7p:OtherTargetMessageVariable stringValue="httpResponse1"/>
+                            <L7p:ResourceInfo staticResourceInfo="included">
+                                <L7p:Document stringValueReference="inline"><![CDATA[{
+   "type":"object",
+   "properties": {
+    "apis": {
+        "type":"array"
+        }
+    }
+}]]></L7p:Document>
+                            </L7p:ResourceInfo>
+                            <L7p:Target target="OTHER"/>
+                        </L7p:JSONSchema>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="dHJ1ZQ=="/>
+                            <L7p:VariableToSet stringValue="validJson"/>
+                        </L7p:SetVariable>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:AuditDetailAssertion>
+                            <L7p:Detail stringValue="Invalid sync response"/>
+                            <L7p:Level stringValue="WARNING"/>
+                        </L7p:AuditDetailAssertion>
+                        <L7p:AuditDetailAssertion>
+                            <L7p:Detail stringValue="${httpResponse1.mainpart}"/>
+                        </L7p:AuditDetailAssertion>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="ZmFsc2U="/>
+                            <L7p:VariableToSet stringValue="validJson"/>
+                        </L7p:SetVariable>
+                    </wsp:All>
+                    <L7p:assertionComment>
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="LEFT.COMMENT"/>
+                                <L7p:value stringValue="validate json"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:assertionComment>
+                </wsp:OneOrMore>
+                <wsp:OneOrMore wsp:Usage="Required">
+                    <L7p:ComparisonAssertion>
+                        <L7p:CaseSensitive booleanValue="false"/>
+                        <L7p:Expression1 stringValue="${validJson}"/>
+                        <L7p:Operator operatorNull="null"/>
+                        <L7p:Predicates predicates="included">
+                            <L7p:item dataType="included">
+                                <L7p:Type variableDataType="boolean"/>
+                            </L7p:item>
+                            <L7p:item binary="included">
+                                <L7p:CaseSensitive booleanValue="false"/>
+                                <L7p:RightValue stringValue="false"/>
+                            </L7p:item>
+                        </L7p:Predicates>
+                    </L7p:ComparisonAssertion>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:CommentAssertion>
+                            <L7p:Comment stringValue="//--------------------- start building bundle"/>
+                        </L7p:CommentAssertion>
+                        <L7p:SetVariable>
+                            <L7p:AssertionComment assertionComment="included">
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="start building bundle"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:AssertionComment>
+                            <L7p:Base64Expression stringValue="PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/Pg0KPGw3OkJ1bmRsZSAgeG1sbnM6bDc9Imh0dHA6Ly9ucy5sN3RlY2guY29tLzIwMTAvMDQvZ2F0ZXdheS1tYW5hZ2VtZW50Ij4NCiAgICA8bDc6UmVmZXJlbmNlcy8+DQogICAgPGw3Ok1hcHBpbmdzLz4NCjwvbDc6QnVuZGxlPg=="/>
+                            <L7p:ContentType stringValue="application/xml; charset=utf-8"/>
+                            <L7p:DataType variableDataType="message"/>
+                            <L7p:VariableToSet stringValue="bundleMO"/>
+                        </L7p:SetVariable>
+                        <L7p:ResponseXpathAssertion>
+                            <L7p:AssertionComment assertionComment="included">
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="find bundle references"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:AssertionComment>
+                            <L7p:VariablePrefix stringValue="bundleReferences"/>
+                            <L7p:XmlMsgSrc stringValue="bundleMO"/>
+                            <L7p:XpathExpression xpathExpressionValue="included">
+                                <L7p:Expression stringValue="/l7:Bundle/l7:References"/>
+                                <L7p:Namespaces mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="s"/>
+                                    <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="l7"/>
+                                    <L7p:value stringValue="http://ns.l7tech.com/2010/04/gateway-management"/>
+                                    </L7p:entry>
+                                </L7p:Namespaces>
+                                <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                            </L7p:XpathExpression>
+                        </L7p:ResponseXpathAssertion>
+                        <L7p:ResponseXpathAssertion>
+                            <L7p:AssertionComment assertionComment="included">
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="find bundle mappings"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:AssertionComment>
+                            <L7p:VariablePrefix stringValue="bundleMappings"/>
+                            <L7p:XmlMsgSrc stringValue="bundleMO"/>
+                            <L7p:XpathExpression xpathExpressionValue="included">
+                                <L7p:Expression stringValue="/l7:Bundle/l7:Mappings"/>
+                                <L7p:Namespaces mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="s"/>
+                                    <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="l7"/>
+                                    <L7p:value stringValue="http://ns.l7tech.com/2010/04/gateway-management"/>
+                                    </L7p:entry>
+                                </L7p:Namespaces>
+                                <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                            </L7p:XpathExpression>
+                        </L7p:ResponseXpathAssertion>
+                        <L7p:CommentAssertion>
+                            <L7p:Comment stringValue="//--------------------- get exisitng service in portal folder"/>
+                        </L7p:CommentAssertion>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="JHtnYXRld2F5LnBvcnRhbC5hcGkuZm9sZGVyfQ=="/>
+                            <L7p:VariableToSet stringValue="folderId"/>
+                        </L7p:SetVariable>
+                        <L7p:Encapsulated>
+                            <L7p:EncapsulatedAssertionConfigGuid stringValue="32ab4aab-a291-4113-8f0c-fc24d917547c"/>
+                            <L7p:EncapsulatedAssertionConfigName stringValue="Portal Query APIs"/>
+                            <L7p:Parameters mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="apiGroup"/>
+                                    <L7p:value stringValue=""/>
+                                </L7p:entry>
+                                <L7p:entry>
+                                    <L7p:key stringValue="enabled"/>
+                                    <L7p:value stringValue=""/>
+                                </L7p:entry>
+                                <L7p:entry>
+                                    <L7p:key stringValue="resId"/>
+                                    <L7p:value stringValue=""/>
+                                </L7p:entry>
+                                <L7p:entry>
+                                    <L7p:key stringValue="showDetails"/>
+                                    <L7p:value stringValue="true"/>
+                                </L7p:entry>
+                                <L7p:entry>
+                                    <L7p:key stringValue="showPolicy"/>
+                                    <L7p:value stringValue="true"/>
+                                </L7p:entry>
+                            </L7p:Parameters>
+                        </L7p:Encapsulated>
+                        <wsp:OneOrMore wsp:Usage="Required">
+                            <wsp:All wsp:Usage="Required">
+                                <L7p:ComparisonAssertion>
+                                    <L7p:Expression1 stringValue="${wsmanResp}"/>
+                                    <L7p:Expression2 stringValue=""/>
+                                    <L7p:Negate booleanValue="true"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:Predicates predicates="included">
+                                    <L7p:item binary="included">
+                                    <L7p:Negated booleanValue="true"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue=""/>
+                                    </L7p:item>
+                                    </L7p:Predicates>
+                                </L7p:ComparisonAssertion>
+                                <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHt3c21hblJlc3B9"/>
+                                    <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                                    <L7p:DataType variableDataType="message"/>
+                                    <L7p:VariableToSet stringValue="portalmanApis"/>
+                                </L7p:SetVariable>
+                            </wsp:All>
+                            <L7p:SetVariable>
+                                <L7p:Base64Expression stringValue="PGw3OkFwaXMgeG1sbnM6bDc9Imh0dHA6Ly9ucy5sN3RlY2guY29tLzIwMTIvMDQvYXBpLW1hbmFnZW1lbnQiLz4="/>
+                                <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                                <L7p:DataType variableDataType="message"/>
+                                <L7p:VariableToSet stringValue="portalmanApis"/>
+                            </L7p:SetVariable>
+                        </wsp:OneOrMore>
+                        <L7p:CommentAssertion>
+                            <L7p:Comment stringValue="//--------------------- create / update service for each api"/>
+                        </L7p:CommentAssertion>
+                        <wsp:OneOrMore wsp:Usage="Required">
+                            <L7p:EvaluateJsonPathExpression>
+                                <L7p:Expression stringValue="apis"/>
+                                <L7p:OtherTargetMessageVariable stringValue="httpResponse1"/>
+                                <L7p:Target target="OTHER"/>
+                            </L7p:EvaluateJsonPathExpression>
+                            <L7p:TrueAssertion>
+                                <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="no apis"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                </L7p:AssertionComment>
+                            </L7p:TrueAssertion>
+                            <L7p:assertionComment>
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="extract portal api list"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:assertionComment>
+                        </wsp:OneOrMore>
+                        <L7p:ForEachLoop L7p:Usage="Required"
+                            loopVariable="jsonPath.results" variablePrefix="results">
+                            <L7p:SetVariable>
+                                <L7p:Base64Expression stringValue="JHtyZXN1bHRzLmN1cnJlbnR9"/>
+                                <L7p:ContentType stringValue="application/json; charset=utf-8"/>
+                                <L7p:DataType variableDataType="message"/>
+                                <L7p:VariableToSet stringValue="props"/>
+                            </L7p:SetVariable>
+                            <L7p:EvaluateJsonPathExpression>
+                                <L7p:Expression stringValue="PortalPublished"/>
+                                <L7p:OtherTargetMessageVariable stringValue="props"/>
+                                <L7p:Target target="OTHER"/>
+                                <L7p:VariablePrefix stringValue="PortalPublished"/>
+                            </L7p:EvaluateJsonPathExpression>
+                            <L7p:EvaluateJsonPathExpression>
+                                <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="portal id"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                </L7p:AssertionComment>
+                                <L7p:Expression stringValue="Uuid"/>
+                                <L7p:OtherTargetMessageVariable stringValue="props"/>
+                                <L7p:Target target="OTHER"/>
+                                <L7p:VariablePrefix stringValue="apiId"/>
+                            </L7p:EvaluateJsonPathExpression>
+                            <L7p:SetVariable>
+                                <L7p:Base64Expression stringValue="JHthcGlJZC5yZXN1bHR9"/>
+                                <L7p:VariableToSet stringValue="portalId"/>
+                            </L7p:SetVariable>
+                            <wsp:OneOrMore wsp:Usage="Required">
+                                <wsp:All wsp:Usage="Required">
+                                    <L7p:ComparisonAssertion>
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Expression1 stringValue="${PortalPublished.result}"/>
+                                    <L7p:Expression2 stringValue="true"/>
+                                    <L7p:Predicates predicates="included">
+                                    <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="true"/>
+                                    </L7p:item>
+                                    </L7p:Predicates>
+                                    </L7p:ComparisonAssertion>
+                                    <wsp:OneOrMore wsp:Usage="Required">
+                                    <wsp:All wsp:Usage="Required">
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="ZmFsc2U="/>
+                                    <L7p:VariableToSet stringValue="isExistingService"/>
+                                    </L7p:SetVariable>
+                                    <L7p:EvaluateJsonPathExpression>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="api name"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:Expression stringValue="Name"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="props"/>
+                                    <L7p:Target target="OTHER"/>
+                                    <L7p:VariablePrefix stringValue="name"/>
+                                    </L7p:EvaluateJsonPathExpression>
+                                    <L7p:EvaluateJsonPathExpression>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="api url"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:Expression stringValue="SsgUrl"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="props"/>
+                                    <L7p:Target target="OTHER"/>
+                                    <L7p:VariablePrefix stringValue="ssgUrl"/>
+                                    </L7p:EvaluateJsonPathExpression>
+                                    <L7p:EvaluateJsonPathExpression>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="api location"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:Expression stringValue="ApiLocationUrl"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="props"/>
+                                    <L7p:Target target="OTHER"/>
+                                    <L7p:VariablePrefix stringValue="apiLocationUrl"/>
+                                    </L7p:EvaluateJsonPathExpression>
+                                    <L7p:EvaluateJsonPathExpression>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="api location"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:Expression stringValue="ApiLocationUrl"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="props"/>
+                                    <L7p:Target target="OTHER"/>
+                                    <L7p:VariablePrefix stringValue="apiLocationUrl"/>
+                                    </L7p:EvaluateJsonPathExpression>
+                                    <L7p:EvaluateJsonPathExpression>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="api enabled"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:Expression stringValue="ServiceEnabled"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="props"/>
+                                    <L7p:Target target="OTHER"/>
+                                    <L7p:VariablePrefix stringValue="enabled"/>
+                                    </L7p:EvaluateJsonPathExpression>
+                                    <L7p:Encapsulated>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="xml escape url"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+
+                                    <L7p:EncapsulatedAssertionConfigGuid stringValue="5821066a-15a6-4523-a8f7-3d159129cdb5"/>
+
+                                    <L7p:EncapsulatedAssertionConfigName stringValue="Portal Escape XML"/>
+                                    <L7p:Parameters mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="escapedXml"/>
+                                    <L7p:value stringValue="${ssgUrl.result}"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="value"/>
+                                    <L7p:value stringValue="${ssgUrl.result}"/>
+                                    </L7p:entry>
+                                    </L7p:Parameters>
+                                    </L7p:Encapsulated>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHtlc2NhcGVkWG1sfQ=="/>
+                                    <L7p:VariableToSet stringValue="urlEscaped"/>
+                                    </L7p:SetVariable>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHtzc2dVcmwucmVzdWx0fQ=="/>
+                                    <L7p:VariableToSet stringValue="url"/>
+                                    </L7p:SetVariable>
+                                    <L7p:Encapsulated>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="xml escape api location url"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+
+                                    <L7p:EncapsulatedAssertionConfigGuid stringValue="5821066a-15a6-4523-a8f7-3d159129cdb5"/>
+
+                                    <L7p:EncapsulatedAssertionConfigName stringValue="Portal Escape XML"/>
+                                    <L7p:Parameters mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="escapedXml"/>
+                                    <L7p:value stringValue="${apiLocationUrl.result}"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="value"/>
+                                    <L7p:value stringValue="${name.result}"/>
+                                    </L7p:entry>
+                                    </L7p:Parameters>
+                                    </L7p:Encapsulated>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHthcGlMb2NhdGlvblVybC5yZXN1bHR9"/>
+                                    <L7p:VariableToSet stringValue="apiLocationUrl"/>
+                                    </L7p:SetVariable>
+                                    <L7p:EncodeDecode>
+                                    <L7p:SourceVariableName stringValue="apiLocationUrl"/>
+                                    <L7p:TargetDataType variableDataType="string"/>
+                                    <L7p:TargetVariableName stringValue="apiLocationUrlEncoded"/>
+                                    <L7p:TransformType transformType="BASE64_ENCODE"/>
+                                    </L7p:EncodeDecode>
+                                    <L7p:Encapsulated>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="xml escape name"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+
+                                    <L7p:EncapsulatedAssertionConfigGuid stringValue="5821066a-15a6-4523-a8f7-3d159129cdb5"/>
+
+                                    <L7p:EncapsulatedAssertionConfigName stringValue="Portal Escape XML"/>
+                                    <L7p:Parameters mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="escapedXml"/>
+                                    <L7p:value stringValue="${name.result}"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="value"/>
+                                    <L7p:value stringValue="${name.result}"/>
+                                    </L7p:entry>
+                                    </L7p:Parameters>
+                                    </L7p:Encapsulated>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHtlc2NhcGVkWG1sfQ=="/>
+                                    <L7p:VariableToSet stringValue="nameEscaped"/>
+                                    </L7p:SetVariable>
+                                    <L7p:Encapsulated>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="xml escape api location url"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+
+                                    <L7p:EncapsulatedAssertionConfigGuid stringValue="5821066a-15a6-4523-a8f7-3d159129cdb5"/>
+
+                                    <L7p:EncapsulatedAssertionConfigName stringValue="Portal Escape XML"/>
+                                    <L7p:Parameters mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="escapedXml"/>
+                                    <L7p:value stringValue="${apiLocationUrl.result}"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="value"/>
+                                    <L7p:value stringValue="${name.result}"/>
+                                    </L7p:entry>
+                                    </L7p:Parameters>
+                                    </L7p:Encapsulated>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHthcGlMb2NhdGlvblVybC5yZXN1bHR9"/>
+                                    <L7p:VariableToSet stringValue="apiLocationUrl"/>
+                                    </L7p:SetVariable>
+                                    <L7p:EncodeDecode>
+                                    <L7p:SourceVariableName stringValue="apiLocationUrl"/>
+                                    <L7p:TargetDataType variableDataType="string"/>
+                                    <L7p:TargetVariableName stringValue="apiLocationUrlEncoded"/>
+                                    <L7p:TransformType transformType="BASE64_ENCODE"/>
+                                    </L7p:EncodeDecode>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHtlbmFibGVkLnJlc3VsdH0="/>
+                                    <L7p:VariableToSet stringValue="enabled"/>
+                                    </L7p:SetVariable>
+                                    <L7p:EncodeDecode>
+                                    <L7p:SourceVariableName stringValue="url"/>
+                                    <L7p:TargetDataType variableDataType="string"/>
+                                    <L7p:TargetVariableName stringValue="urlEncoded"/>
+                                    <L7p:TransformType transformType="BASE64_ENCODE"/>
+                                    </L7p:EncodeDecode>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue=""/>
+                                    <L7p:DataType variableDataType="dateTime"/>
+                                    <L7p:DateFormat stringValue="yyyy-MM-dd'T'HH:mm:ss.SSSXXX"/>
+
+                                    <L7p:DateOffsetExpression stringValue="0"/>
+                                    <L7p:VariableToSet stringValue="updateDate"/>
+                                    </L7p:SetVariable>
+                                    <L7p:SetVariable>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="get existing service id"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:Base64Expression stringValue="L2w3Okxpc3QvbDc6SXRlbS9sNzpSZXNvdXJjZS9sNzpTZXJ2aWNlW2w3OlNlcnZpY2VEZXRhaWwvbDc6UHJvcGVydGllcy9sNzpQcm9wZXJ0eVtAa2V5PSdwcm9wZXJ0eS5wb3J0YWxJRCddL2w3OlN0cmluZ1ZhbHVlW3RleHQoKT0nJHtwb3J0YWxJZH0nXV0vQGlk"/>
+                                    <L7p:VariableToSet stringValue="serviceXpath"/>
+                                    </L7p:SetVariable>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="dHJ1ZQ=="/>
+                                    <L7p:VariableToSet stringValue="ssgStatus"/>
+                                    </L7p:SetVariable>
+                                    <wsp:OneOrMore wsp:Usage="Required">
+                                    <wsp:All wsp:Usage="Required">
+                                    <L7p:SetVariable>
+
+                                    <L7p:Base64Expression stringValue="L2w3MDpBcGlzL2w3MDpBcGlbbDcwOkFwaUlkL3RleHQoKT0iJHtwb3J0YWxJZH0iXS9sNzA6U2VydmljZU9JRC90ZXh0KCk="/>
+
+                                    <L7p:VariableToSet stringValue="xpath"/>
+                                    </L7p:SetVariable>
+                                    <L7p:ResponseXpathAssertion>
+
+                                    <L7p:VariablePrefix stringValue="existingServiceId"/>
+                                    <L7p:XmlMsgSrc stringValue="portalmanApis"/>
+
+                                    <L7p:XpathExpression xpathExpressionValue="included">
+
+                                    <L7p:Expression stringValue="${xpath}"/>
+
+                                    <L7p:Namespaces mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="s"/>
+
+                                    <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="l7"/>
+
+                                    <L7p:value stringValue="http://ns.l7tech.com/2010/04/gateway-management"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="l70"/>
+
+                                    <L7p:value stringValue="http://ns.l7tech.com/2012/04/api-management"/>
+                                    </L7p:entry>
+                                    </L7p:Namespaces>
+
+                                    <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                                    </L7p:XpathExpression>
+                                    </L7p:ResponseXpathAssertion>
+                                    <L7p:SetVariable>
+
+                                    <L7p:Base64Expression stringValue="JHtleGlzdGluZ1NlcnZpY2VJZC5yZXN1bHR9"/>
+
+                                    <L7p:VariableToSet stringValue="serviceId"/>
+                                    </L7p:SetVariable>
+                                    <L7p:SetVariable>
+
+                                    <L7p:Base64Expression stringValue="dHJ1ZQ=="/>
+
+                                    <L7p:VariableToSet stringValue="isExistingService"/>
+                                    </L7p:SetVariable>
+                                    <L7p:SetVariable>
+
+                                    <L7p:Base64Expression stringValue="L2w3MDpBcGlzL2w3MDpBcGlbbDcwOkFwaUlkL3RleHQoKT0iJHtwb3J0YWxJZH0iXS9sNzA6U2VydmljZVBvbGljeS90ZXh0KCk="/>
+
+                                    <L7p:VariableToSet stringValue="xpath"/>
+                                    </L7p:SetVariable>
+                                    <L7p:ResponseXpathAssertion>
+
+                                    <L7p:VariablePrefix stringValue="existingServicePolicy"/>
+                                    <L7p:XmlMsgSrc stringValue="portalmanApis"/>
+
+                                    <L7p:XpathExpression xpathExpressionValue="included">
+
+                                    <L7p:Expression stringValue="${xpath}"/>
+
+                                    <L7p:Namespaces mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="s"/>
+
+                                    <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="l7"/>
+
+                                    <L7p:value stringValue="http://ns.l7tech.com/2010/04/gateway-management"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="l70"/>
+
+                                    <L7p:value stringValue="http://ns.l7tech.com/2012/04/api-management"/>
+                                    </L7p:entry>
+                                    </L7p:Namespaces>
+
+                                    <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                                    </L7p:XpathExpression>
+                                    </L7p:ResponseXpathAssertion>
+                                    <L7p:SetVariable>
+
+                                    <L7p:AssertionComment assertionComment="included">
+
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+
+                                    <L7p:value stringValue="get existing service policy xml"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+
+                                    <L7p:Base64Expression stringValue="JHtleGlzdGluZ1NlcnZpY2VQb2xpY3kucmVzdWx0fQ=="/>
+
+                                    <L7p:VariableToSet stringValue="existingServicePolicyXml"/>
+                                    </L7p:SetVariable>
+                                    <L7p:SetVariable>
+
+                                    <L7p:Base64Expression stringValue="L2w3MDpBcGlzL2w3MDpBcGlbbDcwOkFwaUlkL3RleHQoKT0iJHtwb3J0YWxJZH0iXS9sNzA6U2VydmljZUVuYWJsZWQvdGV4dCgp"/>
+
+                                    <L7p:VariableToSet stringValue="xpath"/>
+                                    </L7p:SetVariable>
+                                    <L7p:ResponseXpathAssertion>
+
+                                    <L7p:VariablePrefix stringValue="existingServiceStatus"/>
+                                    <L7p:XmlMsgSrc stringValue="portalmanApis"/>
+
+                                    <L7p:XpathExpression xpathExpressionValue="included">
+
+                                    <L7p:Expression stringValue="${xpath}"/>
+
+                                    <L7p:Namespaces mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="s"/>
+
+                                    <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="l7"/>
+
+                                    <L7p:value stringValue="http://ns.l7tech.com/2010/04/gateway-management"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="l70"/>
+
+                                    <L7p:value stringValue="http://ns.l7tech.com/2012/04/api-management"/>
+                                    </L7p:entry>
+                                    </L7p:Namespaces>
+
+                                    <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                                    </L7p:XpathExpression>
+                                    </L7p:ResponseXpathAssertion>
+                                    <L7p:SetVariable>
+
+                                    <L7p:AssertionComment assertionComment="included">
+
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+
+                                    <L7p:value stringValue="get existing service status"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+
+                                    <L7p:Base64Expression stringValue="JHtleGlzdGluZ1NlcnZpY2VTdGF0dXMucmVzdWx0fQ=="/>
+
+                                    <L7p:VariableToSet stringValue="ssgStatus"/>
+                                    </L7p:SetVariable>
+                                    <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+
+                                    <L7p:value stringValue="get existing service id"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:assertionComment>
+                                    </wsp:All>
+                                    <wsp:All wsp:Usage="Required">
+                                    <L7p:UUIDGenerator>
+
+                                    <L7p:TargetVariable stringValue="goid"/>
+                                    </L7p:UUIDGenerator>
+                                    <L7p:Regex>
+                                    <L7p:AutoTarget booleanValue="false"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="goid"/>
+                                    <L7p:Regex stringValue="-"/>
+                                    <L7p:Replace booleanValue="true"/>
+                                    <L7p:Replacement stringValue=""/>
+                                    <L7p:Target target="OTHER"/>
+                                    </L7p:Regex>
+                                    <L7p:Regex>
+                                    <L7p:AutoTarget booleanValue="false"/>
+
+                                    <L7p:IncludeEntireExpressionCapture booleanValue="false"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="goid"/>
+                                    <L7p:Regex stringValue=".{0,16}"/>
+                                    <L7p:Replacement stringValue=""/>
+                                    <L7p:Target target="OTHER"/>
+                                    </L7p:Regex>
+                                    <L7p:SetVariable>
+
+                                    <L7p:Base64Expression stringValue="JHtnb2lkfQ=="/>
+
+                                    <L7p:VariableToSet stringValue="serviceId"/>
+                                    </L7p:SetVariable>
+                                    <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+
+                                    <L7p:value stringValue="generate service id for create"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:assertionComment>
+                                    </wsp:All>
+                                    </wsp:OneOrMore>
+                                    <wsp:All wsp:Usage="Required">
+                                    <L7p:SetVariable>
+
+                                    <L7p:Base64Expression stringValue="JHtwb3J0YWxJZH0="/>
+                                    <L7p:VariableToSet stringValue="fragmentId"/>
+                                    </L7p:SetVariable>
+                                    <L7p:Regex>
+                                    <L7p:AutoTarget booleanValue="false"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="fragmentId"/>
+                                    <L7p:Regex stringValue="-"/>
+                                    <L7p:Replace booleanValue="true"/>
+                                    <L7p:Replacement stringValue=""/>
+                                    <L7p:Target target="OTHER"/>
+                                    </L7p:Regex>
+                                    <L7p:Regex>
+                                    <L7p:AutoTarget booleanValue="false"/>
+
+                                    <L7p:IncludeEntireExpressionCapture booleanValue="false"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="fragmentId"/>
+                                    <L7p:Regex stringValue=".{0,16}"/>
+                                    <L7p:Replacement stringValue=""/>
+                                    <L7p:Target target="OTHER"/>
+                                    </L7p:Regex>
+                                    </wsp:All>
+                                    <L7p:CommentAssertion>
+                                    <L7p:Comment stringValue="//---- serviceUrl - setVariable element in proxyXml should alway be last setVariable because we are appending policyentities data based on that -------"/>
+                                    </L7p:CommentAssertion>
+                                    <L7p:SetVariable>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="build fragment policy xml"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:Base64Expression stringValue="PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHdzcDpQb2xpY3kgeG1sbnM6TDdwPSJodHRwOi8vd3d3LmxheWVyN3RlY2guY29tL3dzL3BvbGljeSIgeG1sbnM6d3NwPSJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDAyLzEyL3BvbGljeSI+CiAgICA8d3NwOkFsbCB3c3A6VXNhZ2U9IlJlcXVpcmVkIj4KICAgICAgICA8TDdwOkNvbW1lbnRBc3NlcnRpb24+CiAgICAgICAgICAgIDxMN3A6Q29tbWVudCBzdHJpbmdWYWx1ZT0iPT09PT09PT09PT09PT09PT09PT09PT09PT09PT0iLz4KICAgICAgICA8L0w3cDpDb21tZW50QXNzZXJ0aW9uPgogICAgICAgIDxMN3A6Q29tbWVudEFzc2VydGlvbj4KICAgICAgICAgICAgPEw3cDpDb21tZW50IHN0cmluZ1ZhbHVlPSI9PT09PT09IFB1Ymxpc2hlZCB0aHJ1IEFQSSBQb3J0YWwgPT09PT09PSIvPgogICAgICAgIDwvTDdwOkNvbW1lbnRBc3NlcnRpb24+CiAgICAgICAgPEw3cDpDb21tZW50QXNzZXJ0aW9uPgogICAgICAgICAgICA8TDdwOkNvbW1lbnQgc3RyaW5nVmFsdWU9Ij09PT09PT0gRG9uJ3QgbW9kaWZ5IGJsb2NrIHN0YXJ0cyA9PT09PT09Ii8+CiAgICAgICAgPC9MN3A6Q29tbWVudEFzc2VydGlvbj4KICAgICAgICA8TDdwOkNvbW1lbnRBc3NlcnRpb24+CiAgICAgICAgICAgIDxMN3A6Q29tbWVudCBzdHJpbmdWYWx1ZT0iPT09PT09PT09PT09PT09PT09PT09PT09PT09PT0iLz4KICAgICAgICA8L0w3cDpDb21tZW50QXNzZXJ0aW9uPgogICAgICAgIDxMN3A6QXBpUG9ydGFsSW50ZWdyYXRpb24+CiAgICAgICAgICAgIDxMN3A6QXBpR3JvdXAgc3RyaW5nVmFsdWU9IiIvPgogICAgICAgICAgICA8TDdwOkFwaUlkIHN0cmluZ1ZhbHVlPSIke3BvcnRhbElkfSIvPgogICAgICAgICAgICA8TDdwOlBvcnRhbE1hbmFnZWRBcGlGbGFnIHN0cmluZ1ZhbHVlPSJMN3A6QXBpUG9ydGFsTWFuYWdlZFNlcnZpY2VBc3NlcnRpb24iLz4KICAgICAgICA8L0w3cDpBcGlQb3J0YWxJbnRlZ3JhdGlvbj4KICAgICAgICA8TDdwOlNldFZhcmlhYmxlPgogICAgICAgICAgICA8TDdwOkJhc2U2NEV4cHJlc3Npb24gc3RyaW5nVmFsdWU9IiR7YXBpTG9jYXRpb25VcmxFbmNvZGVkfSIvPgogICAgICAgICAgICA8TDdwOlZhcmlhYmxlVG9TZXQgc3RyaW5nVmFsdWU9ImFwaUxvY2F0aW9uIi8+CiAgICAgICAgPC9MN3A6U2V0VmFyaWFibGU+CiAgICAgICAgPEw3cDpTZXRWYXJpYWJsZT4KICAgICAgICAgICAgPEw3cDpCYXNlNjRFeHByZXNzaW9uIHN0cmluZ1ZhbHVlPSIke3VybEVuY29kZWR9Ii8+CiAgICAgICAgICAgIDxMN3A6VmFyaWFibGVUb1NldCBzdHJpbmdWYWx1ZT0ic2VydmljZVVybCIvPgogICAgICAgIDwvTDdwOlNldFZhcmlhYmxlPgogICAgICAgIDxMN3A6U2V0VmFyaWFibGU+CiAgICAgICAgICAgIDxMN3A6QmFzZTY0RXhwcmVzc2lvbiBzdHJpbmdWYWx1ZT0iSkh0d2IzSjBZV3d1YldGdVlXZGxaQzV6WlhKMmFXTmxMbUZ3YVVsa2ZRPT0iLz4KICAgICAgICAgICAgPEw3cDpWYXJpYWJsZVRvU2V0IHN0cmluZ1ZhbHVlPSJjb3VudGVyTmFtZSIvPgogICAgICAgIDwvTDdwOlNldFZhcmlhYmxlPg=="/>
+                                    <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                                    <L7p:DataType variableDataType="message"/>
+                                    <L7p:VariableToSet stringValue="policyXml"/>
+                                    </L7p:SetVariable>
+                                    <wsp:OneOrMore wsp:Usage="Required">
+                                    <wsp:All wsp:Usage="Required">
+                                    <L7p:SetVariable>
+
+                                    <L7p:Base64Expression stringValue="R0VU"/>
+
+                                    <L7p:VariableToSet stringValue="pman.operation"/>
+                                    </L7p:SetVariable>
+                                    <L7p:SetVariable>
+
+                                    <L7p:Base64Expression stringValue="LzEvYXBpL2ZyYWdtZW50cy8ke3JlcXVlc3QuaHR0cC5wYXJhbWV0ZXJzLmZyYWdtZW50fQ=="/>
+
+                                    <L7p:VariableToSet stringValue="pman.resUri"/>
+                                    </L7p:SetVariable>
+                                    <L7p:ManagePortalResource/>
+                                    <L7p:SetVariable>
+
+                                    <L7p:Base64Expression stringValue="JHtwbWFuLnJlc3AucmVzb3VyY2V9"/>
+                                    <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                                    <L7p:DataType variableDataType="message"/>
+
+                                    <L7p:VariableToSet stringValue="pmanResponse"/>
+                                    </L7p:SetVariable>
+                                    <L7p:ResponseXpathAssertion>
+
+                                    <L7p:VariablePrefix stringValue="hasRoute"/>
+                                    <L7p:XmlMsgSrc stringValue="pmanResponse"/>
+
+                                    <L7p:XpathExpression xpathExpressionValue="included">
+
+                                    <L7p:Expression stringValue="//l7:HasRouting/text()"/>
+
+                                    <L7p:Namespaces mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="s"/>
+
+                                    <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="l7"/>
+
+                                    <L7p:value stringValue="http://ns.l7tech.com/2012/04/api-management"/>
+                                    </L7p:entry>
+                                    </L7p:Namespaces>
+
+                                    <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                                    </L7p:XpathExpression>
+                                    </L7p:ResponseXpathAssertion>
+                                    <wsp:OneOrMore wsp:Usage="Required">
+                                    <wsp:All wsp:Usage="Required">
+                                    <L7p:ComparisonAssertion>
+
+                                    <L7p:CaseSensitive booleanValue="false"/>
+
+                                    <L7p:Expression1 stringValue="${hasRoute.result}"/>
+
+                                    <L7p:Expression2 stringValue="true"/>
+
+                                    <L7p:Predicates predicates="included">
+
+                                    <L7p:item binary="included">
+
+                                    <L7p:CaseSensitive booleanValue="false"/>
+
+                                    <L7p:RightValue stringValue="true"/>
+                                    </L7p:item>
+                                    </L7p:Predicates>
+                                    </L7p:ComparisonAssertion>
+                                    <L7p:SetVariable>
+
+                                    <L7p:Base64Expression stringValue="RW5jYXNzIGhhcyBhIHJvdXRlIGluIGl0Lg=="/>
+
+                                    <L7p:VariableToSet stringValue="routingHint"/>
+                                    </L7p:SetVariable>
+                                    </wsp:All>
+                                    <L7p:SetVariable>
+
+                                    <L7p:Base64Expression stringValue="RW5jYXNzIGRvZXMgbm90IGhhdmUgYSByb3V0ZSBpbiBpdC4="/>
+
+                                    <L7p:VariableToSet stringValue="routingHint"/>
+                                    </L7p:SetVariable>
+                                    </wsp:OneOrMore>
+                                    </wsp:All>
+                                    <L7p:TrueAssertion/>
+                                    </wsp:OneOrMore>
+                                    <L7p:SetVariable>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="build service xml"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:Base64Expression stringValue="PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjx3c3A6UG9saWN5IHhtbG5zOkw3cD0iaHR0cDovL3d3dy5sYXllcjd0ZWNoLmNvbS93cy9wb2xpY3kiIHhtbG5zOndzcD0iaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwMi8xMi9wb2xpY3kiPg0KCTx3c3A6QWxsIHdzcDpVc2FnZT0iUmVxdWlyZWQiPg0KCQk8TDdwOkNvbW1lbnRBc3NlcnRpb24+DQoJCQk8TDdwOkNvbW1lbnQgc3RyaW5nVmFsdWU9Ii0tLS0tLSBQb3J0YWwgQ3JlYXRlZCBGcmFnbWVudCAuIERvIG5vdCBNb2RpZnkgLS0tLS0tIi8+DQoJCTwvTDdwOkNvbW1lbnRBc3NlcnRpb24+DQoJCTxMN3A6Q29tbWVudEFzc2VydGlvbj4NCgkJCTxMN3A6Q29tbWVudCBzdHJpbmdWYWx1ZT0iLS0tLS0tLSAke3JvdXRpbmdIaW50fSAtLS0tLS0iLz4NCgkJPC9MN3A6Q29tbWVudEFzc2VydGlvbj4NCiAgICAgICAgICA8TDdwOlNldFZhcmlhYmxlPg0KICAgICAgICAgICAgPEw3cDpCYXNlNjRFeHByZXNzaW9uIHN0cmluZ1ZhbHVlPSJabUZzYzJVPSIvPg0KICAgICAgICAgICAgPEw3cDpWYXJpYWJsZVRvU2V0IHN0cmluZ1ZhbHVlPSJvdmVycmlkZV90ZW1wbGF0ZV9yb3V0aW5nIi8+DQogICAgICAgICAgPC9MN3A6U2V0VmFyaWFibGU+DQogICAgIAk8TDdwOkluY2x1ZGU+DQoJCQk8TDdwOlBvbGljeUd1aWQgc3RyaW5nVmFsdWU9IjgxMmVkMTk2LWMzMTUtNGU5Mi1iNjMwLWI1YzY0YzVjMDQzYyIvPg0KCQkJPEw3cDpQb2xpY3lOYW1lIHN0cmluZ1ZhbHVlPSJQb3J0YWwgU2VydmljZSBQcmVmYWNlIi8+DQoJCTwvTDdwOkluY2x1ZGU+DQoJCTxMN3A6SW5jbHVkZT4NCgkJCTxMN3A6UG9saWN5R3VpZCBzdHJpbmdWYWx1ZT0iJHtwb3J0YWxJZH0iLz4NCgkJPC9MN3A6SW5jbHVkZT4NCgkJPEw3cDpDb21tZW50QXNzZXJ0aW9uPg0KCQkJPEw3cDpDb21tZW50IHN0cmluZ1ZhbHVlPSItLS0tLS0gUG9ydGFsIENyZWF0ZWQgRnJhZ21lbnQgLiBEbyBub3QgTW9kaWZ5IC0tLS0tLSIvPg0KCQk8L0w3cDpDb21tZW50QXNzZXJ0aW9uPg0KCQk8TDdwOkNvbW1lbnRBc3NlcnRpb24+DQoJCQk8TDdwOkNvbW1lbnQgc3RyaW5nVmFsdWU9Ii0tLS0tLSBUaGlzIHJvdXRpbmcgcGF0aCB3aWxsIGJlIGV4ZWN1dGVkIGlmIHVzaW5nIG92ZXJyaWRlIHRlbXBsYXRlIHJvdXRpbmcgLS0tLS0tIi8+DQoJCTwvTDdwOkNvbW1lbnRBc3NlcnRpb24+DQoJCTx3c3A6T25lT3JNb3JlIHdzcDpVc2FnZT0iUmVxdWlyZWQiPg0KICAgICAgICAgICAgPEw3cDpDb21wYXJpc29uQXNzZXJ0aW9uPg0KICAgICAgICAgICAgICAgIDxMN3A6Q2FzZVNlbnNpdGl2ZSBib29sZWFuVmFsdWU9ImZhbHNlIi8+DQogICAgICAgICAgICAgICAgPEw3cDpFeHByZXNzaW9uMSBzdHJpbmdWYWx1ZT0iJiMzNjt7b3ZlcnJpZGVfdGVtcGxhdGVfcm91dGluZ30iLz4NCiAgICAgICAgICAgICAgICA8TDdwOkV4cHJlc3Npb24yIHN0cmluZ1ZhbHVlPSJmYWxzZSIvPg0KICAgICAgICAgICAgICAgIDxMN3A6UHJlZGljYXRlcyBwcmVkaWNhdGVzPSJpbmNsdWRlZCI+DQogICAgICAgICAgICAgICAgICAgIDxMN3A6aXRlbSBiaW5hcnk9ImluY2x1ZGVkIj4NCiAgICAgICAgICAgICAgICAgICAgICAgIDxMN3A6Q2FzZVNlbnNpdGl2ZSBib29sZWFuVmFsdWU9ImZhbHNlIi8+DQogICAgICAgICAgICAgICAgICAgICAgICA8TDdwOlJpZ2h0VmFsdWUgc3RyaW5nVmFsdWU9ImZhbHNlIi8+DQogICAgICAgICAgICAgICAgICAgIDwvTDdwOml0ZW0+DQogICAgICAgICAgICAgICAgPC9MN3A6UHJlZGljYXRlcz4NCiAgICAgICAgICAgIDwvTDdwOkNvbXBhcmlzb25Bc3NlcnRpb24+DQogICAgICAgICAgICA8d3NwOkFsbCB3c3A6VXNhZ2U9IlJlcXVpcmVkIj4NCiAgICAgICAgICAgICAgICA8TDdwOlNldFZhcmlhYmxlPg0KICAgICAgICAgICAgICAgICAgICA8TDdwOkJhc2U2NEV4cHJlc3Npb24gc3RyaW5nVmFsdWU9IkpIdHlaWEYxWlhOMExtaDBkSEF1ZFhKcGZRPT0iLz4NCiAgICAgICAgICAgICAgICAgICAgPEw3cDpWYXJpYWJsZVRvU2V0IHN0cmluZ1ZhbHVlPSJwYXJhbS51cmkiLz4NCiAgICAgICAgICAgICAgICA8L0w3cDpTZXRWYXJpYWJsZT4NCiAgICAgICAgICAgICAgICA8TDdwOlJlZ2V4Pg0KICAgICAgICAgICAgICAgICAgICA8TDdwOkF1dG9UYXJnZXQgYm9vbGVhblZhbHVlPSJmYWxzZSIvPg0KICAgICAgICAgICAgICAgICAgICA8TDdwOk90aGVyVGFyZ2V0TWVzc2FnZVZhcmlhYmxlIHN0cmluZ1ZhbHVlPSJwYXJhbS51cmkiLz4NCiAgICAgICAgICAgICAgICAgICAgPEw3cDpQYXR0ZXJuQ29udGFpbnNWYXJpYWJsZXMgYm9vbGVhblZhbHVlPSJ0cnVlIi8+DQogICAgICAgICAgICAgICAgICAgIDxMN3A6UmVnZXggc3RyaW5nVmFsdWU9Ii8mIzM2O3tzZXJ2aWNlVXJsfSIvPg0KICAgICAgICAgICAgICAgICAgICA8TDdwOlJlZ2V4TmFtZSBzdHJpbmdWYWx1ZT0icHJvY2VzcyB1cmkiLz4NCiAgICAgICAgICAgICAgICAgICAgPEw3cDpSZXBsYWNlIGJvb2xlYW5WYWx1ZT0idHJ1ZSIvPg0KICAgICAgICAgICAgICAgICAgICA8TDdwOlJlcGxhY2VtZW50IHN0cmluZ1ZhbHVlPSIiLz4NCiAgICAgICAgICAgICAgICAgICAgPEw3cDpUYXJnZXQgdGFyZ2V0PSJPVEhFUiIvPg0KICAgICAgICAgICAgICAgIDwvTDdwOlJlZ2V4Pg0KICAgICAgICAgICAgICAgIDx3c3A6T25lT3JNb3JlIHdzcDpVc2FnZT0iUmVxdWlyZWQiPg0KICAgICAgICAgICAgICAgICAgICA8d3NwOkFsbCB3c3A6VXNhZ2U9IlJlcXVpcmVkIj4NCiAgICAgICAgICAgICAgICAgICAgICAgIDxMN3A6SHR0cFJvdXRpbmdBc3NlcnRpb24+DQogICAgICAgICAgICAgICAgICAgICAgICAgICAgPEw3cDpGYWlsT25FcnJvclN0YXR1cyBib29sZWFuVmFsdWU9ImZhbHNlIi8+DQogICAgICAgICAgICAgICAgICAgICAgICAgICAgPEw3cDpQcm90ZWN0ZWRTZXJ2aWNlVXJsIHN0cmluZ1ZhbHVlPSImIzM2O3thcGlMb2NhdGlvbn0mIzM2O3twYXJhbS51cml9JiMzNjt7cmVxdWVzdC51cmwucXVlcnl9Ii8+DQogICAgICAgICAgICAgICAgICAgICAgICAgICAgPEw3cDpQcm94eVBhc3N3b3JkIHN0cmluZ1ZhbHVlTnVsbD0ibnVsbCIvPg0KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxMN3A6UHJveHlVc2VybmFtZSBzdHJpbmdWYWx1ZU51bGw9Im51bGwiLz4NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8TDdwOlJlcXVlc3RIZWFkZXJSdWxlcyBodHRwUGFzc3Rocm91Z2hSdWxlU2V0PSJpbmNsdWRlZCI+DQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxMN3A6UnVsZXMgaHR0cFBhc3N0aHJvdWdoUnVsZXM9ImluY2x1ZGVkIj4NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxMN3A6aXRlbSBodHRwUGFzc3Rocm91Z2hSdWxlPSJpbmNsdWRlZCI+DQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8TDdwOk5hbWUgc3RyaW5nVmFsdWU9IkNvb2tpZSIvPg0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9MN3A6aXRlbT4NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxMN3A6aXRlbSBodHRwUGFzc3Rocm91Z2hSdWxlPSJpbmNsdWRlZCI+DQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8TDdwOk5hbWUgc3RyaW5nVmFsdWU9IlNPQVBBY3Rpb24iLz4NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvTDdwOml0ZW0+DQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvTDdwOlJ1bGVzPg0KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvTDdwOlJlcXVlc3RIZWFkZXJSdWxlcz4NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8TDdwOlJlcXVlc3RQYXJhbVJ1bGVzIGh0dHBQYXNzdGhyb3VnaFJ1bGVTZXQ9ImluY2x1ZGVkIj4NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPEw3cDpGb3J3YXJkQWxsIGJvb2xlYW5WYWx1ZT0idHJ1ZSIvPg0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8TDdwOlJ1bGVzIGh0dHBQYXNzdGhyb3VnaFJ1bGVzPSJpbmNsdWRlZCIvPg0KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvTDdwOlJlcXVlc3RQYXJhbVJ1bGVzPg0KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxMN3A6UmVzcG9uc2VIZWFkZXJSdWxlcyBodHRwUGFzc3Rocm91Z2hSdWxlU2V0PSJpbmNsdWRlZCI+DQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxMN3A6UnVsZXMgaHR0cFBhc3N0aHJvdWdoUnVsZXM9ImluY2x1ZGVkIj4NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxMN3A6aXRlbSBodHRwUGFzc3Rocm91Z2hSdWxlPSJpbmNsdWRlZCI+DQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8TDdwOk5hbWUgc3RyaW5nVmFsdWU9IlNldC1Db29raWUiLz4NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvTDdwOml0ZW0+DQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvTDdwOlJ1bGVzPg0KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvTDdwOlJlc3BvbnNlSGVhZGVyUnVsZXM+DQogICAgICAgICAgICAgICAgICAgICAgICAgICAgPEw3cDpTYW1sQXNzZXJ0aW9uVmVyc2lvbiBpbnRWYWx1ZT0iMiIvPg0KICAgICAgICAgICAgICAgICAgICAgICAgPC9MN3A6SHR0cFJvdXRpbmdBc3NlcnRpb24+DQogICAgICAgICAgICAgICAgICAgICAgICA8TDdwOlNldFZhcmlhYmxlPg0KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxMN3A6QmFzZTY0RXhwcmVzc2lvbiBzdHJpbmdWYWx1ZT0iSkh0eVpYTndiMjV6WlM1b2RIUndMbk4wWVhSMWMzMD0iLz4NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8TDdwOlZhcmlhYmxlVG9TZXQgc3RyaW5nVmFsdWU9InBvcnRhbC5hbmFseXRpY3MucmVzcG9uc2UuY29kZSIvPg0KICAgICAgICAgICAgICAgICAgICAgICAgPC9MN3A6U2V0VmFyaWFibGU+DQogICAgICAgICAgICAgICAgICAgIDwvd3NwOkFsbD4NCiAgICAgICAgICAgICAgICAgICAgPHdzcDpBbGwgd3NwOlVzYWdlPSJSZXF1aXJlZCI+DQogICAgICAgICAgICAgICAgICAgICAgICA8TDdwOlNldFZhcmlhYmxlPg0KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxMN3A6QmFzZTY0RXhwcmVzc2lvbiBzdHJpbmdWYWx1ZT0iSkh0eVpYTndiMjV6WlM1b2RIUndMbk4wWVhSMWMzMD0iLz4NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8TDdwOlZhcmlhYmxlVG9TZXQgc3RyaW5nVmFsdWU9InBvcnRhbC5hbmFseXRpY3MucmVzcG9uc2UuY29kZSIvPg0KICAgICAgICAgICAgICAgICAgICAgICAgPC9MN3A6U2V0VmFyaWFibGU+DQogICAgICAgICAgICAgICAgICAgICAgICA8TDdwOlNldFZhcmlhYmxlPg0KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxMN3A6QmFzZTY0RXhwcmVzc2lvbiBzdHJpbmdWYWx1ZT0iVlc1aFlteGxJSFJ2SUhKdmRYUmxJSFJ2SUVGUVNTND0iLz4NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8TDdwOlZhcmlhYmxlVG9TZXQgc3RyaW5nVmFsdWU9ImVycm9yTXNnIi8+DQogICAgICAgICAgICAgICAgICAgICAgICA8L0w3cDpTZXRWYXJpYWJsZT4NCiAgICAgICAgICAgICAgICAgICAgICAgIDx3c3A6T25lT3JNb3JlIHdzcDpVc2FnZT0iUmVxdWlyZWQiPg0KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxMN3A6Q29tcGFyaXNvbkFzc2VydGlvbj4NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPEw3cDpDYXNlU2Vuc2l0aXZlIGJvb2xlYW5WYWx1ZT0iZmFsc2UiLz4NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPEw3cDpFeHByZXNzaW9uMSBzdHJpbmdWYWx1ZT0iJiMzNjt7cG9ydGFsLmFuYWx5dGljcy5yZXNwb25zZS5jb2RlfSIvPg0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8TDdwOkV4cHJlc3Npb25Jc1ZhcmlhYmxlIGJvb2xlYW5WYWx1ZT0iZmFsc2UiLz4NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPEw3cDpPcGVyYXRvciBvcGVyYXRvck51bGw9Im51bGwiLz4NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPEw3cDpQcmVkaWNhdGVzIHByZWRpY2F0ZXM9ImluY2x1ZGVkIj4NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxMN3A6aXRlbSBkYXRhVHlwZT0iaW5jbHVkZWQiPg0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPEw3cDpUeXBlIHZhcmlhYmxlRGF0YVR5cGU9InN0cmluZyIvPg0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9MN3A6aXRlbT4NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxMN3A6aXRlbSBzdHJpbmdMZW5ndGg9ImluY2x1ZGVkIj4NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxMN3A6TWF4IGludFZhbHVlPSItMSIvPg0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPEw3cDpNaW4gaW50VmFsdWU9IjEiLz4NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvTDdwOml0ZW0+DQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvTDdwOlByZWRpY2F0ZXM+DQogICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9MN3A6Q29tcGFyaXNvbkFzc2VydGlvbj4NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8TDdwOlNldFZhcmlhYmxlPg0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8TDdwOkJhc2U2NEV4cHJlc3Npb24gc3RyaW5nVmFsdWU9Ik5EQTQiLz4NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPEw3cDpWYXJpYWJsZVRvU2V0IHN0cmluZ1ZhbHVlPSJwb3J0YWwuYW5hbHl0aWNzLnJlc3BvbnNlLmNvZGUiLz4NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L0w3cDpTZXRWYXJpYWJsZT4NCiAgICAgICAgICAgICAgICAgICAgICAgIDwvd3NwOk9uZU9yTW9yZT4NCiAgICAgICAgICAgICAgICAgICAgICAgIDxMN3A6RmFsc2VBc3NlcnRpb24vPg0KICAgICAgICAgICAgICAgICAgICA8L3dzcDpBbGw+DQogICAgICAgICAgICAgICAgPC93c3A6T25lT3JNb3JlPg0KICAgICAgICAgICAgICAgIDxMN3A6U2V0VmFyaWFibGU+DQogICAgICAgICAgICAgICAgICAgIDxMN3A6QmFzZTY0RXhwcmVzc2lvbiBzdHJpbmdWYWx1ZT0iSkh0eVpYRjFaWE4wTG5KdmRYUnBibWRVYjNSaGJGUnBiV1Y5Ii8+DQogICAgICAgICAgICAgICAgICAgIDxMN3A6VmFyaWFibGVUb1NldCBzdHJpbmdWYWx1ZT0icG9ydGFsLmFuYWx5dGljcy5yb3V0aW5nVG90YWxUaW1lIi8+DQogICAgICAgICAgICAgICAgPC9MN3A6U2V0VmFyaWFibGU+DQogICAgICAgICAgICAgICAgPEw3cDpFeHBvcnRWYXJpYWJsZXM+DQogICAgICAgICAgICAgICAgICAgIDxMN3A6RXhwb3J0ZWRWYXJzIHN0cmluZ0FycmF5VmFsdWU9ImluY2x1ZGVkIj4NCiAgICAgICAgICAgICAgICAgICAgICAgIDxMN3A6aXRlbSBzdHJpbmdWYWx1ZT0icG9ydGFsLmFuYWx5dGljcy5yZXNwb25zZS5jb2RlIi8+DQogICAgICAgICAgICAgICAgICAgICAgICA8TDdwOml0ZW0gc3RyaW5nVmFsdWU9InBvcnRhbC5hbmFseXRpY3Mucm91dGluZ1RvdGFsVGltZSIvPg0KICAgICAgICAgICAgICAgICAgICA8L0w3cDpFeHBvcnRlZFZhcnM+DQogICAgICAgICAgICAgICAgPC9MN3A6RXhwb3J0VmFyaWFibGVzPg0KICAgICAgICAgICAgPC93c3A6QWxsPg0KICAgICAgICA8L3dzcDpPbmVPck1vcmU+DQoJPC93c3A6QWxsPg0KPC93c3A6UG9saWN5Pg=="/>
+                                    <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                                    <L7p:DataType variableDataType="message"/>
+                                    <L7p:VariableToSet stringValue="serviceXml"/>
+                                    </L7p:SetVariable>
+                                    <wsp:All wsp:Usage="Required">
+                                    <L7p:EvaluateJsonPathExpression>
+
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+
+                                    <L7p:value stringValue="get Policy Entities"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:Expression stringValue="PolicyEntities"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="props"/>
+                                    <L7p:Target target="OTHER"/>
+                                    <L7p:VariablePrefix stringValue="PolicyEntities"/>
+                                    </L7p:EvaluateJsonPathExpression>
+                                    <L7p:ForEachLoop
+                                    L7p:Usage="Required"
+                                    loopVariable="PolicyEntities.results" variablePrefix="entities">
+                                    <L7p:SetVariable>
+
+                                    <L7p:Base64Expression stringValue="JHtlbnRpdGllcy5jdXJyZW50fQ=="/>
+                                    <L7p:ContentType stringValue="application/json; charset=utf-8"/>
+                                    <L7p:DataType variableDataType="message"/>
+
+                                    <L7p:VariableToSet stringValue="entityParam"/>
+                                    </L7p:SetVariable>
+                                    <L7p:EvaluateJsonPathExpression>
+                                    <L7p:Expression stringValue="PolicyEntityUuid"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="entityParam"/>
+                                    <L7p:Target target="OTHER"/>
+
+                                    <L7p:VariablePrefix stringValue="policyTemplateUuid"/>
+                                    </L7p:EvaluateJsonPathExpression>
+                                    <L7p:SetVariable>
+
+                                    <L7p:Base64Expression stringValue="JHtwb2xpY3lUZW1wbGF0ZVV1aWQucmVzdWx0fQ=="/>
+
+                                    <L7p:VariableToSet stringValue="encassId"/>
+                                    </L7p:SetVariable>
+                                    <L7p:SetVariable>
+
+                                    <L7p:AssertionComment assertionComment="included">
+
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+
+                                    <L7p:value stringValue="build encapsulate xml"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+
+                                    <L7p:Base64Expression stringValue="PEw3cDpFbmNhcHN1bGF0ZWQ+DQo8TDdwOkVuY2Fwc3VsYXRlZEFzc2VydGlvbkNvbmZpZ0d1aWQgeG1sbnM6TDdwPSJodHRwOi8vd3d3LmxheWVyN3RlY2guY29tL3dzL3BvbGljeSIgc3RyaW5nVmFsdWU9IiR7ZW5jYXNzSWR9Ii8+"/>
+
+                                    <L7p:VariableToSet stringValue="policyEntitiesElement"/>
+                                    </L7p:SetVariable>
+                                    <wsp:All wsp:Usage="Required">
+                                    <L7p:EvaluateJsonPathExpression>
+
+                                    <L7p:AssertionComment assertionComment="included">
+
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+
+                                    <L7p:value stringValue="get policy Arguments"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+
+                                    <L7p:Expression stringValue="Arguments"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="entityParam"/>
+                                    <L7p:Target target="OTHER"/>
+
+                                    <L7p:VariablePrefix stringValue="arguments"/>
+                                    </L7p:EvaluateJsonPathExpression>
+                                    <L7p:SetVariable>
+
+                                    <L7p:AssertionComment assertionComment="included">
+
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+
+                                    <L7p:value stringValue="build parameters xml"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+
+                                    <L7p:Base64Expression stringValue="JHtwb2xpY3lFbnRpdGllc0VsZW1lbnR9DQogPEw3cDpQYXJhbWV0ZXJzIG1hcFZhbHVlPSJpbmNsdWRlZCI+"/>
+
+                                    <L7p:VariableToSet stringValue="policyEntitiesElement"/>
+                                    </L7p:SetVariable>
+                                    <L7p:ForEachLoop
+                                    L7p:Usage="Required"
+                                    loopVariable="arguments.results" variablePrefix="args">
+                                    <L7p:SetVariable>
+
+                                    <L7p:Base64Expression stringValue="JHthcmdzLmN1cnJlbnR9"/>
+
+                                    <L7p:ContentType stringValue="application/json; charset=utf-8"/>
+
+                                    <L7p:DataType variableDataType="message"/>
+
+                                    <L7p:VariableToSet stringValue="encassParam"/>
+                                    </L7p:SetVariable>
+                                    <L7p:EvaluateJsonPathExpression>
+
+                                    <L7p:Expression stringValue="Name"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="encassParam"/>
+
+                                    <L7p:Target target="OTHER"/>
+
+                                    <L7p:VariablePrefix stringValue="encassParamName"/>
+                                    </L7p:EvaluateJsonPathExpression>
+                                    <L7p:Encapsulated>
+
+                                    <L7p:EncapsulatedAssertionConfigGuid stringValue="5821066a-15a6-4523-a8f7-3d159129cdb5"/>
+
+                                    <L7p:EncapsulatedAssertionConfigName stringValue="Portal Escape XML"/>
+
+                                    <L7p:Parameters mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="escapedXml"/>
+
+                                    <L7p:value stringValue="${encassParamName.result}"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="value"/>
+
+                                    <L7p:value stringValue="${ssgUrl.result}"/>
+                                    </L7p:entry>
+                                    </L7p:Parameters>
+                                    </L7p:Encapsulated>
+                                    <L7p:SetVariable>
+
+                                    <L7p:Base64Expression stringValue="JHtlc2NhcGVkWG1sfQ=="/>
+
+                                    <L7p:VariableToSet stringValue="encassParamNameEscaped"/>
+                                    </L7p:SetVariable>
+                                    <L7p:EvaluateJsonPathExpression>
+
+                                    <L7p:Expression stringValue="Value"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="encassParam"/>
+
+                                    <L7p:Target target="OTHER"/>
+
+                                    <L7p:VariablePrefix stringValue="encassParamValue"/>
+                                    </L7p:EvaluateJsonPathExpression>
+                                    <L7p:Encapsulated>
+
+                                    <L7p:EncapsulatedAssertionConfigGuid stringValue="5821066a-15a6-4523-a8f7-3d159129cdb5"/>
+
+                                    <L7p:EncapsulatedAssertionConfigName stringValue="Portal Escape XML"/>
+
+                                    <L7p:Parameters mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="escapedXml"/>
+
+                                    <L7p:value stringValue="${encassParamValue.result}"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="value"/>
+
+                                    <L7p:value stringValue="${ssgUrl.result}"/>
+                                    </L7p:entry>
+                                    </L7p:Parameters>
+                                    </L7p:Encapsulated>
+                                    <L7p:SetVariable>
+
+                                    <L7p:Base64Expression stringValue="JHtlc2NhcGVkWG1sfQ=="/>
+
+                                    <L7p:VariableToSet stringValue="encassParamValueEscaped"/>
+                                    </L7p:SetVariable>
+                                    <L7p:SetVariable>
+
+                                    <L7p:AssertionComment assertionComment="included">
+
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+
+                                    <L7p:value stringValue="adding arugments in xml"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+
+                                    <L7p:Base64Expression stringValue="JHtwb2xpY3lFbnRpdGllc0VsZW1lbnR9DQo8TDdwOmVudHJ5IHhtbG5zOkw3cD0iaHR0cDovL3d3dy5sYXllcjd0ZWNoLmNvbS93cy9wb2xpY3kiID4NCiAgICAgICAgICAgICAgICAgICAgPEw3cDprZXkgc3RyaW5nVmFsdWU9IiR7ZW5jYXNzUGFyYW1OYW1lRXNjYXBlZH0iLz4NCiAgICAgICAgICAgICAgICAgICAgPEw3cDp2YWx1ZSBzdHJpbmdWYWx1ZT0iJHtlbmNhc3NQYXJhbVZhbHVlRXNjYXBlZH0iLz4NCiAgICAgICAgICAgICAgICA8L0w3cDplbnRyeT4="/>
+
+                                    <L7p:VariableToSet stringValue="policyEntitiesElement"/>
+                                    </L7p:SetVariable>
+                                    <L7p:assertionComment>
+
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+
+                                    <L7p:value stringValue="for loop on Policy Arguments"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:assertionComment>
+                                    </L7p:ForEachLoop>
+                                    <L7p:assertionComment>
+
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+
+                                    <L7p:value stringValue="policies for building arguments "/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:assertionComment>
+                                    </wsp:All>
+                                    <L7p:SetVariable>
+
+                                    <L7p:AssertionComment assertionComment="included">
+
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+
+                                    <L7p:value stringValue="adding closing tags in xml"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+
+                                    <L7p:Base64Expression stringValue="JHtwb2xpY3lFbnRpdGllc0VsZW1lbnR9DQo8L0w3cDpQYXJhbWV0ZXJzPg0KPC9MN3A6RW5jYXBzdWxhdGVkPg=="/>
+
+                                    <L7p:VariableToSet stringValue="policyEntitiesElement"/>
+                                    </L7p:SetVariable>
+                                    <L7p:SetVariable>
+
+                                    <L7p:AssertionComment assertionComment="included">
+
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+
+                                    <L7p:value stringValue="appending policyEntities xml"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+
+                                    <L7p:Base64Expression stringValue="JHtwb2xpY3lYbWwubWFpbnBhcnR9DQoke3BvbGljeUVudGl0aWVzRWxlbWVudH0="/>
+                                    <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                                    <L7p:DataType variableDataType="message"/>
+
+                                    <L7p:VariableToSet stringValue="policyXml"/>
+                                    </L7p:SetVariable>
+                                    <L7p:TrueAssertion/>
+                                    <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+
+                                    <L7p:value stringValue="for loop on policy entities"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:assertionComment>
+                                    </L7p:ForEachLoop>
+                                    <L7p:SetVariable>
+
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+
+                                    <L7p:value stringValue="appending policyEntities xml"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+
+                                    <L7p:Base64Expression stringValue="JHtwb2xpY3lYbWwubWFpbnBhcnR9DQo8TDdwOkNvbW1lbnRBc3NlcnRpb24+DQogICAgICAgICAgICA8TDdwOkNvbW1lbnQgc3RyaW5nVmFsdWU9Ij09PT09PT09PT09PT09PT09PT09PT09PT09PT09Ii8+DQogICAgICAgIDwvTDdwOkNvbW1lbnRBc3NlcnRpb24+DQogICAgICAgIDxMN3A6Q29tbWVudEFzc2VydGlvbj4NCiAgICAgICAgICAgIDxMN3A6Q29tbWVudCBzdHJpbmdWYWx1ZT0iPT09PT09PSBEb24ndCBtb2RpZnkgYmxvY2sgZW5kcyA9PT09PT09Ii8+DQogICAgICAgIDwvTDdwOkNvbW1lbnRBc3NlcnRpb24+DQogICAgICAgIDxMN3A6Q29tbWVudEFzc2VydGlvbj4NCiAgICAgICAgICAgIDxMN3A6Q29tbWVudCBzdHJpbmdWYWx1ZT0iPT09PT09PT09PT09PT09PT09PT09PT09PT09PT0iLz4NCiAgICAgICAgPC9MN3A6Q29tbWVudEFzc2VydGlvbj4NCiAgICAgICAgPEw3cDpDb21tZW50QXNzZXJ0aW9uPg0KICAgICAgICAgICAgPEw3cDpDb21tZW50IHN0cmluZ1ZhbHVlPSJVcGRhdGVkIG9uICR7dXBkYXRlRGF0ZX0iLz4NCiAgICAgICAgPC9MN3A6Q29tbWVudEFzc2VydGlvbj4NCiAgICA8L3dzcDpBbGw+DQo8L3dzcDpQb2xpY3k+"/>
+                                    <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                                    <L7p:DataType variableDataType="message"/>
+                                    <L7p:VariableToSet stringValue="policyXml"/>
+                                    </L7p:SetVariable>
+                                    </wsp:All>
+                                    <wsp:OneOrMore wsp:Usage="Required">
+                                    <wsp:All wsp:Usage="Required">
+                                    <L7p:ComparisonAssertion>
+
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Expression1 stringValue="${isExistingService}"/>
+                                    <L7p:Operator operatorNull="null"/>
+                                    <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+
+                                    <L7p:Type variableDataType="string"/>
+                                    </L7p:item>
+                                    <L7p:item binary="included">
+
+                                    <L7p:CaseSensitive booleanValue="false"/>
+
+                                    <L7p:RightValue stringValue="true"/>
+                                    </L7p:item>
+                                    </L7p:Predicates>
+                                    </L7p:ComparisonAssertion>
+                                    <L7p:Encapsulated>
+
+                                    <L7p:AssertionComment assertionComment="included">
+
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+
+                                    <L7p:value stringValue="xml escape policy xml"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+
+                                    <L7p:EncapsulatedAssertionConfigGuid stringValue="5821066a-15a6-4523-a8f7-3d159129cdb5"/>
+
+                                    <L7p:EncapsulatedAssertionConfigName stringValue="Portal Escape XML"/>
+                                    <L7p:Parameters mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="escapedXml"/>
+
+                                    <L7p:value stringValue="${existingServicePolicyXml}"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="value"/>
+
+                                    <L7p:value stringValue="${policyXml.mainpart}"/>
+                                    </L7p:entry>
+                                    </L7p:Parameters>
+                                    </L7p:Encapsulated>
+                                    <L7p:SetVariable>
+
+                                    <L7p:AssertionComment assertionComment="included">
+
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+
+                                    <L7p:value stringValue="build serviceMO"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+
+                                    <L7p:Base64Expression stringValue="PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/Pg0KPGw3Okl0ZW0geG1sbnM6bDc9Imh0dHA6Ly9ucy5sN3RlY2guY29tLzIwMTAvMDQvZ2F0ZXdheS1tYW5hZ2VtZW50Ij4NCiAgICA8bDc6TmFtZT4ke25hbWVFc2NhcGVkfTwvbDc6TmFtZT4NCiAgICA8bDc6SWQ+JHtzZXJ2aWNlSWR9PC9sNzpJZD4NCiAgICA8bDc6VHlwZT5TRVJWSUNFPC9sNzpUeXBlPg0KICAgIDxsNzpSZXNvdXJjZT4NCiAgICAgICAgPGw3OlNlcnZpY2UgeG1sbnM6bDc9Imh0dHA6Ly9ucy5sN3RlY2guY29tLzIwMTAvMDQvZ2F0ZXdheS1tYW5hZ2VtZW50IiBpZD0iJHtzZXJ2aWNlSWR9Ij4NCiAgICAgICAgICAgIDxsNzpTZXJ2aWNlRGV0YWlsIGZvbGRlcklkPSIke2ZvbGRlcklkfSIgaWQ9IiR7c2VydmljZUlkfSI+DQogICAgICAgICAgICAgICAgPGw3Ok5hbWU+JHtuYW1lRXNjYXBlZH08L2w3Ok5hbWU+DQogICAgICAgICAgICAgICAgPGw3OkVuYWJsZWQ+JHtzc2dTdGF0dXN9PC9sNzpFbmFibGVkPg0KICAgICAgICAgICAgICAgIDxsNzpTZXJ2aWNlTWFwcGluZ3M+DQogICAgICAgICAgICAgICAgICAgIDxsNzpIdHRwTWFwcGluZz4NCiAgICAgICAgICAgICAgICAgICAgICAgIDxsNzpVcmxQYXR0ZXJuPi8ke3VybEVzY2FwZWR9KjwvbDc6VXJsUGF0dGVybj4NCiAgICAgICAgICAgICAgICAgICAgICAgIDxsNzpWZXJicz4NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8bDc6VmVyYj5HRVQ8L2w3OlZlcmI+DQogICAgICAgICAgICAgICAgICAgICAgICAgICAgPGw3OlZlcmI+UE9TVDwvbDc6VmVyYj4NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8bDc6VmVyYj5QVVQ8L2w3OlZlcmI+DQogICAgICAgICAgICAgICAgICAgICAgICAgICAgPGw3OlZlcmI+REVMRVRFPC9sNzpWZXJiPg0KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxsNzpWZXJiPk9QVElPTlM8L2w3OlZlcmI+DQogICAgICAgICAgICAgICAgICAgICAgICAgICAgPGw3OlZlcmI+SEVBRDwvbDc6VmVyYj4NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8bDc6VmVyYj5QQVRDSDwvbDc6VmVyYj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgDQogICAgICAgICAgICAgICAgICAgICAgICA8L2w3OlZlcmJzPg0KICAgICAgICAgICAgICAgICAgICA8L2w3Okh0dHBNYXBwaW5nPg0KICAgICAgICAgICAgICAgIDwvbDc6U2VydmljZU1hcHBpbmdzPg0KICAgICAgICAgICAgICAgIDxsNzpQcm9wZXJ0aWVzPg0KICAgICAgICAgICAgICAgICAgICA8bDc6UHJvcGVydHkga2V5PSJpbnRlcm5hbCI+DQogICAgICAgICAgICAgICAgICAgICAgICA8bDc6Qm9vbGVhblZhbHVlPmZhbHNlPC9sNzpCb29sZWFuVmFsdWU+DQogICAgICAgICAgICAgICAgICAgIDwvbDc6UHJvcGVydHk+DQogICAgICAgICAgICAgICAgICAgIDxsNzpQcm9wZXJ0eSBrZXk9InNvYXAiPg0KICAgICAgICAgICAgICAgICAgICAgICAgPGw3OkJvb2xlYW5WYWx1ZT5mYWxzZTwvbDc6Qm9vbGVhblZhbHVlPg0KICAgICAgICAgICAgICAgICAgICA8L2w3OlByb3BlcnR5Pg0KICAgICAgICAgICAgICAgICAgICA8bDc6UHJvcGVydHkga2V5PSJ0cmFjaW5nRW5hYmxlZCI+DQogICAgICAgICAgICAgICAgICAgICAgICA8bDc6Qm9vbGVhblZhbHVlPmZhbHNlPC9sNzpCb29sZWFuVmFsdWU+DQogICAgICAgICAgICAgICAgICAgIDwvbDc6UHJvcGVydHk+DQogICAgICAgICAgICAgICAgICAgIDxsNzpQcm9wZXJ0eSBrZXk9Indzc1Byb2Nlc3NpbmdFbmFibGVkIj4NCiAgICAgICAgICAgICAgICAgICAgICAgIDxsNzpCb29sZWFuVmFsdWU+ZmFsc2U8L2w3OkJvb2xlYW5WYWx1ZT4NCiAgICAgICAgICAgICAgICAgICAgPC9sNzpQcm9wZXJ0eT4NCiAgICAgICAgICAgICAgICAgICAgPGw3OlByb3BlcnR5IGtleT0icHJvcGVydHkucG9ydGFsSUQiPg0KICAgICAgICAgICAgICAgICAgICAgICAgPGw3OlN0cmluZ1ZhbHVlPiR7cG9ydGFsSWR9PC9sNzpTdHJpbmdWYWx1ZT4NCiAgICAgICAgICAgICAgICAgICAgPC9sNzpQcm9wZXJ0eT4NCiAgICAgICAgICAgICAgICAgICAgPGw3OlByb3BlcnR5IGtleT0icHJvcGVydHkuaW50ZXJuYWwucG9ydGFsQVBJRW5hYmxlZCI+DQogICAgICAgICAgICAgICAgICAgICAgICA8bDc6U3RyaW5nVmFsdWU+JHtlbmFibGVkfTwvbDc6U3RyaW5nVmFsdWU+DQogICAgICAgICAgICAgICAgICAgIDwvbDc6UHJvcGVydHk+DQogICAgICAgICAgICAgICAgPC9sNzpQcm9wZXJ0aWVzPg0KICAgICAgICAgICAgPC9sNzpTZXJ2aWNlRGV0YWlsPg0KICAgICAgICAgICAgPGw3OlJlc291cmNlcz4NCiAgICAgICAgICAgICAgICA8bDc6UmVzb3VyY2VTZXQgdGFnPSJwb2xpY3kiPg0KICAgICAgICAgICAgICAgICAgICA8bDc6UmVzb3VyY2UgdHlwZT0icG9saWN5Ij4ke2VzY2FwZWRYbWx9PC9sNzpSZXNvdXJjZT4NCiAgICAgICAgICAgICAgICA8L2w3OlJlc291cmNlU2V0Pg0KICAgICAgICAgICAgPC9sNzpSZXNvdXJjZXM+DQogICAgICAgIDwvbDc6U2VydmljZT4NCiAgICA8L2w3OlJlc291cmNlPg0KPC9sNzpJdGVtPg=="/>
+                                    <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                                    <L7p:DataType variableDataType="message"/>
+
+                                    <L7p:VariableToSet stringValue="serviceMO"/>
+                                    </L7p:SetVariable>
+                                    </wsp:All>
+                                    <wsp:All wsp:Usage="Required">
+                                    <L7p:Encapsulated>
+
+                                    <L7p:AssertionComment assertionComment="included">
+
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+
+                                    <L7p:value stringValue="xml escape policy xml"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+
+                                    <L7p:EncapsulatedAssertionConfigGuid stringValue="5821066a-15a6-4523-a8f7-3d159129cdb5"/>
+
+                                    <L7p:EncapsulatedAssertionConfigName stringValue="Portal Escape XML"/>
+                                    <L7p:Parameters mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="escapedXml"/>
+
+                                    <L7p:value stringValue="${serviceXml.mainpart}"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="value"/>
+
+                                    <L7p:value stringValue="${policyXml.mainpart}"/>
+                                    </L7p:entry>
+                                    </L7p:Parameters>
+                                    </L7p:Encapsulated>
+                                    <L7p:SetVariable>
+
+                                    <L7p:AssertionComment assertionComment="included">
+
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+
+                                    <L7p:value stringValue="build serviceMO"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+
+                                    <L7p:Base64Expression stringValue="PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/Pg0KPGw3Okl0ZW0geG1sbnM6bDc9Imh0dHA6Ly9ucy5sN3RlY2guY29tLzIwMTAvMDQvZ2F0ZXdheS1tYW5hZ2VtZW50Ij4NCiAgICA8bDc6TmFtZT4ke25hbWVFc2NhcGVkfTwvbDc6TmFtZT4NCiAgICA8bDc6SWQ+JHtzZXJ2aWNlSWR9PC9sNzpJZD4NCiAgICA8bDc6VHlwZT5TRVJWSUNFPC9sNzpUeXBlPg0KICAgIDxsNzpSZXNvdXJjZT4NCiAgICAgICAgPGw3OlNlcnZpY2UgeG1sbnM6bDc9Imh0dHA6Ly9ucy5sN3RlY2guY29tLzIwMTAvMDQvZ2F0ZXdheS1tYW5hZ2VtZW50IiBpZD0iJHtzZXJ2aWNlSWR9Ij4NCiAgICAgICAgICAgIDxsNzpTZXJ2aWNlRGV0YWlsIGZvbGRlcklkPSIke2ZvbGRlcklkfSIgaWQ9IiR7c2VydmljZUlkfSI+DQogICAgICAgICAgICAgICAgPGw3Ok5hbWU+JHtuYW1lRXNjYXBlZH08L2w3Ok5hbWU+DQogICAgICAgICAgICAgICAgPGw3OkVuYWJsZWQ+JHtzc2dTdGF0dXN9PC9sNzpFbmFibGVkPg0KICAgICAgICAgICAgICAgIDxsNzpTZXJ2aWNlTWFwcGluZ3M+DQogICAgICAgICAgICAgICAgICAgIDxsNzpIdHRwTWFwcGluZz4NCiAgICAgICAgICAgICAgICAgICAgICAgIDxsNzpVcmxQYXR0ZXJuPi8ke3VybEVzY2FwZWR9KjwvbDc6VXJsUGF0dGVybj4NCiAgICAgICAgICAgICAgICAgICAgICAgIDxsNzpWZXJicz4NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8bDc6VmVyYj5HRVQ8L2w3OlZlcmI+DQogICAgICAgICAgICAgICAgICAgICAgICAgICAgPGw3OlZlcmI+UE9TVDwvbDc6VmVyYj4NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8bDc6VmVyYj5QVVQ8L2w3OlZlcmI+DQogICAgICAgICAgICAgICAgICAgICAgICAgICAgPGw3OlZlcmI+REVMRVRFPC9sNzpWZXJiPg0KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxsNzpWZXJiPk9QVElPTlM8L2w3OlZlcmI+DQogICAgICAgICAgICAgICAgICAgICAgICAgICAgPGw3OlZlcmI+SEVBRDwvbDc6VmVyYj4NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8bDc6VmVyYj5QQVRDSDwvbDc6VmVyYj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAgIDwvbDc6VmVyYnM+DQogICAgICAgICAgICAgICAgICAgIDwvbDc6SHR0cE1hcHBpbmc+DQogICAgICAgICAgICAgICAgPC9sNzpTZXJ2aWNlTWFwcGluZ3M+DQogICAgICAgICAgICAgICAgPGw3OlByb3BlcnRpZXM+DQogICAgICAgICAgICAgICAgICAgIDxsNzpQcm9wZXJ0eSBrZXk9ImludGVybmFsIj4NCiAgICAgICAgICAgICAgICAgICAgICAgIDxsNzpCb29sZWFuVmFsdWU+ZmFsc2U8L2w3OkJvb2xlYW5WYWx1ZT4NCiAgICAgICAgICAgICAgICAgICAgPC9sNzpQcm9wZXJ0eT4NCiAgICAgICAgICAgICAgICAgICAgPGw3OlByb3BlcnR5IGtleT0ic29hcCI+DQogICAgICAgICAgICAgICAgICAgICAgICA8bDc6Qm9vbGVhblZhbHVlPmZhbHNlPC9sNzpCb29sZWFuVmFsdWU+DQogICAgICAgICAgICAgICAgICAgIDwvbDc6UHJvcGVydHk+DQogICAgICAgICAgICAgICAgICAgIDxsNzpQcm9wZXJ0eSBrZXk9InRyYWNpbmdFbmFibGVkIj4NCiAgICAgICAgICAgICAgICAgICAgICAgIDxsNzpCb29sZWFuVmFsdWU+ZmFsc2U8L2w3OkJvb2xlYW5WYWx1ZT4NCiAgICAgICAgICAgICAgICAgICAgPC9sNzpQcm9wZXJ0eT4NCiAgICAgICAgICAgICAgICAgICAgPGw3OlByb3BlcnR5IGtleT0id3NzUHJvY2Vzc2luZ0VuYWJsZWQiPg0KICAgICAgICAgICAgICAgICAgICAgICAgPGw3OkJvb2xlYW5WYWx1ZT5mYWxzZTwvbDc6Qm9vbGVhblZhbHVlPg0KICAgICAgICAgICAgICAgICAgICA8L2w3OlByb3BlcnR5Pg0KICAgICAgICAgICAgICAgICAgICA8bDc6UHJvcGVydHkga2V5PSJwcm9wZXJ0eS5wb3J0YWxJRCI+DQogICAgICAgICAgICAgICAgICAgICAgICA8bDc6U3RyaW5nVmFsdWU+JHtwb3J0YWxJZH08L2w3OlN0cmluZ1ZhbHVlPg0KICAgICAgICAgICAgICAgICAgICA8L2w3OlByb3BlcnR5Pg0KICAgICAgICAgICAgICAgICAgICA8bDc6UHJvcGVydHkga2V5PSJwcm9wZXJ0eS5pbnRlcm5hbC5wb3J0YWxBUElFbmFibGVkIj4NCiAgICAgICAgICAgICAgICAgICAgICAgIDxsNzpTdHJpbmdWYWx1ZT4ke2VuYWJsZWR9PC9sNzpTdHJpbmdWYWx1ZT4NCiAgICAgICAgICAgICAgICAgICAgPC9sNzpQcm9wZXJ0eT4NCiAgICAgICAgICAgICAgICA8L2w3OlByb3BlcnRpZXM+DQogICAgICAgICAgICA8L2w3OlNlcnZpY2VEZXRhaWw+DQogICAgICAgICAgICA8bDc6UmVzb3VyY2VzPg0KICAgICAgICAgICAgICAgIDxsNzpSZXNvdXJjZVNldCB0YWc9InBvbGljeSI+DQogICAgICAgICAgICAgICAgICAgIDxsNzpSZXNvdXJjZSB0eXBlPSJwb2xpY3kiPiR7ZXNjYXBlZFhtbH08L2w3OlJlc291cmNlPg0KICAgICAgICAgICAgICAgIDwvbDc6UmVzb3VyY2VTZXQ+DQogICAgICAgICAgICA8L2w3OlJlc291cmNlcz4NCiAgICAgICAgPC9sNzpTZXJ2aWNlPg0KICAgIDwvbDc6UmVzb3VyY2U+DQo8L2w3Okl0ZW0+"/>
+                                    <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                                    <L7p:DataType variableDataType="message"/>
+
+                                    <L7p:VariableToSet stringValue="serviceMO"/>
+                                    </L7p:SetVariable>
+                                    </wsp:All>
+                                    </wsp:OneOrMore>
+                                    <L7p:Encapsulated>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="xml escape policy xml"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+
+                                    <L7p:EncapsulatedAssertionConfigGuid stringValue="5821066a-15a6-4523-a8f7-3d159129cdb5"/>
+
+                                    <L7p:EncapsulatedAssertionConfigName stringValue="Portal Escape XML"/>
+                                    <L7p:Parameters mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="escapedXml"/>
+                                    <L7p:value stringValue="${policyXml.mainpart}"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="value"/>
+                                    <L7p:value stringValue="${policyXml.mainpart}"/>
+                                    </L7p:entry>
+                                    </L7p:Parameters>
+                                    </L7p:Encapsulated>
+                                    <L7p:SetVariable>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="build fragmentMO"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:Base64Expression stringValue="PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/Pg0KPGw3Okl0ZW0geG1sbnM6bDc9Imh0dHA6Ly9ucy5sN3RlY2guY29tLzIwMTAvMDQvZ2F0ZXdheS1tYW5hZ2VtZW50Ij4NCjxsNzpOYW1lPiR7bmFtZUVzY2FwZWR9LWZyYWdtZW50PC9sNzpOYW1lPg0KPGw3OklkPiR7ZnJhZ21lbnRJZH08L2w3OklkPg0KPGw3OlR5cGU+UE9MSUNZPC9sNzpUeXBlPg0KPGw3OlJlc291cmNlPg0KPGw3OlBvbGljeSAgZ3VpZD0iJHtwb3J0YWxJZH0iIGlkPSIke2ZyYWdtZW50SWR9IiB2ZXJzaW9uPSIwIj4NCjxsNzpQb2xpY3lEZXRhaWwgIGZvbGRlcklkPSIke2ZvbGRlcklkfSIgIGd1aWQ9IiR7cG9ydGFsSWR9IiBpZD0iJHtmcmFnbWVudElkfSIgID4NCjxsNzpOYW1lPiR7bmFtZUVzY2FwZWR9LWZyYWdtZW50PC9sNzpOYW1lPg0KPGw3OlBvbGljeVR5cGU+SW5jbHVkZTwvbDc6UG9saWN5VHlwZT4NCjxsNzpQcm9wZXJ0aWVzPg0KPGw3OlByb3BlcnR5IGtleT0icmV2aXNpb24iPg0KPGw3OkxvbmdWYWx1ZT4xPC9sNzpMb25nVmFsdWU+DQo8L2w3OlByb3BlcnR5Pg0KPGw3OlByb3BlcnR5IGtleT0ic29hcCI+DQo8bDc6Qm9vbGVhblZhbHVlPmZhbHNlPC9sNzpCb29sZWFuVmFsdWU+DQo8L2w3OlByb3BlcnR5Pg0KPC9sNzpQcm9wZXJ0aWVzPg0KPC9sNzpQb2xpY3lEZXRhaWw+DQo8bDc6UmVzb3VyY2VzPg0KPGw3OlJlc291cmNlU2V0IHRhZz0icG9saWN5Ij4NCjxsNzpSZXNvdXJjZSB0eXBlPSJwb2xpY3kiPiR7ZXNjYXBlZFhtbH08L2w3OlJlc291cmNlPg0KPC9sNzpSZXNvdXJjZVNldD4NCjwvbDc6UmVzb3VyY2VzPg0KPC9sNzpQb2xpY3k+DQo8L2w3OlJlc291cmNlPg0KPC9sNzpJdGVtPg=="/>
+                                    <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                                    <L7p:DataType variableDataType="message"/>
+                                    <L7p:VariableToSet stringValue="fragmentMO"/>
+                                    </L7p:SetVariable>
+                                    <L7p:Encapsulated>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="xml escape policy xml"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:Enabled booleanValue="false"/>
+
+                                    <L7p:EncapsulatedAssertionConfigGuid stringValue="5821066a-15a6-4523-a8f7-3d159129cdb5"/>
+
+                                    <L7p:EncapsulatedAssertionConfigName stringValue="Portal Escape XML"/>
+                                    <L7p:Parameters mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="escapedXml"/>
+                                    <L7p:value stringValue="${serviceXml.mainpart}"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="value"/>
+                                    <L7p:value stringValue="${policyXml.mainpart}"/>
+                                    </L7p:entry>
+                                    </L7p:Parameters>
+                                    </L7p:Encapsulated>
+                                    <wsp:OneOrMore wsp:Usage="Required">
+                                    <wsp:All wsp:Usage="Required">
+                                    <L7p:EvaluateJsonPathExpression>
+
+                                    <L7p:AssertionComment assertionComment="included">
+
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+
+                                    <L7p:value stringValue="// get custom fields"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:Expression stringValue="CustomFields"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="props"/>
+                                    <L7p:Target target="OTHER"/>
+
+                                    <L7p:VariablePrefix stringValue="customFields"/>
+                                    </L7p:EvaluateJsonPathExpression>
+                                    <L7p:ResponseXpathAssertion>
+
+                                    <L7p:AssertionComment assertionComment="included">
+
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+
+                                    <L7p:value stringValue="// find service properties element"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+
+                                    <L7p:VariablePrefix stringValue="svcProps"/>
+                                    <L7p:XmlMsgSrc stringValue="serviceMO"/>
+
+                                    <L7p:XpathExpression xpathExpressionValue="included">
+
+                                    <L7p:Expression stringValue="/l7:Item/l7:Resource/l7:Service/l7:ServiceDetail/l7:Properties"/>
+
+                                    <L7p:Namespaces mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="l7"/>
+
+                                    <L7p:value stringValue="http://ns.l7tech.com/2010/04/gateway-management"/>
+                                    </L7p:entry>
+                                    </L7p:Namespaces>
+
+                                    <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                                    </L7p:XpathExpression>
+                                    </L7p:ResponseXpathAssertion>
+                                    <L7p:ForEachLoop
+                                    L7p:Usage="Required"
+                                    loopVariable="customFields.results" variablePrefix="customField">
+                                    <L7p:SetVariable>
+
+                                    <L7p:Base64Expression stringValue="JHtjdXN0b21GaWVsZC5jdXJyZW50fQ=="/>
+
+                                    <L7p:ContentType stringValue="application/json; charset=utf-8"/>
+
+                                    <L7p:DataType variableDataType="message"/>
+
+                                    <L7p:VariableToSet stringValue="customField"/>
+                                    </L7p:SetVariable>
+                                    <L7p:EvaluateJsonPathExpression>
+
+                                    <L7p:Expression stringValue="Name"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="customField"/>
+                                    <L7p:Target target="OTHER"/>
+
+                                    <L7p:VariablePrefix stringValue="customFieldName"/>
+                                    </L7p:EvaluateJsonPathExpression>
+                                    <L7p:EvaluateJsonPathExpression>
+
+                                    <L7p:Expression stringValue="Value"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="customField"/>
+                                    <L7p:Target target="OTHER"/>
+
+                                    <L7p:VariablePrefix stringValue="customFieldValue"/>
+                                    </L7p:EvaluateJsonPathExpression>
+                                    <L7p:Encapsulated>
+
+                                    <L7p:AssertionComment assertionComment="included">
+
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+
+                                    <L7p:value stringValue="// escape custom field name"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+
+                                    <L7p:EncapsulatedAssertionConfigGuid stringValue="5821066a-15a6-4523-a8f7-3d159129cdb5"/>
+
+                                    <L7p:EncapsulatedAssertionConfigName stringValue="Portal Escape XML"/>
+
+                                    <L7p:Parameters mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="escapedXml"/>
+
+                                    <L7p:value stringValue="${customFieldName.result}"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="value"/>
+
+                                    <L7p:value stringValue="${ssgUrl.result}"/>
+                                    </L7p:entry>
+                                    </L7p:Parameters>
+                                    </L7p:Encapsulated>
+                                    <L7p:SetVariable>
+
+                                    <L7p:Base64Expression stringValue="JHtlc2NhcGVkWG1sfQ=="/>
+
+                                    <L7p:VariableToSet stringValue="customFieldName"/>
+                                    </L7p:SetVariable>
+                                    <L7p:Encapsulated>
+
+                                    <L7p:AssertionComment assertionComment="included">
+
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+
+                                    <L7p:value stringValue="// escape custom field value"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+
+                                    <L7p:EncapsulatedAssertionConfigGuid stringValue="5821066a-15a6-4523-a8f7-3d159129cdb5"/>
+
+                                    <L7p:EncapsulatedAssertionConfigName stringValue="Portal Escape XML"/>
+
+                                    <L7p:Parameters mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="escapedXml"/>
+
+                                    <L7p:value stringValue="${customFieldValue.result}"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="value"/>
+
+                                    <L7p:value stringValue="${ssgUrl.result}"/>
+                                    </L7p:entry>
+                                    </L7p:Parameters>
+                                    </L7p:Encapsulated>
+                                    <L7p:SetVariable>
+
+                                    <L7p:Base64Expression stringValue="JHtlc2NhcGVkWG1sfQ=="/>
+
+                                    <L7p:VariableToSet stringValue="customFieldValue"/>
+                                    </L7p:SetVariable>
+                                    <L7p:AuditDetailAssertion>
+                                    <L7p:Detail stringValue="Found custom field for service ${serviceId}: ${customFieldName}=${customFieldValue}"/>
+                                    </L7p:AuditDetailAssertion>
+                                    <L7p:SetVariable>
+
+                                    <L7p:AssertionComment assertionComment="included">
+
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+
+                                    <L7p:value stringValue="// build service property xml"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+
+                                    <L7p:Base64Expression stringValue="PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxsNzpQcm9wZXJ0eSB4bWxuczpsNz0iaHR0cDovL25zLmw3dGVjaC5jb20vMjAxMC8wNC9nYXRld2F5LW1hbmFnZW1lbnQiIGtleT0icHJvcGVydHkuJHtjdXN0b21GaWVsZE5hbWV9Ij4NCjxsNzpTdHJpbmdWYWx1ZT4ke2N1c3RvbUZpZWxkVmFsdWV9PC9sNzpTdHJpbmdWYWx1ZT4NCjwvbDc6UHJvcGVydHk+"/>
+
+                                    <L7p:VariableToSet stringValue="svcPropXml"/>
+                                    </L7p:SetVariable>
+                                    <L7p:RemoveElement>
+
+                                    <L7p:AssertionComment assertionComment="included">
+
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+
+                                    <L7p:value stringValue="// add service property to MO"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+
+                                    <L7p:ElementFromVariable stringValue="svcProps.elements[0]"/>
+
+                                    <L7p:ElementToInsertVariable stringValue="svcPropXml"/>
+
+                                    <L7p:InsertedElementLocation insertedElementLocation="LAST_CHILD"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="serviceMO"/>
+                                    <L7p:Target target="OTHER"/>
+                                    </L7p:RemoveElement>
+                                    </L7p:ForEachLoop>
+                                    </wsp:All>
+                                    <wsp:All wsp:Usage="Required">
+                                    <L7p:AuditDetailAssertion>
+                                    <L7p:Detail stringValue="No custom fields found for service ${serviceId}"/>
+                                    </L7p:AuditDetailAssertion>
+                                    </wsp:All>
+                                    </wsp:OneOrMore>
+                                    <L7p:SetVariable>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="build service mapping"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:Base64Expression stringValue="PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/Pg0KPGw3Ok1hcHBpbmcgIHhtbG5zOmw3PSJodHRwOi8vbnMubDd0ZWNoLmNvbS8yMDEwLzA0L2dhdGV3YXktbWFuYWdlbWVudCIgYWN0aW9uPSJOZXdPclVwZGF0ZSIgc3JjSWQ9IiR7c2VydmljZUlkfSIgdHlwZT0iU0VSVklDRSIvPg=="/>
+                                    <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                                    <L7p:DataType variableDataType="message"/>
+                                    <L7p:VariableToSet stringValue="mappingMO"/>
+                                    </L7p:SetVariable>
+                                    <L7p:SetVariable>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="build fragment mapping"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:Base64Expression stringValue="PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/Pg0KPGw3Ok1hcHBpbmcgIHhtbG5zOmw3PSJodHRwOi8vbnMubDd0ZWNoLmNvbS8yMDEwLzA0L2dhdGV3YXktbWFuYWdlbWVudCIgYWN0aW9uPSJOZXdPclVwZGF0ZSIgc3JjSWQ9IiR7ZnJhZ21lbnRJZH0iIHR5cGU9IlBPTElDWSIvPg=="/>
+                                    <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                                    <L7p:DataType variableDataType="message"/>
+                                    <L7p:VariableToSet stringValue="fragmentMappingMO"/>
+                                    </L7p:SetVariable>
+                                    <L7p:RemoveElement>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="add serviceMO to bundle"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:ElementFromVariable stringValue="bundleReferences.elements[0]"/>
+
+                                    <L7p:ElementToInsertVariable stringValue="serviceMO.mainpart"/>
+
+                                    <L7p:InsertedElementLocation insertedElementLocation="FIRST_CHILD"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="bundleMO"/>
+                                    <L7p:Target target="OTHER"/>
+                                    </L7p:RemoveElement>
+                                    <L7p:RemoveElement>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="add fragmentMO to bundle"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:ElementFromVariable stringValue="bundleReferences.elements[0]"/>
+
+                                    <L7p:ElementToInsertVariable stringValue="fragmentMO.mainpart"/>
+
+                                    <L7p:InsertedElementLocation insertedElementLocation="FIRST_CHILD"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="bundleMO"/>
+                                    <L7p:Target target="OTHER"/>
+                                    </L7p:RemoveElement>
+                                    <L7p:RemoveElement>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="add mapping to bundle"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:ElementFromVariable stringValue="bundleMappings.elements[0]"/>
+
+                                    <L7p:ElementToInsertVariable stringValue="mappingMO.mainpart"/>
+
+                                    <L7p:InsertedElementLocation insertedElementLocation="FIRST_CHILD"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="bundleMO"/>
+                                    <L7p:Target target="OTHER"/>
+                                    </L7p:RemoveElement>
+                                    <L7p:RemoveElement>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="add fragment mapping to bundle"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:ElementFromVariable stringValue="bundleMappings.elements[0]"/>
+
+                                    <L7p:ElementToInsertVariable stringValue="fragmentMappingMO.mainpart"/>
+
+                                    <L7p:InsertedElementLocation insertedElementLocation="FIRST_CHILD"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="bundleMO"/>
+                                    <L7p:Target target="OTHER"/>
+                                    </L7p:RemoveElement>
+                                    </wsp:All>
+                                    <L7p:TrueAssertion/>
+                                    </wsp:OneOrMore>
+                                    <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="if (portal published api)"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:assertionComment>
+                                </wsp:All>
+                                <wsp:All wsp:Usage="Required">
+                                    <wsp:OneOrMore wsp:Usage="Required">
+                                    <wsp:All wsp:Usage="Required">
+                                    <L7p:EvaluateJsonPathExpression>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="api enabled"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:Expression stringValue="ServiceEnabled"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="props"/>
+                                    <L7p:Target target="OTHER"/>
+                                    <L7p:VariablePrefix stringValue="portalEnabled"/>
+                                    </L7p:EvaluateJsonPathExpression>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="L2w3MDpBcGlzL2w3MDpBcGlbbDcwOkFwaUlkL3RleHQoKT0iJHtwb3J0YWxJZH0iXS9sNzA6U2VydmljZUVuYWJsZWQvdGV4dCgp"/>
+                                    <L7p:VariableToSet stringValue="xpath"/>
+                                    </L7p:SetVariable>
+                                    <L7p:ResponseXpathAssertion>
+                                    <L7p:VariablePrefix stringValue="serviceEnabled"/>
+                                    <L7p:XmlMsgSrc stringValue="portalmanApis"/>
+                                    <L7p:XpathExpression xpathExpressionValue="included">
+                                    <L7p:Expression stringValue="${xpath}"/>
+                                    <L7p:Namespaces mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="s"/>
+                                    <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="l7"/>
+                                    <L7p:value stringValue="http://ns.l7tech.com/2010/04/gateway-management"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="l70"/>
+                                    <L7p:value stringValue="http://ns.l7tech.com/2012/04/api-management"/>
+                                    </L7p:entry>
+                                    </L7p:Namespaces>
+                                    <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                                    </L7p:XpathExpression>
+                                    </L7p:ResponseXpathAssertion>
+                                    <L7p:SetVariable>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="get existing service id"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:Base64Expression stringValue="Ly9sNzA6QXBpcy8vbDcwOkFwaVtsNzA6QXBpSWQvdGV4dCgpPSIke3BvcnRhbElkfSJdL2w3MDpTZXJ2aWNlT0lEL3RleHQoKQ=="/>
+                                    <L7p:VariableToSet stringValue="xpath"/>
+                                    </L7p:SetVariable>
+                                    <L7p:ResponseXpathAssertion>
+                                    <L7p:VariablePrefix stringValue="serviceId"/>
+                                    <L7p:XmlMsgSrc stringValue="portalmanApis"/>
+                                    <L7p:XpathExpression xpathExpressionValue="included">
+                                    <L7p:Expression stringValue="${xpath}"/>
+                                    <L7p:Namespaces mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="s"/>
+                                    <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="l7"/>
+                                    <L7p:value stringValue="http://ns.l7tech.com/2010/04/gateway-management"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="l70"/>
+                                    <L7p:value stringValue="http://ns.l7tech.com/2012/04/api-management"/>
+                                    </L7p:entry>
+                                    </L7p:Namespaces>
+                                    <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                                    </L7p:XpathExpression>
+                                    </L7p:ResponseXpathAssertion>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="MS4wL3NlcnZpY2VzLyR7c2VydmljZUlkLnJlc3VsdH0="/>
+                                    <L7p:VariableToSet stringValue="restGatewayMan.uri"/>
+                                    </L7p:SetVariable>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="R0VU"/>
+                                    <L7p:VariableToSet stringValue="restGatewayMan.action"/>
+                                    </L7p:SetVariable>
+                                    <L7p:RESTGatewayManagement>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="get existing service"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="empty.message"/>
+                                    <L7p:Target target="OTHER"/>
+                                    </L7p:RESTGatewayManagement>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHtyZXNwb25zZS5tYWlucGFydH0="/>
+                                    <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                                    <L7p:DataType variableDataType="message"/>
+                                    <L7p:VariableToSet stringValue="serviceMO"/>
+                                    </L7p:SetVariable>
+                                    <L7p:XslTransformation>
+                                    <L7p:Direction intValue="-1"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="serviceMO"/>
+                                    <L7p:ResourceInfo staticResourceInfo="included">
+                                    <L7p:Document stringValueReference="inline"><![CDATA[<xsl:stylesheet version="1.0" xmlns:l7="http://ns.l7tech.com/2010/04/gateway-management" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+<xsl:param name="portalEnabled.result"/>
+
+ <xsl:template match="node()|@*">
+     <xsl:copy>
+       <xsl:apply-templates select="node()|@*"/>
+     </xsl:copy>
+ </xsl:template>
+
+ <xsl:template match="l7:Properties">
+   <xsl:copy>
+     <xsl:apply-templates/>
+       <l7:Property key="property.internal.portalAPIEnabled">
+         <l7:StringValue><xsl:value-of select="$portalEnabled.result"/></l7:StringValue>
+       </l7:Property>
+   </xsl:copy>
+ </xsl:template>
+</xsl:stylesheet>]]></L7p:Document>
+                                    </L7p:ResourceInfo>
+                                    <L7p:Target target="OTHER"/>
+                                    <L7p:TransformName stringValue=""/>
+                                    <L7p:XsltVersion stringValue="1.0"/>
+                                    </L7p:XslTransformation>
+                                    <L7p:SetVariable>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="build service mapping"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:Base64Expression stringValue="PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/Pg0KPGw3Ok1hcHBpbmcgIHhtbG5zOmw3PSJodHRwOi8vbnMubDd0ZWNoLmNvbS8yMDEwLzA0L2dhdGV3YXktbWFuYWdlbWVudCIgYWN0aW9uPSJOZXdPclVwZGF0ZSIgc3JjSWQ9IiR7c2VydmljZUlkLnJlc3VsdH0iIHR5cGU9IlNFUlZJQ0UiPg0KICAgICAgPGw3OlByb3BlcnRpZXM+DQogICAgICAgIDxsNzpQcm9wZXJ0eSBrZXk9IkZhaWxPbk5ldyI+DQogICAgICAgICAgPGw3OkJvb2xlYW5WYWx1ZT50cnVlPC9sNzpCb29sZWFuVmFsdWU+DQogICAgICAgIDwvbDc6UHJvcGVydHk+DQogICAgICA8L2w3OlByb3BlcnRpZXM+DQogICAgPC9sNzpNYXBwaW5nPg=="/>
+                                    <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                                    <L7p:DataType variableDataType="message"/>
+                                    <L7p:VariableToSet stringValue="mappingMO"/>
+                                    </L7p:SetVariable>
+                                    <L7p:RemoveElement>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="add serviceMO to bundle"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:ElementFromVariable stringValue="bundleReferences.elements[0]"/>
+
+                                    <L7p:ElementToInsertVariable stringValue="serviceMO.mainpart"/>
+
+                                    <L7p:InsertedElementLocation insertedElementLocation="FIRST_CHILD"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="bundleMO"/>
+                                    <L7p:Target target="OTHER"/>
+                                    </L7p:RemoveElement>
+                                    <L7p:RemoveElement>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="add mapping to bundle"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:ElementFromVariable stringValue="bundleMappings.elements[0]"/>
+
+                                    <L7p:ElementToInsertVariable stringValue="mappingMO.mainpart"/>
+
+                                    <L7p:InsertedElementLocation insertedElementLocation="FIRST_CHILD"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="bundleMO"/>
+                                    <L7p:Target target="OTHER"/>
+                                    </L7p:RemoveElement>
+                                    </wsp:All>
+                                    <L7p:TrueAssertion/>
+                                    <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="update tenant created apis"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:assertionComment>
+                                    </wsp:OneOrMore>
+                                    <L7p:TrueAssertion/>
+                                    <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="else // tenant published"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:assertionComment>
+                                </wsp:All>
+                            </wsp:OneOrMore>
+                            <L7p:assertionComment>
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="for each portal api"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:assertionComment>
+                        </L7p:ForEachLoop>
+                        <wsp:OneOrMore wsp:Usage="Required">
+                            <wsp:All wsp:Usage="Required">
+                                <L7p:ResponseXpathAssertion>
+                                    <L7p:VariablePrefix stringValue="existingPortalServices"/>
+                                    <L7p:XmlMsgSrc stringValue="portalmanApis"/>
+                                    <L7p:XpathExpression xpathExpressionValue="included">
+                                    <L7p:Expression stringValue="/l70:Apis/l70:Api[l70:PortalPublished='true']/l70:ApiId/text()"/>
+                                    <L7p:Namespaces mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="s"/>
+                                    <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="l7"/>
+                                    <L7p:value stringValue="http://ns.l7tech.com/2010/04/gateway-management"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="l70"/>
+                                    <L7p:value stringValue="http://ns.l7tech.com/2012/04/api-management"/>
+                                    </L7p:entry>
+                                    </L7p:Namespaces>
+                                    <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                                    </L7p:XpathExpression>
+                                </L7p:ResponseXpathAssertion>
+                                <wsp:OneOrMore wsp:Usage="Required">
+                                    <L7p:EvaluateJsonPathExpression>
+                                    <L7p:Expression stringValue="$..Uuid"/>
+                                    <L7p:OtherTargetMessageVariable stringValue="httpResponse1"/>
+                                    <L7p:Target target="OTHER"/>
+                                    <L7p:VariablePrefix stringValue="portalIds"/>
+                                    </L7p:EvaluateJsonPathExpression>
+                                    <L7p:TrueAssertion/>
+                                    <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="get all existing portal ids"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:assertionComment>
+                                </wsp:OneOrMore>
+                                <L7p:ForEachLoop L7p:Usage="Required"
+                                    loopVariable="existingPortalServices.results" variablePrefix="existingPortalService">
+                                    <wsp:OneOrMore wsp:Usage="Required">
+                                    <wsp:All wsp:Usage="Required">
+                                    <wsp:OneOrMore wsp:Usage="Required">
+                                    <wsp:All wsp:Usage="Required">
+                                    <L7p:IndexLookupByItem>
+
+                                    <L7p:MultivaluedVariableName stringValue="portalIds.results"/>
+
+                                    <L7p:OutputVariableName stringValue="found"/>
+
+                                    <L7p:ValueToSearchForVariableName stringValue="existingPortalService.current"/>
+                                    </L7p:IndexLookupByItem>
+                                    <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+
+                                    <L7p:value stringValue="if service in portal id list"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+
+                                    <L7p:value stringValue="do  nothing"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:assertionComment>
+                                    </wsp:All>
+                                    <wsp:All wsp:Usage="Required">
+                                    <L7p:SetVariable>
+
+                                    <L7p:Base64Expression stringValue="L2w3MDpBcGlzL2w3MDpBcGlbbDcwOkFwaUlkL3RleHQoKT0iJHtleGlzdGluZ1BvcnRhbFNlcnZpY2UuY3VycmVudH0iXS9sNzA6U2VydmljZU9JRC90ZXh0KCk="/>
+
+                                    <L7p:VariableToSet stringValue="xpath"/>
+                                    </L7p:SetVariable>
+                                    <L7p:ResponseXpathAssertion>
+
+                                    <L7p:VariablePrefix stringValue="existingServiceId"/>
+                                    <L7p:XmlMsgSrc stringValue="portalmanApis"/>
+
+                                    <L7p:XpathExpression xpathExpressionValue="included">
+
+                                    <L7p:Expression stringValue="${xpath}"/>
+
+                                    <L7p:Namespaces mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="s"/>
+
+                                    <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="l7"/>
+
+                                    <L7p:value stringValue="http://ns.l7tech.com/2010/04/gateway-management"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="l70"/>
+
+                                    <L7p:value stringValue="http://ns.l7tech.com/2012/04/api-management"/>
+                                    </L7p:entry>
+                                    </L7p:Namespaces>
+
+                                    <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                                    </L7p:XpathExpression>
+                                    </L7p:ResponseXpathAssertion>
+                                    <L7p:SetVariable>
+
+                                    <L7p:Base64Expression stringValue="JHtleGlzdGluZ1NlcnZpY2VJZC5yZXN1bHR9"/>
+
+                                    <L7p:VariableToSet stringValue="serviceId"/>
+                                    </L7p:SetVariable>
+                                    <L7p:SetVariable>
+
+                                    <L7p:Base64Expression stringValue="JHtleGlzdGluZ1BvcnRhbFNlcnZpY2UuY3VycmVudH0="/>
+
+                                    <L7p:VariableToSet stringValue="portalServiceId"/>
+                                    </L7p:SetVariable>
+                                    <L7p:Regex>
+                                    <L7p:AutoTarget booleanValue="false"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="portalServiceId"/>
+                                    <L7p:Regex stringValue="-"/>
+                                    <L7p:Replace booleanValue="true"/>
+                                    <L7p:Replacement stringValue=""/>
+                                    <L7p:Target target="OTHER"/>
+                                    </L7p:Regex>
+                                    <L7p:Regex>
+                                    <L7p:AutoTarget booleanValue="false"/>
+
+                                    <L7p:IncludeEntireExpressionCapture booleanValue="false"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="portalServiceId"/>
+                                    <L7p:Regex stringValue=".{0,16}"/>
+                                    <L7p:Replacement stringValue=""/>
+                                    <L7p:Target target="OTHER"/>
+                                    </L7p:Regex>
+                                    <L7p:SetVariable>
+
+                                    <L7p:AssertionComment assertionComment="included">
+
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+
+                                    <L7p:value stringValue="build delete fragment mapping"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+
+                                    <L7p:Base64Expression stringValue="PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/Pg0KPGw3Ok1hcHBpbmcgIHhtbG5zOmw3PSJodHRwOi8vbnMubDd0ZWNoLmNvbS8yMDEwLzA0L2dhdGV3YXktbWFuYWdlbWVudCIgYWN0aW9uPSJEZWxldGUiIHNyY0lkPSIke3BvcnRhbFNlcnZpY2VJZH0iIHR5cGU9IlBPTElDWSIvPg=="/>
+                                    <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                                    <L7p:DataType variableDataType="message"/>
+
+                                    <L7p:VariableToSet stringValue="deleteFragmentMappingMO"/>
+                                    </L7p:SetVariable>
+                                    <L7p:RemoveElement>
+
+                                    <L7p:AssertionComment assertionComment="included">
+
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+
+                                    <L7p:value stringValue="add mapping to bundle"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+
+                                    <L7p:ElementFromVariable stringValue="bundleMappings.elements[0]"/>
+
+                                    <L7p:ElementToInsertVariable stringValue="deleteFragmentMappingMO.mainpart"/>
+
+                                    <L7p:InsertedElementLocation insertedElementLocation="FIRST_CHILD"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="bundleMO"/>
+                                    <L7p:Target target="OTHER"/>
+                                    </L7p:RemoveElement>
+                                    <L7p:SetVariable>
+
+                                    <L7p:AssertionComment assertionComment="included">
+
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+
+                                    <L7p:value stringValue="build delete service mapping"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+
+                                    <L7p:Base64Expression stringValue="PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/Pg0KPGw3Ok1hcHBpbmcgIHhtbG5zOmw3PSJodHRwOi8vbnMubDd0ZWNoLmNvbS8yMDEwLzA0L2dhdGV3YXktbWFuYWdlbWVudCIgYWN0aW9uPSJEZWxldGUiIHNyY0lkPSIke3NlcnZpY2VJZH0iIHR5cGU9IlNFUlZJQ0UiLz4="/>
+                                    <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                                    <L7p:DataType variableDataType="message"/>
+
+                                    <L7p:VariableToSet stringValue="deleteMappingMO"/>
+                                    </L7p:SetVariable>
+                                    <L7p:RemoveElement>
+
+                                    <L7p:AssertionComment assertionComment="included">
+
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+
+                                    <L7p:value stringValue="add mapping to bundle"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+
+                                    <L7p:ElementFromVariable stringValue="bundleMappings.elements[0]"/>
+
+                                    <L7p:ElementToInsertVariable stringValue="deleteMappingMO.mainpart"/>
+
+                                    <L7p:InsertedElementLocation insertedElementLocation="FIRST_CHILD"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="bundleMO"/>
+                                    <L7p:Target target="OTHER"/>
+                                    </L7p:RemoveElement>
+                                    <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+
+                                    <L7p:value stringValue="delete service"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+
+                                    <L7p:value stringValue="service not in current portal id list"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:assertionComment>
+                                    </wsp:All>
+                                    <L7p:TrueAssertion/>
+                                    </wsp:OneOrMore>
+                                    </wsp:All>
+                                    <L7p:TrueAssertion/>
+                                    </wsp:OneOrMore>
+                                    <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="for each exsisting portal id"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:assertionComment>
+                                </L7p:ForEachLoop>
+                                <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="if services have portal ids"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                </L7p:assertionComment>
+                            </wsp:All>
+                            <L7p:TrueAssertion/>
+                            <L7p:assertionComment>
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="delete other existing portal services"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:assertionComment>
+                        </wsp:OneOrMore>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="MS4wL2J1bmRsZQ=="/>
+                            <L7p:VariableToSet stringValue="restGatewayMan.uri"/>
+                        </L7p:SetVariable>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="UFVU"/>
+                            <L7p:VariableToSet stringValue="restGatewayMan.action"/>
+                        </L7p:SetVariable>
+                        <L7p:RESTGatewayManagement>
+                            <L7p:AssertionComment assertionComment="included">
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="consume bundle"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:AssertionComment>
+                            <L7p:OtherTargetMessageVariable stringValue="bundleMO"/>
+                            <L7p:Target target="OTHER"/>
+                        </L7p:RESTGatewayManagement>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="ZmFsc2U="/>
+                            <L7p:VariableToSet stringValue="SyncSuccess"/>
+                        </L7p:SetVariable>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="JHtyZXNwb25zZS5tYWlucGFydH0="/>
+                            <L7p:VariableToSet stringValue="importResponse"/>
+                        </L7p:SetVariable>
+                        <wsp:OneOrMore wsp:Usage="Required">
+                            <wsp:All wsp:Usage="Required">
+                                <L7p:ComparisonAssertion>
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Expression1 stringValue="${restGatewayMan.status}"/>
+                                    <L7p:MultivaluedComparison multivaluedComparison="FIRST"/>
+                                    <L7p:Operator operatorNull="null"/>
+                                    <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="int"/>
+                                    </L7p:item>
+                                    <L7p:item binary="included">
+                                    <L7p:RightValue stringValue="200"/>
+                                    </L7p:item>
+                                    </L7p:Predicates>
+                                </L7p:ComparisonAssertion>
+                                <L7p:CacheStorage>
+                                    <L7p:CacheEntryKey stringValue="${cacheKey}"/>
+                                    <L7p:CacheId stringValue="portal"/>
+                                    <L7p:MaxEntryAgeSeconds stringValue="${cacheAge}"/>
+                                    <L7p:OtherTargetMessageVariable stringValue="encodedApis"/>
+                                    <L7p:Target target="OTHER"/>
+                                </L7p:CacheStorage>
+                                <L7p:AuditDetailAssertion>
+                                    <L7p:Detail stringValue="Portal API sync completed"/>
+                                    <L7p:LoggingOnly booleanValue="true"/>
+                                </L7p:AuditDetailAssertion>
+                                <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="dHJ1ZQ=="/>
+                                    <L7p:VariableToSet stringValue="SyncSuccess"/>
+                                </L7p:SetVariable>
+                                <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="sync successful"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                </L7p:assertionComment>
+                            </wsp:All>
+                            <wsp:All wsp:Usage="Required">
+                                <L7p:AuditDetailAssertion>
+                                    <L7p:Detail stringValue="Failed to sync Portal API services"/>
+                                    <L7p:Level stringValue="WARNING"/>
+                                </L7p:AuditDetailAssertion>
+                                <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="sync failed"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                </L7p:assertionComment>
+                            </wsp:All>
+                            <L7p:assertionComment>
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="check bundle import status"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:assertionComment>
+                        </wsp:OneOrMore>
+                    </wsp:All>
+                    <L7p:assertionComment>
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="LEFT.COMMENT"/>
+                                <L7p:value stringValue="build and execute bundle"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:assertionComment>
+                </wsp:OneOrMore>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="update gateway"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+        </wsp:OneOrMore>
+        <wsp:All wsp:Usage="Required">
+            <L7p:Encapsulated>
+                <L7p:EncapsulatedAssertionConfigGuid stringValue="32ab4aab-a291-4113-8f0c-fc24d917547c"/>
+                <L7p:EncapsulatedAssertionConfigName stringValue="Portal Query APIs"/>
+                <L7p:Parameters mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="apiGroup"/>
+                        <L7p:value stringValue=""/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="enabled"/>
+                        <L7p:value stringValue=""/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="resId"/>
+                        <L7p:value stringValue=""/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="showDetails"/>
+                        <L7p:value stringValue="true"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="showPolicy"/>
+                        <L7p:value stringValue=""/>
+                    </L7p:entry>
+                </L7p:Parameters>
+            </L7p:Encapsulated>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/Pg0KPGw3OlN5bmNSZXN1bHQgeG1sbnM6bDc9Imh0dHA6Ly9ucy5sN3RlY2guY29tLzIwMTIvMDQvYXBpLW1hbmFnZW1lbnQiPg=="/>
+                <L7p:ContentType stringValue="application/xml; charset=utf-8"/>
+                <L7p:DataType variableDataType="message"/>
+                <L7p:VariableToSet stringValue="resultMessage"/>
+            </L7p:SetVariable>
+            <wsp:OneOrMore wsp:Usage="Required">
+                <wsp:All wsp:Usage="Required">
+                    <L7p:ComparisonAssertion>
+                        <L7p:Expression1 stringValue="${wsmanResp}"/>
+                        <L7p:Expression2 stringValue=""/>
+                        <L7p:Negate booleanValue="true"/>
+                        <L7p:Operator operator="EMPTY"/>
+                        <L7p:Predicates predicates="included">
+                            <L7p:item binary="included">
+                                <L7p:Negated booleanValue="true"/>
+                                <L7p:Operator operator="EMPTY"/>
+                                <L7p:RightValue stringValue=""/>
+                            </L7p:item>
+                        </L7p:Predicates>
+                    </L7p:ComparisonAssertion>
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue="JHt3c21hblJlc3B9"/>
+                        <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                        <L7p:DataType variableDataType="message"/>
+                        <L7p:VariableToSet stringValue="resultPortalApis"/>
+                    </L7p:SetVariable>
+                    <L7p:ResponseXpathAssertion>
+                        <L7p:VariablePrefix stringValue="resultApi"/>
+                        <L7p:XmlMsgSrc stringValue="resultPortalApis"/>
+                        <L7p:XpathExpression xpathExpressionValue="included">
+                            <L7p:Expression stringValue="/l7:Apis/l7:Api"/>
+                            <L7p:Namespaces mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="l7"/>
+                                    <L7p:value stringValue="http://ns.l7tech.com/2012/04/api-management"/>
+                                </L7p:entry>
+                                <L7p:entry>
+                                    <L7p:key stringValue="s"/>
+                                    <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                                </L7p:entry>
+                            </L7p:Namespaces>
+                            <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                        </L7p:XpathExpression>
+                    </L7p:ResponseXpathAssertion>
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue="JHtyZXN1bHRNZXNzYWdlLm1haW5wYXJ0fQ0KPGw3OkFwaXM+"/>
+                        <L7p:ContentType stringValue="application/xml; charset=utf-8"/>
+                        <L7p:DataType variableDataType="message"/>
+                        <L7p:VariableToSet stringValue="resultMessage"/>
+                    </L7p:SetVariable>
+                    <L7p:ForEachLoop L7p:Usage="Required"
+                        loopVariable="resultApi.elements" variablePrefix="resultApiElement">
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="JHtyZXN1bHRBcGlFbGVtZW50LmN1cnJlbnR9"/>
+                            <L7p:VariableToSet stringValue="apiPart"/>
+                        </L7p:SetVariable>
+                        <L7p:Regex>
+                            <L7p:AutoTarget booleanValue="false"/>
+                            <L7p:CaptureVar stringValue="apiServiceId"/>
+                            <L7p:OtherTargetMessageVariable stringValue="apiPart"/>
+                            <L7p:Regex stringValue="&lt;l7:ServiceOID>(.*)&lt;/l7:ServiceOID>"/>
+                            <L7p:RegexVar stringValue="stuff"/>
+                            <L7p:Replacement stringValue=""/>
+                            <L7p:Target target="OTHER"/>
+                        </L7p:Regex>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="c3JjSWQ9IiR7YXBpU2VydmljZUlkWzFdfSI="/>
+                            <L7p:VariableToSet stringValue="apiSrcId"/>
+                        </L7p:SetVariable>
+                        <wsp:OneOrMore wsp:Usage="Required">
+                            <wsp:All wsp:Usage="Required">
+                                <L7p:Regex>
+                                    <L7p:AutoTarget booleanValue="false"/>
+                                    <L7p:IncludeEntireExpressionCapture booleanValue="false"/>
+                                    <L7p:OtherTargetMessageVariable stringValue="importResponse"/>
+                                    <L7p:PatternContainsVariables booleanValue="true"/>
+                                    <L7p:Regex stringValue="${apiSrcId}"/>
+                                    <L7p:Replacement stringValue=""/>
+                                    <L7p:Target target="OTHER"/>
+                                </L7p:Regex>
+                                <L7p:MapValue>
+                                    <L7p:InputExpr stringValue="${SyncSuccess}"/>
+                                    <L7p:Mappings nameValuePairArray="included">
+                                    <L7p:item nameValuePair="included">
+                                    <L7p:Key stringValue="true"/>
+                                    <L7p:Value stringValue=""/>
+                                    </L7p:item>
+                                    <L7p:item nameValuePair="included">
+                                    <L7p:Key stringValue="false"/>
+                                    <L7p:Value stringValue="FAIL"/>
+                                    </L7p:item>
+                                    </L7p:Mappings>
+                                    <L7p:OutputVar stringValue="apiLog"/>
+                                </L7p:MapValue>
+                            </wsp:All>
+                            <wsp:All wsp:Usage="Required">
+                                <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue=""/>
+                                    <L7p:VariableToSet stringValue="apiLog"/>
+                                </L7p:SetVariable>
+                                <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="not updated"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                </L7p:assertionComment>
+                            </wsp:All>
+                        </wsp:OneOrMore>
+                        <L7p:Regex>
+                            <L7p:AutoTarget booleanValue="false"/>
+                            <L7p:CaptureVar stringValue="apiPart"/>
+                            <L7p:OtherTargetMessageVariable stringValue="apiPart"/>
+                            <L7p:Regex stringValue="(.*)&lt;/l7:Api>"/>
+                            <L7p:Replacement stringValue=""/>
+                            <L7p:Target target="OTHER"/>
+                        </L7p:Regex>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="JHtyZXN1bHRNZXNzYWdlLm1haW5wYXJ0fQ0KJHthcGlQYXJ0WzFdfQ0KCQk8bDc6U3luY0xvZz4ke2FwaUxvZ308L2w3OlN5bmNMb2c+DQoJPC9sNzpBcGk+"/>
+                            <L7p:ContentType stringValue="application/xml; charset=utf-8"/>
+                            <L7p:DataType variableDataType="message"/>
+                            <L7p:VariableToSet stringValue="resultMessage"/>
+                        </L7p:SetVariable>
+                    </L7p:ForEachLoop>
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue="JHtyZXN1bHRNZXNzYWdlLm1haW5wYXJ0fQ0KPC9sNzpBcGlzPg=="/>
+                        <L7p:ContentType stringValue="application/xml; charset=utf-8"/>
+                        <L7p:DataType variableDataType="message"/>
+                        <L7p:VariableToSet stringValue="resultMessage"/>
+                    </L7p:SetVariable>
+                </wsp:All>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHtyZXN1bHRNZXNzYWdlLm1haW5wYXJ0fQ0KPGw3OkFwaXMvPg=="/>
+                    <L7p:ContentType stringValue="application/xml; charset=utf-8"/>
+                    <L7p:DataType variableDataType="message"/>
+                    <L7p:VariableToSet stringValue="resultMessage"/>
+                </L7p:SetVariable>
+            </wsp:OneOrMore>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="MS4wL3NjaGVkdWxlZFRhc2tzP25hbWU9UG9ydGFsJTIwU3luYyUyMEFQSQ=="/>
+                <L7p:VariableToSet stringValue="restGatewayMan.uri"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="R0VU"/>
+                <L7p:VariableToSet stringValue="restGatewayMan.action"/>
+            </L7p:SetVariable>
+            <L7p:RESTGatewayManagement>
+                <L7p:OtherTargetMessageVariable stringValue="empty.message"/>
+                <L7p:Target target="OTHER"/>
+            </L7p:RESTGatewayManagement>
+            <L7p:ResponseXpathAssertion>
+                <L7p:VariablePrefix stringValue="cron"/>
+                <L7p:XpathExpression xpathExpressionValue="included">
+                    <L7p:Expression stringValue="/l7:List/l7:Item/l7:Resource/l7:ScheduledTask/l7:CronExpression/text()"/>
+                    <L7p:Namespaces mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="s"/>
+                            <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                        </L7p:entry>
+                        <L7p:entry>
+                            <L7p:key stringValue="l7"/>
+                            <L7p:value stringValue="http://ns.l7tech.com/2010/04/gateway-management"/>
+                        </L7p:entry>
+                    </L7p:Namespaces>
+                    <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                </L7p:XpathExpression>
+            </L7p:ResponseXpathAssertion>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="JHtyZXN1bHRNZXNzYWdlLm1haW5wYXJ0fQ0KPGw3OkNyb24+JHtjcm9uLnJlc3VsdH08L2w3OkNyb24+DQo8L2w3OlN5bmNSZXN1bHQ+"/>
+                <L7p:ContentType stringValue="application/xml; charset=utf-8"/>
+                <L7p:DataType variableDataType="message"/>
+                <L7p:VariableToSet stringValue="resultMessage"/>
+            </L7p:SetVariable>
+            <L7p:Encapsulated>
+                <L7p:EncapsulatedAssertionConfigGuid stringValue="ed1e3112-5df8-4769-8436-09ddb1362f88"/>
+                <L7p:EncapsulatedAssertionConfigName stringValue="portalosencass"/>
+                <L7p:Parameters mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="defaultHost"/>
+                        <L7p:value stringValue="${gateway.portal.config.pssg.host}"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="defaultPort"/>
+                        <L7p:value stringValue="9447"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="hostName"/>
+                        <L7p:value stringValue="${gateway.portal.config.pssg.sync.host}"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="port"/>
+                        <L7p:value stringValue="${gateway.portal.config.pssg.sync.port}"/>
+                    </L7p:entry>
+                </L7p:Parameters>
+            </L7p:Encapsulated>
+            <L7p:HttpRoutingAssertion>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="post sync response to portal"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:HttpMethod httpMethod="POST"/>
+                <L7p:KeyAlias stringValue="portalman"/>
+                <L7p:NonDefaultKeystoreId goidValue="00000000000000000000000000000002"/>
+                <L7p:ProtectedServiceUrl stringValue="https://${outputHost}:${outputPort}/sync/apis?identifier=${gateway.portal.config.identifier}&amp;nodeId=${gateway.portal.config.node.id}"/>
+                <L7p:ProxyPassword stringValueNull="null"/>
+                <L7p:ProxyUsername stringValueNull="null"/>
+                <L7p:RequestHeaderRules httpPassthroughRuleSet="included">
+                    <L7p:ForwardAll booleanValue="true"/>
+                    <L7p:Rules httpPassthroughRules="included">
+                        <L7p:item httpPassthroughRule="included">
+                            <L7p:Name stringValue="Cookie"/>
+                        </L7p:item>
+                        <L7p:item httpPassthroughRule="included">
+                            <L7p:Name stringValue="SOAPAction"/>
+                        </L7p:item>
+                    </L7p:Rules>
+                </L7p:RequestHeaderRules>
+                <L7p:RequestMsgSrc stringValue="resultMessage"/>
+                <L7p:RequestParamRules httpPassthroughRuleSet="included">
+                    <L7p:ForwardAll booleanValue="true"/>
+                    <L7p:Rules httpPassthroughRules="included"/>
+                </L7p:RequestParamRules>
+                <L7p:ResponseHeaderRules httpPassthroughRuleSet="included">
+                    <L7p:ForwardAll booleanValue="true"/>
+                    <L7p:Rules httpPassthroughRules="included">
+                        <L7p:item httpPassthroughRule="included">
+                            <L7p:Name stringValue="Set-Cookie"/>
+                        </L7p:item>
+                    </L7p:Rules>
+                </L7p:ResponseHeaderRules>
+                <L7p:ResponseMsgDest stringValue="httpResponse1"/>
+                <L7p:SamlAssertionVersion intValue="2"/>
+                <L7p:UsesDefaultKeyStore booleanValue="false"/>
+            </L7p:HttpRoutingAssertion>
+        </wsp:All>
+    </wsp:All>
+</wsp:Policy>

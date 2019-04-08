@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === ***  THIS POLICY IS READ ONLY ***"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === If you have the need to customize this policy"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === please contact CA APIM Support so we can improve customization capability"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="This fragment takes the error created via OTK Fail with error message."/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="This fragment is used at /auth/oauth/v2/authorize to turn a JSON error message into HTML"/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtlcnJvci5tc2d9"/>
+            <L7p:ContentType stringValue="application/json;charset=UTF-8"/>
+            <L7p:DataType variableDataType="message"/>
+            <L7p:VariableToSet stringValue="jsonMsg"/>
+        </L7p:SetVariable>
+        <L7p:EvaluateJsonPathExpression>
+            <L7p:Expression stringValue="error"/>
+            <L7p:OtherTargetMessageVariable stringValue="jsonMsg"/>
+            <L7p:Target target="OTHER"/>
+            <L7p:VariablePrefix stringValue="error"/>
+        </L7p:EvaluateJsonPathExpression>
+        <L7p:EvaluateJsonPathExpression>
+            <L7p:Expression stringValue="error_description"/>
+            <L7p:OtherTargetMessageVariable stringValue="jsonMsg"/>
+            <L7p:Target target="OTHER"/>
+            <L7p:VariablePrefix stringValue="error_description"/>
+        </L7p:EvaluateJsonPathExpression>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="PGRpdiBpZD0iYXV0aFNydkVyciI+IDxwPjxiPmVycm9yOiA8L2I+JHtlcnJvci5yZXN1bHR9PGJyLz48Yj5lcnJvcl9kZXNjcmlwdGlvbjogPC9iPiR7ZXJyb3JfZGVzY3JpcHRpb24ucmVzdWx0fTwvcD4gPC9kaXY+"/>
+            <L7p:VariableToSet stringValue="errorDetail"/>
+        </L7p:SetVariable>
+        <L7p:Regex>
+            <L7p:AutoTarget booleanValue="false"/>
+            <L7p:OtherTargetMessageVariable stringValue="errorContent"/>
+            <L7p:Regex stringValue="&lt;!--oauth_content_placeholder-->"/>
+            <L7p:Replace booleanValue="true"/>
+            <L7p:Replacement stringValue="${errorDetail}"/>
+            <L7p:Target target="OTHER"/>
+        </L7p:Regex>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtlcnJvckNvbnRlbnR9"/>
+            <L7p:VariableToSet stringValue="error.msg"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="dGV4dC9odG1sO2NoYXJzZXQ9VVRGLTg="/>
+            <L7p:VariableToSet stringValue="content-type"/>
+        </L7p:SetVariable>
+    </wsp:All>
+</wsp:Policy>

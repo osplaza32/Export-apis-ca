@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === ***  THIS POLICY IS READ ONLY ***"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === If you have the need to customize this policy"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === please contact CA APIM Support so we can improve customization capability"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="This policy can be found and should be used as 'Encapsulated Assertion'!"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="=== Configure variables for SSO Token"/>
+        </L7p:CommentAssertion>
+        <L7p:Encapsulated>
+            <L7p:EncapsulatedAssertionConfigGuid stringValue="460bb196-7243-4140-b848-9b733c363729"/>
+            <L7p:EncapsulatedAssertionConfigName stringValue="MAG Configured Third Party SSO Token Types"/>
+        </L7p:Encapsulated>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHt0aGlyZF9wYXJ0eV9zc29fdG9rZW5fdHlwZV9zbXNzb3Rva2VufQ=="/>
+            <L7p:VariableToSet stringValue="third_party_sso_token_type"/>
+        </L7p:SetVariable>
+        <L7p:EncodeDecode>
+            <L7p:SourceVariableName stringValue="siteminder.smcontext.ssotoken"/>
+            <L7p:TargetDataType variableDataType="string"/>
+            <L7p:TargetVariableName stringValue="third_party_sso_token"/>
+            <L7p:TransformType transformType="BASE64_ENCODE"/>
+        </L7p:EncodeDecode>
+    </wsp:All>
+</wsp:Policy>

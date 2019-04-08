@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === ***  THIS POLICY IS READ ONLY ***"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === If you have the need to customize this policy"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === please contact CA APIM Support so we can improve customization capability"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="!-- This is an Encas to Generate an OTP for a user request ---"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="!-- Before generation it checks for user's state i.e. generate new OTP only if the user is not barred/suspended ---"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="!-- On successful OTP creation it responds with the OTP and the HTTP header details which can be consumed by the service API using it ---"/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:AssertionComment assertionComment="included">
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="error code"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="overwritten in case of an error"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:AssertionComment>
+            <L7p:Base64Expression stringValue=""/>
+            <L7p:VariableToSet stringValue="error.code"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue=""/>
+            <L7p:VariableToSet stringValue="result"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue=""/>
+            <L7p:VariableToSet stringValue="status"/>
+        </L7p:SetVariable>
+        <L7p:Encapsulated>
+            <L7p:EncapsulatedAssertionConfigGuid stringValue="db047e91-52db-4176-a3eb-a43aa0c2c67c"/>
+            <L7p:EncapsulatedAssertionConfigName stringValue="OTK Storage Configuration"/>
+            <L7p:Parameters mapValue="included">
+                <L7p:entry>
+                    <L7p:key stringValue="custom"/>
+                    <L7p:value stringValue=""/>
+                </L7p:entry>
+            </L7p:Parameters>
+        </L7p:Encapsulated>
+        <L7p:Encapsulated>
+            <L7p:EncapsulatedAssertionConfigGuid stringValue="ae2e93d4-1acf-4931-b01a-8f52407756d6"/>
+            <L7p:EncapsulatedAssertionConfigName stringValue="MAG OTP Configuration"/>
+        </L7p:Encapsulated>
+        <L7p:Encapsulated>
+            <L7p:EncapsulatedAssertionConfigGuid stringValue="1fa9685b-faac-4407-b926-378070a2f50b"/>
+            <L7p:EncapsulatedAssertionConfigName stringValue="MAG OTP Validate Suspended State"/>
+        </L7p:Encapsulated>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="Checking userid "/>
+            </L7p:CommentAssertion>
+            <L7p:ComparisonAssertion>
+                <L7p:CaseSensitive booleanValue="false"/>
+                <L7p:Expression1 stringValue="${userid}"/>
+                <L7p:Operator operatorNull="null"/>
+                <L7p:Predicates predicates="included">
+                    <L7p:item dataType="included">
+                        <L7p:Type variableDataType="string"/>
+                    </L7p:item>
+                    <L7p:item binary="included">
+                        <L7p:Negated booleanValue="true"/>
+                        <L7p:Operator operator="EMPTY"/>
+                        <L7p:RightValue stringValue=""/>
+                    </L7p:item>
+                </L7p:Predicates>
+            </L7p:ComparisonAssertion>
+            <wsp:All wsp:Usage="Required">
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="MTAz"/>
+                    <L7p:VariableToSet stringValue="error.code"/>
+                </L7p:SetVariable>
+                <L7p:FalseAssertion/>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="// fail"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="check"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="userid is empty or not"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:OneOrMore>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="Validate otp_type, if not use the default type as set in MAG OTP Configuration"/>
+            </L7p:CommentAssertion>
+            <L7p:Regex>
+                <L7p:AutoTarget booleanValue="false"/>
+                <L7p:CaseInsensitive booleanValue="true"/>
+                <L7p:OtherTargetMessageVariable stringValue="otp_type"/>
+                <L7p:Regex stringValue="alphanumeric|numerical"/>
+                <L7p:RegexName stringValue="OTP Type validation"/>
+                <L7p:Replacement stringValue=""/>
+                <L7p:Target target="OTHER"/>
+            </L7p:Regex>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="JHtkZWZhdWx0T3RwVHlwZX0="/>
+                <L7p:VariableToSet stringValue="otp_type"/>
+            </L7p:SetVariable>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="check"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="otp type"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:OneOrMore>
+        <wsp:All wsp:Usage="Required">
+            <wsp:OneOrMore wsp:Usage="Required">
+                <L7p:CommentAssertion>
+                    <L7p:Comment stringValue="Validate otp_length, if not set or less than defaultOtpLength then use the default length as set in MAG OTP Configuration"/>
+                </L7p:CommentAssertion>
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${otp_length}"/>
+                    <L7p:Operator operatorNull="null"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item dataType="included">
+                            <L7p:Type variableDataType="int"/>
+                        </L7p:item>
+                        <L7p:item binary="included">
+                            <L7p:Operator operator="GE"/>
+                            <L7p:RightValue stringValue="${defaultOtpLength}"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHtkZWZhdWx0T3RwTGVuZ3RofQ=="/>
+                    <L7p:VariableToSet stringValue="otp_length"/>
+                </L7p:SetVariable>
+            </wsp:OneOrMore>
+            <wsp:OneOrMore wsp:Usage="Required">
+                <L7p:CommentAssertion>
+                    <L7p:Comment stringValue="Validate otp_length, if more than 64 character limit it to 64"/>
+                </L7p:CommentAssertion>
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${otp_length}"/>
+                    <L7p:Operator operatorNull="null"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item dataType="included">
+                            <L7p:Type variableDataType="int"/>
+                        </L7p:item>
+                        <L7p:item binary="included">
+                            <L7p:Operator operator="LE"/>
+                            <L7p:RightValue stringValue="64"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="NjQ="/>
+                    <L7p:VariableToSet stringValue="otp_length"/>
+                </L7p:SetVariable>
+            </wsp:OneOrMore>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="check and validate"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="otp length"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:All>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="Generate OTP"/>
+        </L7p:CommentAssertion>
+        <wsp:All wsp:Usage="Required">
+            <wsp:OneOrMore wsp:Usage="Required">
+                <L7p:CommentAssertion>
+                    <L7p:Comment stringValue="Generate a numerical or alphanumeric OTP based on the otp_type input"/>
+                </L7p:CommentAssertion>
+                <L7p:CommentAssertion>
+                    <L7p:Comment stringValue="No error branch specified, because otp_type will always be either numerical or alphanumeric"/>
+                </L7p:CommentAssertion>
+                <wsp:All wsp:Usage="Required">
+                    <L7p:ComparisonAssertion>
+                        <L7p:CaseSensitive booleanValue="false"/>
+                        <L7p:Expression1 stringValue="${otp_type}"/>
+                        <L7p:Operator operatorNull="null"/>
+                        <L7p:Predicates predicates="included">
+                            <L7p:item dataType="included">
+                                <L7p:Type variableDataType="string"/>
+                            </L7p:item>
+                            <L7p:item binary="included">
+                                <L7p:RightValue stringValue="numerical"/>
+                            </L7p:item>
+                        </L7p:Predicates>
+                    </L7p:ComparisonAssertion>
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue="JHtnYXRld2F5LnJhbmRvbS45Ni51bnNpZ25lZH0="/>
+                        <L7p:VariableToSet stringValue="random_integer"/>
+                    </L7p:SetVariable>
+                    <wsp:OneOrMore wsp:Usage="Required">
+                        <L7p:CommentAssertion>
+                            <L7p:Comment stringValue="Cheking if the otp_length provided is numeric or not.."/>
+                        </L7p:CommentAssertion>
+                        <L7p:Regex>
+                            <L7p:AutoTarget booleanValue="false"/>
+                            <L7p:OtherTargetMessageVariable stringValue="otp_length"/>
+                            <L7p:Regex stringValue="[0-9]+"/>
+                            <L7p:RegexName stringValue="Check if otp_length is numeric"/>
+                            <L7p:Replacement stringValue=""/>
+                            <L7p:Target target="OTHER"/>
+                        </L7p:Regex>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="JHtkZWZhdWx0T3RwTGVuZ3RofQ=="/>
+                            <L7p:VariableToSet stringValue="otp_length"/>
+                        </L7p:SetVariable>
+                    </wsp:OneOrMore>
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue="JHtvdHBfbGVuZ3RofQ=="/>
+                        <L7p:DataType variableDataType="int"/>
+                        <L7p:VariableToSet stringValue="len"/>
+                    </L7p:SetVariable>
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue="PGEvPg=="/>
+                        <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                        <L7p:DataType variableDataType="message"/>
+                        <L7p:VariableToSet stringValue="dummyXml"/>
+                    </L7p:SetVariable>
+                    <L7p:ResponseXpathAssertion>
+                        <L7p:VariablePrefix stringValue="substr"/>
+                        <L7p:XmlMsgSrc stringValue="dummyXml"/>
+                        <L7p:XpathExpression xpathExpressionValue="included">
+                            <L7p:Expression stringValue="substring( $random_integer, string-length($random_integer) - $len, $len )"/>
+                            <L7p:Namespaces mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="s"/>
+                                    <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                                </L7p:entry>
+                            </L7p:Namespaces>
+                            <L7p:XpathVersion xpathVersion="XPATH_2_0"/>
+                        </L7p:XpathExpression>
+                    </L7p:ResponseXpathAssertion>
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue="JHtzdWJzdHIucmVzdWx0c1swXX0="/>
+                        <L7p:VariableToSet stringValue="otp"/>
+                    </L7p:SetVariable>
+                    <L7p:CommentAssertion>
+                        <L7p:Comment stringValue="Replace confusing digit"/>
+                    </L7p:CommentAssertion>
+                    <L7p:Regex>
+                        <L7p:AutoTarget booleanValue="false"/>
+                        <L7p:CaptureVar stringValue="random_replaced"/>
+                        <L7p:IncludeEntireExpressionCapture booleanValue="false"/>
+                        <L7p:OtherTargetMessageVariable stringValue="otp"/>
+                        <L7p:Regex stringValue="[0]"/>
+                        <L7p:RegexName stringValue="Replace 0 (zero) with 9"/>
+                        <L7p:Replace booleanValue="true"/>
+                        <L7p:ReplaceRepeatCount intValue="16"/>
+                        <L7p:Replacement stringValue="9"/>
+                        <L7p:Target target="OTHER"/>
+                    </L7p:Regex>
+                    <L7p:assertionComment>
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="RIGHT.COMMENT"/>
+                                <L7p:value stringValue="// numerical"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:assertionComment>
+                </wsp:All>
+                <wsp:All wsp:Usage="Required">
+                    <L7p:ComparisonAssertion>
+                        <L7p:CaseSensitive booleanValue="false"/>
+                        <L7p:Expression1 stringValue="${otp_type}"/>
+                        <L7p:Operator operatorNull="null"/>
+                        <L7p:Predicates predicates="included">
+                            <L7p:item dataType="included">
+                                <L7p:Type variableDataType="string"/>
+                            </L7p:item>
+                            <L7p:item binary="included">
+                                <L7p:RightValue stringValue="alphanumeric"/>
+                            </L7p:item>
+                        </L7p:Predicates>
+                    </L7p:ComparisonAssertion>
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue="JHtnYXRld2F5LnJhbmRvbS45Ni5iYXNlNjR9"/>
+                        <L7p:LineBreak lineBreak="CR"/>
+                        <L7p:VariableToSet stringValue="random_value"/>
+                    </L7p:SetVariable>
+                    <wsp:OneOrMore wsp:Usage="Required">
+                        <L7p:CommentAssertion>
+                            <L7p:Comment stringValue="Cheking if the otp_length provided is numeric or not.."/>
+                        </L7p:CommentAssertion>
+                        <L7p:Regex>
+                            <L7p:AutoTarget booleanValue="false"/>
+                            <L7p:OtherTargetMessageVariable stringValue="otp_length"/>
+                            <L7p:Regex stringValue="[0-9]+"/>
+                            <L7p:RegexName stringValue="Check if otp_length is numeric"/>
+                            <L7p:Replacement stringValue=""/>
+                            <L7p:Target target="OTHER"/>
+                        </L7p:Regex>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="JHtkZWZhdWx0T3RwTGVuZ3RofQ=="/>
+                            <L7p:VariableToSet stringValue="otp_length"/>
+                        </L7p:SetVariable>
+                    </wsp:OneOrMore>
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue="PGEvPg=="/>
+                        <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                        <L7p:DataType variableDataType="message"/>
+                        <L7p:VariableToSet stringValue="dummyXml"/>
+                    </L7p:SetVariable>
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue="JHtvdHBfbGVuZ3RofQ=="/>
+                        <L7p:DataType variableDataType="int"/>
+                        <L7p:VariableToSet stringValue="len"/>
+                    </L7p:SetVariable>
+                    <L7p:ResponseXpathAssertion>
+                        <L7p:VariablePrefix stringValue="substr"/>
+                        <L7p:XmlMsgSrc stringValue="dummyXml"/>
+                        <L7p:XpathExpression xpathExpressionValue="included">
+                            <L7p:Expression stringValue="substring( $random_value, string-length($random_value) - $len, $len )"/>
+                            <L7p:Namespaces mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="s"/>
+                                    <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                                </L7p:entry>
+                            </L7p:Namespaces>
+                            <L7p:XpathVersion xpathVersion="XPATH_2_0"/>
+                        </L7p:XpathExpression>
+                    </L7p:ResponseXpathAssertion>
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue="JHtzdWJzdHIucmVzdWx0c1swXX0="/>
+                        <L7p:VariableToSet stringValue="otp"/>
+                    </L7p:SetVariable>
+                    <L7p:CommentAssertion>
+                        <L7p:Comment stringValue="Replace confusing characters"/>
+                    </L7p:CommentAssertion>
+                    <L7p:Regex>
+                        <L7p:AutoTarget booleanValue="false"/>
+                        <L7p:CaptureVar stringValue="random_replaced"/>
+                        <L7p:IncludeEntireExpressionCapture booleanValue="false"/>
+                        <L7p:OtherTargetMessageVariable stringValue="otp"/>
+                        <L7p:Regex stringValue="[I]"/>
+                        <L7p:RegexName stringValue="Replace I (capitol i) with 8"/>
+                        <L7p:Replace booleanValue="true"/>
+                        <L7p:ReplaceRepeatCount intValue="16"/>
+                        <L7p:Replacement stringValue="8"/>
+                        <L7p:Target target="OTHER"/>
+                    </L7p:Regex>
+                    <L7p:Regex>
+                        <L7p:AutoTarget booleanValue="false"/>
+                        <L7p:CaptureVar stringValue="random_replaced"/>
+                        <L7p:IncludeEntireExpressionCapture booleanValue="false"/>
+                        <L7p:OtherTargetMessageVariable stringValue="otp"/>
+                        <L7p:Regex stringValue="[O]"/>
+                        <L7p:RegexName stringValue="Replace O (capital o) with 9"/>
+                        <L7p:Replace booleanValue="true"/>
+                        <L7p:ReplaceRepeatCount intValue="16"/>
+                        <L7p:Replacement stringValue="9"/>
+                        <L7p:Target target="OTHER"/>
+                    </L7p:Regex>
+                    <L7p:Regex>
+                        <L7p:AutoTarget booleanValue="false"/>
+                        <L7p:CaptureVar stringValue="random_replaced"/>
+                        <L7p:IncludeEntireExpressionCapture booleanValue="false"/>
+                        <L7p:OtherTargetMessageVariable stringValue="otp"/>
+                        <L7p:Regex stringValue="[0]"/>
+                        <L7p:RegexName stringValue="Replace 0 (zero) with Z"/>
+                        <L7p:Replace booleanValue="true"/>
+                        <L7p:ReplaceRepeatCount intValue="16"/>
+                        <L7p:Replacement stringValue="Z"/>
+                        <L7p:Target target="OTHER"/>
+                    </L7p:Regex>
+                    <L7p:Regex>
+                        <L7p:AutoTarget booleanValue="false"/>
+                        <L7p:CaptureVar stringValue="random_replaced"/>
+                        <L7p:IncludeEntireExpressionCapture booleanValue="false"/>
+                        <L7p:OtherTargetMessageVariable stringValue="otp"/>
+                        <L7p:Regex stringValue="[+]"/>
+                        <L7p:RegexName stringValue="Replace + with @"/>
+                        <L7p:Replace booleanValue="true"/>
+                        <L7p:ReplaceRepeatCount intValue="16"/>
+                        <L7p:Replacement stringValue="@"/>
+                        <L7p:Target target="OTHER"/>
+                    </L7p:Regex>
+                    <L7p:Regex>
+                        <L7p:AutoTarget booleanValue="false"/>
+                        <L7p:CaptureVar stringValue="random_replaced"/>
+                        <L7p:IncludeEntireExpressionCapture booleanValue="false"/>
+                        <L7p:OtherTargetMessageVariable stringValue="otp"/>
+                        <L7p:Regex stringValue="[\/]"/>
+                        <L7p:RegexName stringValue="Replace / with B"/>
+                        <L7p:Replace booleanValue="true"/>
+                        <L7p:ReplaceRepeatCount intValue="16"/>
+                        <L7p:Replacement stringValue="B"/>
+                        <L7p:Target target="OTHER"/>
+                    </L7p:Regex>
+                    <L7p:assertionComment>
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="RIGHT.COMMENT"/>
+                                <L7p:value stringValue="// alphanumeric"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:assertionComment>
+                </wsp:All>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="// generate OTP"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:OneOrMore>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="generate OTP"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:All>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <L7p:ComparisonAssertion>
+                <L7p:CaseSensitive booleanValue="false"/>
+                <L7p:Expression1 stringValue="${otp}"/>
+                <L7p:Operator operatorNull="null"/>
+                <L7p:Predicates predicates="included">
+                    <L7p:item dataType="included">
+                        <L7p:Type variableDataType="string"/>
+                    </L7p:item>
+                    <L7p:item stringLength="included">
+                        <L7p:Max intValue="-1"/>
+                        <L7p:Min intValue="1"/>
+                    </L7p:item>
+                </L7p:Predicates>
+            </L7p:ComparisonAssertion>
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${otp}"/>
+                    <L7p:Operator operatorNull="null"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item dataType="included">
+                            <L7p:Type variableDataType="string"/>
+                        </L7p:item>
+                        <L7p:item stringLength="included"/>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="MTUx"/>
+                    <L7p:VariableToSet stringValue="error.code"/>
+                </L7p:SetVariable>
+                <L7p:FalseAssertion/>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="// fail"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="check"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="Failure"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:OneOrMore>
+    </wsp:All>
+</wsp:Policy>

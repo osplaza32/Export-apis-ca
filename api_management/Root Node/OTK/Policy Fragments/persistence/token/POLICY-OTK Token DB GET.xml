@@ -1,0 +1,1513 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === ***  THIS POLICY IS READ ONLY ***"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === If you have the need to customize this policy"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === please contact CA APIM Support so we can improve customization capability"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="This policy can be found and should be used as 'Encapsulated Assertion'!"/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue=""/>
+            <L7p:VariableToSet stringValue="content-type"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="PHZhbHVlcz4NCjwvdmFsdWVzPg=="/>
+            <L7p:ContentType stringValue="text/xml;charset=UTF-8"/>
+            <L7p:DataType variableDataType="message"/>
+            <L7p:VariableToSet stringValue="resp"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue=""/>
+            <L7p:VariableToSet stringValue="error.code"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue=""/>
+            <L7p:VariableToSet stringValue="returnOffset"/>
+        </L7p:SetVariable>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${tokentype}"/>
+                    <L7p:Expression2 stringValue="token"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:RightValue stringValue="token"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <wsp:OneOrMore wsp:Usage="Required">
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${queryOffset}"/>
+                            <L7p:Expression2 stringValue="0"/>
+                            <L7p:MultivaluedComparison multivaluedComparison="FAIL"/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue="0"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="MA=="/>
+                            <L7p:DataType variableDataType="int"/>
+                            <L7p:VariableToSet stringValue="offset"/>
+                        </L7p:SetVariable>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${queryOffset}"/>
+                            <L7p:Expression2 stringValue="0"/>
+                            <L7p:MultivaluedComparison multivaluedComparison="FAIL"/>
+                            <L7p:Operator operator="LT"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Operator operator="LT"/>
+                                    <L7p:RightValue stringValue="0"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="MA=="/>
+                            <L7p:DataType variableDataType="int"/>
+                            <L7p:VariableToSet stringValue="offset"/>
+                        </L7p:SetVariable>
+                    </wsp:All>
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue="JHtxdWVyeU9mZnNldH0="/>
+                        <L7p:DataType variableDataType="int"/>
+                        <L7p:VariableToSet stringValue="offset"/>
+                    </L7p:SetVariable>
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue="MA=="/>
+                        <L7p:DataType variableDataType="int"/>
+                        <L7p:VariableToSet stringValue="offset"/>
+                    </L7p:SetVariable>
+                    <L7p:assertionComment>
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="LEFT.COMMENT"/>
+                                <L7p:value stringValue="Offset"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="RIGHT.COMMENT"/>
+                                <L7p:value stringValue="Set the offset for the database query"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:assertionComment>
+                </wsp:OneOrMore>
+                <wsp:OneOrMore wsp:Usage="Required">
+                    <L7p:CommentAssertion>
+                        <L7p:Comment stringValue="=== Below: SQL-Queries that will always return a single row"/>
+                    </L7p:CommentAssertion>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${token}"/>
+                            <L7p:Expression2 stringValue=""/>
+                            <L7p:Negate booleanValue="true"/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Negated booleanValue="true"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue=""/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:JdbcQuery>
+                            <L7p:AssertionFailureEnabled booleanValue="false"/>
+                            <L7p:ConnectionName stringValue="OAuth"/>
+                            <L7p:ConvertVariablesToStrings booleanValue="false"/>
+                            <L7p:GenerateXmlResult booleanValue="true"/>
+                            <L7p:MaxRecords intValue="1000"/>
+                            <L7p:SqlQuery stringValueReference="inline"><![CDATA[SELECT token,secret,expiration,rtoken,rexpiration,scope,resource_owner,client_name,client_ident,client_key,status,created,custom
+                FROM oauth_token
+                WHERE token = ${token}]]></L7p:SqlQuery>
+                            <L7p:VariablePrefix stringValue="query"/>
+                        </L7p:JdbcQuery>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="all access_token values of given token"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${rtoken}"/>
+                            <L7p:Expression2 stringValue=""/>
+                            <L7p:Negate booleanValue="true"/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Negated booleanValue="true"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue=""/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:JdbcQuery>
+                            <L7p:AssertionFailureEnabled booleanValue="false"/>
+                            <L7p:ConnectionName stringValue="OAuth"/>
+                            <L7p:GenerateXmlResult booleanValue="true"/>
+                            <L7p:MaxRecords intValue="1000"/>
+                            <L7p:SqlQuery stringValueReference="inline"><![CDATA[SELECT token, secret, expiration, rtoken, rexpiration, scope, resource_owner, client_name, client_ident, client_key, status, created,custom
+                FROM oauth_token
+                WHERE rtoken = ${rtoken}]]></L7p:SqlQuery>
+                            <L7p:VariablePrefix stringValue="query"/>
+                        </L7p:JdbcQuery>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="all access_token values of given rtoken"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                    <L7p:CommentAssertion>
+                        <L7p:Comment stringValue="=== Below: SQL-Queries that will return up to a few rows"/>
+                    </L7p:CommentAssertion>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${client_key}"/>
+                            <L7p:Expression2 stringValue=""/>
+                            <L7p:Negate booleanValue="true"/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Negated booleanValue="true"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue=""/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${resource_owner}"/>
+                            <L7p:Expression2 stringValue=""/>
+                            <L7p:Negate booleanValue="true"/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Negated booleanValue="true"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue=""/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:JdbcQuery>
+                            <L7p:AssertionFailureEnabled booleanValue="false"/>
+                            <L7p:ConnectionName stringValue="OAuth"/>
+                            <L7p:GenerateXmlResult booleanValue="true"/>
+                            <L7p:MaxRecords intValue="1000"/>
+                            <L7p:SqlQuery stringValueReference="inline"><![CDATA[SELECT token, secret, expiration, rtoken, rexpiration, scope, resource_owner, client_name, client_ident, client_key, status, created,custom
+                FROM oauth_token
+                WHERE client_key = ${client_key}
+                AND resource_owner = ${resource_owner}]]></L7p:SqlQuery>
+                            <L7p:VariablePrefix stringValue="query"/>
+                        </L7p:JdbcQuery>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="all access_token values of given client - resource_owner"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                    <L7p:CommentAssertion>
+                        <L7p:Comment stringValue="=== As of here pagination is required ==="/>
+                    </L7p:CommentAssertion>
+                    <L7p:CommentAssertion>
+                        <L7p:Comment stringValue="=== Below: SQL-Queries that may return a few thousand rows"/>
+                    </L7p:CommentAssertion>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${resource_owner}"/>
+                            <L7p:Expression2 stringValue=""/>
+                            <L7p:Negate booleanValue="true"/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Negated booleanValue="true"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue=""/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${token_status}"/>
+                            <L7p:Expression2 stringValue=""/>
+                            <L7p:Negate booleanValue="true"/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Negated booleanValue="true"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue=""/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <wsp:OneOrMore wsp:Usage="Required">
+                            <wsp:All wsp:Usage="Required">
+                                <L7p:ComparisonAssertion>
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Expression1 stringValue="${dbsystem}"/>
+                                    <L7p:Operator operatorNull="null"/>
+                                    <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="string"/>
+                                    </L7p:item>
+                                    <L7p:item binary="included">
+                                    <L7p:RightValue stringValue="mysql"/>
+                                    </L7p:item>
+                                    </L7p:Predicates>
+                                </L7p:ComparisonAssertion>
+                                <L7p:JdbcQuery>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="MySQL"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:AssertionFailureEnabled booleanValue="false"/>
+                                    <L7p:ConnectionName stringValue="OAuth"/>
+                                    <L7p:ConvertVariablesToStrings booleanValue="false"/>
+                                    <L7p:GenerateXmlResult booleanValue="true"/>
+                                    <L7p:MaxRecords intValue="1000"/>
+                                    <L7p:SqlQuery stringValueReference="inline"><![CDATA[SELECT  token, secret, expiration, rtoken, rexpiration, scope, resource_owner, client_name, client_ident, client_key, status, created,custom
+                FROM oauth_token
+                WHERE resource_owner like ${resource_owner}
+                AND status = ${token_status}
+                ORDER BY resource_owner, client_name, created ASC LIMIT 100 OFFSET ${offset}]]></L7p:SqlQuery>
+                                    <L7p:VariablePrefix stringValue="query"/>
+                                </L7p:JdbcQuery>
+                                <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="MySQL"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                </L7p:assertionComment>
+                            </wsp:All>
+                            <wsp:All wsp:Usage="Required">
+                                <L7p:ComparisonAssertion>
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Expression1 stringValue="${dbsystem}"/>
+                                    <L7p:Operator operatorNull="null"/>
+                                    <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="string"/>
+                                    </L7p:item>
+                                    <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="oracle"/>
+                                    </L7p:item>
+                                    </L7p:Predicates>
+                                </L7p:ComparisonAssertion>
+                                <L7p:JdbcQuery>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="Oracle"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:AssertionFailureEnabled booleanValue="false"/>
+                                    <L7p:ConnectionName stringValue="OAuth"/>
+                                    <L7p:ConvertVariablesToStrings booleanValue="false"/>
+                                    <L7p:GenerateXmlResult booleanValue="true"/>
+                                    <L7p:MaxRecords intValue="1000"/>
+                                    <L7p:SqlQuery stringValueReference="inline"><![CDATA[SELECT token, secret, expiration, rtoken, rexpiration, scope, resource_owner, client_name, client_ident, client_key, status, created,custom
+                FROM (
+                SELECT /*+ FIRST_ROWS(100) */ oauth_token.*, ROWNUM rnum
+                FROM (  SELECT * FROM oauth_token
+                WHERE resource_owner like ${resource_owner}
+                AND status = ${token_status}
+                ORDER BY resource_owner, client_name, created ASC ) oauth_token
+                WHERE ROWNUM <= (100+${offset}) )
+                WHERE rnum  > ${offset}]]></L7p:SqlQuery>
+                                    <L7p:VariablePrefix stringValue="query"/>
+                                </L7p:JdbcQuery>
+                                <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="Oracle"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                </L7p:assertionComment>
+                            </wsp:All>
+                            <L7p:assertionComment>
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="Check for database system"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:assertionComment>
+                        </wsp:OneOrMore>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="all access_token values of given resource_owner and status"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${resource_owner}"/>
+                            <L7p:Expression2 stringValue=""/>
+                            <L7p:Negate booleanValue="true"/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Negated booleanValue="true"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue=""/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${client_key}"/>
+                            <L7p:Expression2 stringValue=""/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue=""/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${token_status}"/>
+                            <L7p:Expression2 stringValue=""/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue=""/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <wsp:OneOrMore wsp:Usage="Required">
+                            <wsp:All wsp:Usage="Required">
+                                <L7p:ComparisonAssertion>
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Expression1 stringValue="${dbsystem}"/>
+                                    <L7p:Operator operatorNull="null"/>
+                                    <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="string"/>
+                                    </L7p:item>
+                                    <L7p:item binary="included">
+                                    <L7p:RightValue stringValue="mysql"/>
+                                    </L7p:item>
+                                    </L7p:Predicates>
+                                </L7p:ComparisonAssertion>
+                                <L7p:JdbcQuery>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="MySQL"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:AssertionFailureEnabled booleanValue="false"/>
+                                    <L7p:ConnectionName stringValue="OAuth"/>
+                                    <L7p:ConvertVariablesToStrings booleanValue="false"/>
+                                    <L7p:GenerateXmlResult booleanValue="true"/>
+                                    <L7p:MaxRecords intValue="1000"/>
+                                    <L7p:SqlQuery stringValueReference="inline"><![CDATA[SELECT  token, secret, expiration, rtoken, rexpiration, scope, resource_owner, client_name, client_ident, client_key, status, created,custom
+                FROM oauth_token
+                WHERE resource_owner like ${resource_owner}
+                ORDER BY resource_owner, client_name, created ASC LIMIT 100 OFFSET ${offset}]]></L7p:SqlQuery>
+                                    <L7p:VariablePrefix stringValue="query"/>
+                                </L7p:JdbcQuery>
+                                <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="MySQL"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                </L7p:assertionComment>
+                            </wsp:All>
+                            <wsp:All wsp:Usage="Required">
+                                <L7p:ComparisonAssertion>
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Expression1 stringValue="${dbsystem}"/>
+                                    <L7p:Operator operatorNull="null"/>
+                                    <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="string"/>
+                                    </L7p:item>
+                                    <L7p:item binary="included">
+                                    <L7p:RightValue stringValue="oracle"/>
+                                    </L7p:item>
+                                    </L7p:Predicates>
+                                </L7p:ComparisonAssertion>
+                                <L7p:JdbcQuery>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="Oracle"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:AssertionFailureEnabled booleanValue="false"/>
+                                    <L7p:ConnectionName stringValue="OAuth"/>
+                                    <L7p:ConvertVariablesToStrings booleanValue="false"/>
+                                    <L7p:GenerateXmlResult booleanValue="true"/>
+                                    <L7p:MaxRecords intValue="1000"/>
+                                    <L7p:SqlQuery stringValueReference="inline"><![CDATA[SELECT token, secret, expiration, rtoken, rexpiration, scope, resource_owner, client_name, client_ident, client_key, status, created,custom
+                FROM (
+                SELECT /*+ FIRST_ROWS(100) */ oauth_token.*, ROWNUM rnum
+                FROM (  SELECT * FROM oauth_token
+                WHERE resource_owner like ${resource_owner}
+                ORDER BY resource_owner, client_name, created ASC ) oauth_token
+                WHERE ROWNUM <= (100+${offset}) )
+                WHERE rnum  > ${offset}]]></L7p:SqlQuery>
+                                    <L7p:VariablePrefix stringValue="query"/>
+                                </L7p:JdbcQuery>
+                                <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="Oracle"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                </L7p:assertionComment>
+                            </wsp:All>
+                            <L7p:assertionComment>
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="Check for database system"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:assertionComment>
+                        </wsp:OneOrMore>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="all access_token of a given resource_owner"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${client_key}"/>
+                            <L7p:Expression2 stringValue=""/>
+                            <L7p:Negate booleanValue="true"/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Negated booleanValue="true"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue=""/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${resource_owner}"/>
+                            <L7p:Expression2 stringValue=""/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue=""/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <wsp:OneOrMore wsp:Usage="Required">
+                            <wsp:All wsp:Usage="Required">
+                                <L7p:ComparisonAssertion>
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Expression1 stringValue="${dbsystem}"/>
+                                    <L7p:Operator operatorNull="null"/>
+                                    <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="string"/>
+                                    </L7p:item>
+                                    <L7p:item binary="included">
+                                    <L7p:RightValue stringValue="mysql"/>
+                                    </L7p:item>
+                                    </L7p:Predicates>
+                                </L7p:ComparisonAssertion>
+                                <L7p:JdbcQuery>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="MySQL"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:AssertionFailureEnabled booleanValue="false"/>
+                                    <L7p:ConnectionName stringValue="OAuth"/>
+                                    <L7p:ConvertVariablesToStrings booleanValue="false"/>
+                                    <L7p:GenerateXmlResult booleanValue="true"/>
+                                    <L7p:MaxRecords intValue="1000"/>
+                                    <L7p:SqlQuery stringValueReference="inline"><![CDATA[SELECT  token, secret, expiration,rtoken, rexpiration, scope, resource_owner, client_name, client_ident, client_key, status, created,custom
+                FROM oauth_token
+                WHERE client_key = ${client_key}
+                ORDER BY client_name, resource_owner, created ASC LIMIT 100 OFFSET ${offset}]]></L7p:SqlQuery>
+                                    <L7p:VariablePrefix stringValue="query"/>
+                                </L7p:JdbcQuery>
+                                <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="MySQL"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                </L7p:assertionComment>
+                            </wsp:All>
+                            <wsp:All wsp:Usage="Required">
+                                <L7p:ComparisonAssertion>
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Expression1 stringValue="${dbsystem}"/>
+                                    <L7p:Operator operatorNull="null"/>
+                                    <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="string"/>
+                                    </L7p:item>
+                                    <L7p:item binary="included">
+                                    <L7p:RightValue stringValue="oracle"/>
+                                    </L7p:item>
+                                    </L7p:Predicates>
+                                </L7p:ComparisonAssertion>
+                                <L7p:JdbcQuery>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="Oracle"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:AssertionFailureEnabled booleanValue="false"/>
+                                    <L7p:ConnectionName stringValue="OAuth"/>
+                                    <L7p:ConvertVariablesToStrings booleanValue="false"/>
+                                    <L7p:GenerateXmlResult booleanValue="true"/>
+                                    <L7p:MaxRecords intValue="1000"/>
+                                    <L7p:SqlQuery stringValueReference="inline"><![CDATA[SELECT token, secret, expiration,rtoken, rexpiration, scope, resource_owner, client_name, client_ident, client_key, status, created,custom
+                FROM (
+                SELECT /*+ FIRST_ROWS(100) */ oauth_token.*, ROWNUM rnum
+                FROM (  SELECT * FROM oauth_token
+                WHERE client_key = ${client_key}
+                ORDER BY client_name, resource_owner, created ASC ) oauth_token
+                WHERE ROWNUM <= (100+${offset}) )
+                WHERE rnum  > ${offset}]]></L7p:SqlQuery>
+                                    <L7p:VariablePrefix stringValue="query"/>
+                                </L7p:JdbcQuery>
+                                <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="Oracle"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                </L7p:assertionComment>
+                            </wsp:All>
+                            <L7p:assertionComment>
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="Check for database system"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:assertionComment>
+                        </wsp:OneOrMore>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="all access_token values of given client"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${token_status}"/>
+                            <L7p:Expression2 stringValue=""/>
+                            <L7p:Negate booleanValue="true"/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Negated booleanValue="true"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue=""/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${resource_owner}"/>
+                            <L7p:Expression2 stringValue=""/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue=""/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <wsp:OneOrMore wsp:Usage="Required">
+                            <wsp:All wsp:Usage="Required">
+                                <L7p:ComparisonAssertion>
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Expression1 stringValue="${dbsystem}"/>
+                                    <L7p:Operator operatorNull="null"/>
+                                    <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="string"/>
+                                    </L7p:item>
+                                    <L7p:item binary="included">
+                                    <L7p:RightValue stringValue="mysql"/>
+                                    </L7p:item>
+                                    </L7p:Predicates>
+                                </L7p:ComparisonAssertion>
+                                <L7p:JdbcQuery>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="MySQL"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:AssertionFailureEnabled booleanValue="false"/>
+                                    <L7p:ConnectionName stringValue="OAuth"/>
+                                    <L7p:ConvertVariablesToStrings booleanValue="false"/>
+                                    <L7p:GenerateXmlResult booleanValue="true"/>
+                                    <L7p:MaxRecords intValue="1000"/>
+                                    <L7p:SqlQuery stringValueReference="inline"><![CDATA[SELECT  token, secret, expiration, rtoken, rexpiration, scope, resource_owner, client_name, client_ident, client_key, status, created,custom
+                FROM oauth_token
+                WHERE status = ${token_status}
+                ORDER BY client_name, resource_owner, created ASC LIMIT 100 OFFSET ${offset}]]></L7p:SqlQuery>
+                                    <L7p:VariablePrefix stringValue="query"/>
+                                </L7p:JdbcQuery>
+                                <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="MySQL"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                </L7p:assertionComment>
+                            </wsp:All>
+                            <wsp:All wsp:Usage="Required">
+                                <L7p:ComparisonAssertion>
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Expression1 stringValue="${dbsystem}"/>
+                                    <L7p:Operator operatorNull="null"/>
+                                    <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="string"/>
+                                    </L7p:item>
+                                    <L7p:item binary="included">
+                                    <L7p:RightValue stringValue="oracle"/>
+                                    </L7p:item>
+                                    </L7p:Predicates>
+                                </L7p:ComparisonAssertion>
+                                <L7p:JdbcQuery>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="Oracle"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:AssertionFailureEnabled booleanValue="false"/>
+                                    <L7p:ConnectionName stringValue="OAuth"/>
+                                    <L7p:ConvertVariablesToStrings booleanValue="false"/>
+                                    <L7p:GenerateXmlResult booleanValue="true"/>
+                                    <L7p:MaxRecords intValue="1000"/>
+                                    <L7p:SqlQuery stringValueReference="inline"><![CDATA[SELECT token, secret, expiration, rtoken, rexpiration, scope, resource_owner, client_name, client_ident, client_key, status, created,custom
+                FROM (
+                SELECT /*+ FIRST_ROWS(100) */ oauth_token.*, ROWNUM rnum
+                FROM ( SELECT * FROM oauth_token
+                WHERE status = ${token_status}
+                ORDER BY client_name, resource_owner, created ASC ) oauth_token
+                WHERE ROWNUM <= (100+${offset}) )
+                WHERE rnum  > ${offset}]]></L7p:SqlQuery>
+                                    <L7p:VariablePrefix stringValue="query"/>
+                                </L7p:JdbcQuery>
+                                <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="Oracle"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                </L7p:assertionComment>
+                            </wsp:All>
+                            <L7p:assertionComment>
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="Check for database system"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:assertionComment>
+                        </wsp:OneOrMore>
+                    </wsp:All>
+                    <L7p:CommentAssertion>
+                        <L7p:Comment stringValue="=== Below: SQL-Query that will return all rows"/>
+                    </L7p:CommentAssertion>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${token}"/>
+                            <L7p:Expression2 stringValue=""/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue=""/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${rtoken}"/>
+                            <L7p:Expression2 stringValue=""/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue=""/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${resource_owner}"/>
+                            <L7p:Expression2 stringValue=""/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue=""/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${token_status}"/>
+                            <L7p:Expression2 stringValue=""/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue=""/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${client_key}"/>
+                            <L7p:Expression2 stringValue=""/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue=""/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <wsp:OneOrMore wsp:Usage="Required">
+                            <wsp:All wsp:Usage="Required">
+                                <L7p:ComparisonAssertion>
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Expression1 stringValue="${dbsystem}"/>
+                                    <L7p:Operator operatorNull="null"/>
+                                    <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="string"/>
+                                    </L7p:item>
+                                    <L7p:item binary="included">
+                                    <L7p:RightValue stringValue="mysql"/>
+                                    </L7p:item>
+                                    </L7p:Predicates>
+                                </L7p:ComparisonAssertion>
+                                <L7p:JdbcQuery>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="MySQL"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:AssertionFailureEnabled booleanValue="false"/>
+                                    <L7p:ConnectionName stringValue="OAuth"/>
+                                    <L7p:ConvertVariablesToStrings booleanValue="false"/>
+                                    <L7p:GenerateXmlResult booleanValue="true"/>
+                                    <L7p:MaxRecords intValue="10000"/>
+                                    <L7p:SqlQuery stringValueReference="inline"><![CDATA[SELECT  token, secret, expiration, rtoken, rexpiration, scope, resource_owner, client_name, client_ident, client_key, status, created,custom
+                FROM oauth_token
+                ORDER BY client_name, resource_owner, created ASC LIMIT 100 OFFSET ${offset}]]></L7p:SqlQuery>
+                                    <L7p:VariablePrefix stringValue="query"/>
+                                </L7p:JdbcQuery>
+                                <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="MySQL"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                </L7p:assertionComment>
+                            </wsp:All>
+                            <wsp:All wsp:Usage="Required">
+                                <L7p:ComparisonAssertion>
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Expression1 stringValue="${dbsystem}"/>
+                                    <L7p:Operator operatorNull="null"/>
+                                    <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="string"/>
+                                    </L7p:item>
+                                    <L7p:item binary="included">
+                                    <L7p:RightValue stringValue="oracle"/>
+                                    </L7p:item>
+                                    </L7p:Predicates>
+                                </L7p:ComparisonAssertion>
+                                <L7p:JdbcQuery>
+                                    <L7p:AssertionComment assertionComment="included">
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="Oracle"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:AssertionComment>
+                                    <L7p:AssertionFailureEnabled booleanValue="false"/>
+                                    <L7p:ConnectionName stringValue="OAuth"/>
+                                    <L7p:ConvertVariablesToStrings booleanValue="false"/>
+                                    <L7p:GenerateXmlResult booleanValue="true"/>
+                                    <L7p:MaxRecords intValue="10000"/>
+                                    <L7p:SqlQuery stringValueReference="inline"><![CDATA[SELECT token, secret, expiration, rtoken, rexpiration, scope, resource_owner, client_name, client_ident, client_key, status, created,custom
+                FROM (
+                SELECT /*+ FIRST_ROWS(100) */ oauth_token.*, ROWNUM rnum
+                FROM (  SELECT * FROM oauth_token
+                ORDER BY client_name, resource_owner, created ASC ) oauth_token
+                WHERE ROWNUM <= (100+${offset}) )
+                WHERE rnum  > ${offset}]]></L7p:SqlQuery>
+                                    <L7p:VariablePrefix stringValue="query"/>
+                                </L7p:JdbcQuery>
+                                <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="Oracle"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                </L7p:assertionComment>
+                            </wsp:All>
+                            <L7p:assertionComment>
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="Check for database system"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:assertionComment>
+                        </wsp:OneOrMore>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="all access_token values "/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="MDAw"/>
+                            <L7p:VariableToSet stringValue="error.code"/>
+                        </L7p:SetVariable>
+                        <L7p:FalseAssertion/>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="error"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                    <L7p:assertionComment>
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="RIGHT.COMMENT"/>
+                                <L7p:value stringValue="create the jdbc query"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:assertionComment>
+                </wsp:OneOrMore>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHtxdWVyeS54bWxSZXN1bHR9"/>
+                    <L7p:ContentType stringValue="text/xml;charset=UTF-8"/>
+                    <L7p:DataType variableDataType="message"/>
+                    <L7p:VariableToSet stringValue="input"/>
+                </L7p:SetVariable>
+                <L7p:ResponseXpathAssertion>
+                    <L7p:VariablePrefix stringValue="xpathRowCount"/>
+                    <L7p:XmlMsgSrc stringValue="input"/>
+                    <L7p:XpathExpression xpathExpressionValue="included">
+                        <L7p:Expression stringValue="string(count(//L7j:row) +string($offset))"/>
+                        <L7p:Namespaces mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="L7j"/>
+                                <L7p:value stringValue="http://ns.l7tech.com/2012/08/jdbc-query-result"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="s"/>
+                                <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                            </L7p:entry>
+                        </L7p:Namespaces>
+                        <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                    </L7p:XpathExpression>
+                </L7p:ResponseXpathAssertion>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHt4cGF0aFJvd0NvdW50LnJlc3VsdH0="/>
+                    <L7p:VariableToSet stringValue="returnOffset"/>
+                </L7p:SetVariable>
+                <wsp:OneOrMore wsp:Usage="Required">
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${query.queryresult.count}"/>
+                            <L7p:Expression2 stringValue="0"/>
+                            <L7p:Operator operator="GT"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Operator operator="GT"/>
+                                    <L7p:RightValue stringValue="0"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="PHZhbHVlcz4NCiAgICA8dG9rZW5zPjx0b2tlbj48IVtDREFUQVske3F1ZXJ5LnRva2VufF1dPjwvdG9rZW4+PHRva2VuPjwhW0NEQVRBW31dXT48L3Rva2VuPjwvdG9rZW5zPg0KICAgIDxzZWNyZXRzPjxzZWNyZXQ+PCFbQ0RBVEFbJHtxdWVyeS5zZWNyZXR8XV0+PC9zZWNyZXQ+PHNlY3JldD48IVtDREFUQVt9XV0+PC9zZWNyZXQ+PC9zZWNyZXRzPg0KICAgIDxleHBpcmF0aW9ucz48ZXhwaXJhdGlvbj48IVtDREFUQVske3F1ZXJ5LmV4cGlyYXRpb258XV0+PC9leHBpcmF0aW9uPjxleHBpcmF0aW9uPjwhW0NEQVRBW31dXT48L2V4cGlyYXRpb24+PC9leHBpcmF0aW9ucz4NCiAgICA8cnRva2Vucz48cnRva2VuPjwhW0NEQVRBWyR7cXVlcnkucnRva2VufF1dPjwvcnRva2VuPjxydG9rZW4+PCFbQ0RBVEFbfV1dPjwvcnRva2VuPjwvcnRva2Vucz4NCiAgICA8cmV4cGlyYXRpb25zPjxyZXhwaXJhdGlvbj48IVtDREFUQVske3F1ZXJ5LnJleHBpcmF0aW9ufF1dPjwvcmV4cGlyYXRpb24+PHJleHBpcmF0aW9uPjwhW0NEQVRBW31dXT48L3JleHBpcmF0aW9uPjwvcmV4cGlyYXRpb25zPg0KICAgIDxzY29wZXM+PHNjb3BlPjwhW0NEQVRBWyR7cXVlcnkuc2NvcGV8XV0+PC9zY29wZT48c2NvcGU+PCFbQ0RBVEFbfV1dPjwvc2NvcGU+PC9zY29wZXM+DQogICAgPHJlc291cmNlX293bmVycz48cmVzb3VyY2Vfb3duZXI+PCFbQ0RBVEFbJHtxdWVyeS5yZXNvdXJjZV9vd25lcnxdXT48L3Jlc291cmNlX293bmVyPjxyZXNvdXJjZV9vd25lcj48IVtDREFUQVt9XV0+PC9yZXNvdXJjZV9vd25lcj48L3Jlc291cmNlX293bmVycz4NCiAgICA8Y2xpZW50cz48Y2xpZW50X2tleT48IVtDREFUQVske3F1ZXJ5LmNsaWVudF9rZXl8XV0+PC9jbGllbnRfa2V5PjxjbGllbnRfa2V5PjwhW0NEQVRBW31dXT48L2NsaWVudF9rZXk+PC9jbGllbnRzPg0KICAgIDxjbGllbnROYW1lcz48Y2xpZW50X25hbWU+PCFbQ0RBVEFbJHtxdWVyeS5jbGllbnRfbmFtZXxdXT48L2NsaWVudF9uYW1lPjxjbGllbnRfbmFtZT48IVtDREFUQVt9XV0+PC9jbGllbnRfbmFtZT48L2NsaWVudE5hbWVzPg0KICAgIDxzdGF0dXVzPjxzdGF0dXM+PCFbQ0RBVEFbJHtxdWVyeS5zdGF0dXN8XV0+PC9zdGF0dXM+PHN0YXR1cz48IVtDREFUQVt9XV0+PC9zdGF0dXM+PC9zdGF0dXVzPg0KICAgIDxjcmVhdGVkcz48Y3JlYXRlZD48IVtDREFUQVske3F1ZXJ5LmNyZWF0ZWR8XV0+PC9jcmVhdGVkPjxjcmVhdGVkPjwhW0NEQVRBW31dXT48L2NyZWF0ZWQ+PC9jcmVhdGVkcz4NCiAgICA8Y3VzdG9tcz48Y3VzdG9tPjwhW0NEQVRBWyR7cXVlcnkuY3VzdG9tfF1dPjwvY3VzdG9tPjxjdXN0b20+PCFbQ0RBVEFbfV1dPjwvY3VzdG9tPjwvY3VzdG9tcz4NCjwvdmFsdWVzPg=="/>
+                            <L7p:ContentType stringValue="text/xml;charset=UTF-8"/>
+                            <L7p:DataType variableDataType="message"/>
+                            <L7p:VariableToSet stringValue="resp"/>
+                        </L7p:SetVariable>
+                    </wsp:All>
+                    <L7p:TrueAssertion/>
+                    <L7p:assertionComment>
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="RIGHT.COMMENT"/>
+                                <L7p:value stringValue="transform jdbc result to xml"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:assertionComment>
+                </wsp:OneOrMore>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="Handle 'get'"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${tokentype}"/>
+                    <L7p:Expression2 stringValue="temporary"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:RightValue stringValue="temporary"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <wsp:OneOrMore wsp:Usage="Required">
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${token}"/>
+                            <L7p:Expression2 stringValue="getTemp"/>
+                            <L7p:Negate booleanValue="true"/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Negated booleanValue="true"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue="getTemp"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${verifier}"/>
+                            <L7p:Expression2 stringValue="getTemp"/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue="getTemp"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:JdbcQuery>
+                            <L7p:AssertionFailureEnabled booleanValue="false"/>
+                            <L7p:ConnectionName stringValue="OAuth"/>
+                            <L7p:MaxRecords intValue="1000"/>
+                            <L7p:SqlQuery stringValueReference="inline"><![CDATA[SELECT token, secret, expiration, scope, resource_owner, client_name, client_key, created, verifier, callback,custom
+                FROM oauth_initiate
+                WHERE token = ${token}]]></L7p:SqlQuery>
+                            <L7p:VariablePrefix stringValue="query"/>
+                        </L7p:JdbcQuery>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="all temporary token values of given token"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${token}"/>
+                            <L7p:Expression2 stringValue="getTemp"/>
+                            <L7p:Negate booleanValue="true"/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Negated booleanValue="true"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue="getTemp"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${verifier}"/>
+                            <L7p:Expression2 stringValue="getTemp"/>
+                            <L7p:Negate booleanValue="true"/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Negated booleanValue="true"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue="getTemp"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:JdbcQuery>
+                            <L7p:AssertionFailureEnabled booleanValue="false"/>
+                            <L7p:ConnectionName stringValue="OAuth"/>
+                            <L7p:MaxRecords intValue="1000"/>
+                            <L7p:SqlQuery stringValueReference="inline"><![CDATA[SELECT token, secret, expiration,scope, resource_owner, client_name, client_key, created, verifier, callback,custom
+                FROM oauth_initiate
+                WHERE token = ${token}
+                AND verifier = ${verifier}]]></L7p:SqlQuery>
+                            <L7p:VariablePrefix stringValue="query"/>
+                        </L7p:JdbcQuery>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="all temporary token values of given token and verifier"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${client_key}"/>
+                            <L7p:Expression2 stringValue="getTemp"/>
+                            <L7p:Negate booleanValue="true"/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Negated booleanValue="true"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue="getTemp"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${resource_owner}"/>
+                            <L7p:Expression2 stringValue="getTemp"/>
+                            <L7p:Negate booleanValue="true"/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Negated booleanValue="true"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue="getTemp"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:JdbcQuery>
+                            <L7p:AssertionFailureEnabled booleanValue="false"/>
+                            <L7p:ConnectionName stringValue="OAuth"/>
+                            <L7p:MaxRecords intValue="10000"/>
+                            <L7p:SqlQuery stringValueReference="inline"><![CDATA[SELECT token, secret, expiration,scope, resource_owner, client_name, client_key, created, verifier, callback,custom
+                FROM oauth_initiate
+                WHERE client_key = ${client_key}
+                AND resource_owner = ${resource_owner}]]></L7p:SqlQuery>
+                            <L7p:VariablePrefix stringValue="query"/>
+                        </L7p:JdbcQuery>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="all temporary token values of given client, resource_owner"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${resource_owner}"/>
+                            <L7p:Expression2 stringValue="getTemp"/>
+                            <L7p:Negate booleanValue="true"/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Negated booleanValue="true"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue="getTemp"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${client_key}"/>
+                            <L7p:Expression2 stringValue="getTemp"/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue="getTemp"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:JdbcQuery>
+                            <L7p:AssertionFailureEnabled booleanValue="false"/>
+                            <L7p:ConnectionName stringValue="OAuth"/>
+                            <L7p:MaxRecords intValue="10000"/>
+                            <L7p:SqlQuery stringValueReference="inline"><![CDATA[SELECT token, secret, expiration, scope, resource_owner, client_name, client_key, created, verifier, callback,custom
+                FROM oauth_initiate
+                WHERE resource_owner = ${resource_owner}]]></L7p:SqlQuery>
+                            <L7p:VariablePrefix stringValue="query"/>
+                        </L7p:JdbcQuery>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="all temporary token values of given resource_owner"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${client_key}"/>
+                            <L7p:Expression2 stringValue="getTemp"/>
+                            <L7p:Negate booleanValue="true"/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Negated booleanValue="true"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue="getTemp"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${resource_owner}"/>
+                            <L7p:Expression2 stringValue="getTemp"/>
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue="getTemp"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:JdbcQuery>
+                            <L7p:AssertionFailureEnabled booleanValue="false"/>
+                            <L7p:ConnectionName stringValue="OAuth"/>
+                            <L7p:MaxRecords intValue="10000"/>
+                            <L7p:SqlQuery stringValueReference="inline"><![CDATA[SELECT token, secret, expiration,scope, resource_owner, client_name, client_key, created, verifier, callback,custom
+                FROM oauth_initiate
+                WHERE client_key = ${client_key}]]></L7p:SqlQuery>
+                            <L7p:VariablePrefix stringValue="query"/>
+                        </L7p:JdbcQuery>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="all temporary token values of given client"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="MDAw"/>
+                            <L7p:VariableToSet stringValue="error.code"/>
+                        </L7p:SetVariable>
+                        <L7p:FalseAssertion/>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="error"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                    <L7p:assertionComment>
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="RIGHT.COMMENT"/>
+                                <L7p:value stringValue="create the jdbc query"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:assertionComment>
+                </wsp:OneOrMore>
+                <wsp:OneOrMore wsp:Usage="Required">
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${query.queryresult.count}"/>
+                            <L7p:Expression2 stringValue="0"/>
+                            <L7p:Operator operator="GT"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Operator operator="GT"/>
+                                    <L7p:RightValue stringValue="0"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="PHZhbHVlcz4NCiAgICA8dG9rZW5zPjx0b2tlbj48IVtDREFUQVske3F1ZXJ5LnRva2VufF1dPjwvdG9rZW4+PHRva2VuPjwhW0NEQVRBW31dXT48L3Rva2VuPjwvdG9rZW5zPg0KICAgIDxzZWNyZXRzPjxzZWNyZXQ+PCFbQ0RBVEFbJHtxdWVyeS5zZWNyZXR8XV0+PC9zZWNyZXQ+PHNlY3JldD48IVtDREFUQVt9XV0+PC9zZWNyZXQ+PC9zZWNyZXRzPg0KICAgIDxleHBpcmF0aW9ucz48ZXhwaXJhdGlvbj48IVtDREFUQVske3F1ZXJ5LmV4cGlyYXRpb258XV0+PC9leHBpcmF0aW9uPjxleHBpcmF0aW9uPjwhW0NEQVRBW31dXT48L2V4cGlyYXRpb24+PC9leHBpcmF0aW9ucz4NCiAgICA8c2NvcGVzPjxzY29wZT48IVtDREFUQVske3F1ZXJ5LnNjb3BlfF1dPjwvc2NvcGU+PHNjb3BlPjwhW0NEQVRBW31dXT48L3Njb3BlPjwvc2NvcGVzPg0KICAgIDxyZXNvdXJjZV9vd25lcnM+PHJlc291cmNlX293bmVyPjwhW0NEQVRBWyR7cXVlcnkucmVzb3VyY2Vfb3duZXJ8XV0+PC9yZXNvdXJjZV9vd25lcj48cmVzb3VyY2Vfb3duZXI+PCFbQ0RBVEFbfV1dPjwvcmVzb3VyY2Vfb3duZXI+PC9yZXNvdXJjZV9vd25lcnM+DQogICAgPGNsaWVudHM+PGNsaWVudF9rZXk+PCFbQ0RBVEFbJHtxdWVyeS5jbGllbnRfa2V5fF1dPjwvY2xpZW50X2tleT48Y2xpZW50X2tleT48IVtDREFUQVt9XV0+PC9jbGllbnRfa2V5PjwvY2xpZW50cz4NCiAgICA8Y2xpZW50TmFtZXM+PGNsaWVudF9uYW1lPjwhW0NEQVRBWyR7cXVlcnkuY2xpZW50X25hbWV8XV0+PC9jbGllbnRfbmFtZT48Y2xpZW50X25hbWU+PCFbQ0RBVEFbfV1dPjwvY2xpZW50X25hbWU+PC9jbGllbnROYW1lcz4NCiAgICA8Y3JlYXRlZHM+PGNyZWF0ZWQ+PCFbQ0RBVEFbJHtxdWVyeS5jcmVhdGVkfF1dPjwvY3JlYXRlZD48Y3JlYXRlZD48IVtDREFUQVt9XV0+PC9jcmVhdGVkPjwvY3JlYXRlZHM+DQogICAgPGNhbGxiYWNrcz48Y2FsbGJhY2s+PCFbQ0RBVEFbJHtxdWVyeS5jYWxsYmFja3xdXT48L2NhbGxiYWNrPjxjYWxsYmFjaz48IVtDREFUQVt9XV0+PC9jYWxsYmFjaz48L2NhbGxiYWNrcz4NCiAgICA8dmVyaWZpZXJzPjx2ZXJpZmllcj48IVtDREFUQVske3F1ZXJ5LnZlcmlmaWVyfF1dPjwvdmVyaWZpZXI+PHZlcmlmaWVyPjwhW0NEQVRBW31dXT48L3ZlcmlmaWVyPjwvdmVyaWZpZXJzPg0KICAgIDxjdXN0b21zPjxjdXN0b20+PCFbQ0RBVEFbJHtxdWVyeS5jdXN0b218XV0+PC9jdXN0b20+PGN1c3RvbT48IVtDREFUQVt9XV0+PC9jdXN0b20+PC9jdXN0b21zPg0KPC92YWx1ZXM+"/>
+                            <L7p:ContentType stringValue="text/xml;charset=UTF-8"/>
+                            <L7p:DataType variableDataType="message"/>
+                            <L7p:VariableToSet stringValue="resp"/>
+                        </L7p:SetVariable>
+                    </wsp:All>
+                    <L7p:TrueAssertion/>
+                    <L7p:assertionComment>
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="RIGHT.COMMENT"/>
+                                <L7p:value stringValue="transform jdbc result to xml"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:assertionComment>
+                </wsp:OneOrMore>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="Handle 'getTemp'"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+        </wsp:OneOrMore>
+        <L7p:XslTransformation>
+            <L7p:AssertionComment assertionComment="included">
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="Generate xml with one root and one field for each token"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:AssertionComment>
+            <L7p:Direction intValue="-1"/>
+            <L7p:OtherTargetMessageVariable stringValue="resp"/>
+            <L7p:ResourceInfo staticResourceInfo="included">
+                <L7p:Document stringValueReference="inline"><![CDATA[<xsl:stylesheet version="1.0"
+                xmlns:xls="http://www.w3.org/1999/XSL/Transform"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+                <xsl:output encoding="UTF-8" indent="yes" method="xml"/>
+                <xsl:param name="returnOffset"/>
+                <xsl:template match="/values">
+                <xsl:element name="{name()}"
+                xmlns="http://ns.l7tech.com/2012/11/otk-tokenstore">
+                <xsl:attribute name="offset"><xsl:value-of select="$returnOffset"/></xsl:attribute>
+                <xsl:for-each select="descendant::node()[node()][1]/child::node()[node()]">
+                <xsl:variable name="index">
+                <xsl:value-of select="position()"/>
+                </xsl:variable>
+                <value index="{$index}"
+                xmlns="http://ns.l7tech.com/2012/11/otk-tokenstore">
+                <xsl:element name="{name()}"
+                xmlns="http://ns.l7tech.com/2012/11/otk-tokenstore">
+                <xsl:value-of select="text()"/>
+                </xsl:element>
+                <xsl:for-each select="parent::node()/following-sibling::node()[node()]">
+                <xsl:for-each select="*[position()=$index]">
+                <xsl:copy-of select="self::node()"/>
+                </xsl:for-each>
+                </xsl:for-each>
+                </value>
+                </xsl:for-each>
+                </xsl:element>
+                </xsl:template>
+                </xsl:stylesheet>]]></L7p:Document>
+            </L7p:ResourceInfo>
+            <L7p:Target target="OTHER"/>
+            <L7p:TransformName stringValue=""/>
+            <L7p:XsltVersion stringValue="1.0"/>
+        </L7p:XslTransformation>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${format}"/>
+                    <L7p:Expression2 stringValue="json"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:RightValue stringValue="json"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:JsonTransformation>
+                    <L7p:DestinationMessageTarget MessageTarget="included">
+                        <L7p:OtherTargetMessageVariable stringValue="resp"/>
+                        <L7p:Target target="OTHER"/>
+                        <L7p:TargetModifiedByGateway booleanValue="true"/>
+                    </L7p:DestinationMessageTarget>
+                    <L7p:OtherTargetMessageVariable stringValue="resp"/>
+                    <L7p:PrettyPrint booleanValue="true"/>
+                    <L7p:RootTagString stringValue=""/>
+                    <L7p:Target target="OTHER"/>
+                </L7p:JsonTransformation>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHtyZXNwLm1haW5wYXJ0fQ=="/>
+                    <L7p:VariableToSet stringValue="resp.mainpart"/>
+                </L7p:SetVariable>
+                <L7p:Regex>
+                    <L7p:AutoTarget booleanValue="false"/>
+                    <L7p:OtherTargetMessageVariable stringValue="resp.mainpart"/>
+                    <L7p:Regex stringValue="&quot;xmlns&quot;:[\s]?&quot;http://ns.l7tech.com/2012/11/otk-tokenstore&quot;,\n"/>
+                    <L7p:RegexName stringValue="Remove Namespace"/>
+                    <L7p:Replace booleanValue="true"/>
+                    <L7p:Replacement stringValue=""/>
+                    <L7p:Target target="OTHER"/>
+                </L7p:Regex>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHtyZXNwLm1haW5wYXJ0fQ=="/>
+                    <L7p:ContentType stringValue="text/xml;charset=UTF-8"/>
+                    <L7p:DataType variableDataType="message"/>
+                    <L7p:VariableToSet stringValue="resp"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="YXBwbGljYXRpb24vanNvbjtjaGFyc2V0PVVURi04"/>
+                    <L7p:VariableToSet stringValue="content-type"/>
+                </L7p:SetVariable>
+            </wsp:All>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="dGV4dC94bWw7Y2hhcnNldD1VVEYtOA=="/>
+                <L7p:VariableToSet stringValue="content-type"/>
+            </L7p:SetVariable>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="transform to json if applicable"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:OneOrMore>
+    </wsp:All>
+</wsp:Policy>

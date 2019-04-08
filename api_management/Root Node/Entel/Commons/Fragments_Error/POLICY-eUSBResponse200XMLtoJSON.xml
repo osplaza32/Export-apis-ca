@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:AuditDetailAssertion>
+            <L7p:Detail stringValue="Policy Fragment: GenerateResponseHeader200"/>
+        </L7p:AuditDetailAssertion>
+        <wsp:All wsp:Usage="Required">
+            <L7p:AuditDetailAssertion>
+                <L7p:CustomLoggerSuffix stringValue="sergio"/>
+                <L7p:Detail stringValue="URL: ${request.http.uri}"/>
+                <L7p:Enabled booleanValue="false"/>
+                <L7p:Level stringValue="WARNING"/>
+            </L7p:AuditDetailAssertion>
+            <L7p:EvaluateJsonPathExpression>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="OBTENER MESSAGEHEADER"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:Expression stringValue="$..RequestHeader"/>
+                <L7p:VariablePrefix stringValue="MessageHeader"/>
+            </L7p:EvaluateJsonPathExpression>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="JHtNZXNzYWdlSGVhZGVyLnJlc3VsdH0="/>
+                <L7p:ContentType stringValue="application/json; charset=utf-8"/>
+                <L7p:DataType variableDataType="message"/>
+                <L7p:VariableToSet stringValue="MessageHeaderJson"/>
+            </L7p:SetVariable>
+            <L7p:JsonTransformation>
+                <L7p:DestinationMessageTarget MessageTarget="included">
+                    <L7p:OtherTargetMessageVariable stringValue="MessageHeaderXML"/>
+                    <L7p:Target target="OTHER"/>
+                    <L7p:TargetModifiedByGateway booleanValue="true"/>
+                </L7p:DestinationMessageTarget>
+                <L7p:OtherTargetMessageVariable stringValue="MessageHeaderJson"/>
+                <L7p:RootTagString stringValue="MessageHeaderElement"/>
+                <L7p:Target target="OTHER"/>
+                <L7p:Transformation transformation="JSON_to_XML"/>
+            </L7p:JsonTransformation>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="PHJzcFRpbWVzdGFtcD4ke2dhdGV3YXkudGltZS5sb2NhbH08L3JzcFRpbWVzdGFtcD4="/>
+                <L7p:VariableToSet stringValue="rspTimestamp"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="PFJlc3VsdCBzdGF0dXM9Ik9LIiBkZXNjcmlwdGlvbj0iRWplY3VjacOzbiBFeGl0b3NhIi8+DQo="/>
+                <L7p:VariableToSet stringValue="result"/>
+            </L7p:SetVariable>
+            <L7p:ResponseXpathAssertion>
+                <L7p:VariablePrefix stringValue="responseClientReq"/>
+                <L7p:XmlMsgSrc stringValue="MessageHeaderXML"/>
+                <L7p:XpathExpression xpathExpressionValue="included">
+                    <L7p:Expression stringValue="/MessageHeaderElement/Trace/clientReqTimestamp"/>
+                    <L7p:Namespaces mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="s"/>
+                            <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                        </L7p:entry>
+                    </L7p:Namespaces>
+                    <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                </L7p:XpathExpression>
+            </L7p:ResponseXpathAssertion>
+            <L7p:RemoveElement>
+                <L7p:ElementFromVariable stringValue="responseClientReq.elements[0]"/>
+                <L7p:ElementToInsertVariable stringValue="reqTimestamp"/>
+                <L7p:InsertedElementLocation insertedElementLocation="NEXT_SIBLING"/>
+                <L7p:OtherTargetMessageVariable stringValue="MessageHeaderXML"/>
+                <L7p:Target target="OTHER"/>
+            </L7p:RemoveElement>
+            <L7p:RemoveElement>
+                <L7p:ElementFromVariable stringValue="responseClientReq.elements[0]"/>
+                <L7p:ElementToInsertVariable stringValue="rspTimestamp"/>
+                <L7p:InsertedElementLocation insertedElementLocation="NEXT_SIBLING"/>
+                <L7p:OtherTargetMessageVariable stringValue="MessageHeaderXML"/>
+                <L7p:Target target="OTHER"/>
+            </L7p:RemoveElement>
+            <L7p:ResponseXpathAssertion>
+                <L7p:VariablePrefix stringValue="responseChannel"/>
+                <L7p:XmlMsgSrc stringValue="MessageHeaderXML"/>
+                <L7p:XpathExpression xpathExpressionValue="included">
+                    <L7p:Expression stringValue="/MessageHeaderElement/Channel"/>
+                    <L7p:Namespaces mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="s"/>
+                            <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                        </L7p:entry>
+                    </L7p:Namespaces>
+                    <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                </L7p:XpathExpression>
+            </L7p:ResponseXpathAssertion>
+            <L7p:RemoveElement>
+                <L7p:ElementFromVariable stringValue="responseChannel.elements[0]"/>
+                <L7p:ElementToInsertVariable stringValue="result"/>
+                <L7p:InsertedElementLocation insertedElementLocation="NEXT_SIBLING"/>
+                <L7p:OtherTargetMessageVariable stringValue="MessageHeaderXML"/>
+                <L7p:Target target="OTHER"/>
+            </L7p:RemoveElement>
+            <L7p:JsonTransformation>
+                <L7p:DestinationMessageTarget MessageTarget="included">
+                    <L7p:OtherTargetMessageVariable stringValue="MessageHeaderJson"/>
+                    <L7p:Target target="OTHER"/>
+                    <L7p:TargetModifiedByGateway booleanValue="true"/>
+                </L7p:DestinationMessageTarget>
+                <L7p:OtherTargetMessageVariable stringValue="MessageHeaderXML"/>
+                <L7p:RootTagString stringValue=""/>
+                <L7p:Target target="OTHER"/>
+            </L7p:JsonTransformation>
+            <L7p:EvaluateJsonPathExpression>
+                <L7p:Expression stringValue="$.MessageHeaderElement"/>
+                <L7p:OtherTargetMessageVariable stringValue="MessageHeaderJson"/>
+                <L7p:Target target="OTHER"/>
+                <L7p:VariablePrefix stringValue="MessageHeaderJson"/>
+            </L7p:EvaluateJsonPathExpression>
+            <L7p:HardcodedResponse>
+                <L7p:Base64ResponseBody stringValue="eyAgCiAgICJSZXNwb25zZUhlYWRlciI6JHtNZXNzYWdlSGVhZGVySnNvbi5yZXN1bHR9LAogICAke2JvZHkubWFpbnBhcnR9Cn0="/>
+                <L7p:ResponseContentType stringValue="application/json; charset=UTF-8"/>
+            </L7p:HardcodedResponse>
+        </wsp:All>
+    </wsp:All>
+</wsp:Policy>

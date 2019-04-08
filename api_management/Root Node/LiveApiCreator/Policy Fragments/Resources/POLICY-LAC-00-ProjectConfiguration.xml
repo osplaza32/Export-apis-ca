@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="LAC-PolicyType=inject"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="Component version 1.0.00 installed by LACApiGateway installer version lacgw1.0.00"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="=== Configuration of all endpoints that are used in LAC Project"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="**************** ADJUST DEFAULT CONFIGURATION ****************"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="**************** API Gateway Inbound Protocol: HTTPS ****************"/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue=""/>
+            <L7p:VariableToSet stringValue="project.forwarded.httpScheme"/>
+        </L7p:SetVariable>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="**************** API Gateway Inbound Port: 8443 ****************"/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue=""/>
+            <L7p:VariableToSet stringValue="project.forwarded.port"/>
+        </L7p:SetVariable>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="**************** Default API Gateway's cluster hostname ****************"/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue=""/>
+            <L7p:VariableToSet stringValue="project.forwarded.hostname"/>
+        </L7p:SetVariable>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="**************** Live API Creator Project Name ****************"/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue=""/>
+            <L7p:VariableToSet stringValue="project.name"/>
+        </L7p:SetVariable>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="**************** Live API Creator Project Version ****************"/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue=""/>
+            <L7p:VariableToSet stringValue="project.version"/>
+        </L7p:SetVariable>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="**************** Live API Creator Hostname (FQDN) ****************"/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue=""/>
+            <L7p:VariableToSet stringValue="project.endpoint.hostname"/>
+        </L7p:SetVariable>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="**************** Live API Creator Inbound Port: 8081 ****************"/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue=""/>
+            <L7p:VariableToSet stringValue="project.endpoint.port"/>
+        </L7p:SetVariable>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="**************** Live API Creator Inbound Protocol: HTTPS ****************"/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue=""/>
+            <L7p:VariableToSet stringValue="project.endpoint.httpScheme"/>
+        </L7p:SetVariable>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="**************** Live API Creator Project Root Path: rest/default ****************"/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue=""/>
+            <L7p:VariableToSet stringValue="project.rootPath"/>
+        </L7p:SetVariable>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="**************** ADJUST DEFAULT CONFIGURATION ****************"/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtnYXRld2F5LmNsdXN0ZXIuaG9zdG5hbWV9"/>
+            <L7p:VariableToSet stringValue="project.gateway.hostname"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="LyR7cHJvamVjdC5uYW1lfS8ke3Byb2plY3QudmVyc2lvbn0="/>
+            <L7p:VariableToSet stringValue="project.gateway.basepath"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="aG9zdD0iJHtwcm9qZWN0LmZvcndhcmRlZC5ob3N0bmFtZX06JHtwcm9qZWN0LmZvcndhcmRlZC5wb3J0fSI7IHByb3RvPSR7cHJvamVjdC5mb3J3YXJkZWQuaHR0cFNjaGVtZX07IGNhLWxhYy1iYXNlcGF0aD0iJHtwcm9qZWN0LmdhdGV3YXkuYmFzZXBhdGh9Ig=="/>
+            <L7p:VariableToSet stringValue="project.gateway.forwardedHeaderValues"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtnYXRld2F5LmNsdXN0ZXIuaG9zdG5hbWV9"/>
+            <L7p:VariableToSet stringValue="project.helpUrl.endpoint.hostname"/>
+        </L7p:SetVariable>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="=== Configuration of the SwaggerValidation"/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:AssertionComment assertionComment="included">
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="Seconds"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:AssertionComment>
+            <L7p:Base64Expression stringValue="NjA="/>
+            <L7p:DataType variableDataType="int"/>
+            <L7p:VariableToSet stringValue="project.swaggerCacheExpiry"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtyZXF1ZXN0LnVybC5wcm90b2NvbH06Ly8ke3Byb2plY3QuZW5kcG9pbnQuaG9zdG5hbWV9OiR7cHJvamVjdC5lbmRwb2ludC5wb3J0fS8ke3Byb2plY3Qucm9vdFBhdGh9LyR7cHJvamVjdC5uYW1lfS8ke3Byb2plY3QudmVyc2lvbn0="/>
+            <L7p:VariableToSet stringValue="project.swaggerDocumentRoot"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtwcm9qZWN0LnN3YWdnZXJEb2N1bWVudFJvb3R9L0Bkb2Nz"/>
+            <L7p:VariableToSet stringValue="project.serviceSwaggerURL"/>
+        </L7p:SetVariable>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="=== Configuration of the Role Mapper Groups and Roles"/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="c2ltcGxl"/>
+            <L7p:VariableToSet stringValue="project.roleMappingType"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="QVBJIERvY3VtZW50YXRpb24="/>
+            <L7p:VariableToSet stringValue="project.simpleRoleMapping.defaultRole"/>
+        </L7p:SetVariable>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" **************** UPDATE TO MAP USERS (IF DESIRED)  ****************"/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="PHVzZXJzPg0KCTx1c2VyIGlkPSJhZG1pbiI+PGdyb3VwPkRldmVsb3BlcjwvZ3JvdXA+DQoJCTxncm91cD5Eb2N1bWVudGF0aW9uPC9ncm91cD4NCgk8L3VzZXI+DQo8L3VzZXJzPg=="/>
+            <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+            <L7p:DataType variableDataType="message"/>
+            <L7p:VariableToSet stringValue="project.simpleRoleMapper.users"/>
+        </L7p:SetVariable>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" **************** UPDATE TO MAP ROLES (IF DESIRED) ****************"/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="PHVzZXJSb2xlcz4NCgk8dXNlclJvbGUgZ3JvdXA9IkRldmVsb3BlciI+DQoJCTxyb2xlPkFQSSBPd25lcjwvcm9sZT4NCgk8L3VzZXJSb2xlPg0KCTx1c2VyUm9sZSBncm91cD0iU3VwcG9ydCI+DQoJCTxyb2xlPkFQSSBVc2VyPC9yb2xlPg0KCQk8cm9sZT5BUEkgT3duZXI8L3JvbGU+DQoJPC91c2VyUm9sZT4NCgk8dXNlclJvbGUgZ3JvdXA9IkRvY3VtZW50YXRpb24iPg0KCQk8cm9sZT5BUEkgRG9jdW1lbnRhdGlvbjwvcm9sZT4NCgk8L3VzZXJSb2xlPg0KPC91c2VyUm9sZXM+"/>
+            <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+            <L7p:DataType variableDataType="message"/>
+            <L7p:VariableToSet stringValue="project.simpleRoleMapper.userRoles"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCiAgICA8Y29uZmlnVmFyaWFibGVzIFVzYWdlPSJSZXF1aXJlZCI+DQogICAgICAgIDxTZXRWYXJpYWJsZT4NCiAgICAgICAgICAgIDxWYXJpYWJsZVRvU2V0IHN0cmluZ1ZhbHVlPSIke3Byb2plY3QuZm9yd2FyZGVkLmh0dHBTY2hlbWV9Ii8+DQogICAgICAgIDwvU2V0VmFyaWFibGU+DQogICAgICAgIDxTZXRWYXJpYWJsZT4NCiAgICAgICAgICAgIDxWYXJpYWJsZVRvU2V0IHN0cmluZ1ZhbHVlPSIke3Byb2plY3QuZm9yd2FyZGVkLnBvcnR9Ii8+DQogICAgICAgIDwvU2V0VmFyaWFibGU+DQogICAgICAgIDxTZXRWYXJpYWJsZT4NCiAgICAgICAgICAgIDxWYXJpYWJsZVRvU2V0IHN0cmluZ1ZhbHVlPSIke3Byb2plY3QuZm9yd2FyZGVkLmhvc3RuYW1lfSIvPg0KICAgICAgICA8L1NldFZhcmlhYmxlPg0KICAgICAgICA8U2V0VmFyaWFibGU+DQogICAgICAgICAgICA8VmFyaWFibGVUb1NldCBzdHJpbmdWYWx1ZT0iJHtwcm9qZWN0Lm5hbWV9Ii8+DQogICAgICAgIDwvU2V0VmFyaWFibGU+DQogICAgICAgIDxTZXRWYXJpYWJsZT4NCiAgICAgICAgICAgIDxWYXJpYWJsZVRvU2V0IHN0cmluZ1ZhbHVlPSIke3Byb2plY3QudmVyc2lvbn0iLz4NCiAgICAgICAgPC9TZXRWYXJpYWJsZT4NCiAgICAgICAgPFNldFZhcmlhYmxlPg0KICAgICAgICAgICAgPFZhcmlhYmxlVG9TZXQgc3RyaW5nVmFsdWU9IiR7cHJvamVjdC5lbmRwb2ludC5ob3N0bmFtZX0iLz4NCiAgICAgICAgPC9TZXRWYXJpYWJsZT4NCiAgICAgICAgPFNldFZhcmlhYmxlPg0KICAgICAgICAgICAgPFZhcmlhYmxlVG9TZXQgc3RyaW5nVmFsdWU9IiR7cHJvamVjdC5lbmRwb2ludC5wb3J0fSIvPg0KICAgICAgICA8L1NldFZhcmlhYmxlPg0KICAgICAgICA8U2V0VmFyaWFibGU+DQogICAgICAgICAgICA8VmFyaWFibGVUb1NldCBzdHJpbmdWYWx1ZT0iJHtwcm9qZWN0LmVuZHBvaW50Lmh0dHBTY2hlbWV9Ii8+DQogICAgICAgIDwvU2V0VmFyaWFibGU+DQogICAgICAgIDxTZXRWYXJpYWJsZT4NCiAgICAgICAgICAgIDxWYXJpYWJsZVRvU2V0IHN0cmluZ1ZhbHVlPSIke3Byb2plY3Qucm9vdFBhdGh9Ii8+DQogICAgICAgIDwvU2V0VmFyaWFibGU+DQogICAgPC9jb25maWdWYXJpYWJsZXM+"/>
+            <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+            <L7p:DataType variableDataType="message"/>
+            <L7p:VariableToSet stringValue="validateConfiguration"/>
+        </L7p:SetVariable>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <L7p:SchemaValidation>
+                <L7p:OtherTargetMessageVariable stringValue="validateConfiguration"/>
+                <L7p:ResourceInfo staticResourceInfo="included">
+                    <L7p:Document stringValueReference="inline"><![CDATA[<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+  <xs:element name="configVariables" type="configVariablesType"/>
+  <xs:complexType name="VariableToSetType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="stringValue" use="required">
+        <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:minLength value = "1"/>
+        </xs:restriction>
+      </xs:simpleType>
+      </xs:attribute>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="SetVariableType">
+    <xs:sequence>
+      <xs:element type="VariableToSetType" name="VariableToSet"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="configVariablesType">
+    <xs:sequence>
+      <xs:element type="SetVariableType" name="SetVariable" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="Usage"/>
+  </xs:complexType>
+</xs:schema>]]></L7p:Document>
+                </L7p:ResourceInfo>
+                <L7p:Target target="OTHER"/>
+            </L7p:SchemaValidation>
+            <wsp:All wsp:Usage="Required">
+                <L7p:CustomizeErrorResponse>
+                    <L7p:Content stringValueReference="inline"><![CDATA[{
+	"statusCode": "500",
+	"errorCode": "000",
+	"errorMessage": "Service Misconfigured",
+	"helpUrl": "http://${project.helpUrl.endpoint.hostname}/support/errors/error000"
+}]]></L7p:Content>
+                    <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                    <L7p:ExtraHeaders nameValuePairArray="included"/>
+                </L7p:CustomizeErrorResponse>
+                <L7p:FalseAssertion/>
+            </wsp:All>
+        </wsp:OneOrMore>
+        <L7p:ExportVariables>
+            <L7p:ExportedVars stringArrayValue="included">
+                <L7p:item stringValue="project.endpoint.hostname"/>
+                <L7p:item stringValue="project.endpoint.httpScheme"/>
+                <L7p:item stringValue="project.endpoint.port"/>
+                <L7p:item stringValue="project.forwarded.hostname"/>
+                <L7p:item stringValue="project.forwarded.httpScheme"/>
+                <L7p:item stringValue="project.forwarded.port"/>
+                <L7p:item stringValue="project.gateway.basepath"/>
+                <L7p:item stringValue="project.gateway.forwardedHeaderValues"/>
+                <L7p:item stringValue="project.gateway.hostname"/>
+                <L7p:item stringValue="project.helpUrl.endpoint.hostname"/>
+                <L7p:item stringValue="project.name"/>
+                <L7p:item stringValue="project.roleMappingType"/>
+                <L7p:item stringValue="project.rootPath"/>
+                <L7p:item stringValue="project.serviceSwaggerURL"/>
+                <L7p:item stringValue="project.simpleRoleMapper.userRoles"/>
+                <L7p:item stringValue="project.simpleRoleMapper.users"/>
+                <L7p:item stringValue="project.simpleRoleMapping.defaultRole"/>
+                <L7p:item stringValue="project.swaggerCacheExpiry"/>
+                <L7p:item stringValue="project.swaggerDocumentRoot"/>
+                <L7p:item stringValue="project.version"/>
+            </L7p:ExportedVars>
+        </L7p:ExportVariables>
+    </wsp:All>
+</wsp:Policy>

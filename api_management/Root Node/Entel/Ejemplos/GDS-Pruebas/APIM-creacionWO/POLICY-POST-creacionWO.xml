@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:AuditDetailAssertion>
+            <L7p:Detail stringValue="Policy Fragment: POST-creacionWO"/>
+        </L7p:AuditDetailAssertion>
+        <L7p:Include>
+            <L7p:PolicyGuid stringValue="c30fccdf-e5b2-4d1f-96da-424a5407efde"/>
+        </L7p:Include>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHtyZXF1ZXN0Lmh0dHAuaGVhZGVyLnJlcXVlc3RUaW1lc3RhbXB9"/>
+                    <L7p:VariableToSet stringValue="Timestamp"/>
+                </L7p:SetVariable>
+                <L7p:Regex>
+                    <L7p:AutoTarget booleanValue="false"/>
+                    <L7p:OtherTargetMessageVariable stringValue="Timestamp"/>
+                    <L7p:Regex stringValue="\-|T|\:|\."/>
+                    <L7p:RegexVar stringValue="Timestamp"/>
+                    <L7p:Replace booleanValue="true"/>
+                    <L7p:Replacement stringValue=""/>
+                    <L7p:Target target="OTHER"/>
+                </L7p:Regex>
+                <L7p:Regex>
+                    <L7p:AutoTarget booleanValue="false"/>
+                    <L7p:CaptureVar stringValue="Timestamp"/>
+                    <L7p:OtherTargetMessageVariable stringValue="Timestamp"/>
+                    <L7p:Regex stringValue="^................."/>
+                    <L7p:Replacement stringValue=""/>
+                    <L7p:Target target="OTHER"/>
+                </L7p:Regex>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.AuthenticationInfo.userName"/>
+                    <L7p:VariablePrefix stringValue="userName"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.AuthenticationInfo.password"/>
+                    <L7p:VariablePrefix stringValue="password"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.AuthenticationInfo.authentication"/>
+                    <L7p:VariablePrefix stringValue="authentication"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.AuthenticationInfo.locale"/>
+                    <L7p:VariablePrefix stringValue="locale"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.AuthenticationInfo.timeZone"/>
+                    <L7p:VariablePrefix stringValue="timeZone"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.Body.Submitter"/>
+                    <L7p:VariablePrefix stringValue="Submitter"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.Body.Assigned_To"/>
+                    <L7p:VariablePrefix stringValue="Assigned_To"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.Body.Status"/>
+                    <L7p:VariablePrefix stringValue="Status"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.Body.Summary"/>
+                    <L7p:VariablePrefix stringValue="Summary"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.Body.Categorization_Tier_1"/>
+                    <L7p:VariablePrefix stringValue="Categorization_Tier_1"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.Body.Categorization_Tier_2"/>
+                    <L7p:VariablePrefix stringValue="Categorization_Tier_2"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.Body.Categorization_Tier_3"/>
+                    <L7p:VariablePrefix stringValue="Categorization_Tier_3"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.Body.Detailed_Description"/>
+                    <L7p:VariablePrefix stringValue="Detailed_Description"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.Body.Priority"/>
+                    <L7p:VariablePrefix stringValue="Priority"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.Body.Work_Order_Type"/>
+                    <L7p:VariablePrefix stringValue="Work_Order_Type"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.Body.Product_Cat_Tier_1_2_"/>
+                    <L7p:VariablePrefix stringValue="Product_Cat_Tier_1_2_"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.Body.Product_Cat_Tier_2__2_"/>
+                    <L7p:VariablePrefix stringValue="Product_Cat_Tier_2__2_"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.Body.Product_Cat_Tier_3__2_"/>
+                    <L7p:VariablePrefix stringValue="Product_Cat_Tier_3__2_"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.Body.Product_Name__2_"/>
+                    <L7p:VariablePrefix stringValue="Product_Name__2_"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.Body.Product_Model_Version__2_"/>
+                    <L7p:VariablePrefix stringValue="Product_Model_Version__2_"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.Body.Support_Organization"/>
+                    <L7p:VariablePrefix stringValue="Support_Organization"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.Body.Support_Company"/>
+                    <L7p:VariablePrefix stringValue="Support_Company"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.Body.Support_Group_Name"/>
+                    <L7p:VariablePrefix stringValue="Support_Group_Name"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.Body.Customer_First_Name"/>
+                    <L7p:VariablePrefix stringValue="Customer_First_Name"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.Body.Customer_Last_Name"/>
+                    <L7p:VariablePrefix stringValue="Customer_Last_Name"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.Body.Customer_Company"/>
+                    <L7p:VariablePrefix stringValue="Customer_Company"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.Body.Fuente_Reportada"/>
+                    <L7p:VariablePrefix stringValue="Fuente_Reportada"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.Body.TipoRequerimiento"/>
+                    <L7p:VariablePrefix stringValue="TipoRequerimiento"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.Body.RequestManagerCompany"/>
+                    <L7p:VariablePrefix stringValue="RequestManagerCompany"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.Body.ManagerSupportOrganization"/>
+                    <L7p:VariablePrefix stringValue="ManagerSupportOrganization"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.Body.ManagerSupportGroupName"/>
+                    <L7p:VariablePrefix stringValue="ManagerSupportGroupName"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.Body.z1D_Action"/>
+                    <L7p:VariablePrefix stringValue="z1D_Action"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.Body.LocationCompany"/>
+                    <L7p:VariablePrefix stringValue="LocationCompany"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.Body.AddRequestFor"/>
+                    <L7p:VariablePrefix stringValue="AddRequestFor"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".CreacionWO.Body.CorporateID"/>
+                    <L7p:VariablePrefix stringValue="CorporateID"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="PHNvYXBlbnY6RW52ZWxvcGUgeG1sbnM6c29hcGVudj0iaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvc29hcC9lbnZlbG9wZS8iIHhtbG5zOnVybj0idXJuOkNyZWFjaW9uV08iPg0KICAgPHNvYXBlbnY6SGVhZGVyPg0KICAgICAgPHVybjpBdXRoZW50aWNhdGlvbkluZm8+DQogICAgICAgICA8dXJuOnVzZXJOYW1lPiR7dXNlck5hbWUucmVzdWx0fTwvdXJuOnVzZXJOYW1lPg0KICAgICAgICAgPHVybjpwYXNzd29yZD4ke3Bhc3N3b3JkLnJlc3VsdH08L3VybjpwYXNzd29yZD4NCiAgICAgICAgIDx1cm46YXV0aGVudGljYXRpb24+JHthdXRoZW50aWNhdGlvbi5yZXN1bHR9PC91cm46YXV0aGVudGljYXRpb24+DQoJICAgIDx1cm46bG9jYWxlPiR7bG9jYWxlLnJlc3VsdH08L3Vybjpsb2NhbGU+DQogICAgICAgICA8dXJuOnRpbWVab25lPiR7dGltZVpvbmUucmVzdWx0fTwvdXJuOnRpbWVab25lPg0KDQogICAgICA8L3VybjpBdXRoZW50aWNhdGlvbkluZm8+DQogICA8L3NvYXBlbnY6SGVhZGVyPg0KICAgPHNvYXBlbnY6Qm9keT4NCiAgICAgIDx1cm46Q3JlYWNpb25XTz4NCiAgICAgICAgIDx1cm46U3VibWl0dGVyPiR7U3VibWl0dGVyLnJlc3VsdH08L3VybjpTdWJtaXR0ZXI+DQogICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICA8dXJuOkFzc2lnbmVkX1RvPiR7QXNzaWduZWRfVG8ucmVzdWx0fTwvdXJuOkFzc2lnbmVkX1RvPg0KICAgICAgICAgPHVybjpTdGF0dXM+JHtTdGF0dXMucmVzdWx0fTwvdXJuOlN0YXR1cz4NCiAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgIDx1cm46U3VtbWFyeT4ke1N1bW1hcnkucmVzdWx0fTwvdXJuOlN1bW1hcnk+DQogICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICA8dXJuOkNhdGVnb3JpemF0aW9uX1RpZXJfMT4ke0NhdGVnb3JpemF0aW9uX1RpZXJfMS5yZXN1bHR9PC91cm46Q2F0ZWdvcml6YXRpb25fVGllcl8xPg0KICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgPHVybjpDYXRlZ29yaXphdGlvbl9UaWVyXzI+JHtDYXRlZ29yaXphdGlvbl9UaWVyXzIucmVzdWx0fTwvdXJuOkNhdGVnb3JpemF0aW9uX1RpZXJfMj4NCiAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgIDx1cm46Q2F0ZWdvcml6YXRpb25fVGllcl8zPiR7Q2F0ZWdvcml6YXRpb25fVGllcl8zLnJlc3VsdH08L3VybjpDYXRlZ29yaXphdGlvbl9UaWVyXzM+DQogICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICA8dXJuOkRldGFpbGVkX0Rlc2NyaXB0aW9uPiR7RGV0YWlsZWRfRGVzY3JpcHRpb24ucmVzdWx0fTwvdXJuOkRldGFpbGVkX0Rlc2NyaXB0aW9uPg0KICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgPHVybjpQcmlvcml0eT4ke1ByaW9yaXR5LnJlc3VsdH08L3VybjpQcmlvcml0eT4NCiAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgIDx1cm46V29ya19PcmRlcl9UeXBlPiR7V29ya19PcmRlcl9UeXBlLnJlc3VsdH08L3VybjpXb3JrX09yZGVyX1R5cGU+DQogICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICA8dXJuOlByb2R1Y3RfQ2F0X1RpZXJfMV8yXz4ke1Byb2R1Y3RfQ2F0X1RpZXJfMV8yXy5yZXN1bHR9PC91cm46UHJvZHVjdF9DYXRfVGllcl8xXzJfPg0KICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgPHVybjpQcm9kdWN0X0NhdF9UaWVyXzJfXzJfPiR7UHJvZHVjdF9DYXRfVGllcl8yX18yXy5yZXN1bHR9PC91cm46UHJvZHVjdF9DYXRfVGllcl8yX18yXz4NCiAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgIDx1cm46UHJvZHVjdF9DYXRfVGllcl8zX18yXz4ke1Byb2R1Y3RfQ2F0X1RpZXJfM19fMl8ucmVzdWx0fTwvdXJuOlByb2R1Y3RfQ2F0X1RpZXJfM19fMl8+DQogICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICA8dXJuOlByb2R1Y3RfTmFtZV9fMl8+JHtQcm9kdWN0X05hbWVfXzJfLnJlc3VsdH08L3VybjpQcm9kdWN0X05hbWVfXzJfPg0KICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgPHVybjpQcm9kdWN0X01vZGVsX1ZlcnNpb25fXzJfPiR7UHJvZHVjdF9Nb2RlbF9WZXJzaW9uX18yXy5yZXN1bHR9PC91cm46UHJvZHVjdF9Nb2RlbF9WZXJzaW9uX18yXz4NCiAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgIDx1cm46U3VwcG9ydF9Pcmdhbml6YXRpb24+JHtTdXBwb3J0X09yZ2FuaXphdGlvbi5yZXN1bHR9PC91cm46U3VwcG9ydF9Pcmdhbml6YXRpb24+DQogICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICA8dXJuOlN1cHBvcnRfQ29tcGFueT4ke1N1cHBvcnRfQ29tcGFueS5yZXN1bHR9PC91cm46U3VwcG9ydF9Db21wYW55Pg0KICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgPHVybjpTdXBwb3J0X0dyb3VwX05hbWU+JHtTdXBwb3J0X0dyb3VwX05hbWUucmVzdWx0fTwvdXJuOlN1cHBvcnRfR3JvdXBfTmFtZT4NCiAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgIDx1cm46Q3VzdG9tZXJfRmlyc3RfTmFtZT4ke0N1c3RvbWVyX0ZpcnN0X05hbWUucmVzdWx0fTwvdXJuOkN1c3RvbWVyX0ZpcnN0X05hbWU+DQogICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICA8dXJuOkN1c3RvbWVyX0xhc3RfTmFtZT4ke0N1c3RvbWVyX0xhc3RfTmFtZS5yZXN1bHR9PC91cm46Q3VzdG9tZXJfTGFzdF9OYW1lPg0KICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgPHVybjpDdXN0b21lcl9Db21wYW55PiR7Q3VzdG9tZXJfQ29tcGFueS5yZXN1bHR9PC91cm46Q3VzdG9tZXJfQ29tcGFueT4NCiAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgIDx1cm46RnVlbnRlX1JlcG9ydGFkYT4ke0Z1ZW50ZV9SZXBvcnRhZGEucmVzdWx0fTwvdXJuOkZ1ZW50ZV9SZXBvcnRhZGE+DQogICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICA8dXJuOlRpcG9SZXF1ZXJpbWllbnRvPiR7VGlwb1JlcXVlcmltaWVudG8ucmVzdWx0fTwvdXJuOlRpcG9SZXF1ZXJpbWllbnRvPg0KICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgPHVybjpSZXF1ZXN0TWFuYWdlckNvbXBhbnk+JHtSZXF1ZXN0TWFuYWdlckNvbXBhbnkucmVzdWx0fTwvdXJuOlJlcXVlc3RNYW5hZ2VyQ29tcGFueT4NCiAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgIDx1cm46TWFuYWdlclN1cHBvcnRPcmdhbml6YXRpb24+JHtNYW5hZ2VyU3VwcG9ydE9yZ2FuaXphdGlvbi5yZXN1bHR9PC91cm46TWFuYWdlclN1cHBvcnRPcmdhbml6YXRpb24+DQogICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICA8dXJuOk1hbmFnZXJTdXBwb3J0R3JvdXBOYW1lPiR7TWFuYWdlclN1cHBvcnRHcm91cE5hbWUucmVzdWx0fTwvdXJuOk1hbmFnZXJTdXBwb3J0R3JvdXBOYW1lPg0KICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgPHVybjp6MURfQWN0aW9uPiR7ejFEX0FjdGlvbi5yZXN1bHR9PC91cm46ejFEX0FjdGlvbj4NCiAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgIDx1cm46TG9jYXRpb25Db21wYW55PiR7TG9jYXRpb25Db21wYW55LnJlc3VsdH08L3VybjpMb2NhdGlvbkNvbXBhbnk+DQogICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICA8dXJuOkFkZFJlcXVlc3RGb3I+JHtBZGRSZXF1ZXN0Rm9yLnJlc3VsdH08L3VybjpBZGRSZXF1ZXN0Rm9yPg0KICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgPHVybjpDb3Jwb3JhdGVJRD4ke0NvcnBvcmF0ZUlELnJlc3VsdH08L3VybjpDb3Jwb3JhdGVJRD4gICAgICAgICANCiAgICAgIDwvdXJuOkNyZWFjaW9uV08+DQogICA8L3NvYXBlbnY6Qm9keT4NCjwvc29hcGVudjpFbnZlbG9wZT4="/>
+                    <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                    <L7p:DataType variableDataType="message"/>
+                    <L7p:VariableToSet stringValue="message"/>
+                </L7p:SetVariable>
+                <L7p:AuditDetailAssertion>
+                    <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                    <L7p:Detail stringValue="IDTRANSACTION: ${requestId}  REQUEST BACKEND: ${message.mainpart} "/>
+                    <L7p:LoggingOnly booleanValue="true"/>
+                </L7p:AuditDetailAssertion>
+                <L7p:HttpRoutingAssertion>
+                    <L7p:FailOnErrorStatus booleanValue="false"/>
+                    <L7p:ProtectedServiceUrl stringValue="http://172.16.181.49:8080/arsys/services/ARService?server=172.16.181.42&amp;webService=CreacionWO"/>
+                    <L7p:ProxyPassword stringValueNull="null"/>
+                    <L7p:ProxyUsername stringValueNull="null"/>
+                    <L7p:RequestHeaderRules httpPassthroughRuleSet="included">
+                        <L7p:Rules httpPassthroughRules="included">
+                            <L7p:item httpPassthroughRule="included">
+                                <L7p:Name stringValue="Cookie"/>
+                            </L7p:item>
+                            <L7p:item httpPassthroughRule="included">
+                                <L7p:CustomizeValue stringValue="&quot;urn:CreacionWO/CreacionWO&quot;"/>
+                                <L7p:Name stringValue="SOAPAction"/>
+                                <L7p:UsesCustomizedValue booleanValue="true"/>
+                            </L7p:item>
+                        </L7p:Rules>
+                    </L7p:RequestHeaderRules>
+                    <L7p:RequestMsgSrc stringValue="message"/>
+                    <L7p:RequestParamRules httpPassthroughRuleSet="included">
+                        <L7p:ForwardAll booleanValue="true"/>
+                        <L7p:Rules httpPassthroughRules="included"/>
+                    </L7p:RequestParamRules>
+                    <L7p:ResponseHeaderRules httpPassthroughRuleSet="included">
+                        <L7p:ForwardAll booleanValue="true"/>
+                        <L7p:Rules httpPassthroughRules="included">
+                            <L7p:item httpPassthroughRule="included">
+                                <L7p:Name stringValue="Set-Cookie"/>
+                            </L7p:item>
+                        </L7p:Rules>
+                    </L7p:ResponseHeaderRules>
+                    <L7p:ResponseMsgDest stringValue="serviceResponse"/>
+                    <L7p:SamlAssertionVersion intValue="2"/>
+                </L7p:HttpRoutingAssertion>
+                <L7p:AuditDetailAssertion>
+                    <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                    <L7p:Detail stringValue="IDTRANSACTION: ${requestId} BACKEND: ${httpRouting.url} LATENCY: ${httpRouting.latency} ms REASON CODE: ${httpRouting.reasonCode} RESPONSEBACKEND: ${response.mainpart} "/>
+                    <L7p:LoggingOnly booleanValue="true"/>
+                </L7p:AuditDetailAssertion>
+                <L7p:ComparisonAssertion>
+                    <L7p:AssertionComment assertionComment="included">
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="RIGHT.COMMENT"/>
+                                <L7p:value stringValue="Evalua si el estado de la respuesta es OK"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:AssertionComment>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                    <L7p:Expression2 stringValue="200"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:RightValue stringValue="200"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <wsp:OneOrMore wsp:Usage="Required">
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:EvaluateJsonPathExpression>
+                            <L7p:AssertionComment assertionComment="included">
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="Extrae el Body"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:AssertionComment>
+                            <L7p:Enabled booleanValue="false"/>
+                            <L7p:Expression stringValue="$.Create_RequestPayment_RSP.Body"/>
+                            <L7p:Target target="RESPONSE"/>
+                            <L7p:VariablePrefix stringValue="resultBody"/>
+                        </L7p:EvaluateJsonPathExpression>
+                        <L7p:Regex>
+                            <L7p:AssertionComment assertionComment="included">
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="Arregla el Body"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:AssertionComment>
+                            <L7p:AutoTarget booleanValue="false"/>
+                            <L7p:Enabled booleanValue="false"/>
+                            <L7p:OtherTargetMessageVariable stringValue="resultBody.result"/>
+                            <L7p:Regex stringValue="^\{|\}$"/>
+                            <L7p:Replace booleanValue="true"/>
+                            <L7p:Replacement stringValue=""/>
+                            <L7p:Target target="OTHER"/>
+                        </L7p:Regex>
+                        <L7p:Include>
+                            <L7p:PolicyGuid stringValue="6ca99a73-dddf-4d5c-b579-1b8ff18635d6"/>
+                        </L7p:Include>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="JHtyZXF1ZXN0LnRpbWUubG9jYWwueXl5eS1NTS1kZCdUJ0hIOm1tOnNzLlNTU30="/>
+                            <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                            <L7p:DataType variableDataType="message"/>
+                            <L7p:VariableToSet stringValue="responseTimeStamp"/>
+                        </L7p:SetVariable>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="JHtzZXJ2aWNlUmVzcG9uc2UubWFpbnBhcnR9"/>
+                            <L7p:ContentType stringValue="application/json; charset=utf-8"/>
+                            <L7p:DataType variableDataType="message"/>
+                            <L7p:VariableToSet stringValue="responseBackend"/>
+                        </L7p:SetVariable>
+                        <L7p:EvaluateJsonPathExpression>
+                            <L7p:Expression stringValue=".Envelope.Body.CreacionWOResponse.WorkOrder_ID"/>
+                            <L7p:OtherTargetMessageVariable stringValue="responseBackend"/>
+                            <L7p:Target target="OTHER"/>
+                            <L7p:VariablePrefix stringValue="workOrderId"/>
+                        </L7p:EvaluateJsonPathExpression>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="ew0KCSJyZXN1bHQiOiB7DQoJCSJ0cmFuc2FjdGlvbklkIjogIiR7cmVxdWVzdElkfSIsDQoJCSJjb2RlIjogIjIwMCIsDQoJCSJkZXNjcmlwdGlvbiI6ICJPSyIsDQoJCSJkZXNjcmlwdGlvbkRldGFpbCI6ICJQcm9jZXNhbWllbnRvIGNvbmNsdcOtZG8gZXhpdG9zYW1lbnRlIiwNCgkJInJlc3BvbnNlVGltZXN0YW1wIjogIiR7cmVzcG9uc2VUaW1lU3RhbXAubWFpbnBhcnR9Ig0KCX0sDQoJew0KCSAgIkNyZWFjaW9uV09SZXNwb25zZSI6IHsNCgkJIkJvZHkiOiB7ICJXb3JrT3JkZXJfSUQiOiAke3dvcmtPcmRlcklkLnJlc3VsdH0gfQ0KICAJfQ0KfQkNCgkNCn0="/>
+                            <L7p:ContentType stringValue="application/json; charset=utf-8"/>
+                            <L7p:DataType variableDataType="message"/>
+                            <L7p:VariableToSet stringValue="serviceResponse"/>
+                        </L7p:SetVariable>
+                        <L7p:AuditDetailAssertion>
+                            <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                            <L7p:Detail stringValue="IDTRANSACTION: ${requestId}  RESPONSE GW: ${serviceResponse} "/>
+                            <L7p:LoggingOnly booleanValue="true"/>
+                        </L7p:AuditDetailAssertion>
+                        <L7p:HardcodedResponse>
+                            <L7p:Base64ResponseBody stringValue="JHtzZXJ2aWNlUmVzcG9uc2UubWFpbnBhcnR9CgoK"/>
+                            <L7p:ResponseContentType stringValue="application/json; charset=utf-8"/>
+                        </L7p:HardcodedResponse>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="ew0KInJlc3VsdCI6ew0KCSJ0cmFuc2FjdGlvbklkIjoiJHtyZXF1ZXN0SWR9IiwNCgkiY29kZSI6IjIwMCIsDQoJImRlc2NyaXB0aW9uIjoiT0siLA0KCSJkZXNjcmlwdGlvbkRldGFpbCI6IlByb2Nlc2FtaWVudG8gY29uY2x1w61kbyBleGl0b3NhbWVudGUiLA0KCSJyZXNwb25zZVRpbWVzdGFtcCI6IiR7cmVzcG9uc2VUaW1lc3RhbXB9Ig0KCX0NCn0="/>
+                            <L7p:ContentType stringValue="application/json; charset=utf-8"/>
+                            <L7p:DataType variableDataType="message"/>
+                            <L7p:VariableToSet stringValue="serviceResponse"/>
+                        </L7p:SetVariable>
+                        <L7p:AuditDetailAssertion>
+                            <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                            <L7p:Detail stringValue="IDTRANSACTION: ${requestId}  RESPONSE GW: ${serviceResponse} "/>
+                            <L7p:LoggingOnly booleanValue="true"/>
+                        </L7p:AuditDetailAssertion>
+                        <L7p:HardcodedResponse>
+                            <L7p:Base64ResponseBody stringValue="JHtzZXJ2aWNlUmVzcG9uc2V9CgoK"/>
+                            <L7p:ResponseContentType stringValue="application/json; charset=utf-8"/>
+                        </L7p:HardcodedResponse>
+                    </wsp:All>
+                </wsp:OneOrMore>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="Ruteo"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:Encapsulated>
+                    <L7p:EncapsulatedAssertionConfigGuid stringValue="14295f18-da19-4f0e-9643-a8c30b3544dc"/>
+                    <L7p:EncapsulatedAssertionConfigName stringValue="CodeStatus"/>
+                </L7p:Encapsulated>
+                <L7p:Include>
+                    <L7p:Enabled booleanValue="false"/>
+                    <L7p:PolicyGuid stringValue="6ca99a73-dddf-4d5c-b579-1b8ff18635d6"/>
+                </L7p:Include>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Enabled booleanValue="false"/>
+                    <L7p:Expression stringValue=".SourceError.description"/>
+                    <L7p:Target target="RESPONSE"/>
+                    <L7p:VariablePrefix stringValue="descriptionDetail"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHtkZXNjcmlwdGlvbkRldGFpbC5yZXN1bHR9"/>
+                    <L7p:VariableToSet stringValue="descriptionDetail"/>
+                </L7p:SetVariable>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Enabled booleanValue="false"/>
+                    <L7p:Expression stringValue=".SourceError.code"/>
+                    <L7p:Target target="RESPONSE"/>
+                    <L7p:VariablePrefix stringValue="codeSource"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:ResponseXpathAssertion>
+                    <L7p:VariablePrefix stringValue="ResponseCode"/>
+                    <L7p:XmlMsgSrc stringValue="serviceResponse"/>
+                    <L7p:XpathExpression xpathExpressionValue="included">
+                        <L7p:Expression stringValue="/soapenv:Envelope/soapenv:Body/soapenv:Fault/faultstring"/>
+                        <L7p:Namespaces mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="soapenv"/>
+                                <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                            </L7p:entry>
+                        </L7p:Namespaces>
+                        <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                    </L7p:XpathExpression>
+                </L7p:ResponseXpathAssertion>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHtyZXF1ZXN0LnRpbWUubG9jYWwueXl5eS1NTS1kZCdUJ0hIOm1tOnNzLlNTU30="/>
+                    <L7p:VariableToSet stringValue="responseTimestamp"/>
+                </L7p:SetVariable>
+                <L7p:AuditDetailAssertion>
+                    <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                    <L7p:Detail stringValue="IDTRANSACTION: ${requestId} CODE: ${code} DESCRIPTION: ${description} DETAIL: ${descriptionDetail}"/>
+                    <L7p:LoggingOnly booleanValue="true"/>
+                </L7p:AuditDetailAssertion>
+                <L7p:CustomizeErrorResponse>
+                    <L7p:Content stringValueReference="inline"><![CDATA[{
+"result":{
+	"transactionId":"${requestId}",
+	"code":"${httpRouting.ReasonCode}",
+	"description":"Error retornado por BackEnd",
+	"descriptionDetail":"${ResponseCode.result}",
+	"responseTimestamp":"${responseTimestamp}"
+	},
+	{
+	
+}]]></L7p:Content>
+                    <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                    <L7p:ExtraHeaders nameValuePairArray="included"/>
+                    <L7p:HttpStatus stringValue="${httpRouting.reasonCode}"/>
+                </L7p:CustomizeErrorResponse>
+                <L7p:RaiseError/>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:Include>
+                    <L7p:PolicyGuid stringValue="1b3f18a3-5e88-4cae-9fae-44b459727ac1"/>
+                </L7p:Include>
+            </wsp:All>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="Logica"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:OneOrMore>
+    </wsp:All>
+</wsp:Policy>

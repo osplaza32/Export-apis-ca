@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="== Target policy is 'OTK User Attribute Look Up'"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="== Overwrite other variables that have default values in the targe policy and update the 'Export' assertion"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="== This policy is also referenced wherever user attributes have to be looked up from an LDAP configuration"/>
+        </L7p:CommentAssertion>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:CommentAssertion>
+                    <L7p:Comment stringValue="Lookup the user from a list of known administrators"/>
+                </L7p:CommentAssertion>
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${given_username}"/>
+                    <L7p:Operator operatorNull="null"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item regex="included">
+                            <L7p:Pattern stringValue="admin|pmadmin|administrator"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="YWRtaW4="/>
+                    <L7p:VariableToSet stringValue="current.user.role"/>
+                </L7p:SetVariable>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="Admin users"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+            <L7p:TrueAssertion/>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="// Roles are configured here"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:OneOrMore>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${custom}"/>
+                    <L7p:Expression2 stringValue="path=/userinfo"/>
+                    <L7p:Operator operator="CONTAINS"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Operator operator="CONTAINS"/>
+                            <L7p:RightValue stringValue="path=/userinfo"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:SetVariable>
+                    <L7p:AssertionComment assertionComment="included">
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="RIGHT.COMMENT"/>
+                                <L7p:value stringValue="Used to validate that the MAS User Authentication occurred successfully"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:AssertionComment>
+                    <L7p:Base64Expression stringValue="Im5hbWUiOiJEYXJ0aCIsDQogImZhbWlseV9uYW1lIjoiVmFkZXIiLA0KICJuaWNrbmFtZSI6Ik1hc3Rlci1vZi10aGUtZGFyay1mb3JjZSIsDQogInByZWZlcnJlZF91c2VybmFtZSI6IiR7Z2l2ZW5fdXNlcm5hbWV9Ig=="/>
+                    <L7p:VariableToSet stringValue="userinfo.profile"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:AssertionComment assertionComment="included">
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="RIGHT.COMMENT"/>
+                                <L7p:value stringValue="Used to validate that the MAS User Authentication occurred successfully"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:AssertionComment>
+                    <L7p:Base64Expression stringValue="ImVtYWlsIjoiZGFydGgudmFkZXJAZGVhdGhzdGFyLnNwYWNlIg=="/>
+                    <L7p:VariableToSet stringValue="userinfo.email"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:AssertionComment assertionComment="included">
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="RIGHT.COMMENT"/>
+                                <L7p:value stringValue="Used to validate that the MAS User Authentication occurred successfully"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:AssertionComment>
+                    <L7p:Base64Expression stringValue="InBob25lX251bWJlciI6IisxLTU1NS0xMjMtMTIzNCI="/>
+                    <L7p:VariableToSet stringValue="userinfo.phone"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:AssertionComment assertionComment="included">
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="RIGHT.COMMENT"/>
+                                <L7p:value stringValue="Used to validate that the MAS User Authentication occurred successfully"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:AssertionComment>
+                    <L7p:Base64Expression stringValue="ImFkZHJlc3MiOnsNCiAgICJyZWdpb24iOiAiU3BhY2UiLA0KICAgImNvdW50cnkiOiAiTk9ORSJ9"/>
+                    <L7p:VariableToSet stringValue="userinfo.address"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:AssertionComment assertionComment="included">
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="RIGHT.COMMENT"/>
+                                <L7p:value stringValue="// can be overwritten with any additional information"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:AssertionComment>
+                    <L7p:Base64Expression stringValue="PHVzZXJpbmZvPg0KIDxwcm9maWxlPjwhW0NEQVRBWyR7dXNlcmluZm8ucHJvZmlsZX1dXT48L3Byb2ZpbGU+DQogPGVtYWlsPjwhW0NEQVRBWyR7dXNlcmluZm8uZW1haWx9XV0+PC9lbWFpbD4NCiA8cGhvbmU+PCFbQ0RBVEFbJHt1c2VyaW5mby5waG9uZX1dXT48L3Bob25lPg0KIDxhZGRyZXNzPjwhW0NEQVRBWyR7dXNlcmluZm8uYWRkcmVzc31dXT48L2FkZHJlc3M+DQo8L3VzZXJpbmZvPg=="/>
+                    <L7p:VariableToSet stringValue="current.user.attributes"/>
+                </L7p:SetVariable>
+            </wsp:All>
+            <L7p:TrueAssertion/>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="// handle a call from '/userinfo' as an example"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:OneOrMore>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${custom}"/>
+                    <L7p:Expression2 stringValue="path=/generateOTP"/>
+                    <L7p:Operator operator="CONTAINS"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Operator operator="CONTAINS"/>
+                            <L7p:RightValue stringValue="path=/generateOTP"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="c2FtcGxlQGV4YW1wbGUuY29t"/>
+                    <L7p:VariableToSet stringValue="email"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="KzEtMTIzLTU1NS01NTU1"/>
+                    <L7p:VariableToSet stringValue="mobile"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:AssertionComment assertionComment="included">
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="RIGHT.COMMENT"/>
+                                <L7p:value stringValue="// can be overwritten with any additional information"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:AssertionComment>
+                    <L7p:Base64Expression stringValue="PHVzZXJpbmZvPg0KIDxlbWFpbD48IVtDREFUQVske2VtYWlsfV1dPjwvZW1haWw+DQogPG1vYmlsZT48IVtDREFUQVske21vYmlsZX1dXT48L21vYmlsZT4NCjwvdXNlcmluZm8+"/>
+                    <L7p:VariableToSet stringValue="current.user.attributes"/>
+                </L7p:SetVariable>
+            </wsp:All>
+            <L7p:TrueAssertion/>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="// handle a call from '/generateOTP' as an example for a MAG service"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:OneOrMore>
+        <L7p:ExportVariables>
+            <L7p:AssertionComment assertionComment="included">
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="// export more variables if required"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:AssertionComment>
+            <L7p:ExportedVars stringArrayValue="included">
+                <L7p:item stringValue="current.user.attributes"/>
+                <L7p:item stringValue="current.user.role"/>
+            </L7p:ExportedVars>
+        </L7p:ExportVariables>
+    </wsp:All>
+</wsp:Policy>

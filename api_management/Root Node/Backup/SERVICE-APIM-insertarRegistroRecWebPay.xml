@@ -1,0 +1,1097 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:Include>
+            <L7p:PolicyGuid stringValue="812ed196-c315-4e92-b630-b5c64c5c043c"/>
+        </L7p:Include>
+        <L7p:ApiPortalIntegration>
+            <L7p:ApiGroup stringValue=""/>
+            <L7p:ApiId stringValue="6ff9140e-caa6-494e-87ad-7f74da3456e6"/>
+            <L7p:PortalManagedApiFlag stringValue="L7p:ApiPortalManagedServiceAssertion"/>
+        </L7p:ApiPortalIntegration>
+        <L7p:Encapsulated>
+            <L7p:EncapsulatedAssertionConfigGuid stringValue="8a48ee76-a432-4013-85b6-428c65bd182d"/>
+            <L7p:EncapsulatedAssertionConfigName stringValue="API Portal Integration - OAuth 2.0"/>
+        </L7p:Encapsulated>
+        <L7p:Include>
+            <L7p:PolicyGuid stringValue="c30fccdf-e5b2-4d1f-96da-424a5407efde"/>
+        </L7p:Include>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${request.http.uri}"/>
+                    <L7p:Operator operatorNull="null"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item regex="included">
+                            <L7p:Pattern stringValue="^\/legacy\/v1\/insertarRegistroRecWebPay$"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <wsp:OneOrMore wsp:Usage="Required">
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${request.http.method}"/>
+                            <L7p:Expression2 stringValue="POST"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="POST"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <wsp:OneOrMore wsp:Usage="Required">
+                            <wsp:All wsp:Usage="Required">
+                                <L7p:JSONSchema>
+                                    <L7p:ResourceInfo staticResourceInfo="included">
+                                    <L7p:Document stringValueReference="inline"><![CDATA[{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "ordCompra",
+    "IDP",
+    "parametro4",
+    "tipoPago",
+    "fechaTransaccion",
+    "detalleMonto"
+  ],
+  "properties": {
+    "ordCompra": {
+      "$id": "#/properties/ordCompra",
+      "type": "string",
+      "title": "The Ordcompra Schema",
+      "default": "",
+      "examples": [
+        "?"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "IDP": {
+      "$id": "#/properties/IDP",
+      "type": "string",
+      "title": "The Idp Schema",
+      "default": "",
+      "examples": [
+        "?"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "parametro4": {
+      "$id": "#/properties/parametro4",
+      "type": "string",
+      "title": "The Parametro4 Schema",
+      "default": "",
+      "examples": [
+        "?"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "tipoPago": {
+      "$id": "#/properties/tipoPago",
+      "type": "string",
+      "title": "The Tipopago Schema",
+      "default": "",
+      "examples": [
+        "?"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "fechaTransaccion": {
+      "$id": "#/properties/fechaTransaccion",
+      "type": "string",
+      "title": "The Fechatransaccion Schema",
+      "default": "",
+      "examples": [
+        "?"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "detalleMonto": {
+      "$id": "#/properties/detalleMonto",
+      "type": "array",
+      "title": "The Detallemonto Schema",
+      "items": {
+        "$id": "#/properties/detalleMonto/items",
+        "type": "object",
+        "title": "The Items Schema",
+        "required": [
+          "ordenCompra",
+          "parametroPersonalizable",
+          "monto"
+        ],
+        "properties": {
+          "ordenCompra": {
+            "$id": "#/properties/detalleMonto/items/properties/ordenCompra",
+            "type": "string",
+            "title": "The Ordencompra Schema",
+            "default": "",
+            "examples": [
+              "?"
+            ],
+            "pattern": "^(.*)$"
+          },
+          "parametroPersonalizable": {
+            "$id": "#/properties/detalleMonto/items/properties/parametroPersonalizable",
+            "type": "string",
+            "title": "The Parametropersonalizable Schema",
+            "default": "",
+            "examples": [
+              "?"
+            ],
+            "pattern": "^(.*)$"
+          },
+          "monto": {
+            "$id": "#/properties/detalleMonto/items/properties/monto",
+            "type": "string",
+            "title": "The Monto Schema",
+            "default": "",
+            "examples": [
+              "?"
+            ],
+            "pattern": "^(.*)$"
+          }
+        }
+      }
+    }
+  }
+}]]></L7p:Document>
+                                    </L7p:ResourceInfo>
+                                </L7p:JSONSchema>
+                            </wsp:All>
+                            <wsp:All wsp:Usage="Required">
+                                <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="NDAw"/>
+                                    <L7p:VariableToSet stringValue="codeReturn"/>
+                                </L7p:SetVariable>
+                                <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="RXNxdWVtYSBJbmNvcnJlY3RvLg=="/>
+                                    <L7p:VariableToSet stringValue="description"/>
+                                </L7p:SetVariable>
+                                <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="RXN0cnVjdHVyYSBKc29uIG5vIHbDoWxpZGE="/>
+                                    <L7p:VariableToSet stringValue="descriptionDetail"/>
+                                </L7p:SetVariable>
+                                <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHtyZXF1ZXN0LnRpbWUubG9jYWwueXl5eS9NTS9kZCdUJ0hIOm1tOnNzLlNTU30="/>
+                                    <L7p:VariableToSet stringValue="responseTimestamp"/>
+                                </L7p:SetVariable>
+                                <L7p:AuditDetailAssertion>
+                                    <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                                    <L7p:Detail stringValue="TRANSACTION: ${requestId} CODE: ${code} DESCRIPTION: ${description} DETAIL: ${descriptionDetail}"/>
+                                    <L7p:LoggingOnly booleanValue="true"/>
+                                </L7p:AuditDetailAssertion>
+                                <L7p:CustomizeErrorResponse>
+                                    <L7p:Content stringValueReference="inline"><![CDATA[{
+"result":{
+	"transactionId":"${requestId}",
+	"code":"${code}",
+	"description":"${description}",
+	"descriptionDetail":"${descriptionDetail}",
+	"responseTimestamp":"${responseTimestamp}"
+	}
+}]]></L7p:Content>
+                                    <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                                    <L7p:ExtraHeaders nameValuePairArray="included"/>
+                                    <L7p:HttpStatus stringValue="400"/>
+                                </L7p:CustomizeErrorResponse>
+                                <L7p:RaiseError/>
+                            </wsp:All>
+                            <L7p:assertionComment>
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="//ValidaciÃÂ³n ParÃÂ¡metros Entrada"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:assertionComment>
+                        </wsp:OneOrMore>
+                        <wsp:OneOrMore wsp:Usage="Required">
+                            <wsp:All wsp:Usage="Required">
+                                <L7p:UUIDGenerator>
+                                    <L7p:Enabled booleanValue="false"/>
+                                    <L7p:TargetVariable stringValue="idTransaction"/>
+                                </L7p:UUIDGenerator>
+                                <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHtyZXF1ZXN0SWR9"/>
+                                    <L7p:VariableToSet stringValue="idTransaction"/>
+                                </L7p:SetVariable>
+                                <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHtyZXF1ZXN0LnRpbWUubG9jYWwuZGQvTU0veXl5eSdUJ0hIOm1tOnNzLlNTU30="/>
+                                    <L7p:VariableToSet stringValue="datetimeOperation"/>
+                                </L7p:SetVariable>
+                                <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="QVBJTS1pbnNlcnRhclJlZ2lzdHJvUmVjV2ViUGF5"/>
+                                    <L7p:VariableToSet stringValue="serviceName"/>
+                                </L7p:SetVariable>
+                                <L7p:EvaluateJsonPathExpression>
+                                    <L7p:Expression stringValue=".ordCompra"/>
+                                    <L7p:VariablePrefix stringValue="ordCompra"/>
+                                </L7p:EvaluateJsonPathExpression>
+                                <L7p:EvaluateJsonPathExpression>
+                                    <L7p:Expression stringValue=".IDP"/>
+                                    <L7p:VariablePrefix stringValue="IDP"/>
+                                </L7p:EvaluateJsonPathExpression>
+                                <L7p:EvaluateJsonPathExpression>
+                                    <L7p:Expression stringValue=".parametro"/>
+                                    <L7p:VariablePrefix stringValue="parametro"/>
+                                </L7p:EvaluateJsonPathExpression>
+                                <L7p:EvaluateJsonPathExpression>
+                                    <L7p:Expression stringValue=".tipoPago"/>
+                                    <L7p:VariablePrefix stringValue="tipoPago"/>
+                                </L7p:EvaluateJsonPathExpression>
+                                <L7p:EvaluateJsonPathExpression>
+                                    <L7p:Expression stringValue=".fechaTransaccion"/>
+                                    <L7p:VariablePrefix stringValue="fechaTransaccion"/>
+                                </L7p:EvaluateJsonPathExpression>
+                                <L7p:EvaluateJsonPathExpression>
+                                    <L7p:Enabled booleanValue="false"/>
+                                    <L7p:Expression stringValue=".ordenCompra"/>
+                                    <L7p:VariablePrefix stringValue="ordenCompra"/>
+                                </L7p:EvaluateJsonPathExpression>
+                                <L7p:EvaluateJsonPathExpression>
+                                    <L7p:Enabled booleanValue="false"/>
+                                    <L7p:Expression stringValue=".parametroPersonalizable"/>
+                                    <L7p:VariablePrefix stringValue="parametroPersonalizable"/>
+                                </L7p:EvaluateJsonPathExpression>
+                                <L7p:EvaluateJsonPathExpression>
+                                    <L7p:Enabled booleanValue="false"/>
+                                    <L7p:Expression stringValue=".monto"/>
+                                    <L7p:VariablePrefix stringValue="monto"/>
+                                </L7p:EvaluateJsonPathExpression>
+                                <L7p:EvaluateJsonPathExpression>
+                                    <L7p:Expression stringValue=".detalleMonto"/>
+                                    <L7p:VariablePrefix stringValue="detalleMonto"/>
+                                </L7p:EvaluateJsonPathExpression>
+                                <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue=""/>
+                                    <L7p:VariableToSet stringValue="list_detalleMonto"/>
+                                </L7p:SetVariable>
+                                <L7p:ForEachLoop L7p:Usage="Required"
+                                    loopVariable="detalleMonto.results" variablePrefix="aux">
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHthdXguY3VycmVudH0="/>
+                                    <L7p:ContentType stringValue="application/json; charset=utf-8"/>
+                                    <L7p:DataType variableDataType="message"/>
+                                    <L7p:VariableToSet stringValue="messageInJson"/>
+                                    </L7p:SetVariable>
+                                    <L7p:EvaluateJsonPathExpression>
+                                    <L7p:Expression stringValue=".ordenCompra"/>
+                                    <L7p:OtherTargetMessageVariable stringValue="messageInJson"/>
+                                    <L7p:Target target="OTHER"/>
+                                    <L7p:VariablePrefix stringValue="ordenCompra"/>
+                                    </L7p:EvaluateJsonPathExpression>
+                                    <L7p:EvaluateJsonPathExpression>
+                                    <L7p:Expression stringValue=".parametroPersonalizable"/>
+                                    <L7p:OtherTargetMessageVariable stringValue="messageInJson"/>
+                                    <L7p:Target target="OTHER"/>
+                                    <L7p:VariablePrefix stringValue="parametroPersonalizable"/>
+                                    </L7p:EvaluateJsonPathExpression>
+                                    <L7p:EvaluateJsonPathExpression>
+                                    <L7p:Expression stringValue=".monto"/>
+                                    <L7p:OtherTargetMessageVariable stringValue="messageInJson"/>
+                                    <L7p:Target target="OTHER"/>
+                                    <L7p:VariablePrefix stringValue="monto"/>
+                                    </L7p:EvaluateJsonPathExpression>
+                                    <L7p:EvaluateJsonPathExpression>
+                                    <L7p:Enabled booleanValue="false"/>
+                                    <L7p:Expression stringValue=".CAMPOS"/>
+                                    <L7p:OtherTargetMessageVariable stringValue="messageInJson"/>
+                                    <L7p:Target target="OTHER"/>
+                                    <L7p:VariablePrefix stringValue="campo"/>
+                                    </L7p:EvaluateJsonPathExpression>
+                                    <L7p:EvaluateJsonPathExpression>
+                                    <L7p:Enabled booleanValue="false"/>
+                                    <L7p:Expression stringValue=".DESCRIP"/>
+                                    <L7p:OtherTargetMessageVariable stringValue="messageInJson"/>
+                                    <L7p:Target target="OTHER"/>
+                                    <L7p:VariablePrefix stringValue="descrip"/>
+                                    </L7p:EvaluateJsonPathExpression>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHtsaXN0X2RldGFsbGVNb250b30NCjx0eXA6ZGV0YWxsZU1vbnRvPg0KCTx0eXA6b3JkZW5Db21wcmE+JHtvcmRlbkNvbXByYS5yZXN1bHR9PC90eXA6b3JkZW5Db21wcmE+DQoJPHR5cDpwYXJhbWV0cm9QZXJzb25hbGl6YWJsZT4ke3BhcmFtZXRyb1BlcnNvbmFsaXphYmxlLnJlc3VsdH08L3R5cDpwYXJhbWV0cm9QZXJzb25hbGl6YWJsZT4NCgk8dHlwOm1vbnRvPiR7bW9udG8ucmVzdWx0fTwvdHlwOm1vbnRvPg0KPC90eXA6ZGV0YWxsZU1vbnRvPg=="/>
+                                    <L7p:VariableToSet stringValue="list_detalleMonto"/>
+                                    </L7p:SetVariable>
+                                    <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="// Recorre el arreglo"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:assertionComment>
+                                </L7p:ForEachLoop>
+                                <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="PHNvYXBlbnY6RW52ZWxvcGUgeG1sbnM6c29hcGVudj0iaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvc29hcC9lbnZlbG9wZS8iIHhtbG5zOnJlYz0iaHR0cDovL3d3dy5lcGNzLmNvbS9iaWxsaW5nL3JlY2FyZ2EiIHhtbG5zOnR5cD0iaHR0cDovL3d3dy5lcGNzLmNvbS9iaWxsaW5nL3JlY2FyZ2EvdHlwZXMiPg0KICAgPHNvYXBlbnY6SGVhZGVyPg0KICAgICAgPHJlYzpBdXRoSGVhZGVyRG9jdW1lbnQ+DQogICAgICAgICA8dHlwOnVzZXJuYW1lPj88L3R5cDp1c2VybmFtZT4NCiAgICAgICAgIDx0eXA6cGFzc3dvcmQ+PzwvdHlwOnBhc3N3b3JkPg0KICAgICAgPC9yZWM6QXV0aEhlYWRlckRvY3VtZW50Pg0KICAgPC9zb2FwZW52OkhlYWRlcj4NCiAgIDxzb2FwZW52OkJvZHk+DQogICAgICA8cmVjOkluc2VydGFyUmVnaXN0cm9SZWNXZWJQYXlEb2N1bWVudD4NCiAgICAgICAgIDx0eXA6b3JkQ29tcHJhPiR7b3JkQ29tcHJhLnJlc3VsdH08L3R5cDpvcmRDb21wcmE+DQogICAgICAgICA8dHlwOklEUD4ke0lEUC5yZXN1bHR9PC90eXA6SURQPg0KICAgICAgICAgPHR5cDpwYXJhbWV0cm80PiR7cGFyYW1ldHJvLnJlc3VsdH08L3R5cDpwYXJhbWV0cm80Pg0KICAgICAgICAgPHR5cDp0aXBvUGFnbz4ke3RpcG9QYWdvLnJlc3VsdH08L3R5cDp0aXBvUGFnbz4NCiAgICAgICAgIDx0eXA6ZmVjaGFUcmFuc2FjY2lvbj4ke2ZlY2hhVHJhbnNhY2Npb24ucmVzdWx0fTwvdHlwOmZlY2hhVHJhbnNhY2Npb24+DQogICAgICAgICA8IS0tWmVybyBvciBtb3JlIHJlcGV0aXRpb25zOi0tPg0KCQkke2xpc3RfZGV0YWxsZU1vbnRvfQ0KICAgICAgPC9yZWM6SW5zZXJ0YXJSZWdpc3Ryb1JlY1dlYlBheURvY3VtZW50Pg0KICAgPC9zb2FwZW52OkJvZHk+DQo8L3NvYXBlbnY6RW52ZWxvcGU+"/>
+                                    <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                                    <L7p:DataType variableDataType="message"/>
+                                    <L7p:VariableToSet stringValue="request"/>
+                                </L7p:SetVariable>
+                                <L7p:HttpRoutingAssertion>
+                                    <L7p:ConnectionTimeout stringValue="3000"/>
+                                    <L7p:FailOnErrorStatus booleanValue="false"/>
+                                    <L7p:HttpMethod httpMethod="POST"/>
+                                    <L7p:MaxRetries intValue="2"/>
+                                    <L7p:ProtectedServiceUrl stringValue="http://${gateway.esb.hostname}/BILLING/Recarga/Proxies/BillingRecargaService?wsdl"/>
+                                    <L7p:ProxyPassword stringValueNull="null"/>
+                                    <L7p:ProxyUsername stringValueNull="null"/>
+                                    <L7p:RequestHeaderRules httpPassthroughRuleSet="included">
+                                    <L7p:ForwardAll booleanValue="true"/>
+                                    <L7p:Rules httpPassthroughRules="included">
+                                    <L7p:item httpPassthroughRule="included">
+                                    <L7p:Name stringValue="Cookie"/>
+                                    </L7p:item>
+                                    <L7p:item httpPassthroughRule="included">
+                                    <L7p:Name stringValue="SOAPAction"/>
+                                    </L7p:item>
+                                    </L7p:Rules>
+                                    </L7p:RequestHeaderRules>
+                                    <L7p:RequestMsgSrc stringValue="request"/>
+                                    <L7p:RequestParamRules httpPassthroughRuleSet="included">
+                                    <L7p:ForwardAll booleanValue="true"/>
+                                    <L7p:Rules httpPassthroughRules="included"/>
+                                    </L7p:RequestParamRules>
+                                    <L7p:ResponseHeaderRules httpPassthroughRuleSet="included">
+                                    <L7p:ForwardAll booleanValue="true"/>
+                                    <L7p:Rules httpPassthroughRules="included">
+                                    <L7p:item httpPassthroughRule="included">
+                                    <L7p:Name stringValue="Set-Cookie"/>
+                                    </L7p:item>
+                                    </L7p:Rules>
+                                    </L7p:ResponseHeaderRules>
+                                    <L7p:ResponseMsgDest stringValue="serviceResponse"/>
+                                    <L7p:SamlAssertionVersion intValue="2"/>
+                                </L7p:HttpRoutingAssertion>
+                                <L7p:ComparisonAssertion>
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                                    <L7p:Operator operatorNull="null"/>
+                                    <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="int"/>
+                                    </L7p:item>
+                                    <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="200"/>
+                                    </L7p:item>
+                                    </L7p:Predicates>
+                                </L7p:ComparisonAssertion>
+                                <L7p:ResponseXpathAssertion>
+                                    <L7p:VariablePrefix stringValue="codeResult"/>
+                                    <L7p:XmlMsgSrc stringValue="serviceResponse"/>
+                                    <L7p:XpathExpression xpathExpressionValue="included">
+                                    <L7p:Expression stringValue="/soapenv:Envelope/soapenv:Body/rec:ResultadoInsertarRegistroRecWebPayDocument/typ:respuesta/typ:codigo"/>
+                                    <L7p:Namespaces mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="rec"/>
+                                    <L7p:value stringValue="http://www.epcs.com/billing/recarga"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="typ"/>
+                                    <L7p:value stringValue="http://www.epcs.com/billing/recarga/types"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="s"/>
+                                    <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="soapenv"/>
+                                    <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                                    </L7p:entry>
+                                    </L7p:Namespaces>
+                                    <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                                    </L7p:XpathExpression>
+                                </L7p:ResponseXpathAssertion>
+                                <L7p:ResponseXpathAssertion>
+                                    <L7p:VariablePrefix stringValue="descriptionDetail"/>
+                                    <L7p:XmlMsgSrc stringValue="serviceResponse"/>
+                                    <L7p:XpathExpression xpathExpressionValue="included">
+                                    <L7p:Expression stringValue="/soapenv:Envelope/soapenv:Body/rec:ResultadoInsertarRegistroRecWebPayDocument/typ:respuesta/typ:descripcion"/>
+                                    <L7p:Namespaces mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="rec"/>
+                                    <L7p:value stringValue="http://www.epcs.com/billing/recarga"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="typ"/>
+                                    <L7p:value stringValue="http://www.epcs.com/billing/recarga/types"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="s"/>
+                                    <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="soapenv"/>
+                                    <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                                    </L7p:entry>
+                                    </L7p:Namespaces>
+                                    <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                                    </L7p:XpathExpression>
+                                </L7p:ResponseXpathAssertion>
+                                <wsp:OneOrMore wsp:Usage="Required">
+                                    <wsp:All wsp:Usage="Required">
+                                    <L7p:ComparisonAssertion>
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Expression1 stringValue="${codeResult.result}"/>
+                                    <L7p:Expression2 stringValue="0000"/>
+                                    <L7p:Predicates predicates="included">
+                                    <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="0000"/>
+                                    </L7p:item>
+                                    </L7p:Predicates>
+                                    </L7p:ComparisonAssertion>
+                                    <L7p:XslTransformation>
+                                    <L7p:Direction intValue="-1"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="serviceResponse"/>
+                                    <L7p:ResourceInfo staticResourceInfo="included">
+                                    <L7p:Document stringValueReference="inline"><![CDATA[<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  <xsl:output indent="yes" method="xml"/>
+  <xsl:template match="*">
+    <xsl:element name="{local-name(.)}">
+      <xsl:apply-templates select="@* | node()"/>
+    </xsl:element>
+  </xsl:template>
+  <xsl:template match="@*">
+    <xsl:attribute name="{local-name(.)}">
+      <xsl:value-of select="."/>
+    </xsl:attribute>
+  </xsl:template>
+   <xsl:template match="text() | comment() | processing-instruction()">
+        <xsl:copy />
+   </xsl:template>
+</xsl:stylesheet>]]></L7p:Document>
+                                    </L7p:ResourceInfo>
+                                    <L7p:Target target="OTHER"/>
+                                    <L7p:TransformName stringValue=""/>
+                                    <L7p:XsltVersion stringValue="1.0"/>
+                                    </L7p:XslTransformation>
+                                    <L7p:XslTransformation>
+                                    <L7p:Direction intValue="-1"/>
+                                    <L7p:MsgVarPrefix stringValue="xslt2"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="serviceResponse"/>
+                                    <L7p:ResourceInfo staticResourceInfo="included">
+                                    <L7p:Document stringValueReference="inline"><![CDATA[<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <xsl:output encoding="UTF-8" indent="no" media-type="text/x-json" method="text" omit-xml-declaration="yes"/>
+    <xsl:strip-space elements="*"/>
+    <!--contant-->
+    <xsl:variable name="d">0123456789</xsl:variable>
+    
+    <!-- ignore document text -->
+    <xsl:template match="text()[preceding-sibling::node() or following-sibling::node()]"/>
+    
+    <!-- string -->
+    <xsl:template match="text()">
+        <xsl:call-template name="escape-string">
+            <xsl:with-param name="s" select="."/>
+        </xsl:call-template>
+    </xsl:template>
+    
+
+    <!-- Main template for escaping strings; used by above template and for object-properties 
+        Responsibilities: placed quotes around string, and chain up to next filter, escape-bs-string -->
+    <xsl:template name="escape-string">
+        <xsl:param name="s"/>
+        <xsl:text>"</xsl:text>
+        <xsl:call-template name="escape-bs-string">
+            <xsl:with-param name="s" select="$s"/>
+        </xsl:call-template>
+        <xsl:text>"</xsl:text>
+    </xsl:template>
+    
+    <!-- Escape the backslash (\) before everything else. -->
+    <xsl:template name="escape-bs-string">
+        <xsl:param name="s"/>
+        <xsl:choose>
+            <xsl:when test="contains($s,'\')">
+                <xsl:call-template name="escape-quot-string">
+                    <xsl:with-param name="s" select="concat(substring-before($s,'\'),'\\')"/>
+                </xsl:call-template>
+                <xsl:call-template name="escape-bs-string">
+                    <xsl:with-param name="s" select="substring-after($s,'\')"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:call-template name="escape-quot-string">
+                    <xsl:with-param name="s" select="$s"/>
+                </xsl:call-template>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+
+    <!-- Escape the double quote ("). -->
+    <xsl:template name="escape-quot-string">
+        <xsl:param name="s"/>
+        <xsl:choose>
+            <xsl:when test="contains($s,'&quot;')">
+                <xsl:call-template name="encode-string">
+                    <xsl:with-param name="s" select="concat(substring-before($s,'&quot;'),'\&quot;')"/>
+                </xsl:call-template>
+                <xsl:call-template name="escape-quot-string">
+                    <xsl:with-param name="s" select="substring-after($s,'&quot;')"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:call-template name="encode-string">
+                    <xsl:with-param name="s" select="$s"/>
+                </xsl:call-template>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+
+    <!-- Replace tab, line feed and/or carriage return by its matching escape code. Can't escape backslash
+        or double quote here, because they don't replace characters (&#x0; becomes \t), but they prefix 
+        characters (\ becomes \\). Besides, backslash should be seperate anyway, because it should be 
+        processed first. This function can't do that. -->
+    <xsl:template name="encode-string">
+        <xsl:param name="s"/>
+        <xsl:choose>
+            <!-- tab -->
+            <xsl:when test="contains($s,'&#x9;')">
+                <xsl:call-template name="encode-string">
+                    <xsl:with-param name="s" select="concat(substring-before($s,'&#x9;'),'\t',substring-after($s,'&#x9;'))"/>
+                </xsl:call-template>
+            </xsl:when>
+            <!-- line feed -->
+            <xsl:when test="contains($s,'&#xa;')">
+                <xsl:call-template name="encode-string">
+                    <xsl:with-param name="s" select="concat(substring-before($s,'&#xa;'),'\n',substring-after($s,'&#xa;'))"/>
+                </xsl:call-template>
+            </xsl:when>
+            <!-- carriage return -->
+            <xsl:when test="contains($s,'&#xd;')">
+                <xsl:call-template name="encode-string">
+                    <xsl:with-param name="s" select="concat(substring-before($s,'&#xd;'),'\r',substring-after($s,'&#xd;'))"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise><xsl:value-of select="$s"/></xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <!-- number (no support for javascript mantise) -->
+    <xsl:template match="text()[not(string(number())='NaN')]">
+        <xsl:text>"</xsl:text><xsl:value-of select="."/><xsl:text>"</xsl:text>
+    </xsl:template>
+    
+    <!-- boolean, case-insensitive -->
+    <xsl:template match="text()[translate(.,'TRUE','true')='true']">true</xsl:template>
+    <xsl:template match="text()[translate(.,'FALSE','false')='false']">false</xsl:template>
+    
+
+    <!-- item:null -->
+    <xsl:template match="*[count(child::node())=0 and not(attribute::node())]">
+        <xsl:call-template name="escape-string">
+            <xsl:with-param name="s" select="local-name()"/>
+        </xsl:call-template>
+        <xsl:text>:null</xsl:text>
+        <xsl:if test="following-sibling::*">,</xsl:if>
+    </xsl:template>
+    
+
+    <!-- object -->
+    <xsl:template match="*" name="base">
+        <!-- <xsl:if test="not(preceding-sibling::*)">{</xsl:if> -->
+        <xsl:call-template name="escape-string">
+            <xsl:with-param name="s" select="name()"/>
+        </xsl:call-template>
+        <xsl:text>:</xsl:text>
+        <xsl:choose>
+            <xsl:when test="attribute::node() and child::node()">
+                <xsl:if test="attribute::node() or child::node()">
+                    <xsl:text>{</xsl:text>
+                    <xsl:call-template name="handleAttributes">
+                        <xsl:with-param name="attrib" select="attribute::*"/>
+                    </xsl:call-template>
+                    <xsl:if test="attribute::* and child::node()"><xsl:text>, </xsl:text></xsl:if>
+                    <xsl:apply-templates select="child::*"/>
+                    <xsl:if test="text()">
+                        <xsl:text>"$" :</xsl:text><xsl:apply-templates select="text()"/>
+                    </xsl:if>
+                    <xsl:text>}</xsl:text>
+                </xsl:if>
+            </xsl:when>
+
+            <xsl:when test="not(attribute::node()) and child::node()">
+                <xsl:if test="child::*">{</xsl:if>
+                <xsl:apply-templates select="child::*"/>
+                <xsl:if test="text() and child::*">
+                    <xsl:text>"$" :</xsl:text>
+                </xsl:if>
+                <xsl:apply-templates select="text()"/>
+                <xsl:if test="child::*">}</xsl:if>
+            </xsl:when>
+            <xsl:when test="attribute::node()">
+                <xsl:text>{</xsl:text>
+                <xsl:call-template name="handleAttributes">
+                    <xsl:with-param name="attrib" select="attribute::*"/>
+                </xsl:call-template>
+                <xsl:text>}</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:apply-templates select="text()"/>
+            </xsl:otherwise>
+        </xsl:choose>
+        <xsl:if test="following-sibling::*">,</xsl:if>
+        <!-- <xsl:if test="not(following-sibling::*)">}</xsl:if> -->
+    </xsl:template>
+    
+
+    <!-- array -->
+    <!-- <xsl:template match="*[count(../*[name(../*)=name(.)])=count(../*) and count(../*)&gt;1]"> -->
+    <xsl:template match="*[name(preceding-sibling::*[1]) = name(.) or name(following-sibling::*[1]) = name(.) or name(.) = 'detNumeracion']">
+        <xsl:if test="name(.) != name(preceding-sibling::*[1])">
+            <xsl:text>"</xsl:text><xsl:value-of select="name(.)"/><xsl:text>": [</xsl:text>
+        </xsl:if>
+        <xsl:choose>
+            <xsl:when test="not(child::node()) and not(attribute::*)">
+                <xsl:text>null</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:text>{</xsl:text>
+                <xsl:call-template name="handleAttributes">
+                    <xsl:with-param name="attrib" select="attribute::*"/>
+                </xsl:call-template>
+                <xsl:if test="attribute::* and (text() or child::node())"><xsl:text>, </xsl:text></xsl:if>
+                <xsl:apply-templates select="child::*"/>
+                <xsl:if test="text()">
+                    <xsl:text>"$" :</xsl:text><xsl:apply-templates select="text()"/>
+                </xsl:if>
+                <xsl:text>}</xsl:text>
+            </xsl:otherwise>
+        </xsl:choose>
+        <xsl:if test="name(.) != name(following-sibling::*[1]) or not(following-sibling::*)">]</xsl:if>
+        <xsl:if test="following-sibling::*">,</xsl:if>
+    </xsl:template>
+    
+
+    <xsl:template name="handleAttributes">
+        <xsl:param name="attrib"/>
+        <xsl:param name="count" select="count($attrib)"/>
+        
+        <xsl:for-each select="$attrib">
+            <xsl:text>"</xsl:text><xsl:value-of select="name()"/><xsl:text>": </xsl:text>
+            <xsl:choose>
+                <xsl:when test=".">
+                    <xsl:text>"</xsl:text><xsl:value-of select="."/><xsl:text>"</xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>""</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+            <xsl:if test="position() &lt; $count">
+                <xsl:text>, </xsl:text>
+            </xsl:if>
+        </xsl:for-each>
+    </xsl:template>
+    
+    <!-- convert root element to an anonymous container -->
+    <xsl:template match="/">
+            <xsl:text>{</xsl:text><xsl:apply-templates select="node()"/><xsl:text>}</xsl:text>
+    </xsl:template>
+    
+</xsl:stylesheet>]]></L7p:Document>
+                                    </L7p:ResourceInfo>
+                                    <L7p:Target target="OTHER"/>
+                                    <L7p:TransformName stringValue=""/>
+                                    <L7p:XsltVersion stringValue="1.0"/>
+                                    </L7p:XslTransformation>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHtzZXJ2aWNlUmVzcG9uc2UubWFpbnBhcnR9"/>
+                                    <L7p:ContentType stringValue="application/json; charset=utf-8"/>
+                                    <L7p:DataType variableDataType="message"/>
+                                    <L7p:VariableToSet stringValue="responseJson"/>
+                                    </L7p:SetVariable>
+                                    <L7p:EvaluateJsonPathExpression>
+                                    <L7p:Expression stringValue="$.Envelope.Body"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="responseJson"/>
+                                    <L7p:Target target="OTHER"/>
+                                    </L7p:EvaluateJsonPathExpression>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHtjb2RlUmVzdWx0LnJlc3VsdH0="/>
+                                    <L7p:VariableToSet stringValue="code"/>
+                                    </L7p:SetVariable>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHtodHRwUm91dGluZy5yZWFzb25Db2RlfQ=="/>
+                                    <L7p:VariableToSet stringValue="description"/>
+                                    </L7p:SetVariable>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHtkZXNjcmlwdGlvblJlc3VsdC5yZXN1bHR9"/>
+                                    <L7p:VariableToSet stringValue="descriptionDetail"/>
+                                    </L7p:SetVariable>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHtyZXF1ZXN0LnRpbWUubG9jYWwueXl5eS9NTS9kZCdUJ0hIOm1tOnNzLlNTU30="/>
+                                    <L7p:VariableToSet stringValue="responseTimestamp"/>
+                                    </L7p:SetVariable>
+                                    <L7p:Regex>
+                                    <L7p:AutoTarget booleanValue="false"/>
+
+                                    <L7p:OtherTargetMessageVariable stringValue="jsonPath.result"/>
+                                    <L7p:Regex stringValue="^\{|^}"/>
+                                    <L7p:Replace booleanValue="true"/>
+                                    <L7p:Replacement stringValue=""/>
+                                    <L7p:Target target="OTHER"/>
+                                    </L7p:Regex>
+                                    <L7p:Encapsulated>
+
+                                    <L7p:EncapsulatedAssertionConfigGuid stringValue="2873d7c1-bfb2-42b8-ab9a-35767965de80"/>
+
+                                    <L7p:EncapsulatedAssertionConfigName stringValue="API Portal Integration - Post Route"/>
+                                    <L7p:Parameters mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="portal.analytics.response.code"/>
+                                    <L7p:value stringValue="200"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="portal.analytics.routingTotalTime"/>
+                                    <L7p:value stringValue="${assertion.latency.ms}"/>
+                                    </L7p:entry>
+                                    </L7p:Parameters>
+                                    </L7p:Encapsulated>
+                                    <L7p:HardcodedResponse>
+                                    <L7p:Base64ResponseBody stringValue="ewoicmVzdWx0Ijp7CgkidHJhbnNhY3Rpb25JZCI6IiR7cmVxdWVzdElkfSIsCgkiY29kZSI6IiR7Y29kZX0iLAoJImRlc2NyaXB0aW9uIjoiJHtkZXNjcmlwdGlvbn0iLAoJImRlc2NyaXB0aW9uRGV0YWlsIjogIiR7ZGVzY3JpcHRpb25EZXRhaWx9IiwKCSJyZXNwb25zZVRpbWVzdGFtcCI6IiR7cmVzcG9uc2VUaW1lc3RhbXB9IgoJfSwKJHtqc29uUGF0aC5yZXN1bHR9Cg=="/>
+                                    <L7p:ResponseContentType stringValue="application/json; charset=UTF-8"/>
+                                    </L7p:HardcodedResponse>
+                                    <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue=">> COD OK 200"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:assertionComment>
+                                    </wsp:All>
+                                    <wsp:All wsp:Usage="Required">
+                                    <L7p:ComparisonAssertion>
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Expression1 stringValue="${codeResult.result}"/>
+                                    <L7p:Expression2 stringValue="0100"/>
+                                    <L7p:Predicates predicates="included">
+                                    <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="0100"/>
+                                    </L7p:item>
+                                    </L7p:Predicates>
+                                    </L7p:ComparisonAssertion>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHtjb2RlUmVzdWx0LnJlc3VsdH0="/>
+                                    <L7p:VariableToSet stringValue="code"/>
+                                    </L7p:SetVariable>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHtodHRwUm91dGluZy5yZWFzb25Db2RlfQ=="/>
+                                    <L7p:VariableToSet stringValue="description"/>
+                                    </L7p:SetVariable>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHtkZXNjcmlwdGlvblJlc3VsdC5yZXN1bHR9"/>
+                                    <L7p:VariableToSet stringValue="descriptionDetail"/>
+                                    </L7p:SetVariable>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHtyZXF1ZXN0LnRpbWUubG9jYWwueXl5eS9NTS9kZCdUJ0hIOm1tOnNzLlNTU30="/>
+                                    <L7p:VariableToSet stringValue="responseTimestamp"/>
+                                    </L7p:SetVariable>
+                                    <L7p:Encapsulated>
+
+                                    <L7p:EncapsulatedAssertionConfigGuid stringValue="2873d7c1-bfb2-42b8-ab9a-35767965de80"/>
+
+                                    <L7p:EncapsulatedAssertionConfigName stringValue="API Portal Integration - Post Route"/>
+                                    <L7p:Parameters mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="portal.analytics.response.code"/>
+                                    <L7p:value stringValue="200"/>
+                                    </L7p:entry>
+                                    <L7p:entry>
+                                    <L7p:key stringValue="portal.analytics.routingTotalTime"/>
+                                    <L7p:value stringValue="${assertion.latency.ms}"/>
+                                    </L7p:entry>
+                                    </L7p:Parameters>
+                                    </L7p:Encapsulated>
+                                    <L7p:HardcodedResponse>
+                                    <L7p:Base64ResponseBody stringValue="ewoicmVzdWx0Ijp7CgkidHJhbnNhY3Rpb25JZCI6IiR7cmVxdWVzdElkfSIsCgkiY29kZSI6IiR7Y29kZX0iLAoJImRlc2NyaXB0aW9uIjoiJHtkZXNjcmlwdGlvbn0iLAoJImRlc2NyaXB0aW9uRGV0YWlsIjogIiR7ZGVzY3JpcHRpb25EZXRhaWx9IiwKCSJyZXNwb25zZVRpbWVzdGFtcCI6IiR7cmVzcG9uc2VUaW1lc3RhbXB9IgoJfQp9Cg=="/>
+                                    <L7p:ResponseContentType stringValue="application/json; charset=UTF-8"/>
+                                    </L7p:HardcodedResponse>
+                                    <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue=">> Error Negocio 400"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:assertionComment>
+                                    </wsp:All>
+                                    <wsp:All wsp:Usage="Required">
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHtjb2RlUmVzdWx0LnJlc3VsdH0="/>
+                                    <L7p:VariableToSet stringValue="code"/>
+                                    </L7p:SetVariable>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="RW50aWRhZCBubyBwcm9jZXNhZGE="/>
+                                    <L7p:LineBreak lineBreak="LF"/>
+                                    <L7p:VariableToSet stringValue="description"/>
+                                    </L7p:SetVariable>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHtkZXNjcmlwdGlvblJlc3VsdC5yZXN1bHR9"/>
+                                    <L7p:VariableToSet stringValue="descriptionDetail"/>
+                                    </L7p:SetVariable>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHtyZXF1ZXN0LnRpbWUubG9jYWwueXl5eS9NTS9kZCdUJ0hIOm1tOnNzLlNTU30="/>
+                                    <L7p:VariableToSet stringValue="responseTimestamp"/>
+                                    </L7p:SetVariable>
+                                    <L7p:AuditDetailAssertion>
+                                    <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                                    <L7p:Detail stringValue="IDTRANSACTION: ${requestId} SERVICE: ${httpRouting.url} LATENCY: ${httpRouting.latency} HTTP STATUS: ${httpRouting.reasonCode} DESCRIPTION: ${description} DESCRIPTION: ${descriptionDetail} CODE: ${code} BODY: ${serviceResponse.mainpart} REQUEST:${request.mainpart}"/>
+                                    <L7p:LoggingOnly booleanValue="true"/>
+                                    </L7p:AuditDetailAssertion>
+                                    <L7p:CustomizeErrorResponse>
+                                    <L7p:Content stringValueReference="inline"><![CDATA[{
+"result":{
+	"transactionId":"${requestId}",
+	"code":"${code}",
+	"description":"${description}",
+	"descriptionDetail":"${descriptionDetail}",
+	"responseTimestamp":"${responseTimestamp}"
+	}
+}]]></L7p:Content>
+                                    <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                                    <L7p:ExtraHeaders nameValuePairArray="included"/>
+                                    </L7p:CustomizeErrorResponse>
+                                    <L7p:RaiseError/>
+                                    <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="// Otro error"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:assertionComment>
+                                    </wsp:All>
+                                    <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="// Respuestas"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                    </L7p:assertionComment>
+                                </wsp:OneOrMore>
+                                <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="//LÃÂ³gica"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                </L7p:assertionComment>
+                            </wsp:All>
+                            <wsp:All wsp:Usage="Required">
+                                <L7p:Encapsulated>
+                                    <L7p:EncapsulatedAssertionConfigGuid stringValue="14295f18-da19-4f0e-9643-a8c30b3544dc"/>
+                                    <L7p:EncapsulatedAssertionConfigName stringValue="CodeStatus"/>
+                                </L7p:Encapsulated>
+                                <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHtkZXNjcmlwdGlvbkRldGFpbC5yZXN1bHR9"/>
+                                    <L7p:VariableToSet stringValue="descriptionDetail"/>
+                                </L7p:SetVariable>
+                                <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHtjb2RlUmVzdWx0LnJlc3VsdH0="/>
+                                    <L7p:VariableToSet stringValue="codeSource"/>
+                                </L7p:SetVariable>
+                                <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHtyZXF1ZXN0LnRpbWUubG9jYWwueXl5eS9NTS9kZCdUJ0hIOm1tOnNzLlNTU30="/>
+                                    <L7p:VariableToSet stringValue="responseTimestamp"/>
+                                </L7p:SetVariable>
+                                <L7p:AuditDetailAssertion>
+                                    <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                                    <L7p:Detail stringValue="IDTRANSACTION: ${requestId} CODE: ${code} DESCRIPTION: ${description} DETAIL: ${descriptionDetail}"/>
+                                    <L7p:LoggingOnly booleanValue="true"/>
+                                </L7p:AuditDetailAssertion>
+                                <L7p:CustomizeErrorResponse>
+                                    <L7p:Content stringValueReference="inline"><![CDATA[{
+"result":{
+	"transactionId":"${requestId}",
+	"code":"${codeSource}",
+	"description":"${codeDescription}",
+	"descriptionDetail":"${descriptionDetail}",
+	"responseTimestamp":"${responseTimestamp}"
+	}
+}]]></L7p:Content>
+                                    <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                                    <L7p:ExtraHeaders nameValuePairArray="included"/>
+                                    <L7p:HttpStatus stringValue="${httpRouting.reasonCode}"/>
+                                </L7p:CustomizeErrorResponse>
+                                <L7p:RaiseError/>
+                                <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="//Errores HTTP"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                </L7p:assertionComment>
+                            </wsp:All>
+                            <L7p:Include>
+                                <L7p:PolicyGuid stringValue="1b3f18a3-5e88-4cae-9fae-44b459727ac1"/>
+                            </L7p:Include>
+                        </wsp:OneOrMore>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="POST"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${request.http.method}"/>
+                            <L7p:Expression2 stringValue="OPTIONS"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="OPTIONS"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:AddHeader>
+                            <L7p:AssertionComment assertionComment="included">
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="Indicar metodos implementados"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:AssertionComment>
+                            <L7p:HeaderName stringValue="Allow"/>
+                            <L7p:HeaderValue stringValue="PUT, OPTIONS"/>
+                            <L7p:Target target="RESPONSE"/>
+                        </L7p:AddHeader>
+                        <L7p:HardcodedResponse>
+                            <L7p:ResponseContentType stringValue="application/json; charset=UTF-8"/>
+                        </L7p:HardcodedResponse>
+                        <L7p:RaiseError/>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="OPTIONS"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="TUVULTAx"/>
+                            <L7p:VariableToSet stringValue="code"/>
+                        </L7p:SetVariable>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="SW52YWxpZCBtZXRob2Q="/>
+                            <L7p:VariableToSet stringValue="description"/>
+                        </L7p:SetVariable>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="VGhlIGh0dHAgbWV0aG9kIGlzIG5vdCBzdXBwb3J0ZWQ="/>
+                            <L7p:VariableToSet stringValue="descriptionDetail"/>
+                        </L7p:SetVariable>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="JHtyZXF1ZXN0LnRpbWUubG9jYWwueXl5eS9NTS9kZCdUJ0hIOm1tOnNzLlNTU30="/>
+                            <L7p:VariableToSet stringValue="responseTimestamp"/>
+                        </L7p:SetVariable>
+                        <L7p:AuditDetailAssertion>
+                            <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                            <L7p:Detail stringValue="IDTRANSACTION: ${requestId} SERVICE: ${httpRouting.url} LATENCY: ${httpRouting.latency} HTTP STATUS: ${httpRouting.reasonCode} DESCRIPTION: ${description} DESCRIPTION: ${descriptionDetail} CODE: ${code} BODY: ${httpRouting.reasonCode} REQUEST:${request}"/>
+                            <L7p:LoggingOnly booleanValue="true"/>
+                        </L7p:AuditDetailAssertion>
+                        <L7p:CustomizeErrorResponse>
+                            <L7p:Content stringValueReference="inline"><![CDATA[{
+"result":{
+	"transactionId":"${requestId}",
+	"code":"${code}",
+	"description":"${description}",
+	"descriptionDetail":"${descriptionDetail}",
+	"responseTimestamp":"${responseTimestamp}"
+	}
+}]]></L7p:Content>
+                            <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                            <L7p:ExtraHeaders nameValuePairArray="included">
+                                <L7p:item nameValuePair="included">
+                                    <L7p:Key stringValue="Allow"/>
+                                    <L7p:Value stringValue="POST, OPTIONS"/>
+                                </L7p:item>
+                            </L7p:ExtraHeaders>
+                            <L7p:HttpStatus stringValue="405"/>
+                        </L7p:CustomizeErrorResponse>
+                        <L7p:RaiseError/>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="No suportado"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                </wsp:OneOrMore>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="//insertarRegistroRecWebPay"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="NDA0"/>
+                    <L7p:VariableToSet stringValue="code"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="UmVjdXJzbyBubyBlbmNvbnRyYWRv"/>
+                    <L7p:VariableToSet stringValue="description"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="RWwgcmVjdXJzbyBubyBleGlzdGUgbyBlc3RhIGRlc2hhYmlsaXRhZG8="/>
+                    <L7p:VariableToSet stringValue="descriptionDetail"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHtyZXF1ZXN0LnRpbWUubG9jYWwueXl5eS9NTS9kZCdUJ0hIOm1tOnNzLlNTU30="/>
+                    <L7p:VariableToSet stringValue="responseTimestamp"/>
+                </L7p:SetVariable>
+                <L7p:AuditDetailAssertion>
+                    <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                    <L7p:Detail stringValue="TRANSACTION: ${requestId} CODE: ${code} DESCRIPTION: ${description} DETAIL: ${descriptionDetail}"/>
+                    <L7p:LoggingOnly booleanValue="true"/>
+                </L7p:AuditDetailAssertion>
+                <L7p:CustomizeErrorResponse>
+                    <L7p:Content stringValueReference="inline"><![CDATA[{
+"result":{
+	"transactionId":"${requestId}",
+	"code":"${code}",
+	"description":"${description}",
+	"descriptionDetail":"${descriptionDetail}",
+	"responseTimestamp":"${responseTimestamp}"
+	}
+}]]></L7p:Content>
+                    <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                    <L7p:ExtraHeaders nameValuePairArray="included"/>
+                    <L7p:HttpStatus stringValue="404"/>
+                </L7p:CustomizeErrorResponse>
+                <L7p:RaiseError/>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="Camino no implementado"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+        </wsp:OneOrMore>
+    </wsp:All>
+</wsp:Policy>

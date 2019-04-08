@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === ***  THIS POLICY IS READ ONLY ***"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === If you have the need to customize this policy"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === please contact CA APIM Support so we can improve customization capability"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="Generates request MAC using HMAC-SHA1 algorithm"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="Inputs: timestamp_sec, nonce, http_method, url, ext, mac_key, mac_algorithm"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="Outputs: mac"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="========== Validate inputs =========="/>
+        </L7p:CommentAssertion>
+        <L7p:ComparisonAssertion>
+            <L7p:Expression1 stringValue="${timestamp_sec}"/>
+            <L7p:Expression2 stringValue=""/>
+            <L7p:Negate booleanValue="true"/>
+            <L7p:Operator operator="EMPTY"/>
+            <L7p:Predicates predicates="included">
+                <L7p:item binary="included">
+                    <L7p:Negated booleanValue="true"/>
+                    <L7p:Operator operator="EMPTY"/>
+                    <L7p:RightValue stringValue=""/>
+                </L7p:item>
+            </L7p:Predicates>
+        </L7p:ComparisonAssertion>
+        <L7p:Regex>
+            <L7p:AutoTarget booleanValue="false"/>
+            <L7p:OtherTargetMessageVariable stringValue="timestamp_sec"/>
+            <L7p:ProceedIfPatternMatches booleanValue="false"/>
+            <L7p:Regex stringValue="^0+"/>
+            <L7p:RegexName stringValue="Timestamp must not have leading zeros"/>
+            <L7p:Replacement stringValue=""/>
+            <L7p:Target target="OTHER"/>
+        </L7p:Regex>
+        <L7p:Regex>
+            <L7p:AutoTarget booleanValue="false"/>
+            <L7p:OtherTargetMessageVariable stringValue="timestamp_sec"/>
+            <L7p:ProceedIfPatternMatches booleanValue="false"/>
+            <L7p:Regex stringValue="^-"/>
+            <L7p:RegexName stringValue="Timestamp must be a positive number"/>
+            <L7p:Replacement stringValue=""/>
+            <L7p:Target target="OTHER"/>
+        </L7p:Regex>
+        <L7p:ComparisonAssertion>
+            <L7p:Expression1 stringValue="${nonce}"/>
+            <L7p:Expression2 stringValue=""/>
+            <L7p:Negate booleanValue="true"/>
+            <L7p:Operator operator="EMPTY"/>
+            <L7p:Predicates predicates="included">
+                <L7p:item binary="included">
+                    <L7p:Negated booleanValue="true"/>
+                    <L7p:Operator operator="EMPTY"/>
+                    <L7p:RightValue stringValue=""/>
+                </L7p:item>
+            </L7p:Predicates>
+        </L7p:ComparisonAssertion>
+        <L7p:ComparisonAssertion>
+            <L7p:Expression1 stringValue="${http_method}"/>
+            <L7p:Expression2 stringValue=""/>
+            <L7p:Negate booleanValue="true"/>
+            <L7p:Operator operator="EMPTY"/>
+            <L7p:Predicates predicates="included">
+                <L7p:item binary="included">
+                    <L7p:Negated booleanValue="true"/>
+                    <L7p:Operator operator="EMPTY"/>
+                    <L7p:RightValue stringValue=""/>
+                </L7p:item>
+            </L7p:Predicates>
+        </L7p:ComparisonAssertion>
+        <L7p:Regex>
+            <L7p:AutoTarget booleanValue="false"/>
+            <L7p:OtherTargetMessageVariable stringValue="http_method"/>
+            <L7p:ProceedIfPatternMatches booleanValue="false"/>
+            <L7p:Regex stringValue="[a-z]"/>
+            <L7p:RegexName stringValue="HTTP method must be in upper case"/>
+            <L7p:Replacement stringValue=""/>
+            <L7p:Target target="OTHER"/>
+        </L7p:Regex>
+        <L7p:ComparisonAssertion>
+            <L7p:Expression1 stringValue="${url}"/>
+            <L7p:Expression2 stringValue=""/>
+            <L7p:Negate booleanValue="true"/>
+            <L7p:Operator operator="EMPTY"/>
+            <L7p:Predicates predicates="included">
+                <L7p:item binary="included">
+                    <L7p:Negated booleanValue="true"/>
+                    <L7p:Operator operator="EMPTY"/>
+                    <L7p:RightValue stringValue=""/>
+                </L7p:item>
+            </L7p:Predicates>
+        </L7p:ComparisonAssertion>
+        <L7p:ComparisonAssertion>
+            <L7p:Expression1 stringValue="${mac_key}"/>
+            <L7p:Expression2 stringValue=""/>
+            <L7p:Negate booleanValue="true"/>
+            <L7p:Operator operator="EMPTY"/>
+            <L7p:Predicates predicates="included">
+                <L7p:item binary="included">
+                    <L7p:Negated booleanValue="true"/>
+                    <L7p:Operator operator="EMPTY"/>
+                    <L7p:RightValue stringValue=""/>
+                </L7p:item>
+            </L7p:Predicates>
+        </L7p:ComparisonAssertion>
+        <L7p:ComparisonAssertion>
+            <L7p:Expression1 stringValue="${mac_algorithm}"/>
+            <L7p:Expression2 stringValue="hmac-sha-1"/>
+            <L7p:Predicates predicates="included">
+                <L7p:item binary="included">
+                    <L7p:RightValue stringValue="hmac-sha-1"/>
+                </L7p:item>
+            </L7p:Predicates>
+        </L7p:ComparisonAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="========== Break URL into parts (protocol, hostname+port, path) =========="/>
+        </L7p:CommentAssertion>
+        <L7p:Regex>
+            <L7p:AutoTarget booleanValue="false"/>
+            <L7p:CaptureVar stringValue="url_sub_string"/>
+            <L7p:FindAll booleanValue="true"/>
+            <L7p:OtherTargetMessageVariable stringValue="url"/>
+            <L7p:Regex stringValue="([a-z]*)://([^/]*)(.*)"/>
+            <L7p:Replacement stringValue=""/>
+            <L7p:Target target="OTHER"/>
+        </L7p:Regex>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHt1cmxfc3ViX3N0cmluZ1szXX0="/>
+            <L7p:VariableToSet stringValue="request_uri"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHt1cmxfc3ViX3N0cmluZ1syXX0="/>
+            <L7p:VariableToSet stringValue="url_hostname_port"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue=""/>
+            <L7p:VariableToSet stringValue="host"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue=""/>
+            <L7p:VariableToSet stringValue="port"/>
+        </L7p:SetVariable>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:Regex>
+                    <L7p:AutoTarget booleanValue="false"/>
+                    <L7p:CaptureVar stringValue="url_hostname_port_sub_string"/>
+                    <L7p:FindAll booleanValue="true"/>
+                    <L7p:OtherTargetMessageVariable stringValue="url_hostname_port"/>
+                    <L7p:Regex stringValue="([^:]*):([0-9]*)"/>
+                    <L7p:RegexName stringValue="get hostname and port number"/>
+                    <L7p:Replacement stringValue=""/>
+                    <L7p:Target target="OTHER"/>
+                </L7p:Regex>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHt1cmxfaG9zdG5hbWVfcG9ydF9zdWJfc3RyaW5nWzFdfQ=="/>
+                    <L7p:VariableToSet stringValue="host"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHt1cmxfaG9zdG5hbWVfcG9ydF9zdWJfc3RyaW5nWzJdfQ=="/>
+                    <L7p:VariableToSet stringValue="port"/>
+                </L7p:SetVariable>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="port is specified"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHt1cmxfaG9zdG5hbWVfcG9ydH0="/>
+                    <L7p:VariableToSet stringValue="host"/>
+                </L7p:SetVariable>
+                <wsp:OneOrMore wsp:Usage="Required">
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:Expression1 stringValue="${url_sub_string[1]}"/>
+                            <L7p:Expression2 stringValue="http"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:RightValue stringValue="http"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="ODA="/>
+                            <L7p:VariableToSet stringValue="port"/>
+                        </L7p:SetVariable>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:Expression1 stringValue="${url_sub_string[1]}"/>
+                            <L7p:Expression2 stringValue="https"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:RightValue stringValue="https"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="NDQz"/>
+                            <L7p:VariableToSet stringValue="port"/>
+                        </L7p:SetVariable>
+                    </wsp:All>
+                    <L7p:assertionComment>
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="RIGHT.COMMENT"/>
+                                <L7p:value stringValue="Use default port"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:assertionComment>
+                </wsp:OneOrMore>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="port is not specified"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="Get hostname and port number"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:OneOrMore>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:Regex>
+                    <L7p:AssertionComment assertionComment="included">
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="RIGHT.COMMENT"/>
+                                <L7p:value stringValue="Check if there are any uppercases in hostname"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:AssertionComment>
+                    <L7p:AutoTarget booleanValue="false"/>
+                    <L7p:FindAll booleanValue="true"/>
+                    <L7p:OtherTargetMessageVariable stringValue="host"/>
+                    <L7p:Regex stringValue="[A-Z]"/>
+                    <L7p:RegexName stringValue="Check for uppercase"/>
+                    <L7p:Replacement stringValue=""/>
+                    <L7p:Target target="OTHER"/>
+                </L7p:Regex>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="PGhvc3RuYW1lPiR7aG9zdH08L2hvc3RuYW1lPg=="/>
+                    <L7p:VariableToSet stringValue="xml"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHt4bWx9"/>
+                    <L7p:ContentType stringValue="text/xml;charset=UTF-8"/>
+                    <L7p:DataType variableDataType="message"/>
+                    <L7p:VariableToSet stringValue="forXSL"/>
+                </L7p:SetVariable>
+                <L7p:XslTransformation>
+                    <L7p:Direction intValue="-1"/>
+                    <L7p:OtherTargetMessageVariable stringValue="forXSL"/>
+                    <L7p:ResourceInfo staticResourceInfo="included">
+                        <L7p:Document stringValueReference="inline"><![CDATA[<xsl:stylesheet version="1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+                <xsl:output method="text" omit-xml-declaration="yes"/>
+
+                <xsl:variable name="lowercase" select="'abcdefghijklmnopqrstuvwxyz'"/>
+                <xsl:variable name="uppercase" select="'ABCDEFGHIJKLMNOPQRSTUVWXYZ'"/>
+
+                <xsl:template match="/hostname">
+                <xsl:value-of select="translate(., $uppercase, $lowercase)"/>
+                </xsl:template>
+
+                </xsl:stylesheet>]]></L7p:Document>
+                    </L7p:ResourceInfo>
+                    <L7p:Target target="OTHER"/>
+                    <L7p:TransformName stringValue=""/>
+                </L7p:XslTransformation>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHtmb3JYU0wubWFpbnBhcnR9"/>
+                    <L7p:VariableToSet stringValue="host"/>
+                </L7p:SetVariable>
+            </wsp:All>
+            <L7p:TrueAssertion/>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="Change hostname to lowercase"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:OneOrMore>
+        <L7p:ComparisonAssertion>
+            <L7p:Expression1 stringValue="${request_uri}"/>
+            <L7p:Expression2 stringValue=""/>
+            <L7p:Negate booleanValue="true"/>
+            <L7p:Operator operator="EMPTY"/>
+            <L7p:Predicates predicates="included">
+                <L7p:item binary="included">
+                    <L7p:Negated booleanValue="true"/>
+                    <L7p:Operator operator="EMPTY"/>
+                    <L7p:RightValue stringValue=""/>
+                </L7p:item>
+            </L7p:Predicates>
+        </L7p:ComparisonAssertion>
+        <L7p:ComparisonAssertion>
+            <L7p:Expression1 stringValue="${host}"/>
+            <L7p:Expression2 stringValue=""/>
+            <L7p:Negate booleanValue="true"/>
+            <L7p:Operator operator="EMPTY"/>
+            <L7p:Predicates predicates="included">
+                <L7p:item binary="included">
+                    <L7p:Negated booleanValue="true"/>
+                    <L7p:Operator operator="EMPTY"/>
+                    <L7p:RightValue stringValue=""/>
+                </L7p:item>
+            </L7p:Predicates>
+        </L7p:ComparisonAssertion>
+        <L7p:ComparisonAssertion>
+            <L7p:Expression1 stringValue="${port}"/>
+            <L7p:Expression2 stringValue=""/>
+            <L7p:Negate booleanValue="true"/>
+            <L7p:Operator operator="EMPTY"/>
+            <L7p:Predicates predicates="included">
+                <L7p:item binary="included">
+                    <L7p:Negated booleanValue="true"/>
+                    <L7p:Operator operator="EMPTY"/>
+                    <L7p:RightValue stringValue=""/>
+                </L7p:item>
+            </L7p:Predicates>
+        </L7p:ComparisonAssertion>
+        <L7p:EncodeDecode>
+            <L7p:SourceVariableName stringValue="request_uri"/>
+            <L7p:TargetDataType variableDataType="string"/>
+            <L7p:TargetVariableName stringValue="request_uri"/>
+            <L7p:TransformType transformType="URL_ENCODE"/>
+        </L7p:EncodeDecode>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue=""/>
+            <L7p:LineBreak lineBreak="LF"/>
+            <L7p:VariableToSet stringValue="empty_line"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHt0aW1lc3RhbXBfc2VjfQ0KJHtub25jZX0NCiR7aHR0cF9tZXRob2R9DQoke3JlcXVlc3RfdXJpfQ0KJHtob3N0fQ0KJHtwb3J0fQ0KJHtleHR9DQoke2VtcHR5X2xpbmV9"/>
+            <L7p:VariableToSet stringValue="normalized_request"/>
+        </L7p:SetVariable>
+        <L7p:GenerateSecurityHash>
+            <L7p:Base64Data stringValue="JHtub3JtYWxpemVkX3JlcXVlc3R9"/>
+            <L7p:KeyText stringValue="${mac_key}"/>
+            <L7p:LineBreak lineBreak="CR-LF"/>
+            <L7p:TargetOutputVariable stringValue="mac"/>
+        </L7p:GenerateSecurityHash>
+        <L7p:ExportVariables>
+            <L7p:ExportedVars stringArrayValue="included">
+                <L7p:item stringValue="mac"/>
+            </L7p:ExportedVars>
+        </L7p:ExportVariables>
+    </wsp:All>
+</wsp:Policy>

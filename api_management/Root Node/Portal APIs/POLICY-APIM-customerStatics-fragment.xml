@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="============================="/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="======= Published thru API Portal ======="/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="======= Don't modify block starts ======="/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="============================="/>
+        </L7p:CommentAssertion>
+        <L7p:ApiPortalIntegration>
+            <L7p:ApiGroup stringValue=""/>
+            <L7p:ApiId stringValue="e0c4d1d2-efb6-4b8d-8d67-440b03d6117d"/>
+            <L7p:PortalManagedApiFlag stringValue="L7p:ApiPortalManagedServiceAssertion"/>
+        </L7p:ApiPortalIntegration>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="aHR0cHM6Ly8xMC40OS4yMi43Ojg0NDMvZ3cvY3VzdG9tZXIvdjEvY3VzdG9tZXJTdGF0aWNz"/>
+            <L7p:VariableToSet stringValue="apiLocation"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="Y3VzdG9tZXIvdjEvY3VzdG9tZXJTdGF0aWNz"/>
+            <L7p:VariableToSet stringValue="serviceUrl"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtwb3J0YWwubWFuYWdlZC5zZXJ2aWNlLmFwaUlkfQ=="/>
+            <L7p:VariableToSet stringValue="counterName"/>
+        </L7p:SetVariable>
+        <L7p:Encapsulated>
+            <L7p:EncapsulatedAssertionConfigGuid stringValue="2e69dcfb-2302-4959-b43c-1931a152b8e4"/>
+        </L7p:Encapsulated>
+        <L7p:Encapsulated>
+            <L7p:EncapsulatedAssertionConfigGuid stringValue="75e6aff2-1d58-4a08-959e-5ac5335a1d06"/>
+            <L7p:Parameters mapValue="included">
+                <L7p:entry>
+                    <L7p:key stringValue="maxRequestsPerSecond"/>
+                    <L7p:value stringValue="50"/>
+                </L7p:entry>
+            </L7p:Parameters>
+        </L7p:Encapsulated>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="============================="/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="======= Don't modify block ends ======="/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="============================="/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="Updated on 2018-09-12T15:30:22.414Z"/>
+        </L7p:CommentAssertion>
+    </wsp:All>
+</wsp:Policy>

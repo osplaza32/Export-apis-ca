@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="LAC-PolicyType=inject"/>
+        </L7p:CommentAssertion>
+        <L7p:EncodeDecode>
+            <L7p:SourceVariableName stringValue="x_ca_gateway_lac_header"/>
+            <L7p:TargetDataType variableDataType="string"/>
+            <L7p:TargetVariableName stringValue="x_ca_gateway_lac_header_b64"/>
+            <L7p:TransformType transformType="BASE64_ENCODE"/>
+        </L7p:EncodeDecode>
+        <L7p:AuditDetailAssertion>
+            <L7p:Detail stringValue="X_CA_GATEWAY_LAC Header Values: ${x_ca_gateway_lac_header}"/>
+            <L7p:Level stringValue="FINE"/>
+        </L7p:AuditDetailAssertion>
+        <L7p:AddHeader>
+            <L7p:HeaderName stringValue="X-CA-Gateway-LAC"/>
+            <L7p:HeaderValue stringValue="${x_ca_gateway_lac_header_b64}"/>
+            <L7p:RemoveExisting booleanValue="true"/>
+        </L7p:AddHeader>
+        <L7p:AuditDetailAssertion>
+            <L7p:Detail stringValue="Forwarded Headers Values: ${project.gateway.forwardedHeaderValues}"/>
+            <L7p:Level stringValue="FINE"/>
+        </L7p:AuditDetailAssertion>
+        <L7p:AddHeader>
+            <L7p:HeaderName stringValue="Forwarded"/>
+            <L7p:HeaderValue stringValue="${project.gateway.forwardedHeaderValues}"/>
+            <L7p:RemoveExisting booleanValue="true"/>
+        </L7p:AddHeader>
+    </wsp:All>
+</wsp:Policy>

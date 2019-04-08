@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="LAC-PolicyType=inject"/>
+        </L7p:CommentAssertion>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:Expression1 stringValue="${project.roleMappingType}"/>
+                    <L7p:Expression2 stringValue="ldap"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:RightValue stringValue="ldap"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <wsp:OneOrMore wsp:Usage="Required">
+                    <wsp:OneOrMore wsp:Usage="Required">
+                        <wsp:All wsp:Usage="Required">
+                            <L7p:ComparisonAssertion>
+                                <L7p:Expression1 stringValue="${authenticatedUser.login}"/>
+                                <L7p:Expression2 stringValue=""/>
+                                <L7p:Negate booleanValue="true"/>
+                                <L7p:Operator operator="EMPTY"/>
+                                <L7p:Predicates predicates="included">
+                                    <L7p:item binary="included">
+                                    <L7p:Negated booleanValue="true"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue=""/>
+                                    </L7p:item>
+                                </L7p:Predicates>
+                            </L7p:ComparisonAssertion>
+                            <L7p:LDAPQuery>
+                                <L7p:AllowMultipleResults booleanValue="true"/>
+                                <L7p:AttrNames stringArrayValue="included">
+                                    <L7p:item stringValue="memberOf"/>
+                                </L7p:AttrNames>
+                                <L7p:CacheSize intValue="100"/>
+                                <L7p:FailIfNoResults booleanValue="true"/>
+                                <L7p:FailIfTooManyResults booleanValue="true"/>
+                                <L7p:LdapProviderOid goidValue="f8ed6b988ca44f531e7e26c4f72d4c6f"/>
+                                <L7p:MaximumResults intValue="1"/>
+                                <L7p:QueryMappings queryAttributeMappings="included">
+                                    <L7p:item mapping="included">
+                                    <L7p:AttributeName stringValue="memberOf"/>
+                                    <L7p:MatchingContextVariableName stringValue="ldapGroups"/>
+                                    <L7p:Multivalued booleanValue="true"/>
+                                    </L7p:item>
+                                </L7p:QueryMappings>
+                                <L7p:SearchFilter stringValue="(cn=${authenticatedUser.login})"/>
+                                <L7p:SearchFilterInjectionProtected booleanValue="true"/>
+                            </L7p:LDAPQuery>
+                            <L7p:ForEachLoop L7p:Usage="Required"
+                                loopVariable="ldapGroups" variablePrefix="userGroups">
+                                <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHtncm91cHN9PGdyb3VwPiR7dXNlckdyb3Vwcy5jdXJyZW50fTwvZ3JvdXA+DQo="/>
+                                    <L7p:VariableToSet stringValue="groups"/>
+                                </L7p:SetVariable>
+                            </L7p:ForEachLoop>
+                            <L7p:SetVariable>
+                                <L7p:Base64Expression stringValue="PHVzZXJzPg0KCTx1c2VyIGlkPSIke2F1dGhlbnRpY2F0ZWRVc2VyLmxvZ2lufSI+DQoJJHtncm91cHN9DQoJPC91c2VyPg0KPC91c2Vycz4="/>
+                                <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                                <L7p:DataType variableDataType="message"/>
+                                <L7p:VariableToSet stringValue="project.simpleRoleMapper.users"/>
+                            </L7p:SetVariable>
+                            <L7p:assertionComment>
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="Ensure Groups and RoleMapping Messages are valid"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:assertionComment>
+                        </wsp:All>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="PHVzZXJzPg0KCTx1c2VyIGlkPSIke2F1dGhlbnRpY2F0ZWRVc2VyLmxvZ2lufSI+DQoJPGdyb3VwPiR7cHJvamVjdC5zaW1wbGVSb2xlTWFwcGluZy5kZWZhdWx0Um9sZX08L2dyb3VwPg0KCTwvdXNlcj4NCjwvdXNlcnM+"/>
+                            <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                            <L7p:DataType variableDataType="message"/>
+                            <L7p:VariableToSet stringValue="project.simpleRoleMapper.users"/>
+                        </L7p:SetVariable>
+                    </wsp:OneOrMore>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:CustomizeErrorResponse>
+                            <L7p:Content stringValueReference="inline"><![CDATA[{
+  "statusCode": "500",
+  "errorCode": "000",
+  "errorMessage": "LDAP Role Mapper Query Failure",
+  "helpUrl": "http://${project.helpUrl.endpoint.hostname}/support/errors/error000"
+}]]></L7p:Content>
+                            <L7p:ExtraHeaders nameValuePairArray="included"/>
+                        </L7p:CustomizeErrorResponse>
+                        <L7p:FalseAssertion/>
+                    </wsp:All>
+                </wsp:OneOrMore>
+                <wsp:OneOrMore wsp:Usage="Required">
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="L3VzZXJzL3VzZXJbQGlkPScke2F1dGhlbnRpY2F0ZWRVc2VyLmxvZ2lufSddL2dyb3Vw"/>
+                            <L7p:VariableToSet stringValue="xpathUser"/>
+                        </L7p:SetVariable>
+                        <L7p:ResponseXpathAssertion>
+                            <L7p:VariablePrefix stringValue="userGroups"/>
+                            <L7p:XmlMsgSrc stringValue="project.simpleRoleMapper.users"/>
+                            <L7p:XpathExpression xpathExpressionValue="included">
+                                <L7p:Expression stringValue="${xpathUser}"/>
+                                <L7p:Namespaces mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="s"/>
+                                    <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                                    </L7p:entry>
+                                </L7p:Namespaces>
+                                <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                            </L7p:XpathExpression>
+                        </L7p:ResponseXpathAssertion>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxyb2xlTWFwPg0KPGdyb3Vwcz4ke3VzZXJHcm91cHMuZWxlbWVudHN9PC9ncm91cHM+DQoke3Byb2plY3Quc2ltcGxlUm9sZU1hcHBlci51c2VyUm9sZXMubWFpbnBhcnR9DQo8L3JvbGVNYXA+"/>
+                            <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                            <L7p:DataType variableDataType="message"/>
+                            <L7p:VariableToSet stringValue="roleMap"/>
+                        </L7p:SetVariable>
+                        <L7p:XslTransformation>
+                            <L7p:Direction intValue="-1"/>
+                            <L7p:OtherTargetMessageVariable stringValue="roleMap"/>
+                            <L7p:ResourceInfo staticResourceInfo="included">
+                                <L7p:Document stringValueReference="inline"><![CDATA[<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <xsl:output indent="yes" omit-xml-declaration="yes"/>
+ <xsl:template match="/">
+    <xsl:for-each select="/*/groups/group">
+     <xsl:variable name="groupName">
+           <xsl:value-of select="./text()"/>
+     </xsl:variable>
+        <xsl:choose>
+           <xsl:when test="/*/userRoles/userRole/@group = $groupName">
+                <role>"<xsl:value-of select="/*/userRoles/userRole[@group=$groupName]/role" separator=", "/>"</role>
+           </xsl:when>
+           <xsl:otherwise>
+                 <role>"<xsl:value-of select="$groupName" separator=","/>"</role>
+           </xsl:otherwise>
+      </xsl:choose>        
+ </xsl:for-each>
+ </xsl:template>
+</xsl:stylesheet>]]></L7p:Document>
+                            </L7p:ResourceInfo>
+                            <L7p:Target target="OTHER"/>
+                            <L7p:TransformName stringValue=""/>
+                            <L7p:XsltVersion stringValue="2.0"/>
+                        </L7p:XslTransformation>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="PHJvbGVzPiR7cm9sZU1hcC5tYWlucGFydH08L3JvbGVzPg=="/>
+                            <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                            <L7p:DataType variableDataType="message"/>
+                            <L7p:VariableToSet stringValue="roleMap"/>
+                        </L7p:SetVariable>
+                        <L7p:ResponseXpathAssertion>
+                            <L7p:VariablePrefix stringValue="userRoles"/>
+                            <L7p:XmlMsgSrc stringValue="roleMap"/>
+                            <L7p:XpathExpression xpathExpressionValue="included">
+                                <L7p:Expression stringValue="/roles/role"/>
+                                <L7p:Namespaces mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="s"/>
+                                    <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                                    </L7p:entry>
+                                </L7p:Namespaces>
+                                <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                            </L7p:XpathExpression>
+                        </L7p:ResponseXpathAssertion>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="Map the Authenticated Users' Groups to the corresponding LAC Roles."/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:CustomizeErrorResponse>
+                            <L7p:Content stringValueReference="inline"><![CDATA[{
+  "statusCode": "500",
+  "errorCode": "000",
+  "errorMessage": "LDAP Role Mapper Failure",
+  "helpUrl": "http://${project.helpUrl.endpoint.hostname}/support/errors/error000"
+}]]></L7p:Content>
+                            <L7p:ExtraHeaders nameValuePairArray="included"/>
+                        </L7p:CustomizeErrorResponse>
+                        <L7p:FalseAssertion/>
+                    </wsp:All>
+                </wsp:OneOrMore>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="eyJ1c2VySWRlbnRpZmllciI6ICIke2F1dGhlbnRpY2F0ZWRVc2VyLmxvZ2lufSIsICJyb2xlcyI6IFske3VzZXJSb2xlcy5yZXN1bHRzfV0sICJ1c2VyRGF0YSI6IHsibmFtZTEiOiAidmFsMSIsIm5hbWUyIjogInZhbDIifX0="/>
+                    <L7p:VariableToSet stringValue="x_ca_gateway_lac_header"/>
+                </L7p:SetVariable>
+                <L7p:AuditDetailAssertion>
+                    <L7p:Detail stringValue="X_CA_Gateway_LAC header: ${x_ca_gateway_lac_header}"/>
+                    <L7p:Level stringValue="FINE"/>
+                </L7p:AuditDetailAssertion>
+            </wsp:All>
+            <L7p:TrueAssertion/>
+        </wsp:OneOrMore>
+        <L7p:ExportVariables>
+            <L7p:ExportedVars stringArrayValue="included">
+                <L7p:item stringValue="x_ca_gateway_lac_header"/>
+            </L7p:ExportedVars>
+        </L7p:ExportVariables>
+    </wsp:All>
+</wsp:Policy>

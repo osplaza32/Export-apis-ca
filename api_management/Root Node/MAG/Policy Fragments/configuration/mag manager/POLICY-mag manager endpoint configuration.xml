@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === ***  THIS POLICY IS READ ONLY ***"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === Required changes can be implemented in policies in the 'Customizations' folder "/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === The policies within that folder will have the same name as this policy but "/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === either prefixed with '#' or suffixed with 'Extensions'"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === Prefixed policies can be used to overwrite variables of this policy"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === Suffixed policies can be used to extend functionality"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === If you find you cannot add your customizations using the policies in the 'Customizations' folder"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === please contact CA APIM Support so we can improve customization capability"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="TUFHIEFkbWluIENvbnNvbGU="/>
+            <L7p:VariableToSet stringValue="this.app.name"/>
+        </L7p:SetVariable>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="=== Configure OAuth Client Credentials ==="/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:AssertionComment assertionComment="included">
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="Change"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:AssertionComment>
+            <L7p:Base64Expression stringValue="MTg2NjEzMDAtNDVkZi00Y2RjLTgyNmYtMjNlNDAyMjc1NDYz"/>
+            <L7p:VariableToSet stringValue="client_id"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:AssertionComment assertionComment="included">
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="Change"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:AssertionComment>
+            <L7p:Base64Expression stringValue="MTcxZjZhMGItZGVlZS00NGE5LTg5ZmUtOGRkYTgwYjY3Y2Jh"/>
+            <L7p:VariableToSet stringValue="client_secret"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:AssertionComment assertionComment="included">
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="SCOPE"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:AssertionComment>
+            <L7p:Base64Expression stringValue="b3BlbmlkIHByb2ZpbGUgZW1haWwgdXNlcl9yb2xl"/>
+            <L7p:VariableToSet stringValue="scope"/>
+        </L7p:SetVariable>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="=== cookie configuration ==="/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:AssertionComment assertionComment="included">
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="Change"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:AssertionComment>
+            <L7p:Base64Expression stringValue="YjI4MjhkMmYtMmI0MS00ZGU5LTkwNDctNzFkN2JjMzE3ZDU3"/>
+            <L7p:VariableToSet stringValue="cookieKey"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="bWFnTWFuYWdlckNhY2hl"/>
+            <L7p:VariableToSet stringValue="cacheName"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="bDdtYWdtYW5hZ2Vy"/>
+            <L7p:VariableToSet stringValue="cookieName"/>
+        </L7p:SetVariable>
+        <wsp:All wsp:Usage="Required">
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="IMPORTANT: When customizing the values below, copy the entire block to the #policy to maintain the variable dependencies"/>
+            </L7p:CommentAssertion>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="=== Configuration of all endpoints that are used in MAG Manager"/>
+            </L7p:CommentAssertion>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="aHR0cHM6Ly8ke3JlcXVlc3QudXJsLmhvc3R9Ojg0NDM="/>
+                <L7p:VariableToSet stringValue="host_this_app"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="JHtob3N0X3RoaXNfYXBwfS9tYWcvbWFuYWdlcg=="/>
+                <L7p:VariableToSet stringValue="this.app.url"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="JHtob3N0X3RoaXNfYXBwfS9tYWcvbWFuYWdlcg=="/>
+                <L7p:VariableToSet stringValue="registered_redirect_uri"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="JHtob3N0X3RoaXNfYXBwfS9hdXRoL29hdXRoL3YyL2F1dGhvcml6ZQ=="/>
+                <L7p:VariableToSet stringValue="authorization_endpoint"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="JHtob3N0X3RoaXNfYXBwfS9hdXRoL29hdXRoL3YyL3Rva2Vu"/>
+                <L7p:VariableToSet stringValue="token_endpoint"/>
+            </L7p:SetVariable>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="======== Resource Endpoint to retrieve user information ======="/>
+            </L7p:CommentAssertion>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="JHtob3N0X3RoaXNfYXBwfS9vcGVuaWQvY29ubmVjdC92MS91c2VyaW5mbw=="/>
+                <L7p:VariableToSet stringValue="resource_endpoint"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="JHtob3N0X3RoaXNfYXBwfS9hdXRoL29hdXRoL3YyL3Rva2VuL3Jldm9rZQ=="/>
+                <L7p:VariableToSet stringValue="revoke_token_endpoint"/>
+            </L7p:SetVariable>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="Endpoints"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:All>
+        <L7p:Include>
+            <L7p:PolicyGuid stringValue="f989be3f-b0d9-4ad3-9b56-a08f81247dc8"/>
+        </L7p:Include>
+        <L7p:ExportVariables>
+            <L7p:ExportedVars stringArrayValue="included">
+                <L7p:item stringValue="authorization_endpoint"/>
+                <L7p:item stringValue="cacheName"/>
+                <L7p:item stringValue="client_id"/>
+                <L7p:item stringValue="client_secret"/>
+                <L7p:item stringValue="cookieKey"/>
+                <L7p:item stringValue="cookieName"/>
+                <L7p:item stringValue="registered_redirect_uri"/>
+                <L7p:item stringValue="resource_endpoint"/>
+                <L7p:item stringValue="revoke_token_endpoint"/>
+                <L7p:item stringValue="scope"/>
+                <L7p:item stringValue="this.app.name"/>
+                <L7p:item stringValue="this.app.url"/>
+                <L7p:item stringValue="token_endpoint"/>
+            </L7p:ExportedVars>
+        </L7p:ExportVariables>
+    </wsp:All>
+</wsp:Policy>

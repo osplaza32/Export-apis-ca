@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === ***  THIS POLICY IS READ ONLY ***"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === If you have the need to customize this policy"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === please contact CA APIM Support so we can improve customization capability"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="======== IMPORTANT ======="/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="Import these certificates:"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="https://YOUR_SSG:8443"/>
+        </L7p:CommentAssertion>
+        <L7p:RetrieveOAuth2Token>
+            <L7p:AuthEndpoint stringValue="${authorization_endpoint}"/>
+            <L7p:ClientId stringValue="${client_id}"/>
+            <L7p:ClientSecretPlainText stringValue="${client_secret}"/>
+            <L7p:InputParams inputParams="included">
+                <L7p:item oauthParam="included">
+                    <L7p:Name stringValue="redirect_uri"/>
+                    <L7p:Value stringValue="${registered_redirect_uri}"/>
+                </L7p:item>
+                <L7p:item oauthParam="included">
+                    <L7p:IncludeType includeType="AUTHORIZATION_REQUEST"/>
+                    <L7p:Name stringValue="scope"/>
+                    <L7p:Value stringValue="${scope}"/>
+                </L7p:item>
+                <L7p:item oauthParam="included">
+                    <L7p:IncludeType includeType="AUTHORIZATION_REQUEST"/>
+                    <L7p:Name stringValue="display"/>
+                    <L7p:Value stringValue="page"/>
+                </L7p:item>
+                <L7p:item oauthParam="included">
+                    <L7p:IncludeType includeType="AUTHORIZATION_REQUEST"/>
+                    <L7p:Name stringValue="state"/>
+                    <L7p:Value stringValue="granted"/>
+                </L7p:item>
+            </L7p:InputParams>
+            <L7p:IsClientAuthHttpBasic booleanValue="false"/>
+            <L7p:TokenEndpoint stringValue="${token_endpoint}"/>
+            <L7p:UserPasswordPlainText stringValue=""/>
+            <L7p:Username stringValue=""/>
+        </L7p:RetrieveOAuth2Token>
+    </wsp:All>
+</wsp:Policy>

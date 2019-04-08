@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="These two HTTP headers will always be added to a response of the authorization server"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="Enable the assertions below to add these headers to all authorization responses"/>
+        </L7p:CommentAssertion>
+        <L7p:AddHeader>
+            <L7p:AssertionComment assertionComment="included">
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="HTTPS only"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="Inform the browser to only accept SSL connections"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:AssertionComment>
+            <L7p:Enabled booleanValue="false"/>
+            <L7p:HeaderName stringValue="Strict-Transport-Security"/>
+            <L7p:HeaderValue stringValue="max-age=31536000; includeSubDomains"/>
+            <L7p:RemoveExisting booleanValue="true"/>
+            <L7p:Target target="RESPONSE"/>
+        </L7p:AddHeader>
+        <L7p:AddHeader>
+            <L7p:AssertionComment assertionComment="included">
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="ClickJacking"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="Do not allow overlapping of frames"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:AssertionComment>
+            <L7p:Enabled booleanValue="false"/>
+            <L7p:HeaderName stringValue="X-Frame-Options"/>
+            <L7p:HeaderValue stringValue="Deny"/>
+            <L7p:RemoveExisting booleanValue="true"/>
+            <L7p:Target target="RESPONSE"/>
+        </L7p:AddHeader>
+    </wsp:All>
+</wsp:Policy>

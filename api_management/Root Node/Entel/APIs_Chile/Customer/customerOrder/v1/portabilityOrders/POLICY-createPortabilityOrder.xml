@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:Encapsulated>
+                    <L7p:EncapsulatedAssertionConfigGuid stringValue="371f66e9-a471-4dfb-8e78-07c793ea10d3"/>
+                    <L7p:EncapsulatedAssertionConfigName stringValue="Compose Bus Header"/>
+                    <L7p:Parameters mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="format"/>
+                            <L7p:value stringValue="XML"/>
+                        </L7p:entry>
+                        <L7p:entry>
+                            <L7p:key stringValue="operationCode"/>
+                            <L7p:value stringValue="SASS100056"/>
+                        </L7p:entry>
+                    </L7p:Parameters>
+                </L7p:Encapsulated>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.channelIn"/>
+                    <L7p:VariablePrefix stringValue="channelIn"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.clientType"/>
+                    <L7p:VariablePrefix stringValue="clientType"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.creationDate"/>
+                    <L7p:VariablePrefix stringValue="creationDate"/>
+                </L7p:EvaluateJsonPathExpression>
+                <wsp:OneOrMore wsp:Usage="Required">
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue=""/>
+                        <L7p:VariableToSet stringValue="tag.creationDate"/>
+                    </L7p:SetVariable>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${creationDate}"/>
+                            <L7p:Operator operatorNull="null"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="string"/>
+                                </L7p:item>
+                                <L7p:item binary="included">
+                                    <L7p:Negated booleanValue="true"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue=""/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="PHYxOmNyZWF0aW9uRGF0ZT4ke2NyZWF0aW9uRGF0ZS5yZXN1bHR9PC92MTpjcmVhdGlvbkRhdGU+"/>
+                            <L7p:VariableToSet stringValue="tag.creationDate"/>
+                        </L7p:SetVariable>
+                    </wsp:All>
+                </wsp:OneOrMore>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.messageID"/>
+                    <L7p:VariablePrefix stringValue="messageID"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.observations"/>
+                    <L7p:VariablePrefix stringValue="observations"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.observations"/>
+                    <L7p:VariablePrefix stringValue="observations"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.operatorDestination"/>
+                    <L7p:VariablePrefix stringValue="operatorDestination"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.orderNumber"/>
+                    <L7p:VariablePrefix stringValue="orderNumber"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.originOperator"/>
+                    <L7p:VariablePrefix stringValue="originOperator"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.portabilityConsultId"/>
+                    <L7p:VariablePrefix stringValue="portabilityConsultId"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.portabilityObjectType"/>
+                    <L7p:VariablePrefix stringValue="portabilityObjectType"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.scheduledDate"/>
+                    <L7p:VariablePrefix stringValue="scheduledDate"/>
+                </L7p:EvaluateJsonPathExpression>
+                <wsp:OneOrMore wsp:Usage="Required">
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue=""/>
+                        <L7p:VariableToSet stringValue="tag.scheduledDate"/>
+                    </L7p:SetVariable>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${scheduledDate}"/>
+                            <L7p:Operator operatorNull="null"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="string"/>
+                                </L7p:item>
+                                <L7p:item binary="included">
+                                    <L7p:Negated booleanValue="true"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue=""/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="PHYxOnNjaGVkdWxlZERhdGU+JHtzY2hlZHVsZWREYXRlLnJlc3VsdH08L3YxOnNjaGVkdWxlZERhdGU+"/>
+                            <L7p:VariableToSet stringValue="tag.creationDate"/>
+                        </L7p:SetVariable>
+                    </wsp:All>
+                </wsp:OneOrMore>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.serviceType"/>
+                    <L7p:VariablePrefix stringValue="serviceType"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.subscriberType"/>
+                    <L7p:VariablePrefix stringValue="subscriberType"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.subscriberTypeDestination"/>
+                    <L7p:VariablePrefix stringValue="subscriberTypeDestination"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.transactionNumber"/>
+                    <L7p:VariablePrefix stringValue="transactionNumber"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.CustomerAccount.legalEntityType"/>
+                    <L7p:VariablePrefix stringValue="CustomerAccount.legalEntityType"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.CustomerAccount.Contact.alternativeFaxNumber.number"/>
+                    <L7p:VariablePrefix stringValue="CustomerAccount.Contact.alternativeFaxNumber.number"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.CustomerAccount.Contact.email.eMailAddress"/>
+                    <L7p:VariablePrefix stringValue="CustomerAccount.Contact.email.eMailAddress"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.CustomerAccount.Contact.mainPhoneNumber.number"/>
+                    <L7p:VariablePrefix stringValue="CustomerAccount.Contact.mainPhoneNumber.number"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.CustomerAccount.GeographicArea.commune"/>
+                    <L7p:VariablePrefix stringValue="CustomerAccount.GeographicArea.commune"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.CustomerAccount.GeographicArea.location"/>
+                    <L7p:VariablePrefix stringValue="CustomerAccount.GeographicArea.location"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.CustomerAccount.GeographicArea.region"/>
+                    <L7p:VariablePrefix stringValue="CustomerAccount.GeographicArea.region"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.Holder.addressFull"/>
+                    <L7p:VariablePrefix stringValue="Holder.addressFull"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.Holder.individualIdentification.number"/>
+                    <L7p:VariablePrefix stringValue="Holder.individualIdentification.number"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.Holder.individualIdentification.type"/>
+                    <L7p:VariablePrefix stringValue="Holder.individualIdentification.type"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.Holder.individualName.firstName"/>
+                    <L7p:VariablePrefix stringValue="Holder.individualName.firstName"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.Holder.individualName.lastName"/>
+                    <L7p:VariablePrefix stringValue="Holder.individualName.lastName"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.PortabilityInformation"/>
+                    <L7p:VariablePrefix stringValue="PortabilityInformation"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue=""/>
+                    <L7p:VariableToSet stringValue="PortabilityInformationList"/>
+                </L7p:SetVariable>
+                <L7p:ForEachLoop L7p:Usage="Required"
+                    loopVariable="PortabilityInformation.results" variablePrefix="PI">
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue="JHtQSS5jdXJyZW50fQ=="/>
+                        <L7p:ContentType stringValue="application/json; charset=utf-8"/>
+                        <L7p:DataType variableDataType="message"/>
+                        <L7p:VariableToSet stringValue="currentPI"/>
+                    </L7p:SetVariable>
+                    <L7p:EvaluateJsonPathExpression>
+                        <L7p:Expression stringValue=".CAP"/>
+                        <L7p:OtherTargetMessageVariable stringValue="currentPI"/>
+                        <L7p:Target target="OTHER"/>
+                        <L7p:VariablePrefix stringValue="PortabilityInformation.CAP"/>
+                    </L7p:EvaluateJsonPathExpression>
+                    <L7p:EvaluateJsonPathExpression>
+                        <L7p:Expression stringValue=".billNo"/>
+                        <L7p:OtherTargetMessageVariable stringValue="currentPI"/>
+                        <L7p:Target target="OTHER"/>
+                        <L7p:VariablePrefix stringValue="PortabilityInformation.billNo"/>
+                    </L7p:EvaluateJsonPathExpression>
+                    <L7p:EvaluateJsonPathExpression>
+                        <L7p:Expression stringValue=".creditedAccount"/>
+                        <L7p:OtherTargetMessageVariable stringValue="currentPI"/>
+                        <L7p:Target target="OTHER"/>
+                        <L7p:VariablePrefix stringValue="PortabilityInformation.creditedAccount"/>
+                    </L7p:EvaluateJsonPathExpression>
+                    <L7p:EvaluateJsonPathExpression>
+                        <L7p:Expression stringValue=".MSISDN.SN"/>
+                        <L7p:OtherTargetMessageVariable stringValue="currentPI"/>
+                        <L7p:Target target="OTHER"/>
+                        <L7p:VariablePrefix stringValue="PortabilityInformation.MSISDN.SN"/>
+                    </L7p:EvaluateJsonPathExpression>
+                    <L7p:EvaluateJsonPathExpression>
+                        <L7p:Expression stringValue=".PhysicalResource.imei"/>
+                        <L7p:OtherTargetMessageVariable stringValue="currentPI"/>
+                        <L7p:Target target="OTHER"/>
+                        <L7p:VariablePrefix stringValue="PortabilityInformation.PhysicalResource.imei"/>
+                    </L7p:EvaluateJsonPathExpression>
+                    <L7p:EvaluateJsonPathExpression>
+                        <L7p:Expression stringValue=".debit.amount"/>
+                        <L7p:OtherTargetMessageVariable stringValue="currentPI"/>
+                        <L7p:Target target="OTHER"/>
+                        <L7p:VariablePrefix stringValue="PortabilityInformation.debit.amount"/>
+                    </L7p:EvaluateJsonPathExpression>
+                    <wsp:OneOrMore wsp:Usage="Required">
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue=""/>
+                            <L7p:VariableToSet stringValue="tag.PortabilityInformation.debit.amount"/>
+                        </L7p:SetVariable>
+                        <wsp:All wsp:Usage="Required">
+                            <L7p:ComparisonAssertion>
+                                <L7p:CaseSensitive booleanValue="false"/>
+                                <L7p:Expression1 stringValue="${PortabilityInformation.debit.amount}"/>
+                                <L7p:Operator operatorNull="null"/>
+                                <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="string"/>
+                                    </L7p:item>
+                                    <L7p:item binary="included">
+                                    <L7p:Negated booleanValue="true"/>
+                                    <L7p:Operator operator="EMPTY"/>
+                                    <L7p:RightValue stringValue=""/>
+                                    </L7p:item>
+                                </L7p:Predicates>
+                            </L7p:ComparisonAssertion>
+                            <L7p:SetVariable>
+                                <L7p:Base64Expression stringValue="PHYxOmRlYml0Pg0KIAk8IS0tT3B0aW9uYWw6LS0+DQogCTx2MTphbW91bnQ+JHtQb3J0YWJpbGl0eUluZm9ybWF0aW9uLmRlYml0LmFtb3VudC5yZXN1bHR9PC92MTphbW91bnQ+DQo8L3YxOmRlYml0Pg=="/>
+                                <L7p:VariableToSet stringValue="tag.PortabilityInformation.debit.amount"/>
+                            </L7p:SetVariable>
+                        </wsp:All>
+                    </wsp:OneOrMore>
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue="JHtQb3J0YWJpbGl0eUluZm9ybWF0aW9uTGlzdH0NCgkgICAgICA8djE6UG9ydGFiaWxpdHlJbmZvcm1hdGlvbj4NCiAgICAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgICAgIDx2MTpiaWxsTm8+JHtQb3J0YWJpbGl0eUluZm9ybWF0aW9uLmJpbGxOby5yZXN1bHR9PC92MTpiaWxsTm8+DQogICAgICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICAgICA8djE6Q0FQPiR7UG9ydGFiaWxpdHlJbmZvcm1hdGlvbi5DQVAucmVzdWx0fTwvdjE6Q0FQPg0KICAgICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgICAgPHYxOmNyZWRpdGVkQWNjb3VudD4ke1BvcnRhYmlsaXR5SW5mb3JtYXRpb24uY3JlZGl0ZWRBY2NvdW50LnJlc3VsdH08L3YxOmNyZWRpdGVkQWNjb3VudD4NCiAgICAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgICAgICR7dGFnLlBvcnRhYmlsaXR5SW5mb3JtYXRpb24uZGViaXQuYW1vdW50fQ0KICAgICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgICAgPHYxOk1TSVNETj4NCiAgICAgICAgICAgICAgICAgICAgIDx2MTpTTj4ke1BvcnRhYmlsaXR5SW5mb3JtYXRpb24uTVNJU0ROLlNOLnJlc3VsdH08L3YxOlNOPg0KICAgICAgICAgICAgICAgICAgPC92MTpNU0lTRE4+DQogICAgICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICAgICA8djE6UGh5c2ljYWxSZXNvdXJjZT4NCiAgICAgICAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgICAgICAgIDx2MTppbWVpPiR7UG9ydGFiaWxpdHlJbmZvcm1hdGlvbi5QaHlzaWNhbFJlc291cmNlLmltZWkucmVzdWx0fTwvdjE6aW1laT4NCiAgICAgICAgICAgICAgICAgIDwvdjE6UGh5c2ljYWxSZXNvdXJjZT4NCiAgICAgICAgICAgICAgIDwvdjE6UG9ydGFiaWxpdHlJbmZvcm1hdGlvbj4="/>
+                        <L7p:VariableToSet stringValue="PortabilityInformationList"/>
+                    </L7p:SetVariable>
+                </L7p:ForEachLoop>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.Requester.individualIdentification.number"/>
+                    <L7p:VariablePrefix stringValue="Requester.individualIdentification.number"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.Requester.individualIdentification.type"/>
+                    <L7p:VariablePrefix stringValue="Requester.individualIdentification.type"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".PortabilityOrder.ServiceRequest.ID"/>
+                    <L7p:VariablePrefix stringValue="ServiceRequest.ID"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="PHNvYXA6RW52ZWxvcGUgeG1sbnM6c29hcD0iaHR0cDovL3d3dy53My5vcmcvMjAwMy8wNS9zb2FwLWVudmVsb3BlIiB4bWxuczp2MT0iaHR0cDovL3d3dy5lbnRlbC5jbC9FQk0vQ3JlYXRlUG9ydGFiaWxpdHlPcmRlci92MSIgeG1sbnM6djExPSJodHRwOi8vd3d3LmVudGVsLmNsL0VTTy9NZXNzYWdlSGVhZGVyL3YxIiB4bWxuczp2Mj0iaHR0cDovL3d3dy5lbnRlbC5jbC9FU08vUmVzdWx0L3YyIiB4bWxuczp2MTI9Imh0dHA6Ly93d3cuZW50ZWwuY2wvRVNPL0Vycm9yL3YxIj4NCiAgIDxzb2FwOkhlYWRlci8+DQogICA8c29hcDpCb2R5Pg0KICAgICAgPHYxOkNyZWF0ZVBvcnRhYmlsaXR5T3JkZXJfUkVRPg0KJHtoZWFkZXJ9DQogICAgICAgICA8djE6Qm9keT4NCiAgICAgICAgICAgIDx2MTpQb3J0YWJpbGl0eU9yZGVyPg0KICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgPHYxOmNoYW5uZWxJbj4ke2NoYW5uZWxJbi5yZXN1bHR9PC92MTpjaGFubmVsSW4+DQogICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICA8djE6Y2xpZW50VHlwZT4ke29wZXJhdG9yRGVzdGluYXRpb24ucmVzdWx0fTwvdjE6Y2xpZW50VHlwZT4NCiAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgICR7dGFnLmNyZWF0aW9uRGF0ZX0NCiAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgIDx2MTptZXNzYWdlSUQ+JHttZXNzYWdlSUQucmVzdWx0fTwvdjE6bWVzc2FnZUlEPg0KICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgPHYxOm9ic2VydmF0aW9ucz4ke29ic2VydmF0aW9ucy5yZXN1bHR9PC92MTpvYnNlcnZhdGlvbnM+DQogICAgICAgICAgICAgICA8djE6b3BlcmF0b3JEZXN0aW5hdGlvbj4ke29wZXJhdG9yRGVzdGluYXRpb24ucmVzdWx0fTwvdjE6b3BlcmF0b3JEZXN0aW5hdGlvbj4NCiAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgIDx2MTpvcmRlck51bWJlcj4ke29yZGVyTnVtYmVyLnJlc3VsdH08L3YxOm9yZGVyTnVtYmVyPg0KICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgPHYxOm9yaWdpbk9wZXJhdG9yPiR7b3JpZ2luT3BlcmF0b3IucmVzdWx0fTwvdjE6b3JpZ2luT3BlcmF0b3I+DQogICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICA8djE6cG9ydGFiaWxpdHlDb25zdWx0SWQ+JHtwb3J0YWJpbGl0eUNvbnN1bHRJZC5yZXN1bHR9PC92MTpwb3J0YWJpbGl0eUNvbnN1bHRJZD4NCiAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgIDx2MTpwb3J0YWJpbGl0eU9iamVjdFR5cGU+JHtwb3J0YWJpbGl0eU9iamVjdFR5cGUucmVzdWx0fTwvdjE6cG9ydGFiaWxpdHlPYmplY3RUeXBlPg0KICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgJHt0YWcuc2NoZWR1bGVkRGF0ZX0NCiAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgIDx2MTpzZXJ2aWNlVHlwZT4ke3NlcnZpY2VUeXBlLnJlc3VsdH08L3YxOnNlcnZpY2VUeXBlPg0KICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgPHYxOnN1YnNjcmliZXJUeXBlPiR7c3Vic2NyaWJlclR5cGUucmVzdWx0fTwvdjE6c3Vic2NyaWJlclR5cGU+DQogICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICA8djE6c3Vic2NyaWJlclR5cGVEZXN0aW5hdGlvbj4ke3N1YnNjcmliZXJUeXBlRGVzdGluYXRpb24ucmVzdWx0fTwvdjE6c3Vic2NyaWJlclR5cGVEZXN0aW5hdGlvbj4NCiAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgIDx2MTp0cmFuc2FjdGlvbk51bWJlcj4ke3RyYW5zYWN0aW9uTnVtYmVyLnJlc3VsdH08L3YxOnRyYW5zYWN0aW9uTnVtYmVyPg0KICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgPHYxOkN1c3RvbWVyQWNjb3VudD4NCiAgICAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgICAgIDx2MTpsZWdhbEVudGl0eVR5cGU+JHtDdXN0b21lckFjY291bnQubGVnYWxFbnRpdHlUeXBlLnJlc3VsdH08L3YxOmxlZ2FsRW50aXR5VHlwZT4NCiAgICAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgICAgIDx2MTpDb250YWN0Pg0KICAgICAgICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgICAgICAgPHYxOmFsdGVybmF0aXZlRmF4TnVtYmVyPg0KICAgICAgICAgICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgICAgICAgICAgPHYxOm51bWJlcj4ke0N1c3RvbWVyQWNjb3VudC5Db250YWN0LmFsdGVybmF0aXZlRmF4TnVtYmVyLm51bWJlci5yZXN1bHR9PC92MTpudW1iZXI+DQogICAgICAgICAgICAgICAgICAgICA8L3YxOmFsdGVybmF0aXZlRmF4TnVtYmVyPg0KICAgICAgICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgICAgICAgPHYxOmVtYWlsPg0KICAgICAgICAgICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgICAgICAgICAgPHYxOmVNYWlsQWRkcmVzcz4ke0N1c3RvbWVyQWNjb3VudC5Db250YWN0LmVtYWlsLmVNYWlsQWRkcmVzcy5yZXN1bHR9PC92MTplTWFpbEFkZHJlc3M+DQogICAgICAgICAgICAgICAgICAgICA8L3YxOmVtYWlsPg0KICAgICAgICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgICAgICAgPHYxOm1haW5QaG9uZU51bWJlcj4NCiAgICAgICAgICAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgICAgICAgICAgIDx2MTpudW1iZXI+JHtDdXN0b21lckFjY291bnQuQ29udGFjdC5tYWluUGhvbmVOdW1iZXIubnVtYmVyLnJlc3VsdH08L3YxOm51bWJlcj4NCiAgICAgICAgICAgICAgICAgICAgIDwvdjE6bWFpblBob25lTnVtYmVyPg0KICAgICAgICAgICAgICAgICAgPC92MTpDb250YWN0Pg0KICAgICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgICAgPHYxOkdlb2dyYXBoaWNBcmVhPg0KICAgICAgICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgICAgICAgPHYxOmNvbW11bmU+JHtDdXN0b21lckFjY291bnQuR2VvZ3JhcGhpY0FyZWEuY29tbXVuZS5yZXN1bHR9PC92MTpjb21tdW5lPg0KICAgICAgICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgICAgICAgPHYxOmxvY2F0aW9uPiR7Q3VzdG9tZXJBY2NvdW50Lkdlb2dyYXBoaWNBcmVhLmxvY2F0aW9uLnJlc3VsdH08L3YxOmxvY2F0aW9uPg0KICAgICAgICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgICAgICAgPHYxOnJlZ2lvbj4ke0N1c3RvbWVyQWNjb3VudC5HZW9ncmFwaGljQXJlYS5sb2NhdGlvbi5yZXN1bHR9PC92MTpyZWdpb24+DQogICAgICAgICAgICAgICAgICA8L3YxOkdlb2dyYXBoaWNBcmVhPg0KICAgICAgICAgICAgICAgPC92MTpDdXN0b21lckFjY291bnQ+DQogICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICA8djE6SG9sZGVyPg0KICAgICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgICAgPHYxOmFkZHJlc3NGdWxsPiR7SG9sZGVyLmFkZHJlc3NGdWxsLnJlc3VsdH08L3YxOmFkZHJlc3NGdWxsPg0KICAgICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgICAgPHYxOmluZGl2aWR1YWxJZGVudGlmaWNhdGlvbj4NCiAgICAgICAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgICAgICAgIDx2MTpudW1iZXI+JHtIb2xkZXIuaW5kaXZpZHVhbElkZW50aWZpY2F0aW9uLm51bWJlci5yZXN1bHR9PC92MTpudW1iZXI+DQogICAgICAgICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICAgICAgICA8djE6dHlwZT4ke0hvbGRlci5pbmRpdmlkdWFsSWRlbnRpZmljYXRpb24udHlwZS5yZXN1bHR9PC92MTp0eXBlPg0KICAgICAgICAgICAgICAgICAgPC92MTppbmRpdmlkdWFsSWRlbnRpZmljYXRpb24+DQogICAgICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICAgICA8djE6aW5kaXZpZHVhbE5hbWU+DQogICAgICAgICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICAgICAgICA8djE6Zmlyc3ROYW1lPiR7SG9sZGVyLmluZGl2aWR1YWxOYW1lLmZpcnN0TmFtZS5yZXN1bHR9PC92MTpmaXJzdE5hbWU+DQogICAgICAgICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICAgICAgICA8djE6bGFzdE5hbWU+JHtIb2xkZXIuaW5kaXZpZHVhbE5hbWUubGFzdE5hbWUucmVzdWx0fTwvdjE6bGFzdE5hbWU+DQogICAgICAgICAgICAgICAgICA8L3YxOmluZGl2aWR1YWxOYW1lPg0KICAgICAgICAgICAgICAgPC92MTpIb2xkZXI+JHtQb3J0YWJpbGl0eUluZm9ybWF0aW9uTGlzdH0NCiAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgIDx2MTpSZXF1ZXN0ZXI+DQogICAgICAgICAgICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICAgICAgICAgICA8djE6aW5kaXZpZHVhbElkZW50aWZpY2F0aW9uPg0KICAgICAgICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgICAgICAgPHYxOm51bWJlcj4ke1JlcXVlc3Rlci5pbmRpdmlkdWFsSWRlbnRpZmljYXRpb24ubnVtYmVyLnJlc3VsdH08L3YxOm51bWJlcj4NCiAgICAgICAgICAgICAgICAgICAgIDwhLS1PcHRpb25hbDotLT4NCiAgICAgICAgICAgICAgICAgICAgIDx2MTp0eXBlPiR7UmVxdWVzdGVyLmluZGl2aWR1YWxJZGVudGlmaWNhdGlvbi50eXBlLnJlc3VsdH08L3YxOnR5cGU+DQogICAgICAgICAgICAgICAgICA8L3YxOmluZGl2aWR1YWxJZGVudGlmaWNhdGlvbj4NCiAgICAgICAgICAgICAgIDwvdjE6UmVxdWVzdGVyPg0KICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgPHYxOlNlcnZpY2VSZXF1ZXN0Pg0KICAgICAgICAgICAgICAgICAgPCEtLU9wdGlvbmFsOi0tPg0KICAgICAgICAgICAgICAgICAgPHYxOklEPiR7U2VydmljZVJlcXVlc3QuSUQucmVzdWx0fTwvdjE6SUQ+DQogICAgICAgICAgICAgICA8L3YxOlNlcnZpY2VSZXF1ZXN0Pg0KICAgICAgICAgICAgPC92MTpQb3J0YWJpbGl0eU9yZGVyPg0KICAgICAgICAgPC92MTpCb2R5Pg0KICAgICAgPC92MTpDcmVhdGVQb3J0YWJpbGl0eU9yZGVyX1JFUT4NCiAgIDwvc29hcDpCb2R5Pg0KPC9zb2FwOkVudmVsb3BlPg=="/>
+                    <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                    <L7p:DataType variableDataType="message"/>
+                    <L7p:VariableToSet stringValue="message"/>
+                </L7p:SetVariable>
+                <L7p:HttpRoutingAssertion>
+                    <L7p:ConnectionTimeout stringValue="5000"/>
+                    <L7p:FailOnErrorStatus booleanValue="false"/>
+                    <L7p:HttpMethod httpMethod="POST"/>
+                    <L7p:ProtectedServiceUrl stringValue="http://${gateway.eUSB.tde.hostname}/ES/CreatePortabilityOrder/v1"/>
+                    <L7p:ProxyPassword stringValueNull="null"/>
+                    <L7p:ProxyUsername stringValueNull="null"/>
+                    <L7p:RequestHeaderRules httpPassthroughRuleSet="included">
+                        <L7p:ForwardAll booleanValue="true"/>
+                        <L7p:Rules httpPassthroughRules="included">
+                            <L7p:item httpPassthroughRule="included">
+                                <L7p:Name stringValue="Cookie"/>
+                            </L7p:item>
+                            <L7p:item httpPassthroughRule="included">
+                                <L7p:Name stringValue="SOAPAction"/>
+                            </L7p:item>
+                        </L7p:Rules>
+                    </L7p:RequestHeaderRules>
+                    <L7p:RequestMsgSrc stringValue="message"/>
+                    <L7p:RequestParamRules httpPassthroughRuleSet="included">
+                        <L7p:ForwardAll booleanValue="true"/>
+                        <L7p:Rules httpPassthroughRules="included"/>
+                    </L7p:RequestParamRules>
+                    <L7p:ResponseHeaderRules httpPassthroughRuleSet="included">
+                        <L7p:ForwardAll booleanValue="true"/>
+                        <L7p:Rules httpPassthroughRules="included">
+                            <L7p:item httpPassthroughRule="included">
+                                <L7p:Name stringValue="Set-Cookie"/>
+                            </L7p:item>
+                        </L7p:Rules>
+                    </L7p:ResponseHeaderRules>
+                    <L7p:ResponseMsgDest stringValue="serviceResponse"/>
+                    <L7p:Timeout stringValue="6900"/>
+                </L7p:HttpRoutingAssertion>
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${httpRouting.reasonCode}"/>
+                    <L7p:Operator operatorNull="null"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item dataType="included">
+                            <L7p:Type variableDataType="int"/>
+                        </L7p:item>
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:RightValue stringValue="202"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:ResponseXpathAssertion>
+                    <L7p:VariablePrefix stringValue="status"/>
+                    <L7p:XmlMsgSrc stringValue="serviceResponse"/>
+                    <L7p:XpathExpression xpathExpressionValue="included">
+                        <L7p:Expression stringValue="/soap:Envelope/soap:Body/ns1:CreatePortabilityOrder_RSP/ns0:ResponseHeader/ns3:Result/@status"/>
+                        <L7p:Namespaces mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="wsa"/>
+                                <L7p:value stringValue="http://www.w3.org/2005/08/addressing"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="instra"/>
+                                <L7p:value stringValue="http://xmlns.oracle.com/sca/tracking/1.0"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="soap-env"/>
+                                <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="ns0"/>
+                                <L7p:value stringValue="http://www.entel.cl/ESO/MessageHeader/v1"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="ns2"/>
+                                <L7p:value stringValue="http://www.entel.cl/SC/ErrorManager/ErrorDictionary/v1"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="ns1"/>
+                                <L7p:value stringValue="http://www.entel.cl/EBM/CreatePortabilityOrder/v1"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="ns4"/>
+                                <L7p:value stringValue="http://www.entel.cl/ESO/Error/v1"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="ns3"/>
+                                <L7p:value stringValue="http://www.entel.cl/ESO/Result/v2"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="s"/>
+                                <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="v12"/>
+                                <L7p:value stringValue="http://www.entel.cl/ESO/Error/v1"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="v11"/>
+                                <L7p:value stringValue="http://www.entel.cl/ESO/MessageHeader/v1"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="v1"/>
+                                <L7p:value stringValue="http://www.entel.cl/EBM/CreatePortabilityOrder/v1"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="v2"/>
+                                <L7p:value stringValue="http://www.entel.cl/ESO/Result/v2"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="soap"/>
+                                <L7p:value stringValue="http://www.w3.org/2003/05/soap-envelope"/>
+                            </L7p:entry>
+                        </L7p:Namespaces>
+                        <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                    </L7p:XpathExpression>
+                </L7p:ResponseXpathAssertion>
+                <L7p:ResponseXpathAssertion>
+                    <L7p:VariablePrefix stringValue="descriptRsp"/>
+                    <L7p:XmlMsgSrc stringValue="serviceResponse"/>
+                    <L7p:XpathExpression xpathExpressionValue="included">
+                        <L7p:Expression stringValue="/soap:Envelope/soap:Body/ns1:CreatePortabilityOrder_RSP/ns0:ResponseHeader/ns3:Result/@description"/>
+                        <L7p:Namespaces mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="soap-env"/>
+                                <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="ns0"/>
+                                <L7p:value stringValue="http://www.entel.cl/ESO/MessageHeader/v1"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="ns2"/>
+                                <L7p:value stringValue="http://www.entel.cl/SC/ErrorManager/ErrorDictionary/v1"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="ns1"/>
+                                <L7p:value stringValue="http://www.entel.cl/EBM/CreatePortabilityOrder/v1"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="ns4"/>
+                                <L7p:value stringValue="http://www.entel.cl/ESO/Error/v1"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="ns3"/>
+                                <L7p:value stringValue="http://www.entel.cl/ESO/Result/v2"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="s"/>
+                                <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="v12"/>
+                                <L7p:value stringValue="http://www.entel.cl/ESO/Error/v1"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="v11"/>
+                                <L7p:value stringValue="http://www.entel.cl/ESO/MessageHeader/v1"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="v1"/>
+                                <L7p:value stringValue="http://www.entel.cl/EBM/CreatePortabilityOrder/v1"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="v2"/>
+                                <L7p:value stringValue="http://www.entel.cl/ESO/Result/v2"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="soap"/>
+                                <L7p:value stringValue="http://www.w3.org/2003/05/soap-envelope"/>
+                            </L7p:entry>
+                        </L7p:Namespaces>
+                        <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                    </L7p:XpathExpression>
+                </L7p:ResponseXpathAssertion>
+                <wsp:OneOrMore wsp:Usage="Required">
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${status.result}"/>
+                            <L7p:Expression2 stringValue="OK"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="OK"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="MjAy"/>
+                            <L7p:VariableToSet stringValue="code"/>
+                        </L7p:SetVariable>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="T3BlcmFjacOzbiBleGl0b3Nh"/>
+                            <L7p:VariableToSet stringValue="description"/>
+                        </L7p:SetVariable>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="JHtkZXNjcmlwdFJzcC5yZXN1bHR9"/>
+                            <L7p:VariableToSet stringValue="descriptionDetail"/>
+                        </L7p:SetVariable>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="JHtyZXF1ZXN0LnRpbWUubG9jYWwueXl5eS9NTS9kZCdUJ0hIOm1tOnNzLlNTU30="/>
+                            <L7p:VariableToSet stringValue="responseTimestamp"/>
+                        </L7p:SetVariable>
+                        <L7p:HardcodedResponse>
+                            <L7p:Base64ResponseBody stringValue="ewoicmVzdWx0Ijp7CgkidHJhbnNhY3Rpb25JZCI6IiR7cmVxdWVzdElkfSIsCgkiY29kZSI6IiR7Y29kZX0iLAoJImRlc2NyaXB0aW9uIjoiT0siLAoJImRlc2NyaXB0aW9uRGV0YWlsIjoiJHtkZXNjcmlwdGlvbkRldGFpbH0iLAoJInJlc3BvbnNlVGltZXN0YW1wIjoiJHtyZXNwb25zZVRpbWVzdGFtcH0iCgl9Cn0="/>
+                            <L7p:ResponseContentType stringValue="application/json; charset=UTF-8"/>
+                        </L7p:HardcodedResponse>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${status.result}"/>
+                            <L7p:Expression2 stringValue="WARNING"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="WARNING"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="RW50aWRhZCBubyBwcm9jZXNhZGE="/>
+                            <L7p:VariableToSet stringValue="codeDescription"/>
+                        </L7p:SetVariable>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="JHtyZXF1ZXN0LnRpbWUubG9jYWwueXl5eS1NTS1kZCdUJ0hIOm1tOnNzLlNTU30="/>
+                            <L7p:VariableToSet stringValue="responseTimestamp"/>
+                        </L7p:SetVariable>
+                        <L7p:AuditDetailAssertion>
+                            <L7p:CustomLoggerSuffix stringValue="entel.api.syslog.error"/>
+                            <L7p:Detail stringValue="REQUESTID: ${requestId} | EVENTID: ${request.http.header.consumerId} | APIM ${service.name} Route Failed | IS STATUS: ${httpRouting.reasonCode} | IS URI: ${httpRouting.url} | IS REQUEST: ${message.mainpart} | IS RESPONSE: ${serviceResponse.mainpart} | TIMESTAMP: ${request.time.local.yyyy-MM-dd'T'HH:mm:ss.SSS}"/>
+                            <L7p:Level stringValue="WARNING"/>
+                            <L7p:LoggingOnly booleanValue="true"/>
+                        </L7p:AuditDetailAssertion>
+                        <L7p:Encapsulated>
+                            <L7p:EncapsulatedAssertionConfigGuid stringValue="2873d7c1-bfb2-42b8-ab9a-35767965de80"/>
+                            <L7p:EncapsulatedAssertionConfigName stringValue="API Portal Integration - Post Route"/>
+                            <L7p:Parameters mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="portal.analytics.response.code"/>
+                                    <L7p:value stringValue="422"/>
+                                </L7p:entry>
+                                <L7p:entry>
+                                    <L7p:key stringValue="portal.analytics.routingTotalTime"/>
+                                    <L7p:value stringValue="${request.routingTotalTime}"/>
+                                </L7p:entry>
+                            </L7p:Parameters>
+                        </L7p:Encapsulated>
+                        <L7p:CustomizeErrorResponse>
+                            <L7p:Content stringValueReference="inline"><![CDATA[{
+    "result": {
+        "transactionId": "${requestId}",
+        "code": "${codeRsp.result}",
+        "description": "${codeDescription}",
+        "descriptionDetail": "${descriptRsp.result}",
+        "responseTimestamp": "${responseTimestamp}"
+    }
+}]]></L7p:Content>
+                            <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                            <L7p:ExtraHeaders nameValuePairArray="included"/>
+                            <L7p:HttpStatus stringValue="422"/>
+                        </L7p:CustomizeErrorResponse>
+                        <L7p:RaiseError/>
+                    </wsp:All>
+                </wsp:OneOrMore>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:Include>
+                    <L7p:PolicyGuid stringValue="1b3f18a3-5e88-4cae-9fae-44b459727ac1"/>
+                </L7p:Include>
+            </wsp:All>
+        </wsp:OneOrMore>
+    </wsp:All>
+</wsp:Policy>

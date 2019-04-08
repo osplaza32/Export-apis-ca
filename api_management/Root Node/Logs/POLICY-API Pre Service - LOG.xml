@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:AuditDetailAssertion>
+            <L7p:Detail stringValue="Policy Fragment: API-Init"/>
+            <L7p:Enabled booleanValue="false"/>
+            <L7p:LoggingOnly booleanValue="true"/>
+        </L7p:AuditDetailAssertion>
+        <L7p:AuditDetailAssertion>
+            <L7p:CustomLoggerSuffix stringValue="trafficlog"/>
+            <L7p:Detail stringValueReference="inline"><![CDATA[REQUESTID: ${requestId} | CONSUMERID: ${request.http.header.consumerid} | APIM ${service.name} Started | METHOD: ${request.http.method} | URL: ${request.url} | NODE: ${ssgnode.name} | IP:${request.tcp.remoteIP} | TIMESTAMP: ${request.time.local.yyyy-MM-dd'T'HH:mm:ss.SSS} 
+--
+Request Header:
+${request.http.allheadervalues}
+--
+Request Body:
+${request.mainpart}]]></L7p:Detail>
+            <L7p:LoggingOnly booleanValue="true"/>
+        </L7p:AuditDetailAssertion>
+    </wsp:All>
+</wsp:Policy>

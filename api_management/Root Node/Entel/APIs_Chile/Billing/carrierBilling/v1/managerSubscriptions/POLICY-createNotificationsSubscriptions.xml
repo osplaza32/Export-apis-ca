@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:Split>
+            <L7p:IgnoreEmptyValues booleanValue="true"/>
+            <L7p:InputVariable stringValue="request.http.uri"/>
+            <L7p:OutputVariable stringValue="uri"/>
+            <L7p:SplitPattern stringValue="/"/>
+        </L7p:Split>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${uri[5]}"/>
+                    <L7p:Expression2 stringValue="FOX"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:RightValue stringValue="FOX"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Expression stringValue=".operation"/>
+                    <L7p:VariablePrefix stringValue="operation"/>
+                </L7p:EvaluateJsonPathExpression>
+                <wsp:OneOrMore wsp:Usage="Required">
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${operation.result}"/>
+                            <L7p:Expression2 stringValue="inscripcion"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="inscripcion"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:HardcodedResponse>
+                            <L7p:Base64ResponseBody stringValue="ewoJInJlc3VsdCI6IHsKICAgICAgICAJInRyYW5zYWN0aW9uSWQiOiAiJHtyZXF1ZXN0SWR9IiwKICAgICAgICAJImNvZGUiOiAiMjAwIiwKICAgICAgICAJImRlc2NyaXB0aW9uIjogIk9LIiwKICAgICAgICAJImRlc2NyaXB0aW9uRGV0YWlsIjogIlByb2Nlc2FtaWVudG8gY29uY2x1w61kbyBleGl0b3NhbWVudGUiLAogICAgICAgIAkicmVzcG9uc2VUaW1lc3RhbXAiOiAiJHtyZXF1ZXN0LnRpbWUubG9jYWwueXl5eS1NTS1kZCdUJ0hIOm1tOnNzLlNTU30iCiAgICAJfQp9"/>
+                            <L7p:ResponseContentType stringValue="application/json; charset=UTF-8"/>
+                        </L7p:HardcodedResponse>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${operation.result}"/>
+                            <L7p:Expression2 stringValue="desinscripcion"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="desinscripcion"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:HardcodedResponse>
+                            <L7p:Base64ResponseBody stringValue="ewoJInJlc3VsdCI6IHsKICAgICAgICAJInRyYW5zYWN0aW9uSWQiOiAiJHtyZXF1ZXN0SWR9IiwKICAgICAgICAJImNvZGUiOiAiMjAwIiwKICAgICAgICAJImRlc2NyaXB0aW9uIjogIk9LIiwKICAgICAgICAJImRlc2NyaXB0aW9uRGV0YWlsIjogIlByb2Nlc2FtaWVudG8gY29uY2x1w61kbyBleGl0b3NhbWVudGUiLAogICAgICAgIAkicmVzcG9uc2VUaW1lc3RhbXAiOiAiJHtyZXF1ZXN0LnRpbWUubG9jYWwueXl5eS1NTS1kZCdUJ0hIOm1tOnNzLlNTU30iCiAgICAJfQp9"/>
+                            <L7p:ResponseContentType stringValue="application/json; charset=UTF-8"/>
+                        </L7p:HardcodedResponse>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:ComparisonAssertion>
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:Expression1 stringValue="${operation.result}"/>
+                            <L7p:Expression2 stringValue="reinscripcion"/>
+                            <L7p:Predicates predicates="included">
+                                <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="reinscripcion"/>
+                                </L7p:item>
+                            </L7p:Predicates>
+                        </L7p:ComparisonAssertion>
+                        <L7p:HardcodedResponse>
+                            <L7p:Base64ResponseBody stringValue="ewoJInJlc3VsdCI6IHsKICAgICAgICAJInRyYW5zYWN0aW9uSWQiOiAiJHtyZXF1ZXN0SWR9IiwKICAgICAgICAJImNvZGUiOiAiMjAwIiwKICAgICAgICAJImRlc2NyaXB0aW9uIjogIk9LIiwKICAgICAgICAJImRlc2NyaXB0aW9uRGV0YWlsIjogIlByb2Nlc2FtaWVudG8gY29uY2x1w61kbyBleGl0b3NhbWVudGUiLAogICAgICAgIAkicmVzcG9uc2VUaW1lc3RhbXAiOiAiJHtyZXF1ZXN0LnRpbWUubG9jYWwueXl5eS1NTS1kZCdUJ0hIOm1tOnNzLlNTU30iCiAgICAJfQp9"/>
+                            <L7p:ResponseContentType stringValue="application/json; charset=UTF-8"/>
+                        </L7p:HardcodedResponse>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="NDAw"/>
+                            <L7p:VariableToSet stringValue="code"/>
+                        </L7p:SetVariable>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="UGV0aWNpw7NuIGluY29ycmVjdGE="/>
+                            <L7p:VariableToSet stringValue="description"/>
+                        </L7p:SetVariable>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="TGEgcGV0aWNpw7NuIGNvbnRpZW5lIHNpbnRheGlzIGVycsOzbmVhIHkgbm8gZGViZXLDrWEgcmVwZXRpcnNl"/>
+                            <L7p:VariableToSet stringValue="descriptionDetail"/>
+                        </L7p:SetVariable>
+                        <L7p:CustomizeErrorResponse>
+                            <L7p:Content stringValueReference="inline"><![CDATA[{
+"result":{
+	"transactionId":"${requestId}",
+	"code":"${code}",
+	"description":"${description}",
+	"descriptionDetail":"${descriptionDetail}",
+	 "responseTimestamp": "${request.time.local.yyyy-MM-dd'T'HH:mm:ss.SSS}"
+	}
+}]]></L7p:Content>
+                            <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                            <L7p:ExtraHeaders nameValuePairArray="included"/>
+                            <L7p:HttpStatus stringValue="400"/>
+                        </L7p:CustomizeErrorResponse>
+                        <L7p:RaiseError/>
+                    </wsp:All>
+                    <L7p:assertionComment>
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="RIGHT.COMMENT"/>
+                                <L7p:value stringValue="LEGADO"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:assertionComment>
+                </wsp:OneOrMore>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="NDAw"/>
+                    <L7p:VariableToSet stringValue="code"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="UGV0aWNpw7NuIGluY29ycmVjdGE="/>
+                    <L7p:VariableToSet stringValue="description"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="TGEgcGV0aWNpw7NuIGNvbnRpZW5lIHNpbnRheGlzIGVycsOzbmVhIHkgbm8gZGViZXLDrWEgcmVwZXRpcnNl"/>
+                    <L7p:VariableToSet stringValue="descriptionDetail"/>
+                </L7p:SetVariable>
+                <L7p:CustomizeErrorResponse>
+                    <L7p:Content stringValueReference="inline"><![CDATA[{
+"result":{
+	"transactionId":"${requestId}",
+	"code":"${code}",
+	"description":"${description}",
+	"descriptionDetail":"${descriptionDetail}",
+	 "responseTimestamp": "${request.time.local.yyyy-MM-dd'T'HH:mm:ss.SSS}"
+	}
+}]]></L7p:Content>
+                    <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                    <L7p:ExtraHeaders nameValuePairArray="included"/>
+                    <L7p:HttpStatus stringValue="400"/>
+                </L7p:CustomizeErrorResponse>
+                <L7p:RaiseError/>
+            </wsp:All>
+        </wsp:OneOrMore>
+    </wsp:All>
+</wsp:Policy>

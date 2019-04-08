@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="Generates the HMAC-SHA1 signature for the test client"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="Input: consumer_key_secret, http_method, url, oauth_consumer_key,                 oauth_callback, oauth_token, oauth_verifier"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="http_method = GET | POST"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="url = target URL that shall be called"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="oauth_callback (optional) - for request tokens"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="oauth_token (optional) - for authorized request or access tokens"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="oauth_verifier (optional) - for authorized request tokens"/>
+        </L7p:CommentAssertion>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:Regex>
+                    <L7p:AutoTarget booleanValue="false"/>
+                    <L7p:OtherTargetMessageVariable stringValue="url"/>
+                    <L7p:Regex stringValue="#.+$"/>
+                    <L7p:RegexName stringValue="remove fragment"/>
+                    <L7p:Replace booleanValue="true"/>
+                    <L7p:Replacement stringValue=""/>
+                    <L7p:Target target="OTHER"/>
+                </L7p:Regex>
+                <L7p:Regex>
+                    <L7p:AutoTarget booleanValue="false"/>
+                    <L7p:CaptureVar stringValue="urlQuery"/>
+                    <L7p:OtherTargetMessageVariable stringValue="url"/>
+                    <L7p:Regex stringValue="([^?]+)([?].+)$"/>
+                    <L7p:RegexName stringValue="get the query part"/>
+                    <L7p:Replacement stringValue=""/>
+                    <L7p:Target target="OTHER"/>
+                </L7p:Regex>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHt1cmxRdWVyeVsxXX0="/>
+                    <L7p:VariableToSet stringValue="url"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHt1cmxRdWVyeVsyXX0="/>
+                    <L7p:VariableToSet stringValue="sigQuery"/>
+                </L7p:SetVariable>
+            </wsp:All>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue=""/>
+                <L7p:VariableToSet stringValue="sigQuery"/>
+            </L7p:SetVariable>
+        </wsp:OneOrMore>
+        <L7p:GenerateOAuthSignatureBaseString>
+            <L7p:HttpMethod stringValue="${http_method}"/>
+            <L7p:OauthCallback stringValue="${oauth_callback}"/>
+            <L7p:OauthConsumerKey stringValue="${oauth_consumer_key}"/>
+            <L7p:OauthToken stringValue="${oauth_token}"/>
+            <L7p:OauthVerifier stringValue="${oauth_verifier}"/>
+            <L7p:QueryString stringValue="${sigQuery}"/>
+            <L7p:RequestUrl stringValue="${url}"/>
+        </L7p:GenerateOAuthSignatureBaseString>
+        <L7p:GenerateSecurityHash>
+            <L7p:Base64Data stringValue="JHtvYXV0aC5zaWdCYXNlU3RyaW5nfQ=="/>
+            <L7p:KeyText stringValue="${consumer_key_secret}&amp;${token_secret}"/>
+            <L7p:LineBreak lineBreak="CR-LF"/>
+            <L7p:TargetOutputVariable stringValue="signature"/>
+        </L7p:GenerateSecurityHash>
+        <L7p:EncodeDecode>
+            <L7p:SourceVariableName stringValue="signature"/>
+            <L7p:TargetDataType variableDataType="string"/>
+            <L7p:TargetVariableName stringValue="signature"/>
+            <L7p:TransformType transformType="URL_ENCODE"/>
+        </L7p:EncodeDecode>
+        <L7p:AuditDetailAssertion>
+            <L7p:AssertionComment assertionComment="included">
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="For debugging purposes only"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:AssertionComment>
+            <L7p:Detail stringValue="SignatureBaseString: ${oauth.sigBaseString}, secret_for_signature:                 '${consumer_key_secret}&amp;${token_secret}', ssg_signature: ${signature}"/>
+            <L7p:Enabled booleanValue="false"/>
+            <L7p:Level stringValue="WARNING"/>
+        </L7p:AuditDetailAssertion>
+        <L7p:ExportVariables>
+            <L7p:ExportedVars stringArrayValue="included">
+                <L7p:item stringValue="oauth.oauth_callback"/>
+                <L7p:item stringValue="oauth.oauth_consumer_key"/>
+                <L7p:item stringValue="oauth.oauth_nonce"/>
+                <L7p:item stringValue="oauth.oauth_signature_method"/>
+                <L7p:item stringValue="oauth.oauth_timestamp"/>
+                <L7p:item stringValue="oauth.oauth_token"/>
+                <L7p:item stringValue="oauth.oauth_verifier"/>
+                <L7p:item stringValue="oauth.oauth_version"/>
+                <L7p:item stringValue="oauth_callback"/>
+                <L7p:item stringValue="oauth_consumer_key"/>
+                <L7p:item stringValue="signature"/>
+            </L7p:ExportedVars>
+        </L7p:ExportVariables>
+    </wsp:All>
+</wsp:Policy>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:AuditDetailAssertion>
+            <L7p:CustomLoggerSuffix stringValue="trafficlog"/>
+            <L7p:Detail stringValue="REQUESTID: ${requestId} | APIM TASK-sendBulkMessage Started | NODE: ${ssgnode.name} | TIMESTAMP: ${request.time.local.yyyy-MM-dd'T'HH:mm:ss.SSS}"/>
+            <L7p:LoggingOnly booleanValue="true"/>
+        </L7p:AuditDetailAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="Q1ZM"/>
+            <L7p:VariableToSet stringValue="entryKey"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="Q1ZM"/>
+            <L7p:VariableToSet stringValue="event"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="MQ=="/>
+            <L7p:VariableToSet stringValue="tipo"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="MTA="/>
+            <L7p:VariableToSet stringValue="maximo"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="aHR0cDovLyR7Z2F0ZXdheS5wZWdhLmhvc3RuYW1lfS8ke2dhdGV3YXkucGVnYS5jdmwucGF0aH0="/>
+            <L7p:VariableToSet stringValue="hostname"/>
+        </L7p:SetVariable>
+        <L7p:Include>
+            <L7p:PolicyGuid stringValue="4daa08cc-478c-4bea-9d30-2c76ca4d0075"/>
+        </L7p:Include>
+    </wsp:All>
+</wsp:Policy>

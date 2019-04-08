@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === ***  THIS POLICY IS READ ONLY ***"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === If you have the need to customize this policy"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === please contact CA APIM Support so we can improve customization capability"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="This policy can be found and should be used as 'Encapsulated Assertion'!"/>
+        </L7p:CommentAssertion>
+        <L7p:ComparisonAssertion>
+            <L7p:CaseSensitive booleanValue="false"/>
+            <L7p:Expression1 stringValue="${provider}"/>
+            <L7p:Expression2 stringValue=""/>
+            <L7p:Negate booleanValue="true"/>
+            <L7p:Operator operator="EMPTY"/>
+            <L7p:Predicates predicates="included">
+                <L7p:item binary="included">
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Negated booleanValue="true"/>
+                    <L7p:Operator operator="EMPTY"/>
+                    <L7p:RightValue stringValue=""/>
+                </L7p:item>
+            </L7p:Predicates>
+        </L7p:ComparisonAssertion>
+        <L7p:Encapsulated>
+            <L7p:EncapsulatedAssertionConfigGuid stringValue="bdf5c675-4823-4995-9417-0229611988b0"/>
+            <L7p:EncapsulatedAssertionConfigName stringValue="MAG Authenticate via Social Login"/>
+            <L7p:Parameters mapValue="included">
+                <L7p:entry>
+                    <L7p:key stringValue="login"/>
+                    <L7p:value stringValue="${provider}"/>
+                </L7p:entry>
+                <L7p:entry>
+                    <L7p:key stringValue="oauth_token"/>
+                    <L7p:value stringValue="${oauth_token}"/>
+                </L7p:entry>
+                <L7p:entry>
+                    <L7p:key stringValue="oauth_verifier"/>
+                    <L7p:value stringValue="${oauth_verifier}"/>
+                </L7p:entry>
+                <L7p:entry>
+                    <L7p:key stringValue="provider"/>
+                    <L7p:value stringValue="${provider}"/>
+                </L7p:entry>
+                <L7p:entry>
+                    <L7p:key stringValue="sessionID"/>
+                    <L7p:value stringValue="${state}"/>
+                </L7p:entry>
+            </L7p:Parameters>
+        </L7p:Encapsulated>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtyZXNvdXJjZV9vd25lcn0="/>
+            <L7p:VariableToSet stringValue="current.username"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtwcm92aWRlcn0="/>
+            <L7p:VariableToSet stringValue="salt"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="dHJ1ZQ=="/>
+            <L7p:VariableToSet stringValue="encas_social_login_successful"/>
+        </L7p:SetVariable>
+    </wsp:All>
+</wsp:Policy>

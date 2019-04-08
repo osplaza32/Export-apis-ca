@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:EvaluateJsonPathExpression>
+            <L7p:Expression stringValue=".test.nombre[1]"/>
+            <L7p:VariablePrefix stringValue="varNombre"/>
+        </L7p:EvaluateJsonPathExpression>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="PHZhcjE+JHt2YXJOb21icmUucmVzdWx0fTwvdmFyMT4="/>
+            <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+            <L7p:DataType variableDataType="message"/>
+            <L7p:VariableToSet stringValue="requestMessage"/>
+        </L7p:SetVariable>
+        <L7p:HttpRoutingAssertion>
+            <L7p:ProtectedServiceUrl stringValue="https://10.49.22.7:8443/pruebalog"/>
+            <L7p:ProxyPassword stringValueNull="null"/>
+            <L7p:ProxyUsername stringValueNull="null"/>
+            <L7p:RequestHeaderRules httpPassthroughRuleSet="included">
+                <L7p:ForwardAll booleanValue="true"/>
+                <L7p:Rules httpPassthroughRules="included">
+                    <L7p:item httpPassthroughRule="included">
+                        <L7p:Name stringValue="Cookie"/>
+                    </L7p:item>
+                    <L7p:item httpPassthroughRule="included">
+                        <L7p:Name stringValue="SOAPAction"/>
+                    </L7p:item>
+                </L7p:Rules>
+            </L7p:RequestHeaderRules>
+            <L7p:RequestMsgSrc stringValue="requestMessage"/>
+            <L7p:RequestParamRules httpPassthroughRuleSet="included">
+                <L7p:ForwardAll booleanValue="true"/>
+                <L7p:Rules httpPassthroughRules="included"/>
+            </L7p:RequestParamRules>
+            <L7p:ResponseHeaderRules httpPassthroughRuleSet="included">
+                <L7p:ForwardAll booleanValue="true"/>
+                <L7p:Rules httpPassthroughRules="included">
+                    <L7p:item httpPassthroughRule="included">
+                        <L7p:Name stringValue="Set-Cookie"/>
+                    </L7p:item>
+                </L7p:Rules>
+            </L7p:ResponseHeaderRules>
+            <L7p:SamlAssertionVersion intValue="2"/>
+        </L7p:HttpRoutingAssertion>
+        <L7p:HardcodedResponse>
+            <L7p:Base64ResponseBody stringValue="ewoicmVzcHVlc3RhIjoiSG9sYSAke3Zhck5vbWJyZS5yZXN1bHR9Igp9"/>
+            <L7p:ResponseContentType stringValue="application/json; charset=UTF-8"/>
+        </L7p:HardcodedResponse>
+    </wsp:All>
+</wsp:Policy>

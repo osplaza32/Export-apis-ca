@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === ***  THIS POLICY IS READ ONLY ***"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === Required changes can be implemented in policies in the 'Customizations' folder "/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === The policies within that folder will have the same name as this policy but "/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === either prefixed with '#' or suffixed with 'Extensions'"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === Prefixed policies can be used to overwrite variables of this policy"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === Suffixed policies can be used to extend functionality"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === If you find you cannot add your customizations using the policies in the 'Customizations' folder"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === please contact CA APIM Support so we can improve customization capability"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="This policy can be found and should be used as 'Encapsulated Assertion'!"/>
+        </L7p:CommentAssertion>
+        <wsp:All wsp:Usage="Required">
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="TUFD"/>
+                <L7p:Enabled booleanValue="false"/>
+                <L7p:VariableToSet stringValue="oauth2_token_type"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="QkVBUkVS"/>
+                <L7p:VariableToSet stringValue="oauth2_token_type"/>
+            </L7p:SetVariable>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="Server type"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="Configure the type of token that should be issued. MAG supports 'BEARER' only"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:All>
+        <wsp:All wsp:Usage="Required">
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="aHR0cHM6Ly8ke2dhdGV3YXkuY2x1c3Rlci5ob3N0bmFtZX06ODQ0Mw=="/>
+                <L7p:VariableToSet stringValue="host_oauth2_auth_server"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="L2F1dGgvb2F1dGgvdjIvYXV0aG9yaXpl"/>
+                <L7p:VariableToSet stringValue="oauth2_auth_path"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="L2F1dGgvb2F1dGgvdjIvdG9rZW4="/>
+                <L7p:VariableToSet stringValue="oauth2_token_path"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="L2F1dGgvb2F1dGgvdjIvdG9rZW4vcmV2b2tl"/>
+                <L7p:VariableToSet stringValue="oauth2_token_revocation_path"/>
+            </L7p:SetVariable>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="Server Auth Server"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="Configure values related to the authorization server"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:All>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="Please review the values below and configure them to your needs"/>
+        </L7p:CommentAssertion>
+        <wsp:All wsp:Usage="Required">
+            <L7p:SetVariable>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="Match the hostname that will be used by oauth clients"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:Base64Expression stringValue="JHtnYXRld2F5LmNsdXN0ZXIuaG9zdG5hbWV9"/>
+                <L7p:VariableToSet stringValue="oauth2_server_hostname"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="Match the name of the cert that is used when SSL connections are made with oauth clients. The name has to match the value in 'Tasks - Manage Certificates'"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:Base64Expression stringValue="JHtnYXRld2F5LmNsdXN0ZXIuaG9zdG5hbWV9"/>
+                <L7p:VariableToSet stringValue="oauth2_server_certificate"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="Match the port through which oauth clients connect"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:Base64Expression stringValue="ODQ0Mw=="/>
+                <L7p:VariableToSet stringValue="oauth2_server_port"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="Set the url prefix if a prefix has been used when these policies were installed"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:Base64Expression stringValue=""/>
+                <L7p:VariableToSet stringValue="oauth2_server_url_prefix"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="ZmFsc2U="/>
+                <L7p:VariableToSet stringValue="expose_client_secret"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="ZmFsc2U="/>
+                <L7p:VariableToSet stringValue="enable_anonymous_client_export"/>
+            </L7p:SetVariable>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="Modify the value below ONLY if the path has been modified"/>
+            </L7p:CommentAssertion>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="L2Nvbm5lY3Qvc2Vzc2lvbi9sb2dvdXQ="/>
+                <L7p:VariableToSet stringValue="usersession_logout_path"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="L29wZW5pZC9jb25uZWN0L3YxL3VzZXJpbmZv"/>
+                <L7p:VariableToSet stringValue="userinfo_path"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="L2Nvbm5lY3Qvc2Vzc2lvbi9zdGF0dXM="/>
+                <L7p:VariableToSet stringValue="usersession_status_path"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="L29wZW5pZC9jb25uZWN0L2p3a3MuanNvbg=="/>
+                <L7p:VariableToSet stringValue="jwks_uri_path"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="L29wZW5pZC9jb25uZWN0L3JlZ2lzdGVy"/>
+                <L7p:VariableToSet stringValue="oidc_register_path"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="L2FwaWRvY3MvYXV0aC9vYXV0aC92Mi9zd2FnZ2Vy"/>
+                <L7p:VariableToSet stringValue="service_documentation_path"/>
+            </L7p:SetVariable>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="The content below will be added to the configuration export JSON message as is"/>
+            </L7p:CommentAssertion>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="Im9hdXRoX2RlbW9fcHJvdGVjdGVkX2FwaV9lbmRwb2ludF9wYXRoIjoiL29hdXRoL3YyL3Byb3RlY3RlZGFwaS9mb28iLA0KIm1hZ19kZW1vX3Byb2R1Y3RzX2VuZHBvaW50X3BhdGgiOiIvcHJvdGVjdGVkL3Jlc291cmNlL3Byb2R1Y3RzIg=="/>
+                <L7p:VariableToSet stringValue="export_custom"/>
+            </L7p:SetVariable>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="Export"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="Configure values related to the OAuth Manager client_id export feature"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:All>
+        <L7p:Include>
+            <L7p:PolicyGuid stringValue="174ef22a-955b-465c-bd2a-9bc4caa888d8"/>
+        </L7p:Include>
+    </wsp:All>
+</wsp:Policy>

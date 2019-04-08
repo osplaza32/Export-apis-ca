@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === ***  THIS POLICY IS READ ONLY ***"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === If you have the need to customize this policy"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === please contact CA APIM Support so we can improve customization capability"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="Builds the JSON returned when a user exports client information for SDK configuration"/>
+        </L7p:CommentAssertion>
+        <L7p:Encapsulated>
+            <L7p:EncapsulatedAssertionConfigGuid stringValue="2e6e2ef3-a36f-4548-a2c4-7b369b7ae184"/>
+            <L7p:EncapsulatedAssertionConfigName stringValue="OTK Variable Configuration"/>
+        </L7p:Encapsulated>
+        <L7p:SetVariable>
+            <L7p:AssertionComment assertionComment="included">
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="initialize"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="will be overwritten in the case of an error"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:AssertionComment>
+            <L7p:Base64Expression stringValue=""/>
+            <L7p:VariableToSet stringValue="error.code"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="YXBwbGljYXRpb24vanNvbjsgY2hhcnNldD1VVEYtOA=="/>
+            <L7p:VariableToSet stringValue="content-type"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtpbmNvbWluZ194bWwubWFpbnBhcnR9"/>
+            <L7p:ContentType stringValue="text/xml;charset=UTF-8"/>
+            <L7p:DataType variableDataType="message"/>
+            <L7p:VariableToSet stringValue="xmlClientInfo"/>
+        </L7p:SetVariable>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <L7p:ResponseXpathAssertion>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="Verify"/>
+                        </L7p:entry>
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="Verify that only one client_id gets exported"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:VariablePrefix stringValue=""/>
+                <L7p:XmlMsgSrc stringValue="xmlClientInfo"/>
+                <L7p:XpathExpression xpathExpressionValue="included">
+                    <L7p:Expression stringValue="count(/ns:values/ns:keys/ns:values/ns:value)=1"/>
+                    <L7p:Namespaces mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="ns"/>
+                            <L7p:value stringValue="http://ns.l7tech.com/2012/11/otk-clientstore"/>
+                        </L7p:entry>
+                        <L7p:entry>
+                            <L7p:key stringValue="s"/>
+                            <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                        </L7p:entry>
+                    </L7p:Namespaces>
+                    <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                </L7p:XpathExpression>
+            </L7p:ResponseXpathAssertion>
+            <L7p:ResponseXpathAssertion>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="Verify"/>
+                        </L7p:entry>
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="Verify that the requested client_key is included in the provided input message"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:VariablePrefix stringValue=""/>
+                <L7p:XmlMsgSrc stringValue="xmlClientInfo"/>
+                <L7p:XpathExpression xpathExpressionValue="included">
+                    <L7p:Expression stringValue="/ns:values/ns:keys/ns:values/ns:value/ns:client_key/text()=$client_key"/>
+                    <L7p:Namespaces mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="ns"/>
+                            <L7p:value stringValue="http://ns.l7tech.com/2012/11/otk-clientstore"/>
+                        </L7p:entry>
+                        <L7p:entry>
+                            <L7p:key stringValue="s"/>
+                            <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                        </L7p:entry>
+                    </L7p:Namespaces>
+                    <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                </L7p:XpathExpression>
+            </L7p:ResponseXpathAssertion>
+            <wsp:All wsp:Usage="Required">
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="MjAx"/>
+                    <L7p:VariableToSet stringValue="error.code"/>
+                </L7p:SetVariable>
+                <L7p:FalseAssertion/>
+            </wsp:All>
+        </wsp:OneOrMore>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <L7p:LookupTrustedCertificate>
+                <L7p:TrustedCertificateName stringValue="${oauth2_server_certificate}"/>
+                <L7p:VariableName stringValue="certificate"/>
+            </L7p:LookupTrustedCertificate>
+            <wsp:All wsp:Usage="Required">
+                <L7p:AuditDetailAssertion>
+                    <L7p:Detail stringValue="Certificate lookup failed! attempted to look up ${oauth2_server_certificate}"/>
+                </L7p:AuditDetailAssertion>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="MTMy"/>
+                    <L7p:VariableToSet stringValue="error.code"/>
+                </L7p:SetVariable>
+                <L7p:FalseAssertion/>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="FAIL"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:All>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="Look up certificate"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:OneOrMore>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtjZXJ0aWZpY2F0ZS5wZW19"/>
+            <L7p:VariableToSet stringValue="certificate.pem"/>
+        </L7p:SetVariable>
+        <L7p:Regex>
+            <L7p:AutoTarget booleanValue="false"/>
+            <L7p:OtherTargetMessageVariable stringValue="certificate.pem"/>
+            <L7p:Regex stringValue="\n(.)"/>
+            <L7p:RegexName stringValue="Normalize Certificate"/>
+            <L7p:Replace booleanValue="true"/>
+            <L7p:Replacement stringValue="&quot;,&quot;$1"/>
+            <L7p:Target target="OTHER"/>
+        </L7p:Regex>
+        <L7p:Regex>
+            <L7p:AutoTarget booleanValue="false"/>
+            <L7p:OtherTargetMessageVariable stringValue="certificate.pem"/>
+            <L7p:Regex stringValue="\r"/>
+            <L7p:RegexName stringValue="Remove carriage return"/>
+            <L7p:Replace booleanValue="true"/>
+            <L7p:Replacement stringValue=""/>
+            <L7p:Target target="OTHER"/>
+        </L7p:Regex>
+        <L7p:Encapsulated>
+            <L7p:EncapsulatedAssertionConfigGuid stringValue="f0db12ba-404c-4674-a54e-571ed6d2f1bc"/>
+            <L7p:EncapsulatedAssertionConfigName stringValue="MAG Variable Configuration"/>
+            <L7p:NoOpIfConfigMissing booleanValue="true"/>
+            <L7p:Parameters mapValue="included">
+                <L7p:entry>
+                    <L7p:key stringValue="incoming"/>
+                    <L7p:value stringValue="resp"/>
+                </L7p:entry>
+                <L7p:entry>
+                    <L7p:key stringValue="incoming-resp"/>
+                    <L7p:value stringValue="resp"/>
+                </L7p:entry>
+                <L7p:entry>
+                    <L7p:key stringValue="parent-element"/>
+                    <L7p:value stringValue="${parent_element}"/>
+                </L7p:entry>
+                <L7p:entry>
+                    <L7p:key stringValue="parent_element"/>
+                    <L7p:value stringValue="${parent_element}"/>
+                </L7p:entry>
+            </L7p:Parameters>
+        </L7p:Encapsulated>
+        <L7p:Encapsulated>
+            <L7p:EncapsulatedAssertionConfigGuid stringValue="75c95854-92b4-4293-92e5-6d63b6d94812"/>
+            <L7p:EncapsulatedAssertionConfigName stringValue="MAS Variable Configuration"/>
+            <L7p:NoOpIfConfigMissing booleanValue="true"/>
+        </L7p:Encapsulated>
+        <L7p:XslTransformation>
+            <L7p:AssertionComment assertionComment="included">
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="Escape quotes"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="Escape quotes for xml to json transformation"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:AssertionComment>
+            <L7p:Direction intValue="-1"/>
+            <L7p:OtherTargetMessageVariable stringValue="xmlClientInfo"/>
+            <L7p:ResourceInfo staticResourceInfo="included">
+                <L7p:Document stringValueReference="inline"><![CDATA[<xsl:stylesheet version="1.0" xmlns:mag="http://ns.l7tech.com/2012/11/otk-clientstore" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  <xsl:output indent="yes" method="xml"/>
+
+    <xsl:template match="@*|node()">
+        <xsl:copy>
+            <xsl:apply-templates select="@*|node()"/>
+        </xsl:copy>
+    </xsl:template>
+
+    <xsl:template match="*[not(self::mag:client_custom)][not(self::mag:client_key_custom)]/text()">
+      <xsl:call-template name="replace">
+       <xsl:with-param name="pS" select="normalize-space(.)"/>
+     </xsl:call-template>
+    </xsl:template>
+
+ <xsl:template name="replace">
+  <xsl:param name="pS"/>
+  <xsl:param name="pTarget" select="'&quot;'"/>
+  <xsl:param name="pReplacement" select="'\&quot;'"/>
+
+  <xsl:if test="$pS">
+   <xsl:value-of select="substring-before(concat($pS,$pTarget), $pTarget)"/>
+   <xsl:if test="contains($pS, $pTarget)">
+     <xsl:value-of select="$pReplacement"/>
+   </xsl:if>
+   <xsl:call-template name="replace">
+     <xsl:with-param name="pS" select="substring-after($pS, $pTarget)"/>
+     <xsl:with-param name="pTarget" select="$pTarget"/>
+     <xsl:with-param name="pReplacement" select="$pReplacement"/>
+   </xsl:call-template>
+  </xsl:if>
+ </xsl:template>
+
+</xsl:stylesheet>]]></L7p:Document>
+            </L7p:ResourceInfo>
+            <L7p:Target target="OTHER"/>
+            <L7p:TransformName stringValue=""/>
+            <L7p:XsltVersion stringValue="1.0"/>
+        </L7p:XslTransformation>
+        <L7p:XslTransformation>
+            <L7p:Direction intValue="-1"/>
+            <L7p:OtherTargetMessageVariable stringValue="xmlClientInfo"/>
+            <L7p:ResourceInfo staticResourceInfo="included">
+                <L7p:Document stringValueReference="inline"><![CDATA[<xsl:stylesheet version="1.0" xmlns:mag="http://ns.l7tech.com/2012/11/otk-clientstore" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+                                <xsl:output method="text"/>
+                                <xsl:param name="certificate.pem"/>
+                                <xsl:param name="oauth2_server_hostname"/>
+                                <xsl:param name="oauth2_server_port"/>
+                                <xsl:param name="oauth2_server_url_prefix"/>
+
+                                <xsl:param name="oauth2_auth_path"/>
+                                <xsl:param name="oauth2_token_path"/>
+                                <xsl:param name="oauth2_token_revocation_path"/>
+                                <xsl:param name="usersession_logout_path"/>
+
+                                <xsl:param name="userinfo_path"/>
+                                <xsl:param name="usersession_status_path"/>
+
+                                <xsl:param name="mas_json"/>
+                                <xsl:param name="mag_json"/>
+
+                                <xsl:param name="export_custom"/>
+                                <xsl:param name="expose_client_secret"/>
+
+                                <xsl:strip-space elements="*"/>
+
+                                <xsl:template match="text()">
+                                <xsl:value-of select="normalize-space()"/>
+                                </xsl:template>
+
+                                <xsl:strip-space elements="certificate.pem"/>
+
+
+                                <xsl:template match="/mag:values">
+                                {
+                                "server": {
+                                "hostname": "<xsl:value-of select="$oauth2_server_hostname"/>",
+                                "port": <xsl:value-of select="$oauth2_server_port"/>,
+                                "prefix": "<xsl:value-of select="$oauth2_server_url_prefix"/>",
+                                "server_certs": [
+                                [
+                                "<xsl:value-of select="normalize-space($certificate.pem)"/>"
+                                ]
+                                ]
+                                },
+                                "oauth": {
+                                "client": {
+                                "organization": "<xsl:value-of select="mag:clients/mag:values/mag:value/mag:organization"/>",
+                                "description": "<xsl:value-of select="mag:clients/mag:values/mag:value/mag:description"/>",
+                                "client_name": "<xsl:value-of select="mag:clients/mag:values/mag:value/mag:name"/>",
+                                "client_type": "<xsl:value-of select="mag:clients/mag:values/mag:value/mag:type"/>",
+                                "registered_by": "<xsl:value-of select="mag:clients/mag:values/mag:value/mag:registered_by"/>",
+                                "client_custom": <xsl:value-of select="mag:clients/mag:values/mag:value/mag:client_custom"/>,
+                                "client_ids": [
+                                <xsl:for-each select="mag:keys/mag:values/mag:value">
+                                {
+                                "client_id": "<xsl:value-of select="mag:client_key"/>",
+                                "client_secret":"<xsl:if test="$expose_client_secret = 'true'"><xsl:value-of select="mag:secret"/></xsl:if>",
+                                "scope": "<xsl:value-of select="mag:scope"/>",
+                                "redirect_uri": "<xsl:value-of select="mag:callback"/>",
+                                "environment": "<xsl:value-of select="mag:environment"/>",
+                                "status": "<xsl:value-of select="mag:status"/>",
+                                "registered_by": "<xsl:value-of select="mag:created_by"/>",
+                                "service_ids": "<xsl:value-of select="mag:serviceids"/>",
+                                "account_plan_mapping_ids": "<xsl:value-of select="mag:accountplanmappingids"/>",
+                                "client_key_custom": <xsl:value-of select="mag:client_key_custom"/>
+                                }<xsl:if test="position() != last()">,</xsl:if>
+                                </xsl:for-each>
+                                ]
+                                },
+                                "system_endpoints": {
+                                "authorization_endpoint_path": "<xsl:value-of select="$oauth2_auth_path"/>",
+                                "token_endpoint_path": "<xsl:value-of select="$oauth2_token_path"/>",
+                                "token_revocation_endpoint_path": "<xsl:value-of select="$oauth2_token_revocation_path"/>",
+                                "usersession_logout_endpoint_path": "<xsl:value-of select="$usersession_logout_path"/>",
+                                "usersession_status_endpoint_path": "<xsl:value-of select="$usersession_status_path"/>"
+                                },
+                                "oauth_protected_endpoints": {
+                                "userinfo_endpoint_path": "<xsl:value-of select="$userinfo_path"/>"
+                                }
+                                }<xsl:if test="$mas_json">,<xsl:value-of select="normalize-space($mas_json)" xml:space="preserve"/></xsl:if>
+                                <xsl:if test="$mag_json">,<xsl:value-of select="normalize-space($mag_json)" xml:space="preserve"/></xsl:if>,
+                                "custom": {
+                                <xsl:value-of select="$export_custom"/>
+                                }
+                                }</xsl:template>
+                                </xsl:stylesheet>]]></L7p:Document>
+            </L7p:ResourceInfo>
+            <L7p:Target target="OTHER"/>
+            <L7p:TransformName stringValue=""/>
+            <L7p:XsltVersion stringValue="1.0"/>
+        </L7p:XslTransformation>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHt4bWxDbGllbnRJbmZvLm1haW5wYXJ0fQ=="/>
+            <L7p:VariableToSet stringValue="resp"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtyZXNwfQ=="/>
+            <L7p:ContentType stringValue="application/json;charset=UTF-8"/>
+            <L7p:DataType variableDataType="message"/>
+            <L7p:VariableToSet stringValue="resp"/>
+        </L7p:SetVariable>
+    </wsp:All>
+</wsp:Policy>

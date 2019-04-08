@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:JdbcQuery>
+            <L7p:AssertionComment assertionComment="included">
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="DECLARE"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:AssertionComment>
+            <L7p:AssertionFailureEnabled booleanValue="false"/>
+            <L7p:ConnectionName stringValue="ODS_DES"/>
+            <L7p:ConvertVariablesToStrings booleanValue="false"/>
+            <L7p:SaveResultsAsContextVariables booleanValue="false"/>
+            <L7p:Schema stringValue="ODS_RDM"/>
+            <L7p:SqlQuery stringValue="CALL PKG_PDSV_ECM.PRC_ECM_PDSV_VLUE('PO_B_LGG4_BLK')"/>
+        </L7p:JdbcQuery>
+    </wsp:All>
+</wsp:Policy>

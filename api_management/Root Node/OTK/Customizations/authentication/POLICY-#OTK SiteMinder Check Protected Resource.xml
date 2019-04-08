@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="Target Policy: &quot;OTK User Authentication Extension&quot;"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="Target Policy: &quot;MAG Session Validation - Third Party SSO Token&quot;"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="=== If using SiteMinder, set your configuration below ==="/>
+        </L7p:CommentAssertion>
+        <L7p:SiteMinderCheckProtected>
+            <L7p:Action stringValue="GET"/>
+            <L7p:AgentId stringValue="siteminder-instance"/>
+            <L7p:Prefix stringValue="siteminder"/>
+            <L7p:ProtectedResource stringValue="/mode"/>
+            <L7p:SmAgentName stringValue="agent"/>
+        </L7p:SiteMinderCheckProtected>
+    </wsp:All>
+</wsp:Policy>

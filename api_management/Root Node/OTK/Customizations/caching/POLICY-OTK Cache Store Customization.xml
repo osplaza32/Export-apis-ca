@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="***** OTK Cache Store Customization *****"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="**********************************************"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="** Available context variables:"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="** cacheID (String) - the ID of the cache to be stored"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="** cacheKey - the key associated with the given value for the cache identified by cacheID"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="** maxEntries - the maximum number of entries allowed in the cache.  Adding more than this limit would force some existing items to be removed."/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="** maxEntryAge - the maximum length (seconds) to keep entries in the cache.  "/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="** maxEntrySize - the maximum size in bytes allowable for the value"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="**"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="** Replace the assertion below if desired with an assertion that support key- value data structures"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="** If this assertion is replaced also replace it at 'OTK Cache Look Up Customization'"/>
+        </L7p:CommentAssertion>
+        <L7p:CacheStorage>
+            <L7p:CacheEntryKey stringValue="${cacheKey}"/>
+            <L7p:CacheId stringValue="${actualCacheID}"/>
+            <L7p:MaxEntries stringValue="${maxEntries}"/>
+            <L7p:MaxEntryAgeSeconds stringValue="${maxEntryAge}"/>
+            <L7p:MaxEntrySizeBytes stringValue="${maxEntrySize}"/>
+            <L7p:OtherTargetMessageVariable stringValue="msg"/>
+            <L7p:Target target="OTHER"/>
+        </L7p:CacheStorage>
+    </wsp:All>
+</wsp:Policy>

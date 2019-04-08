@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="************************************************************************************"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="* Policy for Syncing Portal Applications onto the tenant gateway"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="*"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="************************************************************************************"/>
+        </L7p:CommentAssertion>
+        <L7p:RateLimit>
+            <L7p:CounterName stringValue="41edb9a1-application-sync"/>
+            <L7p:MaxConcurrency stringValue="2"/>
+            <L7p:MaxRequestsPerSecond stringValue="1"/>
+            <L7p:ShapeRequests booleanValue="true"/>
+            <L7p:SplitConcurrencyLimitAcrossNodes booleanValue="false"/>
+            <L7p:SplitRateLimitAcrossNodes booleanValue="false"/>
+        </L7p:RateLimit>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtnYXRld2F5LnBvcnRhbC5hcHBsaWNhdGlvbi5pbmNyZW1lbnQuc3RhcnR9"/>
+            <L7p:VariableToSet stringValue="incrementStart"/>
+        </L7p:SetVariable>
+        <L7p:Encapsulated>
+            <L7p:EncapsulatedAssertionConfigGuid stringValue="ed1e3112-5df8-4769-8436-09ddb1362f88"/>
+            <L7p:EncapsulatedAssertionConfigName stringValue="portalosencass"/>
+            <L7p:Parameters mapValue="included">
+                <L7p:entry>
+                    <L7p:key stringValue="defaultHost"/>
+                    <L7p:value stringValue="${gateway.portal.config.pssg.host}"/>
+                </L7p:entry>
+                <L7p:entry>
+                    <L7p:key stringValue="defaultPort"/>
+                    <L7p:value stringValue="9447"/>
+                </L7p:entry>
+                <L7p:entry>
+                    <L7p:key stringValue="hostName"/>
+                    <L7p:value stringValue="${gateway.portal.config.pssg.sync.host}"/>
+                </L7p:entry>
+                <L7p:entry>
+                    <L7p:key stringValue="port"/>
+                    <L7p:value stringValue="${gateway.portal.config.pssg.sync.port}"/>
+                </L7p:entry>
+            </L7p:Parameters>
+        </L7p:Encapsulated>
+        <L7p:HttpRoutingAssertion>
+            <L7p:AssertionComment assertionComment="included">
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="get from portal"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:AssertionComment>
+            <L7p:HttpMethod httpMethod="GET"/>
+            <L7p:KeyAlias stringValue="portalman"/>
+            <L7p:NonDefaultKeystoreId goidValue="00000000000000000000000000000002"/>
+            <L7p:ProtectedServiceUrl stringValue="https://${outputHost}:${outputPort}/sync/v1/applications?identifier=${gateway.portal.config.identifier}&amp;nodeId=${gateway.portal.config.node.id}&amp;start=${incrementStart}"/>
+            <L7p:ProxyPassword stringValueNull="null"/>
+            <L7p:ProxyUsername stringValueNull="null"/>
+            <L7p:RequestHeaderRules httpPassthroughRuleSet="included">
+                <L7p:ForwardAll booleanValue="true"/>
+                <L7p:Rules httpPassthroughRules="included">
+                    <L7p:item httpPassthroughRule="included">
+                        <L7p:Name stringValue="Cookie"/>
+                    </L7p:item>
+                    <L7p:item httpPassthroughRule="included">
+                        <L7p:Name stringValue="SOAPAction"/>
+                    </L7p:item>
+                </L7p:Rules>
+            </L7p:RequestHeaderRules>
+            <L7p:RequestParamRules httpPassthroughRuleSet="included">
+                <L7p:ForwardAll booleanValue="true"/>
+                <L7p:Rules httpPassthroughRules="included"/>
+            </L7p:RequestParamRules>
+            <L7p:ResponseHeaderRules httpPassthroughRuleSet="included">
+                <L7p:ForwardAll booleanValue="true"/>
+                <L7p:Rules httpPassthroughRules="included">
+                    <L7p:item httpPassthroughRule="included">
+                        <L7p:Name stringValue="Set-Cookie"/>
+                    </L7p:item>
+                </L7p:Rules>
+            </L7p:ResponseHeaderRules>
+            <L7p:ResponseMsgDest stringValue="httpResponse1"/>
+            <L7p:SamlAssertionVersion intValue="2"/>
+            <L7p:UsesDefaultKeyStore booleanValue="false"/>
+        </L7p:HttpRoutingAssertion>
+        <L7p:Encapsulated>
+            <L7p:EncapsulatedAssertionConfigGuid stringValue="ed1e3112-5df8-4769-8436-09ddb1362f88"/>
+            <L7p:EncapsulatedAssertionConfigName stringValue="portalosencass"/>
+            <L7p:Parameters mapValue="included">
+                <L7p:entry>
+                    <L7p:key stringValue="defaultHost"/>
+                    <L7p:value stringValue="${gateway.portal.config.pssg.host}"/>
+                </L7p:entry>
+                <L7p:entry>
+                    <L7p:key stringValue="defaultPort"/>
+                    <L7p:value stringValue="9447"/>
+                </L7p:entry>
+                <L7p:entry>
+                    <L7p:key stringValue="hostName"/>
+                    <L7p:value stringValue="${gateway.portal.config.pssg.sync.host}"/>
+                </L7p:entry>
+                <L7p:entry>
+                    <L7p:key stringValue="port"/>
+                    <L7p:value stringValue="${gateway.portal.config.pssg.sync.port}"/>
+                </L7p:entry>
+            </L7p:Parameters>
+        </L7p:Encapsulated>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="QVBQTElDQVRJT04="/>
+            <L7p:VariableToSet stringValue="portal.sync.increment.type"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="UG9ydGFsIEFwcGxpY2F0aW9ucyBzeW5jIENPTVBMRVRFRA=="/>
+            <L7p:VariableToSet stringValue="syncSuccessMsg"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="UG9ydGFsIEFwcGxpY2F0aW9ucyBzeW5jIEZBSUxFRA=="/>
+            <L7p:VariableToSet stringValue="synFailMsg"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="aHR0cHM6Ly8ke291dHB1dEhvc3R9OiR7b3V0cHV0UG9ydH0vc3luYy92MS9hcHBsaWNhdGlvbnM/aWRlbnRpZmllcj0ke2dhdGV3YXkucG9ydGFsLmNvbmZpZy5pZGVudGlmaWVyfSZub2RlSWQ9JHtnYXRld2F5LnBvcnRhbC5jb25maWcubm9kZS5pZH0="/>
+            <L7p:VariableToSet stringValue="postbackUrl"/>
+        </L7p:SetVariable>
+        <L7p:Include>
+            <L7p:PolicyGuid stringValue="60bf478d-1551-46b7-b08c-e0d4a668b027"/>
+        </L7p:Include>
+    </wsp:All>
+</wsp:Policy>

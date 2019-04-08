@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:AuditDetailAssertion>
+            <L7p:Detail stringValue="Policy Fragment: PostCreateProductOrder"/>
+        </L7p:AuditDetailAssertion>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Enabled booleanValue="false"/>
+                    <L7p:Expression stringValue="$.sysCode"/>
+                    <L7p:VariablePrefix stringValue="sysCodejson"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:EvaluateJsonPathExpression>
+                    <L7p:Enabled booleanValue="false"/>
+                    <L7p:Expression stringValue="$.enterpriseCode"/>
+                    <L7p:VariablePrefix stringValue="enterpriseCodejson"/>
+                </L7p:EvaluateJsonPathExpression>
+                <L7p:AuditDetailAssertion>
+                    <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                    <L7p:Detail stringValue="ID TRANSACTION:    SERVICIO: ${request.url} "/>
+                    <L7p:LoggingOnly booleanValue="true"/>
+                </L7p:AuditDetailAssertion>
+                <L7p:HttpRoutingAssertion>
+                    <L7p:FailOnErrorStatus booleanValue="false"/>
+                    <L7p:HttpMethod httpMethod="POST"/>
+                    <L7p:ProtectedServiceUrl stringValue="http://10.49.4.232:7011/ES/JSON/CreateProductOrder/v1"/>
+                    <L7p:ProxyPassword stringValueNull="null"/>
+                    <L7p:ProxyUsername stringValueNull="null"/>
+                    <L7p:RequestHeaderRules httpPassthroughRuleSet="included">
+                        <L7p:ForwardAll booleanValue="true"/>
+                        <L7p:Rules httpPassthroughRules="included">
+                            <L7p:item httpPassthroughRule="included">
+                                <L7p:Name stringValue="Cookie"/>
+                            </L7p:item>
+                            <L7p:item httpPassthroughRule="included">
+                                <L7p:Name stringValue="SOAPAction"/>
+                            </L7p:item>
+                        </L7p:Rules>
+                    </L7p:RequestHeaderRules>
+                    <L7p:RequestParamRules httpPassthroughRuleSet="included">
+                        <L7p:ForwardAll booleanValue="true"/>
+                        <L7p:Rules httpPassthroughRules="included"/>
+                    </L7p:RequestParamRules>
+                    <L7p:ResponseHeaderRules httpPassthroughRuleSet="included">
+                        <L7p:ForwardAll booleanValue="true"/>
+                        <L7p:Rules httpPassthroughRules="included">
+                            <L7p:item httpPassthroughRule="included">
+                                <L7p:Name stringValue="Set-Cookie"/>
+                            </L7p:item>
+                        </L7p:Rules>
+                    </L7p:ResponseHeaderRules>
+                    <L7p:ResponseMsgDest stringValue="CreateProductOrderResponse"/>
+                    <L7p:SamlAssertionVersion intValue="2"/>
+                </L7p:HttpRoutingAssertion>
+                <L7p:AuditDetailAssertion>
+                    <L7p:CustomLoggerSuffix stringValue="entel.api.syslog"/>
+                    <L7p:Detail stringValue="ID TRANSACTION:    SERVICIO: ${request.url} "/>
+                    <L7p:LoggingOnly booleanValue="true"/>
+                </L7p:AuditDetailAssertion>
+                <L7p:JsonTransformation>
+                    <L7p:DestinationMessageTarget MessageTarget="included">
+                        <L7p:OtherTargetMessageVariable stringValue="XMLResponse"/>
+                        <L7p:Target target="OTHER"/>
+                        <L7p:TargetModifiedByGateway booleanValue="true"/>
+                    </L7p:DestinationMessageTarget>
+                    <L7p:OtherTargetMessageVariable stringValue="CreateProductOrderResponse"/>
+                    <L7p:RootTagString stringValue="test"/>
+                    <L7p:Target target="OTHER"/>
+                    <L7p:Transformation transformation="JSON_to_XML"/>
+                </L7p:JsonTransformation>
+                <L7p:HardcodedResponse>
+                    <L7p:Base64ResponseBody stringValue="JHtYTUxSZXNwb25zZS5tYWlucGFydH0="/>
+                    <L7p:ResponseContentType stringValue="application/soap+xml; charset=utf-8"/>
+                </L7p:HardcodedResponse>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:CustomizeErrorResponse>
+                    <L7p:Content stringValue="Error"/>
+                    <L7p:ExtraHeaders nameValuePairArray="included"/>
+                </L7p:CustomizeErrorResponse>
+                <L7p:RaiseError/>
+            </wsp:All>
+        </wsp:OneOrMore>
+    </wsp:All>
+</wsp:Policy>

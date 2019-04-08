@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === ***  THIS POLICY IS READ ONLY ***"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === If you have the need to customize this policy"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === please contact CA APIM Support so we can improve customization capability"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="This policy can be found and should be used as 'Encapsulated Assertion'!"/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="PHZhbGlkYXRpb24geG1sbnM9Imh0dHA6Ly9ucy5sN3RlY2guY29tLzIwMTIvMTEvb3RrLW92cCI+DQogPHJlc3VsdD5ub25lPC9yZXN1bHQ+DQogPHRoaXJkX3BhcnR5X3Nzb190b2tlbj48L3RoaXJkX3BhcnR5X3Nzb190b2tlbj4NCiA8dGhpcmRfcGFydHlfc3NvX3Rva2VuX3R5cGU+PC90aGlyZF9wYXJ0eV9zc29fdG9rZW5fdHlwZT4NCjwvdmFsaWRhdGlvbj4="/>
+            <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+            <L7p:DataType variableDataType="message"/>
+            <L7p:VariableToSet stringValue="resp"/>
+        </L7p:SetVariable>
+    </wsp:All>
+</wsp:Policy>

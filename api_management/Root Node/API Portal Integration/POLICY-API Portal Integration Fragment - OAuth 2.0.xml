@@ -1,0 +1,701 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="=================================="/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="API Portal Integration Snippet for Gateway Published API"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="Type: OAuth 2.0 Protection"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="Version: 1.0"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="=================================="/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue=""/>
+            <L7p:VariableToSet stringValue="errorMsg"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="T0FVVEhfMg=="/>
+            <L7p:VariableToSet stringValue="portal.analytics.authType"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHtwb3J0YWwubWFuYWdlZC5zZXJ2aWNlLmFwaUlkfQ=="/>
+            <L7p:VariableToSet stringValue="portal.analytics.api.uuid"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="MA=="/>
+            <L7p:VariableToSet stringValue="portal.analytics.routingTotalTime"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue=""/>
+            <L7p:VariableToSet stringValue="portal.analytics.organization.name"/>
+        </L7p:SetVariable>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:CommentAssertion>
+                    <L7p:Comment stringValue="For SOAP service, set action as SOAP action header."/>
+                </L7p:CommentAssertion>
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${request.http.header.soapaction}"/>
+                    <L7p:Operator operatorNull="null"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item dataType="included">
+                            <L7p:Type variableDataType="string"/>
+                        </L7p:item>
+                        <L7p:item stringLength="included">
+                            <L7p:Max intValue="-1"/>
+                            <L7p:Min intValue="1"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHtyZXF1ZXN0Lmh0dHAuaGVhZGVyLnNvYXBhY3Rpb259"/>
+                    <L7p:VariableToSet stringValue="portal.analytics.action"/>
+                </L7p:SetVariable>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:CommentAssertion>
+                    <L7p:Comment stringValue="For RESTful service, set action as request uri."/>
+                </L7p:CommentAssertion>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="JHtyZXF1ZXN0Lmh0dHAudXJpfQ=="/>
+                    <L7p:VariableToSet stringValue="portal.analytics.action"/>
+                </L7p:SetVariable>
+            </wsp:All>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="// get request action"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:OneOrMore>
+        <L7p:ExportVariables>
+            <L7p:ExportedVars stringArrayValue="included">
+                <L7p:item stringValue="portal.analytics.action"/>
+                <L7p:item stringValue="portal.analytics.api.uuid"/>
+                <L7p:item stringValue="portal.analytics.authType"/>
+                <L7p:item stringValue="portal.analytics.routingTotalTime"/>
+            </L7p:ExportedVars>
+        </L7p:ExportVariables>
+        <L7p:Include>
+            <L7p:AssertionComment assertionComment="included">
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="//check portal state &amp; CORS pre-flight"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:AssertionComment>
+            <L7p:PolicyGuid stringValue="812ed196-c315-4e92-b630-b5c64c5c043c"/>
+        </L7p:Include>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${errorMsg}"/>
+                    <L7p:Operator operatorNull="null"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item dataType="included">
+                            <L7p:Type variableDataType="string"/>
+                        </L7p:item>
+                        <L7p:item binary="included">
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:RightValue stringValue=""/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:Encapsulated>
+                    <L7p:EncapsulatedAssertionConfigGuid stringValue="393bcb93-82ad-4b55-8333-1119f607a560"/>
+                    <L7p:EncapsulatedAssertionConfigName stringValue="OTK Require OAuth 2.0 Token"/>
+                    <L7p:Parameters mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="cache_lifetime"/>
+                            <L7p:value stringValue="0"/>
+                        </L7p:entry>
+                        <L7p:entry>
+                            <L7p:key stringValue="given_access_token"/>
+                            <L7p:value stringValue=""/>
+                        </L7p:entry>
+                        <L7p:entry>
+                            <L7p:key stringValue="onetime"/>
+                            <L7p:value stringValue="false"/>
+                        </L7p:entry>
+                        <L7p:entry>
+                            <L7p:key stringValue="scope_fail"/>
+                            <L7p:value stringValue="false"/>
+                        </L7p:entry>
+                        <L7p:entry>
+                            <L7p:key stringValue="scope_required"/>
+                            <L7p:value stringValue=""/>
+                        </L7p:entry>
+                    </L7p:Parameters>
+                </L7p:Encapsulated>
+                <L7p:CommentAssertion>
+                    <L7p:Comment stringValue="============================"/>
+                </L7p:CommentAssertion>
+                <L7p:CommentAssertion>
+                    <L7p:Comment stringValue="= API Portal Integration components below ="/>
+                </L7p:CommentAssertion>
+                <L7p:CommentAssertion>
+                    <L7p:Comment stringValue="============================"/>
+                </L7p:CommentAssertion>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="VW5hYmxlIHRvIHJvdXRlIEFQSQ=="/>
+                    <L7p:VariableToSet stringValue="errorMsg"/>
+                </L7p:SetVariable>
+                <wsp:All wsp:Usage="Required">
+                    <L7p:SetVariable>
+                        <L7p:AssertionComment assertionComment="included">
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="getRequestedApiResource()"/>
+                                </L7p:entry>
+                                <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="// capture the API resource requested"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:AssertionComment>
+                        <L7p:Base64Expression stringValue="JHtyZXF1ZXN0Lmh0dHAudXJpfQ=="/>
+                        <L7p:VariableToSet stringValue="apiResource"/>
+                    </L7p:SetVariable>
+                    <L7p:SetVariable>
+                        <L7p:AssertionComment assertionComment="included">
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="getRequestApiKey()"/>
+                                </L7p:entry>
+                                <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="// parse API key from request"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:AssertionComment>
+                        <L7p:Base64Expression stringValue="JHtzZXNzaW9uLmNsaWVudF9pZH0="/>
+                        <L7p:VariableToSet stringValue="lookupApiKey"/>
+                    </L7p:SetVariable>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:Encapsulated>
+                            <L7p:EncapsulatedAssertionConfigGuid stringValue="d6b48093-4288-44b3-977e-712fdac328e6"/>
+                            <L7p:EncapsulatedAssertionConfigName stringValue="Portal Look Up API Key"/>
+                            <L7p:Parameters mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="apikey"/>
+                                    <L7p:value stringValue="${lookupApiKey}"/>
+                                </L7p:entry>
+                                <L7p:entry>
+                                    <L7p:key stringValue="serviceid"/>
+                                    <L7p:value stringValue="${portal.managed.service.apiId}"/>
+                                </L7p:entry>
+                            </L7p:Parameters>
+                        </L7p:Encapsulated>
+                        <wsp:OneOrMore wsp:Usage="Required">
+                            <wsp:All wsp:Usage="Required">
+                                <L7p:ComparisonAssertion>
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Expression1 stringValue="${apiKeyRecord.found}"/>
+                                    <L7p:Operator operatorNull="null"/>
+                                    <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="string"/>
+                                    </L7p:item>
+                                    <L7p:item binary="included">
+                                    <L7p:RightValue stringValue="true"/>
+                                    </L7p:item>
+                                    </L7p:Predicates>
+                                </L7p:ComparisonAssertion>
+                                <L7p:ComparisonAssertion>
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Expression1 stringValue="${apiKeyRecord.service}"/>
+                                    <L7p:Operator operatorNull="null"/>
+                                    <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="string"/>
+                                    </L7p:item>
+                                    <L7p:item binary="included">
+                                    <L7p:RightValue stringValue="${portal.managed.service.apiId}"/>
+                                    </L7p:item>
+                                    </L7p:Predicates>
+                                </L7p:ComparisonAssertion>
+                                <L7p:ComparisonAssertion>
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Expression1 stringValue="${apiKeyRecord.status}"/>
+                                    <L7p:Operator operatorNull="null"/>
+                                    <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="string"/>
+                                    </L7p:item>
+                                    <L7p:item binary="included">
+                                    <L7p:RightValue stringValue="active"/>
+                                    </L7p:item>
+                                    </L7p:Predicates>
+                                </L7p:ComparisonAssertion>
+                                <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="dHJ1ZQ=="/>
+                                    <L7p:VariableToSet stringValue="apiAuthz"/>
+                                </L7p:SetVariable>
+                                <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="// success - API key found"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                </L7p:assertionComment>
+                            </wsp:All>
+                            <wsp:All wsp:Usage="Required">
+                                <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="SW52YWxpZCBBUEkgS2V5"/>
+                                    <L7p:VariableToSet stringValue="errorMsg"/>
+                                </L7p:SetVariable>
+                                <L7p:FalseAssertion/>
+                                <L7p:assertionComment>
+                                    <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="// error - API key not found"/>
+                                    </L7p:entry>
+                                    </L7p:Properties>
+                                </L7p:assertionComment>
+                            </wsp:All>
+                        </wsp:OneOrMore>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="Step 1 --"/>
+                                </L7p:entry>
+                                <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="Lookup API Key"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="JHthcGlLZXlSZWNvcmQua2V5fQ=="/>
+                            <L7p:VariableToSet stringValue="apiKey"/>
+                        </L7p:SetVariable>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="JHthcGlLZXlSZWNvcmQucGxhbn0="/>
+                            <L7p:VariableToSet stringValue="apiPlan"/>
+                        </L7p:SetVariable>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="JHthcGlLZXlSZWNvcmQuYWNjb3VudFBsYW5NYXBwaW5nSWR9"/>
+                            <L7p:VariableToSet stringValue="accountPlanMappingId"/>
+                        </L7p:SetVariable>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="dHJ1ZQ=="/>
+                            <L7p:VariableToSet stringValue="apiAuthz"/>
+                        </L7p:SetVariable>
+                        <L7p:MessageContextAssertion>
+                            <L7p:AssertionComment assertionComment="included">
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="// capture API key and requested method (used by analytics)"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:AssertionComment>
+                            <L7p:Mappings mappingInfoArray="included">
+                                <L7p:item mappingInfo="included">
+                                    <L7p:Key stringValue="AUTH_USER"/>
+                                    <L7p:MappingType mappingType="AUTH_USER"/>
+                                    <L7p:Value stringValue="(SYSTEM DEFINED)"/>
+                                </L7p:item>
+                                <L7p:item mappingInfo="included">
+                                    <L7p:Key stringValue="API_KEY"/>
+                                    <L7p:MappingType mappingType="CUSTOM_MAPPING"/>
+                                    <L7p:Value stringValue="${apikey}"/>
+                                </L7p:item>
+                                <L7p:item mappingInfo="included">
+                                    <L7p:Key stringValue="API_METHOD"/>
+                                    <L7p:MappingType mappingType="CUSTOM_MAPPING"/>
+                                    <L7p:Value stringValue="${apiResource}"/>
+                                </L7p:item>
+                            </L7p:Mappings>
+                        </L7p:MessageContextAssertion>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="Step 2 --"/>
+                                </L7p:entry>
+                                <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="// Capture API key and API method for metrics"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:CommentAssertion>
+                            <L7p:Comment stringValue="The Account Plans Fragment must be manually added here"/>
+                        </L7p:CommentAssertion>
+                        <L7p:Include>
+                            <L7p:PolicyGuid stringValue="f8a5669d-831e-4417-9225-f52527f90323"/>
+                        </L7p:Include>
+                        <wsp:OneOrMore wsp:Usage="Required">
+                            <L7p:ComparisonAssertion>
+                                <L7p:CaseSensitive booleanValue="false"/>
+                                <L7p:Expression1 stringValue="${apiAuthz}"/>
+                                <L7p:Operator operatorNull="null"/>
+                                <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="string"/>
+                                    </L7p:item>
+                                    <L7p:item binary="included">
+                                    <L7p:RightValue stringValue="true"/>
+                                    </L7p:item>
+                                </L7p:Predicates>
+                            </L7p:ComparisonAssertion>
+                            <wsp:All wsp:Usage="Required">
+                                <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="QWNjb3VudCBwbGFuIGxpbWl0IGV4Y2VlZGVkDQoNClJlYXNvbjogJHthcGlBdXRoekRldGFpbHN9"/>
+                                    <L7p:VariableToSet stringValue="errorMsg"/>
+                                </L7p:SetVariable>
+                                <wsp:OneOrMore wsp:Usage="Required">
+                                    <L7p:ComparisonAssertion>
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Expression1 stringValue="${portal.analytics.response.code}"/>
+                                    <L7p:ExpressionIsVariable booleanValue="false"/>
+                                    <L7p:Operator operatorNull="null"/>
+                                    <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="string"/>
+                                    </L7p:item>
+                                    <L7p:item stringLength="included">
+                                    <L7p:Max intValue="-1"/>
+                                    <L7p:Min intValue="1"/>
+                                    </L7p:item>
+                                    </L7p:Predicates>
+                                    </L7p:ComparisonAssertion>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="NTAz"/>
+                                    <L7p:VariableToSet stringValue="portal.analytics.response.code"/>
+                                    </L7p:SetVariable>
+                                </wsp:OneOrMore>
+                                <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHthcGlLZXlSZWNvcmQuYXBwbGljYXRpb25JZH0="/>
+                                    <L7p:VariableToSet stringValue="portal.analytics.application.uuid"/>
+                                </L7p:SetVariable>
+                                <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="JHthY2NvdW50UGxhbk1hcHBpbmdJZH0="/>
+                                    <L7p:VariableToSet stringValue="portal.analytics.organization.uuid"/>
+                                </L7p:SetVariable>
+                                <L7p:ExportVariables>
+                                    <L7p:ExportedVars stringArrayValue="included">
+                                    <L7p:item stringValue="portal.analytics.action"/>
+                                    <L7p:item stringValue="portal.analytics.api.uuid"/>
+                                    <L7p:item stringValue="portal.analytics.application.name"/>
+                                    <L7p:item stringValue="portal.analytics.application.uuid"/>
+                                    <L7p:item stringValue="portal.analytics.authType"/>
+                                    <L7p:item stringValue="portal.analytics.organization.name"/>
+                                    <L7p:item stringValue="portal.analytics.organization.uuid"/>
+                                    <L7p:item stringValue="portal.analytics.response.code"/>
+                                    <L7p:item stringValue="portal.analytics.routingTotalTime"/>
+                                    </L7p:ExportedVars>
+                                </L7p:ExportVariables>
+                                <L7p:FalseAssertion/>
+                            </wsp:All>
+                        </wsp:OneOrMore>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="Step 3 --"/>
+                                </L7p:entry>
+                                <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="// Enforce Account Plan restriction"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:CommentAssertion>
+                            <L7p:Comment stringValue="The API Plans Fragment must be manually added here"/>
+                        </L7p:CommentAssertion>
+                        <wsp:OneOrMore wsp:Usage="Required">
+                            <L7p:ComparisonAssertion>
+                                <L7p:CaseSensitive booleanValue="false"/>
+                                <L7p:Expression1 stringValue="${apiAuthz}"/>
+                                <L7p:Operator operatorNull="null"/>
+                                <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="string"/>
+                                    </L7p:item>
+                                    <L7p:item binary="included">
+                                    <L7p:RightValue stringValue="true"/>
+                                    </L7p:item>
+                                </L7p:Predicates>
+                            </L7p:ComparisonAssertion>
+                            <wsp:All wsp:Usage="Required">
+                                <L7p:CustomizeErrorResponse>
+                                    <L7p:Content stringValueReference="inline"><![CDATA[{
+"result":{
+	"transactionId":"${requestId}",
+	"code":"403",
+	"description":"Forbidden",
+	"descriptionDetail": "Límite de plan API excedido: ${apiAuthzDetails}",	"responseTimestamp":"${request.time.local.yyyy-MM-dd'T'HH:mm:ss.SSS}"
+	}
+}]]></L7p:Content>
+                                    <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                                    <L7p:ExtraHeaders nameValuePairArray="included"/>
+                                    <L7p:HttpStatus stringValue="403"/>
+                                </L7p:CustomizeErrorResponse>
+                                <wsp:OneOrMore wsp:Usage="Required">
+                                    <L7p:ComparisonAssertion>
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:Expression1 stringValue="${portal.analytics.response.code}"/>
+                                    <L7p:ExpressionIsVariable booleanValue="false"/>
+                                    <L7p:Operator operatorNull="null"/>
+                                    <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="string"/>
+                                    </L7p:item>
+                                    <L7p:item stringLength="included">
+                                    <L7p:Max intValue="-1"/>
+                                    <L7p:Min intValue="1"/>
+                                    </L7p:item>
+                                    </L7p:Predicates>
+                                    </L7p:ComparisonAssertion>
+                                    <L7p:SetVariable>
+                                    <L7p:Base64Expression stringValue="NTAz"/>
+                                    <L7p:VariableToSet stringValue="portal.analytics.response.code"/>
+                                    </L7p:SetVariable>
+                                </wsp:OneOrMore>
+                                <L7p:ExportVariables>
+                                    <L7p:ExportedVars stringArrayValue="included">
+                                    <L7p:item stringValue="portal.analytics.action"/>
+                                    <L7p:item stringValue="portal.analytics.api.uuid"/>
+                                    <L7p:item stringValue="portal.analytics.application.name"/>
+                                    <L7p:item stringValue="portal.analytics.application.uuid"/>
+                                    <L7p:item stringValue="portal.analytics.authType"/>
+                                    <L7p:item stringValue="portal.analytics.organization.name"/>
+                                    <L7p:item stringValue="portal.analytics.organization.uuid"/>
+                                    <L7p:item stringValue="portal.analytics.response.code"/>
+                                    <L7p:item stringValue="portal.analytics.routingTotalTime"/>
+                                    </L7p:ExportedVars>
+                                </L7p:ExportVariables>
+                                <L7p:FalseAssertion/>
+                            </wsp:All>
+                        </wsp:OneOrMore>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="Step 4 --"/>
+                                </L7p:entry>
+                                <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="// Enforce API Plan restriction"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                </wsp:All>
+                <L7p:CommentAssertion>
+                    <L7p:Comment stringValue="==========================="/>
+                </L7p:CommentAssertion>
+                <L7p:CommentAssertion>
+                    <L7p:Comment stringValue="= The rest of the service policy follows ... ="/>
+                </L7p:CommentAssertion>
+                <L7p:CommentAssertion>
+                    <L7p:Comment stringValue="==========================="/>
+                </L7p:CommentAssertion>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <L7p:CustomizeErrorResponse>
+                    <L7p:Content stringValueReference="inline"><![CDATA[{
+"result":{
+	"transactionId":"${requestId}",
+	"code":"401",
+	"description":"Unauthorized",
+	"descriptionDetail":"El token ingresado no es válido",
+	"responseTimestamp":"${request.time.local.yyyy-MM-dd'T'HH:mm:ss.SSS}"
+	}
+}]]></L7p:Content>
+                    <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                    <L7p:ExtraHeaders nameValuePairArray="included"/>
+                    <L7p:HttpStatus stringValue="401"/>
+                </L7p:CustomizeErrorResponse>
+                <wsp:OneOrMore wsp:Usage="Required">
+                    <L7p:ComparisonAssertion>
+                        <L7p:CaseSensitive booleanValue="false"/>
+                        <L7p:Expression1 stringValue="${portal.analytics.response.code}"/>
+                        <L7p:ExpressionIsVariable booleanValue="false"/>
+                        <L7p:Operator operatorNull="null"/>
+                        <L7p:Predicates predicates="included">
+                            <L7p:item dataType="included">
+                                <L7p:Type variableDataType="string"/>
+                            </L7p:item>
+                            <L7p:item stringLength="included">
+                                <L7p:Max intValue="-1"/>
+                                <L7p:Min intValue="1"/>
+                            </L7p:item>
+                        </L7p:Predicates>
+                    </L7p:ComparisonAssertion>
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue="NDAw"/>
+                        <L7p:VariableToSet stringValue="portal.analytics.response.code"/>
+                    </L7p:SetVariable>
+                </wsp:OneOrMore>
+                <L7p:ExportVariables>
+                    <L7p:ExportedVars stringArrayValue="included">
+                        <L7p:item stringValue="portal.analytics.action"/>
+                        <L7p:item stringValue="portal.analytics.api.uuid"/>
+                        <L7p:item stringValue="portal.analytics.application.name"/>
+                        <L7p:item stringValue="portal.analytics.application.uuid"/>
+                        <L7p:item stringValue="portal.analytics.authType"/>
+                        <L7p:item stringValue="portal.analytics.organization.name"/>
+                        <L7p:item stringValue="portal.analytics.organization.uuid"/>
+                        <L7p:item stringValue="portal.analytics.response.code"/>
+                        <L7p:item stringValue="portal.analytics.routingTotalTime"/>
+                    </L7p:ExportedVars>
+                </L7p:ExportVariables>
+                <L7p:FalseAssertion/>
+            </wsp:All>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="main()"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:OneOrMore>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHthcGlLZXlSZWNvcmQuYXBwbGljYXRpb25JZH0="/>
+            <L7p:VariableToSet stringValue="portal.analytics.application.uuid"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHthcGlLZXlSZWNvcmQubGFiZWx9"/>
+            <L7p:VariableToSet stringValue="portal.analytics.application.name"/>
+        </L7p:SetVariable>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHthY2NvdW50UGxhbk1hcHBpbmdJZH0="/>
+            <L7p:VariableToSet stringValue="portal.analytics.organization.uuid"/>
+        </L7p:SetVariable>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="========================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="Get Organization Name"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="========================================"/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="JHthcGlLZXlSZWNvcmQuYWNjb3VudFBsYW5NYXBwaW5nTmFtZX0="/>
+            <L7p:VariableToSet stringValue="portal.analytics.organization.name"/>
+        </L7p:SetVariable>
+        <wsp:All L7p:Enabled="false" wsp:Usage="Required">
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="R0VU"/>
+                <L7p:VariableToSet stringValue="pman.operation"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:Base64Expression stringValue="LzEvYXBpL2tleXMvJHtsb29rdXBBcGlLZXl9"/>
+                <L7p:VariableToSet stringValue="pman.resUri"/>
+            </L7p:SetVariable>
+            <L7p:ManagePortalResource/>
+            <L7p:AuditDetailAssertion>
+                <L7p:Detail stringValue="Detail: ${pman.resp.detail}"/>
+            </L7p:AuditDetailAssertion>
+            <L7p:AuditDetailAssertion>
+                <L7p:Detail stringValue="Detail: ${apiKeyRecord.accountPlanMappingName}"/>
+            </L7p:AuditDetailAssertion>
+            <wsp:OneOrMore wsp:Usage="Required">
+                <wsp:All wsp:Usage="Required">
+                    <L7p:ComparisonAssertion>
+                        <L7p:CaseSensitive booleanValue="false"/>
+                        <L7p:Expression1 stringValue="${pman.resp.status}"/>
+                        <L7p:Operator operatorNull="null"/>
+                        <L7p:Predicates predicates="included">
+                            <L7p:item dataType="included">
+                                <L7p:Type variableDataType="int"/>
+                            </L7p:item>
+                            <L7p:item binary="included">
+                                <L7p:RightValue stringValue="200"/>
+                            </L7p:item>
+                        </L7p:Predicates>
+                    </L7p:ComparisonAssertion>
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue="JHtwbWFuLnJlc3AucmVzb3VyY2V9"/>
+                        <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                        <L7p:DataType variableDataType="message"/>
+                        <L7p:VariableToSet stringValue="keysXml"/>
+                    </L7p:SetVariable>
+                    <L7p:ResponseXpathAssertion>
+                        <L7p:VariablePrefix stringValue="mappingName"/>
+                        <L7p:XmlMsgSrc stringValue="keysXml"/>
+                        <L7p:XpathExpression xpathExpressionValue="included">
+                            <L7p:Expression stringValue="/l7:ApiKeys/l7:ApiKey/l7:AccountPlanMappingName"/>
+                            <L7p:Namespaces mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="l7"/>
+                                    <L7p:value stringValue="http://ns.l7tech.com/2012/04/api-management"/>
+                                </L7p:entry>
+                                <L7p:entry>
+                                    <L7p:key stringValue="s"/>
+                                    <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                                </L7p:entry>
+                            </L7p:Namespaces>
+                            <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                        </L7p:XpathExpression>
+                    </L7p:ResponseXpathAssertion>
+                    <wsp:OneOrMore wsp:Usage="Required">
+                        <wsp:All wsp:Usage="Required">
+                            <L7p:ComparisonAssertion>
+                                <L7p:CaseSensitive booleanValue="false"/>
+                                <L7p:Expression1 stringValue="${mappingName.found}"/>
+                                <L7p:Operator operatorNull="null"/>
+                                <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="boolean"/>
+                                    </L7p:item>
+                                    <L7p:item binary="included">
+                                    <L7p:CaseSensitive booleanValue="false"/>
+                                    <L7p:RightValue stringValue="true"/>
+                                    </L7p:item>
+                                </L7p:Predicates>
+                            </L7p:ComparisonAssertion>
+                            <L7p:SetVariable>
+                                <L7p:Base64Expression stringValue="JHttYXBwaW5nTmFtZS5yZXN1bHR9"/>
+                                <L7p:VariableToSet stringValue="portal.analytics.organization.name"/>
+                            </L7p:SetVariable>
+                        </wsp:All>
+                        <L7p:TrueAssertion/>
+                    </wsp:OneOrMore>
+                </wsp:All>
+                <L7p:TrueAssertion/>
+            </wsp:OneOrMore>
+        </wsp:All>
+        <L7p:ExportVariables>
+            <L7p:ExportedVars stringArrayValue="included">
+                <L7p:item stringValue="portal.analytics.action"/>
+                <L7p:item stringValue="portal.analytics.api.uuid"/>
+                <L7p:item stringValue="portal.analytics.application.name"/>
+                <L7p:item stringValue="portal.analytics.application.uuid"/>
+                <L7p:item stringValue="portal.analytics.authType"/>
+                <L7p:item stringValue="portal.analytics.organization.name"/>
+                <L7p:item stringValue="portal.analytics.organization.uuid"/>
+                <L7p:item stringValue="portal.analytics.response.code"/>
+                <L7p:item stringValue="portal.analytics.routingTotalTime"/>
+            </L7p:ExportedVars>
+        </L7p:ExportVariables>
+    </wsp:All>
+</wsp:Policy>

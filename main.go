@@ -36,13 +36,13 @@ func main() {
 }
 func GetUat(writer http.ResponseWriter, request *http.Request) {
 	gotenv.Load(".env.gatewayuat")
-	recursivecall(os.Getenv("ENV_URL")+"restman/1.0/folders//0f43e5ff5547ea5444f6d5e0b087720f/dependencies?level=1","")
+	recursivecall(os.Getenv("ENV_URL")+"restman/1.0/folders/0000000000000000ffffffffffffec76/dependencies?level=1","")
 	GitWorld()
 	json.NewEncoder(writer).Encode("Trabajo realizado")
 }
 func GetDev(writer http.ResponseWriter, request *http.Request) {
 	gotenv.Load(".env.gatewaydev")
-	recursivecall(os.Getenv("ENV_URL")+"restman/1.0/folders//0f43e5ff5547ea5444f6d5e0b087720f/dependencies?level=1","")
+	recursivecall(os.Getenv("ENV_URL")+"restman/1.0/folders/0000000000000000ffffffffffffec76/dependencies?level=1","")
 	GitWorld()
 	json.NewEncoder(writer).Encode("Trabajo realizado")
 }

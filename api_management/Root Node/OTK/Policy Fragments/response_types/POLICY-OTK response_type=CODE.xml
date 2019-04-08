@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === ***  THIS POLICY IS READ ONLY ***"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === If you have the need to customize this policy"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === please contact CA APIM Support so we can improve customization capability"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:Encapsulated>
+            <L7p:EncapsulatedAssertionConfigGuid stringValue="db047e91-52db-4176-a3eb-a43aa0c2c67c"/>
+            <L7p:EncapsulatedAssertionConfigName stringValue="OTK Storage Configuration"/>
+            <L7p:Parameters mapValue="included">
+                <L7p:entry>
+                    <L7p:key stringValue="custom"/>
+                    <L7p:value stringValue="${custom}"/>
+                </L7p:entry>
+            </L7p:Parameters>
+        </L7p:Encapsulated>
+        <L7p:SetVariable>
+            <L7p:AssertionComment assertionComment="included">
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="LEFT.COMMENT"/>
+                        <L7p:value stringValue="initialize"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="will be overwritten in case of an error"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:AssertionComment>
+            <L7p:Base64Expression stringValue=""/>
+            <L7p:VariableToSet stringValue="error.code"/>
+        </L7p:SetVariable>
+        <wsp:All wsp:Usage="Required">
+            <L7p:Encapsulated>
+                <L7p:EncapsulatedAssertionConfigGuid stringValue="6dbc70f9-bb40-4a69-a0ec-88fae4f35300"/>
+                <L7p:EncapsulatedAssertionConfigName stringValue="OTK Generate OAuth Token"/>
+                <L7p:Parameters mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="ac"/>
+                        <L7p:value stringValue="true"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="art"/>
+                        <L7p:value stringValue="false"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="at"/>
+                        <L7p:value stringValue="false"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="cid"/>
+                        <L7p:value stringValue="false"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="custom"/>
+                        <L7p:value stringValue="${custom}"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="ock"/>
+                        <L7p:value stringValue="false"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="ot"/>
+                        <L7p:value stringValue="false"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="rft"/>
+                        <L7p:value stringValue="false"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="urt"/>
+                        <L7p:value stringValue="false"/>
+                    </L7p:entry>
+                </L7p:Parameters>
+            </L7p:Encapsulated>
+            <wsp:OneOrMore wsp:Usage="Required">
+                <wsp:All wsp:Usage="Required">
+                    <L7p:Encapsulated>
+                        <L7p:EncapsulatedAssertionConfigGuid stringValue="f78f0f85-00e2-49b1-95e4-e520df255c9c"/>
+                        <L7p:EncapsulatedAssertionConfigName stringValue="OTK SCOPE Verification"/>
+                        <L7p:Parameters mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="any"/>
+                                <L7p:value stringValue="false"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="fail"/>
+                                <L7p:value stringValue="false"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="scope.granted"/>
+                                <L7p:value stringValue="${scope}"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="scope.required"/>
+                                <L7p:value stringValue="openid"/>
+                            </L7p:entry>
+                        </L7p:Parameters>
+                    </L7p:Encapsulated>
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue="PHM+DQogIDxub25jZT48IVtDREFUQVske25vbmNlfV1dPjwvbm9uY2U+DQogIDxzYWx0PjwhW0NEQVRBWyR7c2FsdH1dXT48L3NhbHQ+DQogIDx0aGlyZF9wYXJ0eV9zc29fdG9rZW4+PCFbQ0RBVEFbJHt0aGlyZF9wYXJ0eV9zc29fdG9rZW59XV0+PC90aGlyZF9wYXJ0eV9zc29fdG9rZW4+DQogIDx0aGlyZF9wYXJ0eV9zc29fdG9rZW5fdHlwZT48IVtDREFUQVske3RoaXJkX3BhcnR5X3Nzb190b2tlbl90eXBlfV1dPjwvdGhpcmRfcGFydHlfc3NvX3Rva2VuX3R5cGU+DQogIDxleHBlY3RlZF9tYWdfaWRlbnRpZmllcj48IVtDREFUQVske2V4cGVjdGVkLW1hZy1pZGVudGlmaWVyfV1dPjwvZXhwZWN0ZWRfbWFnX2lkZW50aWZpZXI+DQogIDxhdXRoVGltZT48IVtDREFUQVske2F1dGhUaW1lfV1dPjwvYXV0aFRpbWU+DQogIDxhY3I+PCFbQ0RBVEFbJHthY3J9XV0+PC9hY3I+DQo8L3M+"/>
+                        <L7p:VariableToSet stringValue="sessionValue"/>
+                    </L7p:SetVariable>
+                    <L7p:Encapsulated>
+                        <L7p:EncapsulatedAssertionConfigGuid stringValue="dd360775-0fec-47db-8b45-059d995b262d"/>
+                        <L7p:EncapsulatedAssertionConfigName stringValue="OTK Session - Store"/>
+                        <L7p:Parameters mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="cacheAge"/>
+                                <L7p:value stringValue=""/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="cacheId"/>
+                                <L7p:value stringValue="openIDConnectCache"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="cacheKey"/>
+                                <L7p:value stringValue="${genToken}"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="cacheMaxEntries"/>
+                                <L7p:value stringValue="10000"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="cacheMaxSize"/>
+                                <L7p:value stringValue="10000"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="dbAge"/>
+                                <L7p:value stringValue=""/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="value"/>
+                                <L7p:value stringValue="${sessionValue}"/>
+                            </L7p:entry>
+                        </L7p:Parameters>
+                    </L7p:Encapsulated>
+                </wsp:All>
+                <L7p:TrueAssertion/>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="Only do something if openid is a granted SCOPE value"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:OneOrMore>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="================="/>
+            </L7p:CommentAssertion>
+            <wsp:OneOrMore wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:AssertionComment assertionComment="included">
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="LEFT.COMMENT"/>
+                                <L7p:value stringValue="check success"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="RIGHT.COMMENT"/>
+                                <L7p:value stringValue="error code will be set if session store failed"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:AssertionComment>
+                    <L7p:Expression1 stringValue="${error.code}"/>
+                    <L7p:Expression2 stringValue=""/>
+                    <L7p:Operator operator="EMPTY"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:Operator operator="EMPTY"/>
+                            <L7p:RightValue stringValue=""/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:ComparisonAssertion>
+                    <L7p:AssertionComment assertionComment="included">
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="LEFT.COMMENT"/>
+                                <L7p:value stringValue="check success"/>
+                            </L7p:entry>
+                            <L7p:entry>
+                                <L7p:key stringValue="RIGHT.COMMENT"/>
+                                <L7p:value stringValue="115 indicates that 'openid' was not part of SCOPE which is fine"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:AssertionComment>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${error.code}"/>
+                    <L7p:Expression2 stringValue="115"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:RightValue stringValue="115"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="check error"/>
+                        </L7p:entry>
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="either empty or 115 which is fine"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:OneOrMore>
+            <L7p:Encapsulated>
+                <L7p:EncapsulatedAssertionConfigGuid stringValue="baaf2c65-f49a-42b1-af87-c22cc747d831"/>
+                <L7p:EncapsulatedAssertionConfigName stringValue="OTK Token Storage (temporary token)"/>
+                <L7p:Parameters mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="callback"/>
+                        <L7p:value stringValue="${redirect_uri}"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="client"/>
+                        <L7p:value stringValue="${client}"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="client_key"/>
+                        <L7p:value stringValue="${client_key}"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="client_name"/>
+                        <L7p:value stringValue="${client_name}"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="custom"/>
+                        <L7p:value stringValue="${custom}"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="expiration"/>
+                        <L7p:value stringValue="${genExpiration}"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="resource_owner"/>
+                        <L7p:value stringValue="${resource_owner}"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="scope"/>
+                        <L7p:value stringValue="${scope}"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="token"/>
+                        <L7p:value stringValue="${genToken}"/>
+                    </L7p:entry>
+                    <L7p:entry>
+                        <L7p:key stringValue="token_secret"/>
+                        <L7p:value stringValue=""/>
+                    </L7p:entry>
+                </L7p:Parameters>
+            </L7p:Encapsulated>
+            <wsp:OneOrMore wsp:Usage="Required">
+                <wsp:All wsp:Usage="Required">
+                    <L7p:ComparisonAssertion>
+                        <L7p:CaseSensitive booleanValue="false"/>
+                        <L7p:Expression1 stringValue="${redirect_uri}"/>
+                        <L7p:Expression2 stringValue="?"/>
+                        <L7p:Operator operator="CONTAINS"/>
+                        <L7p:Predicates predicates="included">
+                            <L7p:item binary="included">
+                                <L7p:CaseSensitive booleanValue="false"/>
+                                <L7p:Operator operator="CONTAINS"/>
+                                <L7p:RightValue stringValue="?"/>
+                            </L7p:item>
+                        </L7p:Predicates>
+                    </L7p:ComparisonAssertion>
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue="JHtyZWRpcmVjdF91cml9JmNvZGU9JHtnZW5Ub2tlbn0="/>
+                        <L7p:VariableToSet stringValue="location"/>
+                    </L7p:SetVariable>
+                </wsp:All>
+                <L7p:SetVariable>
+                    <L7p:AssertionComment assertionComment="included">
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="RIGHT.COMMENT"/>
+                                <L7p:value stringValue="Invalid token"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:AssertionComment>
+                    <L7p:Base64Expression stringValue="JHtyZWRpcmVjdF91cml9P2NvZGU9JHtnZW5Ub2tlbn0="/>
+                    <L7p:VariableToSet stringValue="location"/>
+                </L7p:SetVariable>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="location"/>
+                        </L7p:entry>
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="modifyc the location header for the response"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:OneOrMore>
+            <L7p:assertionComment>
+                <L7p:Properties mapValue="included">
+                    <L7p:entry>
+                        <L7p:key stringValue="RIGHT.COMMENT"/>
+                        <L7p:value stringValue="Access was granted: response_type=code"/>
+                    </L7p:entry>
+                </L7p:Properties>
+            </L7p:assertionComment>
+        </wsp:All>
+    </wsp:All>
+</wsp:Policy>

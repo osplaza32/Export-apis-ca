@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === ***  THIS POLICY IS READ ONLY ***"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === Required changes can be implemented in policies in the 'Customizations' folder "/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === The policies within that folder will have the same name as this policy but "/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === either prefixed with '#' or suffixed with 'Extensions'"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === Prefixed policies can be used to overwrite variables of this policy"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === Suffixed policies can be used to extend functionality"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === If you find you cannot add your customizations using the policies in the 'Customizations' folder"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" === please contact CA APIM Support so we can improve customization capability"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue=" ============================================"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="This represents the only instance of the logo to be included on all pages"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="The span can be changed to any other tag (ie an anchor) but the class must remain"/>
+        </L7p:CommentAssertion>
+        <L7p:SetVariable>
+            <L7p:Base64Expression stringValue="PHNwYW4gY2xhc3M9ImJyYW5kIj48aW1nIHdpZHRoPSIxNjciIGhlaWdodD0iMzUiIHRpdGxlPSIiIGFsdD0iIiBzcmM9ImRhdGE6aW1hZ2UvcG5nO2Jhc2U2NCxpVkJPUncwS0dnb0FBQUFOU1VoRVVnQUFBS2NBQUFBakNBTUFBQURHNmVvUUFBQUFHWFJGV0hSVGIyWjBkMkZ5WlFCQlpHOWlaU0JKYldGblpWSmxZV1I1Y2NsbFBBQUFBL3BwVkZoMFdFMU1PbU52YlM1aFpHOWlaUzU0YlhBQUFBQUFBRHcvZUhCaFkydGxkQ0JpWldkcGJqMGk3N3UvSWlCcFpEMGlWelZOTUUxd1EyVm9hVWg2Y21WVGVrNVVZM3ByWXpsa0lqOCtJRHg0T25odGNHMWxkR0VnZUcxc2JuTTZlRDBpWVdSdlltVTZibk02YldWMFlTOGlJSGc2ZUcxd2RHczlJa0ZrYjJKbElGaE5VQ0JEYjNKbElEVXVNeTFqTURFeElEWTJMakUwTlRZMk1Td2dNakF4TWk4d01pOHdOaTB4TkRvMU5qb3lOeUFnSUNBZ0lDQWdJajRnUEhKa1pqcFNSRVlnZUcxc2JuTTZjbVJtUFNKb2RIUndPaTh2ZDNkM0xuY3pMbTl5Wnk4eE9UazVMekF5THpJeUxYSmtaaTF6ZVc1MFlYZ3Ribk1qSWo0Z1BISmtaanBFWlhOamNtbHdkR2x2YmlCeVpHWTZZV0p2ZFhROUlpSWdlRzFzYm5NNmVHMXdUVTA5SW1oMGRIQTZMeTl1Y3k1aFpHOWlaUzVqYjIwdmVHRndMekV1TUM5dGJTOGlJSGh0Ykc1ek9uTjBVbVZtUFNKb2RIUndPaTh2Ym5NdVlXUnZZbVV1WTI5dEwzaGhjQzh4TGpBdmMxUjVjR1V2VW1WemIzVnlZMlZTWldZaklpQjRiV3h1Y3pwNGJYQTlJbWgwZEhBNkx5OXVjeTVoWkc5aVpTNWpiMjB2ZUdGd0x6RXVNQzhpSUhodGJHNXpPbVJqUFNKb2RIUndPaTh2Y0hWeWJDNXZjbWN2WkdNdlpXeGxiV1Z1ZEhNdk1TNHhMeUlnZUcxd1RVMDZUM0pwWjJsdVlXeEViMk4xYldWdWRFbEVQU0oxZFdsa09qVkVNakE0T1RJME9UTkNSa1JDTVRFNU1UUkJPRFU1TUVRek1UVXdPRU00SWlCNGJYQk5UVHBFYjJOMWJXVnVkRWxFUFNKNGJYQXVaR2xrT2pjMk1EUTRRVVE1UkRjM01URXhSVEpCUmtNeE9VTTRNak0wTVRkRk1FWkZJaUI0YlhCTlRUcEpibk4wWVc1alpVbEVQU0o0YlhBdWFXbGtPamMyTURRNFFVUTRSRGMzTVRFeFJUSkJSa014T1VNNE1qTTBNVGRGTUVaRklpQjRiWEE2UTNKbFlYUnZjbFJ2YjJ3OUlrRmtiMkpsSUVsc2JIVnpkSEpoZEc5eUlFTlROaUFvVjJsdVpHOTNjeWtpUGlBOGVHMXdUVTA2UkdWeWFYWmxaRVp5YjIwZ2MzUlNaV1k2YVc1emRHRnVZMlZKUkQwaWRYVnBaRHBrWWpnNU16RXpOUzB5TXprMkxUUmpaVGd0T1dOa1pDMDBObVUwTm1KbE9UWTVaV1FpSUhOMFVtVm1PbVJ2WTNWdFpXNTBTVVE5SW5odGNDNWthV1E2UVRKQ016VXhSRUUzTjBRMFJUSXhNVUZCTUVaRE1qUTRPRVF4TnpORE1UTWlMejRnUEdSak9uUnBkR3hsUGlBOGNtUm1Pa0ZzZEQ0Z1BISmtaanBzYVNCNGJXdzZiR0Z1WnowaWVDMWtaV1poZFd4MElqNURRUzF3Y21sdFlYSjVMV2h2Y21sNmIyNTBZV3c4TDNKa1pqcHNhVDRnUEM5eVpHWTZRV3gwUGlBOEwyUmpPblJwZEd4bFBpQThMM0prWmpwRVpYTmpjbWx3ZEdsdmJqNGdQQzl5WkdZNlVrUkdQaUE4TDNnNmVHMXdiV1YwWVQ0Z1BEOTRjR0ZqYTJWMElHVnVaRDBpY2lJL1BoUUQyeDRBQUFNQVVFeFVSVjJ4M2h1UzBkcnUyRTJwMjVMT2piRGJyZGp1MTJtN1lzdm55WVRFNWxxMFU1dlNsOVhzMDZyWnBxZlhvNGJJZ2FMVm5uRy9haXVaMUc2K2FIVEFicW5XN3ZQNS9WU3QzSzNhcWVYeStycmd0cURVbkgvRmVaN1RtaFNPenp5dXFoQ016Z1NHekRXZTFzWGx3ejJpMlBiNy9iZmVzNGpKZytEeDM5anM5MzdCNWRIcDluckRkSGpDY25iQmNDNnFuN0xhN3lXVzA0TEdmTExjcnBuUmxXZTZZSlhQa0dXNVhuYTk0dytMemdtSXpjUGt3VjYyVm9qRzUwdXRSbks3NHJ6aHVkM3czUFQ2ODFlelQySzRXNXJSbFcyOVprMnVSWVBIZnY3Ky92MysvZW4xNk1mbXhGQ3dTUHY5KzlIcXo5L3crTkxyMFB6Ky9QbjgrRnkxVmFYV29mVDY5RTZ2UmsydlJmYjc5YURVbTgvcHpiL2l2UEQ0OEZXeVRtTzRYT2IwNWI3aXZHNjlaMUt4U3V2MjZuM0VkL2o4K01IanZtQzNXWmJQa2VQeTR2Zjg5MUd3U2JQZHNOL3gzdGZ0MWRQcjBtcThaSXZMaHVyMTZWU3lUYjNodXFuWXBlNzM3Ylhkc1YyMlZ0L3czYTdhcWxLeFMxT3hTOGpteHZmNzlxVFdvTHZndU9qMTUwK3ZSd0dFeTdmZnROUHIwY3JueDhUa3dZM01pSS9NaXREcXpzN3B6Tmp0MW9yS2hmRDQ3L0w1OHBiUWt1ejI2OGJseE1qbXhlZjA1dVR6NGxlelVQbjgrZnI5K2xtMFVkYnMxRnUxVlAzKy8yeTladnY5L3N6b3lzM295KzMzN1hqQ2NiamZ0WkROaTNDK2FkdnUrSlRPanlpWDAvTDU4ZHJ0OXd1SnpmSDU4Tnp2Mm9YSWYzdS81TmJ0MU9YejVJN01pYjdodTFpelVNL3B6SjNUbWNEaXZZL0o2RmF5VHNubng2N2FxNi9icTVQTDZYbSs1SnpTbUtqWXBIekVkNWJNNmdlSHpOZnM5OTd2K0J5U3k5dnYybSs2NG92SzNxTFM3R3k3ZWUvMy9FeXVSbksvMUJlUDBQUDY4Mk8wMzlicjk0SEdlL1g3OVlUSGYyeThaY3pveVp2UDYwYXJhYUxWbmIzZjhsU3hUQU9GekVPazJXVzE0R2kyNE1ManY4L285VU9zZWlxY3luTy9iRm0wVXVYejlpQ1QwaUtVMGlDVnk4ams5TTduOVluS2hPdjErKzMzK2l1cm1LM1g3cS9ZN3hpUTBFbXJVeDZUenVMeTRQSDQvRDJyaGZuOC9ybmQ4WFBBYlFDRXkweXVSUC8vL3dTOWJ4RUFBQUVBZEZKT1UvLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vd0JUOXdjbEFBQUdKVWxFUVZSNDJzU1lkMXhUVnhUSEl3cFlRWVpiRkZ0RXhEcW9yV0lWVnhJS0lWRkN4WlM5OTFCQm1ZS2lLSXA3YjNGWDNMTmFkeDBkbis3YXZmZmV5OXFaMytsOUwza0Q4a0w5UTVyekJ6bjMzUFhsdm5QT0hTb1NKZUNYWi9xMThUT2JRKzV0Ty9aVHdiZzdmVVJRWGlTQVVOY0lEM2M5T1VwVWdyTHZsY05tbVhSNmV3ZVJmdEVRSGVTUzEyT3lZem03amYvQTNFd09mTGQ4TzJ3azFjbVJuSWM2bVczRjd4NG95S3dveDNFTzZtTldGRVhRamZNY3hkbnpoakttMmU4ekpWQlBCM0Z1NjJlMko5K09VK0RVVFhBTTUyTXlzRDZxeTNkODFFWXEvOHk0cHVkMzdMaC9qQXgwcWtNNHU4bWNjMlFBWjlzeFZqUjhqZzdMK0hhYndpVE9KUTdoUENkaGpoZXNsd1ZMM1c5RmdxMjN5RG40VmdhZXJOSEV0RlMvUmpOTnVTSktYYVBJS2FXa1VkMEU2d3QrVmxQSW5WSi9rVE5jMWo4c2JLZnlkQnBnWWt1Y1lRaFZyb2hvTXI3SWVVaGF6bzhsOHdIQjlwSm8yaXh5dXNyNkF3L2RaczRab1VGS25MSW82aXFaZXo1b2xaOGtXNmpBK1VDcmN0cnhUNVhFK2FTZE5uT20xVlJlZFZzeTM1WXptZEdNMENRenJTQTlQYzFpSzBndkcyRGxMRnhYVzhEVVZjd1ZrM05QcmVHclMzTFZSMldjS3hlcFQvQ25HNzE3N2RwNFEvdEVtcWZad0pXemNzc3NEcnd5Visya0oxVmZpVE5BSVJvU3ZhNDFORStnRXFjelgzWW00Mkl1cjU1aEZsN0RzUnlPY3kvcnFldFBwRVpwQWp0eVpTNWw5V2U0ZzAxMmpNRHBQSVVWTzJjUnBiM0piWFhlaUxENlowSXNLNjh3RXVWeUxUSUtWTmVsM2NjMjlGYThyN1FoU1p4SjRZQXBQSW5jVURvOFB4T015WTFSOU5iaEVZNFR3WUVia2JLWmNRTGVudlBSU0hRUkNJcUl4VEVyNXdWZ2UrQnNoRWRUWjVnU3NvRUVGd3RuSldMM3VtMkJHOFhNd2hzSlkrSjhWSFZTdURlalhPZ05aYkh4VCswVW5DSWFobFJPODJWYXltcU8wMDFQL1lFQkhDZjdEMVlqamd3bS9FQTBGU2l3Y0FiQjIwQ1BBalcvQSt3Z2xvRmUxbmpQdzF5aWVzeWE0d0xFVS9KT2tybG5VMDZEcnc2M3l0a2V1S1JXWHdVcTZvRXFvdWhDSVk0U0FRM0h5YmJhUzRDMkNxZ25lcG5iMGpqT25EajBZR00wWUxnTDMrUWErdzQ4NTBuQVY2MWVBQlR2MWlFOG5SMTZaWndoVGRPRG5HejJudnlMWjJmYjVYeFlxS2xpV3JJODNpZEpuTXlYdFcveHkwWlQyTHB4bkduQVdWWU1oK2NtRTRiczZnaFVXempGWEQyUlBOamZMZVVHMVJNUzZGK3krY3NseUMycnQwYTNuSmQ4MkFLcE9WbkZ0SW9XT0hjQkxxd3VFbDQ4NXp3Z25SV25JNUFXOHRsa2U3eUZjeUhneFE5WXdvSWttMzNZSzZwdkpNNm5wT2xMTWdXbzJBVHRmK1pQOW5XWFc0cUpGcENqZGpnM0FJdUlLb0FGUEtjeEV1VXNJNTJHcno0UUdaN3RmRFpaOTZNSlFKSXdnNTdXUjZCVTlhSEUrYmMwZlMrQktUSlJ0Tm41N3N6aGMxSndYelE1ZGE3bnRCbEUxZkEwS0hKU0txNUYwN3ZRbFZqaUtCdkI4VlFHTEYwR0xEdWlsL2JOWUhnWDBucHZINHJ4Yk1kRldweHFwTVE1VUpwK3VzQlVMbVY3eFRqcWdCVHZCY1E4YTJhR0RxazVuSllhRElRcHJ5Y2xzYnNnRzN1L05TOHRqOE9YalRwMnNFazd6dzA4YzdDL2xmTVQ0SFJqSk01bnJXUFpiVVVIN0ZFTmxkM2N4Tm0vZWxGZ1dpbmFpaFU1UGZnOFQxNHNqK3Q2Y3dmb3VVeUx6VGZhNGFUS0ZDQnVoRkhJODJ0bnN2NFJNV1R3MHNXYXVPdDNqVFhQVjVheXdqOGFvdEhjeWJjeFRSVVFJb0grS3N6K3JPaWRFdEZ3UlU1YVA4bnBkZllUczdYSUd1anhKNG9PY25sTnEyVTAwVnF0Z1l4YUxmdWttN1c4bzA5MmNWL0YvMnI1WTUvaDZXSnVQNjJHNjBIU1I1bVFUNFhhZUw2K2FHdVdKVUZxSnAza3puV3lUTi9uVmN0VWgyNktUTHNGbnF4TVpjN2JJM3VSY1lSdG5ubDhQbFUrSjM4dnUzWWNIampvajIzN3h0N2xKOTZMUEt6dGpFUFFtcHhSa2RBMU1CL29VbWovZnRSZDRRTDNqaGp2dFh5ekNYdlFxcHkwb2RkclgzU1prUlRkd2oydTV5Z2J6RHJaemQzMWluTVB6MGkwTXVldDNOK0gxdG1BM2h3SCsrSW9UbnE4eFFVVm41WUVwWUYxY1JyZ2lQZWw1MEpzbmtMK2JJNjVwRXg4WWlMeWQvYTU0SWozdWtGOW00UGVlTDRwNWhuYUtlb1Y1TzlSdmM0aDc1L2J1allodlg3OFI4TXcyWVhEZFJkeGh3T3IxRk5Tc2Y5YXg3elRFdDE5cm5zbkZ2cUh2MjU3L0wwZGZNNGN2ZmorVE9oTVhkejR0MFM5V3BBcTBpOTEvMy85ODE4QkJnQkdyMFV1Y1BWVDVnQUFBQUJKUlU1RXJrSmdnZz09IiAvPjwvc3Bhbj4="/>
+            <L7p:VariableToSet stringValue="brandLogo"/>
+        </L7p:SetVariable>
+        <L7p:Include>
+            <L7p:PolicyGuid stringValue="a1e92039-34b0-4c34-8894-9fdce78ab812"/>
+        </L7p:Include>
+        <L7p:ExportVariables>
+            <L7p:ExportedVars stringArrayValue="included">
+                <L7p:item stringValue="brandLogo"/>
+            </L7p:ExportedVars>
+        </L7p:ExportVariables>
+    </wsp:All>
+</wsp:Policy>

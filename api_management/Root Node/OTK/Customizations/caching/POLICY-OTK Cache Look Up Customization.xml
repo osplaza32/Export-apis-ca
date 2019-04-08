@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="***** OTK Cache Look Up Customization *****"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="** Available context variables:"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="** cacheID (String) - the ID of the cache to be stored"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="** cacheKey - the key associated with the value to be looked up"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="** maxEntryAge - the max age that the cache was originally created with"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="**"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="** Must return:  the variable 'resp' as a Message for found content"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="** Must fail if the looked up value does not exist!"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="**"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="** Replace the assertion below if desired with an assertion that supports key- value data structures"/>
+        </L7p:CommentAssertion>
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="** If this assertion is replaced also replace it at 'OTK Cache Store Customization'"/>
+        </L7p:CommentAssertion>
+        <L7p:CacheLookup>
+            <L7p:CacheEntryKey stringValue="${cacheKey}"/>
+            <L7p:CacheId stringValue="${actualCacheID}"/>
+            <L7p:ContentTypeOverride stringValue=""/>
+            <L7p:MaxEntryAgeSeconds stringValue="${maxEntryAge}"/>
+            <L7p:OtherTargetMessageVariable stringValue="resp"/>
+            <L7p:Target target="OTHER"/>
+        </L7p:CacheLookup>
+    </wsp:All>
+</wsp:Policy>
