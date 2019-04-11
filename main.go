@@ -1,9 +1,9 @@
 package main
-
 import (
 	"bytes"
 	"crypto/tls"
 	"github.com/gorilla/mux"
+	"github.com/subosito/gotenv"
 	"log"
 	"os"
 	"os/exec"
@@ -11,7 +11,6 @@ import (
 	"regexp"
 	"runtime"
 
-	//"crypto/tls"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
@@ -25,10 +24,10 @@ func init()  {
 	http.DefaultClient.Transport = &http.Transport{
 		TLSClientConfig: cfg,
 	}
-
-}
-
+	}
 func main() {
+	gotenv.Load(".env.gatewayuat")
+	os.RemoveAll(os.Getenv("ENV_CLONE")+string(os.PathSeparator)+"RootNode/*")
 	router := mux.NewRouter()
 	router.HandleFunc("/dev", GetDev).Methods("GET")
 	router.HandleFunc("/uat", GetUat).Methods("GET")
@@ -36,6 +35,8 @@ func main() {
 	http.ListenAndServe(":8081", router)
 }
 func GetUat(writer http.ResponseWriter, request *http.Request) {
+	//os.RemoveAll(os.Getenv("ENV_CLONE")+string(os.PathSeparator)+"RootNode/*")
+
 	url,env := getenviroment("UAT")
 	recursivecall(url+"restman/1.0/folders/0000000000000000ffffffffffffec76/dependencies?level=1","",env)
 	GitWorld("UAT")
@@ -43,8 +44,9 @@ func GetUat(writer http.ResponseWriter, request *http.Request) {
 }
 
 func GetDev(writer http.ResponseWriter, request *http.Request) {
-	url,env := getenviroment("DEV")
+	//os.RemoveAll(os.Getenv("ENV_CLONE")+string(os.PathSeparator)+"RootNode/*")
 
+	url,env := getenviroment("DEV")
 	recursivecall(url+"restman/1.0/folders/0000000000000000ffffffffffffec76/dependencies?level=1","",env)
 	GitWorld("DEV")
 	json.NewEncoder(writer).Encode("Trabajo realizado")
@@ -62,7 +64,6 @@ func recursivecall(url string,folder string,env string){
 		}else {
 			if element.Type == "SERVICE" || element.Type == "POLICY" {
 				fmt.Println(makeurl(element.Type,element.ID,env))
-
 				thecallandsave(makeurl(element.Type,element.ID,env),element.Type,folder)
 				}}}
 }
@@ -81,20 +82,22 @@ func thecallandsave(url string,typee string,directory string) {
 	jsonrespinfo:=calls(url)
 	if typee == "SERVICE" {
 		var respuestainfoservice Entidades.Serviceinfo
-		json.Unmarshal(jsonrespinfo.Bytes(), &respuestainfoservice)
+		err:=json.Unmarshal(jsonrespinfo.Bytes(), &respuestainfoservice)
 		archivo :=cleanString(respuestainfoservice.Item.Name)
 		createFile(os.Getenv("ENV_CLONE")+string(os.PathSeparator) +directory,string(os.PathSeparator) +"SERVICE-"+archivo+".xml",respuestainfoservice.Item.Resource.Service.Resources.ResourceSet.Resource.Content)
 		}
 	if typee == "POLICY"{
 		var respuestainfopolicy Entidades.Policyinfo
-		json.Unmarshal(jsonrespinfo.Bytes(), &respuestainfopolicy)
+		err := json.Unmarshal(jsonrespinfo.Bytes(), &respuestainfopolicy)
 		archivo :=cleanString(respuestainfopolicy.Item.Name)
 		createFile(os.Getenv("ENV_CLONE")+string(os.PathSeparator) +directory,string(os.PathSeparator) +"POLICY-"+archivo+".xml",respuestainfopolicy.Item.Resource.Policy.Resources.ResourceSet.Resource.Content)
 		}
 	}
 func createFile(path string,name string,contenido string) {
-	os.MkdirAll(path,os.ModePerm)
+	errdel := os.RemoveAll(path + name)
+	errcrete := os.MkdirAll(path, os.ModePerm)
 	f, err := os.OpenFile(path+name, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	defer f.Close()
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -106,6 +109,7 @@ func createFile(path string,name string,contenido string) {
 		return
 	}
 	fmt.Println(l, "bytes escritos")
+	f.Sync()
 	err = f.Close()
 	if err != nil {
 		fmt.Println(err)
