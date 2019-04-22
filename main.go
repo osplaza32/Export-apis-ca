@@ -82,20 +82,20 @@ func thecallandsave(url string,typee string,directory string) {
 	jsonrespinfo:=calls(url)
 	if typee == "SERVICE" {
 		var respuestainfoservice Entidades.Serviceinfo
-		err:=json.Unmarshal(jsonrespinfo.Bytes(), &respuestainfoservice)
+		json.Unmarshal(jsonrespinfo.Bytes(), &respuestainfoservice)
 		archivo :=cleanString(respuestainfoservice.Item.Name)
 		createFile(os.Getenv("ENV_CLONE")+string(os.PathSeparator) +directory,string(os.PathSeparator) +"SERVICE-"+archivo+".xml",respuestainfoservice.Item.Resource.Service.Resources.ResourceSet.Resource.Content)
 		}
 	if typee == "POLICY"{
 		var respuestainfopolicy Entidades.Policyinfo
-		err := json.Unmarshal(jsonrespinfo.Bytes(), &respuestainfopolicy)
+		json.Unmarshal(jsonrespinfo.Bytes(), &respuestainfopolicy)
 		archivo :=cleanString(respuestainfopolicy.Item.Name)
 		createFile(os.Getenv("ENV_CLONE")+string(os.PathSeparator) +directory,string(os.PathSeparator) +"POLICY-"+archivo+".xml",respuestainfopolicy.Item.Resource.Policy.Resources.ResourceSet.Resource.Content)
 		}
 	}
 func createFile(path string,name string,contenido string) {
-	errdel := os.RemoveAll(path + name)
-	errcrete := os.MkdirAll(path, os.ModePerm)
+	os.RemoveAll(path+name)
+	os.MkdirAll(path,os.ModePerm)
 	f, err := os.OpenFile(path+name, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	defer f.Close()
 	if err != nil {
