@@ -134,6 +134,7 @@ func basicAuth() string {
 	return base64.StdEncoding.EncodeToString([]byte(auth))
 }
 func GitWorld(){
+	fmt.Println("Hola")
 	if runtime.GOOS == "windows" {
 		value, err:= exec.Command("git-work.bat",os.Getenv("ENV_CLONE")).Output()
 		if err != nil{
