@@ -90,6 +90,7 @@ func thecallandsave(url string,typee string,directory string) {
 	}
 func createFile(path string,name string,contenido string) {
 	os.MkdirAll(path,os.ModePerm)
+	os.Remove(path+name)
 	f, err := os.OpenFile(path+name, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		fmt.Println(err)

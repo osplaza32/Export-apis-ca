@@ -26,7 +26,7 @@ type TheContent struct {
 						} `json:"Dependencies"`
 					} `json:"Reference"`
 					Dependencies struct {
-						Dependency []struct {
+						Dependency [1]struct {
 							Type string `json:"Type"`
 							Name string `json:"Name"`
 							ID   string `json:"Id"`
