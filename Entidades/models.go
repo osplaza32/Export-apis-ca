@@ -1,7 +1,6 @@
 package Entidades
 
 import (
-	"encoding/xml"
 	"os/exec"
 )
 
@@ -63,7 +62,57 @@ type TheContent struct {
 		L7 string `json:"-l7"`
 	} `json:"Item"`
 }
+
+type Serviceinfo struct {
+	Item struct {
+		Link []struct {
+			Rel string `json:"-rel"`
+			URI string `json:"-uri"`
+		} `json:"Link"`
+		Resource struct {
+			PolicyVersion struct {
+				ID       string `json:"-id"`
+				Ordinal  string `json:"ordinal"`
+				PolicyID string `json:"policyId"`
+				Time     string `json:"time"`
+				Active   string `json:"active"`
+				XML      string `json:"xml"`
+			} `json:"PolicyVersion"`
+		} `json:"Resource"`
+		L7        string `json:"-l7"`
+		Name      string `json:"Name"`
+		ID        string `json:"Id"`
+		Type      string `json:"Type"`
+		TimeStamp string `json:"TimeStamp"`
+	} `json:"Item"`
+}
+
 type Policyinfo struct {
+	Item struct {
+		L7        string `json:"-l7"`
+		Name      string `json:"Name"`
+		ID        string `json:"Id"`
+		Type      string `json:"Type"`
+		TimeStamp string `json:"TimeStamp"`
+		Link      []struct {
+			Rel string `json:"-rel"`
+			URI string `json:"-uri"`
+		} `json:"Link"`
+		Resource struct {
+			PolicyVersion struct {
+				ID       string `json:"-id"`
+				Ordinal  string `json:"ordinal"`
+				PolicyID string `json:"policyId"`
+				Time     string `json:"time"`
+				Active   string `json:"active"`
+				XML      string `json:"xml"`
+			} `json:"PolicyVersion"`
+		} `json:"Resource"`
+	} `json:"Item"`
+}
+// TODO STRUCT VIERJOS OLD
+
+type PolicyinfoOLD struct {
 	Item struct {
 		Name      string `json:"Name"`
 		ID        string `json:"Id"`
@@ -107,7 +156,7 @@ type Policyinfo struct {
 		L7 string `json:"-l7"`
 	} `json:"Item"`
 }
-type Serviceinfo struct {
+type ServiceinfoOLD struct {
 	Item struct {
 		Link []struct {
 			URI string `json:"-uri,omitempty"`
@@ -158,68 +207,13 @@ type Serviceinfo struct {
 		TimeStamp string `json:"TimeStamp"`
 	} `json:"Item"`
 }
-type TheserviceEspecial struct {
-	XMLName   xml.Name `xml:"Item"`
-	Text      string   `xml:",chardata"`
-	L7        string   `xml:"l7,attr"`
-	Name      string   `xml:"Name"`
-	ID        string   `xml:"Id"`
-	Type      string   `xml:"Type"`
-	TimeStamp string   `xml:"TimeStamp"`
-	Link      []struct {
-		Text string `xml:",chardata"`
-		Rel  string `xml:"rel,attr"`
-		URI  string `xml:"uri,attr"`
-	} `xml:"Link"`
-	Resource struct {
-		Text    string `xml:",chardata"`
-		Service struct {
-			Text          string `xml:",chardata"`
-			ID            string `xml:"id,attr"`
-			Version       string `xml:"version,attr"`
-			ServiceDetail struct {
-				Text            string `xml:",chardata"`
-				FolderId        string `xml:"folderId,attr"`
-				ID              string `xml:"id,attr"`
-				Version         string `xml:"version,attr"`
-				Name            string `xml:"Name"`
-				Enabled         string `xml:"Enabled"`
-				ServiceMappings struct {
-					Text        string `xml:",chardata"`
-					HttpMapping struct {
-						Text       string `xml:",chardata"`
-						UrlPattern string `xml:"UrlPattern"`
-						Verbs      struct {
-							Text string `xml:",chardata"`
-							Verb string `xml:"Verb"`
-						} `xml:"Verbs"`
-					} `xml:"HttpMapping"`
-				} `xml:"ServiceMappings"`
-				Properties struct {
-					Text     string `xml:",chardata"`
-					Property []struct {
-						Text         string `xml:",chardata"`
-						Key          string `xml:"key,attr"`
-						BooleanValue string `xml:"BooleanValue"`
-						LongValue    string `xml:"LongValue"`
-					} `xml:"Property"`
-				} `xml:"Properties"`
-			} `xml:"ServiceDetail"`
-			Resources struct {
-				Text        string `xml:",chardata"`
-				ResourceSet struct {
-					Text     string `xml:",chardata"`
-					Tag      string `xml:"tag,attr"`
-					Resource struct {
-						Text    string `xml:",chardata"`
-						Type    string `xml:"type,attr"`
-						Version string `xml:"version,attr"`
-					} `xml:"Resource"`
-				} `xml:"ResourceSet"`
-			} `xml:"Resources"`
-		} `xml:"Service"`
-	} `xml:"Resource"`
-}
+
+
+
+
+
+
+
 
 type Git struct {
 	Cmd string
